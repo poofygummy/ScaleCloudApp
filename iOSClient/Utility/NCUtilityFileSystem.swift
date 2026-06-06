@@ -128,11 +128,11 @@ final class NCUtilityFileSystem: NSObject, @unchecked Sendable {
     }
 
     func getHomeServer(urlBase: String, userId: String) -> String {
-        return NKDav.homeURLStringNoSlash(urlBase: urlBase, userId: userId)
+        return SCKDav.homeURLStringNoSlash(urlBase: urlBase, userId: userId)
     }
 
     func getPath(path: String, user: String, fileName: String? = nil) -> String {
-        let prefix = NKDav.userPathNoSlash(userId: user)
+        let prefix = SCKDav.userPathNoSlash(userId: user)
 
         var result = path.hasPrefix(prefix)
             ? String(path.dropFirst(prefix.count))

@@ -9,10 +9,10 @@ import ScaleCloudKit
 /// A context menu for notification actions.
 /// See ``NCNotification`` for usage details.
 class NCContextMenuNotification: NSObject {
-    let notification: NKNotifications
+    let notification: SCKNotifications
     weak var delegate: NCNotificationCellDelegate?
 
-    init(notification: NKNotifications, delegate: NCNotificationCellDelegate?) {
+    init(notification: SCKNotifications, delegate: NCNotificationCellDelegate?) {
         self.notification = notification
         self.delegate = delegate
     }

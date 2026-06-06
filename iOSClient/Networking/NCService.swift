@@ -79,7 +79,7 @@ class NCService: NSObject {
             return false
         }
 
-        let resultUserProfile = await ScaleCloudKit.shared.getUserMetadataAsync(account: account, userId: userId, options: NKRequestOptions(queue: ScaleCloudKit.shared.nkCommonInstance.backgroundQueue)) { task in
+        let resultUserProfile = await ScaleCloudKit.shared.getUserMetadataAsync(account: account, userId: userId, options: SCKRequestOptions(queue: ScaleCloudKit.shared.nkCommonInstance.backgroundQueue)) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
                                                                                             path: userId,
@@ -302,7 +302,7 @@ class NCService: NSObject {
     // MARK: -
 
     func sendClientDiagnosticsRemoteOperation(account: String) async {
-        let capabilities = await NKCapabilities.shared.getCapabilities(for: account)
+        let capabilities = await SCKCapabilities.shared.getCapabilities(for: account)
         guard capabilities.securityGuardDiagnostics,
               await self.database.existsDiagnosticsAsync(account: account) else {
             return

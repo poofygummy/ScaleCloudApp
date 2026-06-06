@@ -152,7 +152,7 @@ class FileProviderData: NSObject {
                           dateLastModified: Date?,
                           length: Int64,
                           task: URLSessionTask,
-                          error: NKError) async {
+                          error: SCKError) async {
         let taskIdentifier = task.taskIdentifier
         let metadata = await NCManageDatabase.shared.getMetadataAsync(predicate: NSPredicate(format: "serverUrl == %@ AND fileName == %@", serverUrl, fileName))
 
@@ -198,7 +198,7 @@ class FileProviderData: NSObject {
                         date: Date?,
                         size: Int64,
                         task: URLSessionTask,
-                        error: NKError) async {
+                        error: SCKError) async {
         guard let metadata = await NCManageDatabase.shared.getMetadataAsync(predicate: NSPredicate(format: "serverUrl == %@ AND fileName == %@ AND sessionTaskIdentifier == %d", serverUrl, fileName, task.taskIdentifier)) else {
             let predicate = NSPredicate(format: "fileName == %@ AND serverUrl == %@", fileName, serverUrl)
             await NCManageDatabase.shared.deleteMetadataAsync(predicate: predicate)

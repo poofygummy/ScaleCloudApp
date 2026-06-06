@@ -251,7 +251,7 @@ extension NCViewerDirectEditing: NCTransferDelegate {
                         selector: String?,
                         ocId: String,
                         destination: String?,
-                        error: NKError) {
+                        error: SCKError) {
         Task {@MainActor in
             if status == NCGlobal.shared.networkingStatusFavorite,
                self.metadata.ocId == ocId,

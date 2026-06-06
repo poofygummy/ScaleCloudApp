@@ -84,7 +84,7 @@ extension NCManageDatabase {
 
     // MARK: - Realm write
 
-    func addActivity(_ activities: [NKActivity], account: String) {
+    func addActivity(_ activities: [SCKActivity], account: String) {
         core.performRealmWrite { realm in
             for activity in activities {
                 let addObjectActivity = tableActivity()

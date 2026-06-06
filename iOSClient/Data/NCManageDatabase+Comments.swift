@@ -32,7 +32,7 @@ extension NCManageDatabase {
 
     // MARK: - Realm write
 
-    func addComments(_ comments: [NKComments], account: String, objectId: String) {
+    func addComments(_ comments: [SCKComments], account: String, objectId: String) {
         core.performRealmWrite { realm in
             let existing = realm.objects(tableComments.self)
                 .filter("account == %@ AND objectId == %@", account, objectId)

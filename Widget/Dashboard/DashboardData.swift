@@ -117,7 +117,7 @@ func getDashboardDataEntry(configuration: DashboardIntent?, isPreview: Bool, dis
             titleImage = image.withTintColor(NCBrandColor.shared.iconImageColor, renderingMode: .alwaysOriginal)
         }
     }
-    let options = NKRequestOptions(timeout: 90, queue: ScaleCloudKit.shared.nkCommonInstance.backgroundQueue)
+    let options = SCKRequestOptions(timeout: 90, queue: ScaleCloudKit.shared.nkCommonInstance.backgroundQueue)
     let resultsDashboardWidget = await ScaleCloudKit.shared.getDashboardWidgetsApplicationAsync(widgetApplicationId, account: activeTableAccount.account, options: options)
 
     var datas = [DashboardData]()

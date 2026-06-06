@@ -21,7 +21,7 @@ actor NCNetworkingProcess {
     private var currentTask: Task<Void, Never>?
 
     @MainActor
-    private var currentUploadTask: Task<(account: String, file: NKFile?, error: NKError), Never>?
+    private var currentUploadTask: Task<(account: String, file: SCKFile?, error: SCKError), Never>?
 
     @MainActor
     private var currentUploadRequest: UploadRequest?
@@ -179,7 +179,7 @@ actor NCNetworkingProcess {
 
     private func handleTimerTick() async {
         if currentTask != nil {
-            print("[NKLOG] current task is running")
+            print("[SCKLOG] current task is running")
             return
         }
 
@@ -310,7 +310,7 @@ actor NCNetworkingProcess {
         let countDownloading = metadatas.filter { $0.status == self.global.metadataStatusDownloading }.count
         let countUploading = metadatas.filter { $0.status == self.global.metadataStatusUploading }.count - countTransferSuccess
         var availableProcess = NCBrandOptions.shared.numMaximumProcess - (countDownloading + countUploading)
-        let isWiFi = self.networking.networkReachability == NKTypeReachability.reachableEthernetOrWiFi
+        let isWiFi = self.networking.networkReachability == SCKTypeReachability.reachableEthernetOrWiFi
         // Banner
         var banner: LucidBanner?
         var token: Int?
@@ -511,7 +511,7 @@ actor NCNetworkingProcess {
             imageAnimation: .rotate
         ))
 
-        let task = Task { () -> (account: String, file: NKFile?, error: NKError) in
+        let task = Task { () -> (account: String, file: SCKFile?, error: SCKError) in
             let results = await NCNetworking.shared.uploadChunkFile(metadata: metadata) { total, counter in
                 Task {
                     banner?.update(
@@ -560,7 +560,7 @@ actor NCNetworkingProcess {
 
     // MARK: - Helper
 
-    private func hubProcessWebDav(metadatas: [tableMetadata]) async -> NKError {
+    private func hubProcessWebDav(metadatas: [tableMetadata]) async -> SCKError {
         var results: [tableMetadata] = []
 
         // CREATE FOLDER

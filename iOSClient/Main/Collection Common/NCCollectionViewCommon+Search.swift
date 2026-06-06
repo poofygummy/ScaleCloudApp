@@ -15,7 +15,7 @@ extension NCCollectionViewCommon {
               !text.isEmpty else {
             return
         }
-        let capabilities = await NKCapabilities.shared.getCapabilities(for: session.account)
+        let capabilities = await SCKCapabilities.shared.getCapabilities(for: session.account)
 
         // Force layoutList
         let layoutForView = database.getLayoutForView(account: session.account, key: layoutKey, serverUrl: serverUrl)
@@ -235,8 +235,8 @@ extension NCCollectionViewCommon {
     // MARK: - Helper
 
     private func getSearchResultMetadatas(session: NCSession.Session,
-                                          provider: NKSearchProvider,
-                                          searchResult: NKSearchResult,
+                                          provider: SCKSearchProvider,
+                                          searchResult: SCKSearchResult,
     ) async -> [tableMetadata]? {
         var metadatas: [tableMetadata] = []
 
@@ -268,7 +268,7 @@ extension NCCollectionViewCommon {
                     return(nil)
                 }
                 if let metadata = await NCManageDatabase.shared.getMetadataAsync(
-                    predicate: NSPredicate(format: "account == %@ && path == %@ && fileName == %@", session.account, NKDav.userPath(userId: session.user) + dir, filename)) {
+                    predicate: NSPredicate(format: "account == %@ && path == %@ && fileName == %@", session.account, SCKDav.userPath(userId: session.user) + dir, filename)) {
                     metadatas.append(metadata)
                 } else {
                     if let metadata = await loadMetadata(session: session,
@@ -305,10 +305,10 @@ extension NCCollectionViewCommon {
     }
 
     private func loadMetadata(session: NCSession.Session,
-                              provider: NKSearchProvider,
+                              provider: SCKSearchProvider,
                               filePath: String) async -> tableMetadata? {
         let cleanPath = filePath.hasPrefix("/") ? String(filePath.dropFirst()) : filePath
-        let urlPath = NKDav.homeURLString(urlBase: session.urlBase,
+        let urlPath = SCKDav.homeURLString(urlBase: session.urlBase,
                                           userId: session.user) + cleanPath
         let results = await NCNetworking.shared.readFileAsync(serverUrlFileName: urlPath,
                                                               account: session.account

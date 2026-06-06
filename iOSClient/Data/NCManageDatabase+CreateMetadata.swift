@@ -9,7 +9,7 @@ import ScaleCloudKit
 import Photos
 
 final class NCManageDatabaseCreateMetadata {
-    func convertFileToMetadataAsync(_ file: NKFile, mediaSearch: Bool = false, isDirectoryE2EE: Bool? = nil) async -> tableMetadata {
+    func convertFileToMetadataAsync(_ file: SCKFile, mediaSearch: Bool = false, isDirectoryE2EE: Bool? = nil) async -> tableMetadata {
         let metadata = self.createMetadata(file)
         let e2eEncryptedDirectory: Bool
         if let value = isDirectoryE2EE {
@@ -34,7 +34,7 @@ final class NCManageDatabaseCreateMetadata {
 #endif
 
         if !metadata.directory {
-            let results = await NKTypeIdentifiers.shared.getInternalType(fileName: metadata.fileNameView, mimeType: file.contentType, directory: file.directory, account: file.account)
+            let results = await SCKTypeIdentifiers.shared.getInternalType(fileName: metadata.fileNameView, mimeType: file.contentType, directory: file.directory, account: file.account)
 
             metadata.contentType = results.mimeType
             metadata.iconName = results.iconName
@@ -46,7 +46,7 @@ final class NCManageDatabaseCreateMetadata {
         return metadata.detachedCopy()
     }
 
-    func convertFileToMetadata(_ file: NKFile, capabilities: NKCapabilities.Capabilities?, isDirectoryE2EE: Bool? = nil, completion: @escaping (tableMetadata) -> Void) {
+    func convertFileToMetadata(_ file: SCKFile, capabilities: SCKCapabilities.Capabilities?, isDirectoryE2EE: Bool? = nil, completion: @escaping (tableMetadata) -> Void) {
         let metadata = self.createMetadata(file)
 #if !EXTENSION_FILE_PROVIDER_EXTENSION
         let e2eEncryptedDirectory: Bool = isDirectoryE2EE ?? NCUtilityFileSystem().isDirectoryE2EE(
@@ -66,7 +66,7 @@ final class NCManageDatabaseCreateMetadata {
 #endif
 
         if !metadata.directory {
-            let results = NKTypeIdentifiersHelper.shared.getInternalType(fileName: metadata.fileNameView, mimeType: file.contentType, directory: file.directory, capabilities: capabilities ?? NKCapabilities.Capabilities())
+            let results = SCKTypeIdentifiersHelper.shared.getInternalType(fileName: metadata.fileNameView, mimeType: file.contentType, directory: file.directory, capabilities: capabilities ?? SCKCapabilities.Capabilities())
 
             metadata.contentType = results.mimeType
             metadata.iconName = results.iconName
@@ -76,7 +76,7 @@ final class NCManageDatabaseCreateMetadata {
         completion(metadata)
     }
 
-    func convertFilesToMetadatasAsync(_ files: [NKFile], serverUrlMetadataFolder: String? = nil, mediaSearch: Bool = false) async -> (metadataFolder: tableMetadata, metadatas: [tableMetadata]) {
+    func convertFilesToMetadatasAsync(_ files: [SCKFile], serverUrlMetadataFolder: String? = nil, mediaSearch: Bool = false) async -> (metadataFolder: tableMetadata, metadatas: [tableMetadata]) {
         var counter: Int = 0
         var isDirectoryE2EE: Bool = false
         var listServerUrl: [String: Bool] = [:]
@@ -107,7 +107,7 @@ final class NCManageDatabaseCreateMetadata {
     }
 
 #if !EXTENSION_FILE_PROVIDER_EXTENSION
-    func convertFilesToMetadatas(_ files: [NKFile], capabilities: NKCapabilities.Capabilities?, serverUrlMetadataFolder: String? = nil, completion: @escaping (_ metadataFolder: tableMetadata?, _ metadatas: [tableMetadata]) -> Void) {
+    func convertFilesToMetadatas(_ files: [SCKFile], capabilities: SCKCapabilities.Capabilities?, serverUrlMetadataFolder: String? = nil, completion: @escaping (_ metadataFolder: tableMetadata?, _ metadatas: [tableMetadata]) -> Void) {
         var counter: Int = 0
         var isDirectoryE2EE: Bool = false
         let listServerUrl = ThreadSafeDictionary<String, Bool>()
@@ -136,7 +136,7 @@ final class NCManageDatabaseCreateMetadata {
     }
 #endif
 
-    func createMetadata(_ file: NKFile) -> tableMetadata {
+    func createMetadata(_ file: SCKFile) -> tableMetadata {
         let metadata = tableMetadata()
 
         metadata.account = file.account
@@ -206,8 +206,8 @@ final class NCManageDatabaseCreateMetadata {
         metadata.size = file.size
         metadata.classFile = file.classFile
         // iOS 12.0,* don't detect UTI text/markdown, text/x-markdown
-        if (metadata.contentType == "text/markdown" || metadata.contentType == "text/x-markdown") && metadata.classFile == NKTypeClassFile.unknow.rawValue {
-            metadata.classFile = NKTypeClassFile.document.rawValue
+        if (metadata.contentType == "text/markdown" || metadata.contentType == "text/x-markdown") && metadata.classFile == SCKTypeClassFile.unknow.rawValue {
+            metadata.classFile = SCKTypeClassFile.document.rawValue
         }
         if let date = file.uploadDate {
             metadata.uploadDate = date as NSDate
@@ -227,9 +227,9 @@ final class NCManageDatabaseCreateMetadata {
         metadata.typeIdentifier = file.typeIdentifier
 
         if file.directory {
-            metadata.classFile = NKTypeClassFile.directory.rawValue
+            metadata.classFile = SCKTypeClassFile.directory.rawValue
             metadata.contentType = "httpd/unix-directory"
-            metadata.iconName = NKTypeIconFile.directory.rawValue
+            metadata.iconName = SCKTypeIconFile.directory.rawValue
         }
 
         return metadata
@@ -250,12 +250,12 @@ final class NCManageDatabaseCreateMetadata {
             let metadata = tableMetadata()
 
             if isUrl {
-                metadata.classFile = NKTypeClassFile.url.rawValue
+                metadata.classFile = SCKTypeClassFile.url.rawValue
                 metadata.contentType = "text/uri-list"
-                metadata.iconName = NKTypeClassFile.url.rawValue
+                metadata.iconName = SCKTypeClassFile.url.rawValue
                 metadata.typeIdentifier = "public.url"
             } else {
-                let results = await NKTypeIdentifiers.shared.getInternalType(fileName: fileName, mimeType: "", directory: false, account: session.account)
+                let results = await SCKTypeIdentifiers.shared.getInternalType(fileName: fileName, mimeType: "", directory: false, account: session.account)
                 metadata.classFile = results.classFile
                 metadata.contentType = results.mimeType
                 metadata.iconName = results.iconName
@@ -311,12 +311,12 @@ final class NCManageDatabaseCreateMetadata {
         let metadata = tableMetadata()
 
         if isUrl {
-            metadata.classFile = NKTypeClassFile.url.rawValue
+            metadata.classFile = SCKTypeClassFile.url.rawValue
             metadata.contentType = "text/uri-list"
-            metadata.iconName = NKTypeClassFile.url.rawValue
+            metadata.iconName = SCKTypeClassFile.url.rawValue
             metadata.typeIdentifier = "public.url"
         } else {
-            let results = await NKTypeIdentifiers.shared.getInternalType(fileName: fileName,
+            let results = await SCKTypeIdentifiers.shared.getInternalType(fileName: fileName,
                                                                          mimeType: "",
                                                                          directory: false,
                                                                          account: session.account)
@@ -388,9 +388,9 @@ final class NCManageDatabaseCreateMetadata {
         metadata.userId = session.userId
         metadata.sceneIdentifier = sceneIdentifier
 
-        metadata.classFile = NKTypeClassFile.directory.rawValue
+        metadata.classFile = SCKTypeClassFile.directory.rawValue
         metadata.contentType = "httpd/unix-directory"
-        metadata.iconName = NKTypeIconFile.directory.rawValue
+        metadata.iconName = SCKTypeIconFile.directory.rawValue
         metadata.typeIdentifier = "public.folder"
 
         return metadata

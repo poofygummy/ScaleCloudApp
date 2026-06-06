@@ -22,8 +22,8 @@ struct NCSettingsView: View {
     // Object of ViewModel of this view
     @ObservedObject var model: NCSettingsModel
 
-    var capabilities: NKCapabilities.Capabilities {
-        NCNetworking.shared.capabilities[model.controller?.account ?? ""] ?? NKCapabilities.Capabilities()
+    var capabilities: SCKCapabilities.Capabilities {
+        NCNetworking.shared.capabilities[model.controller?.account ?? ""] ?? SCKCapabilities.Capabilities()
     }
 
     var body: some View {

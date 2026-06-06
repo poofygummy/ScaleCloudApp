@@ -11,9 +11,9 @@ struct NCTagEditorView: View {
     @State private var model: NCTagEditorModel
     @State private var isSearchPresented = false
 
-    private let onApplied: ([NKTag]) -> Void
+    private let onApplied: ([SCKTag]) -> Void
 
-    init(metadata: tableMetadata, windowScene: UIWindowScene?, onApplied: @escaping ([NKTag]) -> Void) {
+    init(metadata: tableMetadata, windowScene: UIWindowScene?, onApplied: @escaping ([SCKTag]) -> Void) {
         _model = State(initialValue: NCTagEditorModel(metadata: metadata, windowScene: windowScene))
         self.onApplied = onApplied
     }
@@ -116,7 +116,7 @@ struct NCTagEditorView: View {
         }
     }
 
-    private func color(for tag: NKTag) -> Color {
+    private func color(for tag: SCKTag) -> Color {
         if let colorHex = tag.color, let color = UIColor(hex: colorHex) {
             return Color(color)
         }

@@ -10,7 +10,7 @@ import ScaleCloudKit
 extension NCNetworking {
     @MainActor
     func termsOfService(account: String) async {
-        let capabilities = await NKCapabilities.shared.getCapabilities(for: account)
+        let capabilities = await SCKCapabilities.shared.getCapabilities(for: account)
         guard capabilities.termsOfService,
               let groupDefaults = UserDefaults(suiteName: ScaleCloudKit.shared.nkCommonInstance.groupIdentifier),
               let controller = SceneManager.shared.getControllers().first(where: { $0.account == account }),
@@ -20,7 +20,7 @@ extension NCNetworking {
         }
 
         var tosArray = groupDefaults.array(forKey: ScaleCloudKit.shared.nkCommonInstance.groupDefaultsToS) as? [String] ?? []
-        let options = NKRequestOptions(checkInterceptor: false)
+        let options = SCKRequestOptions(checkInterceptor: false)
 
         let resultsGetToS = await ScaleCloudKit.shared.getTermsOfServiceAsync(account: account, options: options, taskHandler: { task in
             Task {
@@ -42,15 +42,15 @@ extension NCNetworking {
         controller.present(termOfServiceController, animated: true)
     }
 
-    func signTermsOfService(account: String, termId: Int) async -> NKError? {
-        let capabilities = await NKCapabilities.shared.getCapabilities(for: account)
+    func signTermsOfService(account: String, termId: Int) async -> SCKError? {
+        let capabilities = await SCKCapabilities.shared.getCapabilities(for: account)
         guard capabilities.termsOfService,
               let groupDefaults = UserDefaults(suiteName: ScaleCloudKit.shared.nkCommonInstance.groupIdentifier)
         else {
             return nil
         }
         var tosArray = groupDefaults.array(forKey: ScaleCloudKit.shared.nkCommonInstance.groupDefaultsToS) as? [String] ?? []
-        let options = NKRequestOptions(checkInterceptor: false)
+        let options = SCKRequestOptions(checkInterceptor: false)
 
         let resultsSignToS = await  ScaleCloudKit.shared.signTermsOfServiceAsync(termId: "\(termId)", account: account, options: options) { task in
             Task {

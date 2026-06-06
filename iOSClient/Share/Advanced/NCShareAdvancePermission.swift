@@ -241,12 +241,12 @@ class NCShareAdvancePermission: UITableViewController, NCShareAdvanceFooterDeleg
         }
 
         Task {
-            if (share.shareType == NKShare.ShareType.publicLink.rawValue || share.shareType == NKShare.ShareType.email.rawValue) && NCSharePermissions.hasPermissionToShare(share.permissions) {
-                share.permissions = share.permissions - NKShare.Permission.share.rawValue
+            if (share.shareType == SCKShare.ShareType.publicLink.rawValue || share.shareType == SCKShare.ShareType.email.rawValue) && NCSharePermissions.hasPermissionToShare(share.permissions) {
+                share.permissions = share.permissions - SCKShare.Permission.share.rawValue
             }
 
             if isNewShare {
-                if share.shareType != NKShare.ShareType.publicLink.rawValue, metadata.e2eEncrypted {
+                if share.shareType != SCKShare.ShareType.publicLink.rawValue, metadata.e2eEncrypted {
 
                     if await NCNetworkingE2EE().isInUpload(account: metadata.account, serverUrl: metadata.serverUrlFileName) {
                         await showErrorBanner(windowScene: windowScene,

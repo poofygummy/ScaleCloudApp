@@ -527,7 +527,7 @@ extension NCViewerPDF: NCTransferDelegate {
                         selector: String?,
                         ocId: String,
                         destination: String?,
-                        error: NKError) {
+                        error: SCKError) {
         Task {@MainActor in
             guard self.metadata?.serverUrl == serverUrl,
                   let metadata = await NCManageDatabase.shared.getMetadataFromOcIdAsync(ocId),

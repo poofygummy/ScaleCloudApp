@@ -41,8 +41,8 @@ class NCUploadAssetsModel: ObservableObject, NCCreateFormUploadConflictDelegate 
         NCSession.shared.getSession(controller: controller)
     }
     // Capabilities
-    var capabilities: NKCapabilities.Capabilities {
-        NCNetworking.shared.capabilities[controller?.account ?? ""] ?? NKCapabilities.Capabilities()
+    var capabilities: SCKCapabilities.Capabilities {
+        NCNetworking.shared.capabilities[controller?.account ?? ""] ?? SCKCapabilities.Capabilities()
     }
     let database = NCManageDatabase.shared
     let global = NCGlobal.shared

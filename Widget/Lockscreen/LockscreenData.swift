@@ -59,7 +59,7 @@ func getLockscreenDataEntry(configuration: AccountIntent?, isPreview: Bool, fami
                                       httpMaximumConnectionsPerHostInUpload: NCBrandOptions.shared.httpMaximumConnectionsPerHostInUpload,
                                       groupIdentifier: NCBrandOptions.shared.capabilitiesGroup)
 
-    let options = NKRequestOptions(timeout: 90, queue: ScaleCloudKit.shared.nkCommonInstance.backgroundQueue)
+    let options = SCKRequestOptions(timeout: 90, queue: ScaleCloudKit.shared.nkCommonInstance.backgroundQueue)
 
     if family == .accessoryCircular {
         ScaleCloudKit.shared.getUserMetadata(account: activeTableAccount.account, userId: activeTableAccount.userId, options: options) { _, userProfile, _, error in

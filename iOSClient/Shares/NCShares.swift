@@ -78,7 +78,7 @@ class NCShares: NCCollectionViewCommon {
 
         startGUIGetServerData()
 
-        let resultsReadShares = await ScaleCloudKit.shared.readSharesAsync(parameters: NKShareParameter(), account: session.account) { task in
+        let resultsReadShares = await ScaleCloudKit.shared.readSharesAsync(parameters: SCKShareParameter(), account: session.account) { task in
             Task {
                 await NCNetworking.shared.networkingTasks.track(identifier: "NCShares", task: task)
             }

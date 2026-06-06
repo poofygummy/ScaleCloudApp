@@ -23,9 +23,9 @@ extension NCManageDatabase {
 
     /// Asynchronously adds a new external site entry to the Realm database for the specified account.
     /// - Parameters:
-    ///   - externalSite: The `NKExternalSite` model containing the site data.
+    ///   - externalSite: The `SCKExternalSite` model containing the site data.
     ///   - account: The account to which the site belongs.
-    func addExternalSitesAsync(_ externalSite: NKExternalSite, account: String) async {
+    func addExternalSitesAsync(_ externalSite: SCKExternalSite, account: String) async {
         await core.performRealmWriteAsync { realm in
             let addObject = tableExternalSites()
             addObject.account = account

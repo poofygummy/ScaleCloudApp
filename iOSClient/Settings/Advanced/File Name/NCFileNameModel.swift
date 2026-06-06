@@ -60,7 +60,7 @@ class NCFileNameModel: ObservableObject, ViewOnAppearHandling {
 
     /// Submits the changed file name.
     func submitChangedName() {
-        let capabilities = NCNetworking.shared.capabilities[session.account] ?? NKCapabilities.Capabilities()
+        let capabilities = NCNetworking.shared.capabilities[session.account] ?? SCKCapabilities.Capabilities()
         changedName = FileAutoRenamer.rename(changedName, capabilities: capabilities)
     }
 

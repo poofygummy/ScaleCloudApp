@@ -229,7 +229,7 @@ class NCFiles: NCCollectionViewCommon {
         return false
     }
 
-    private func networkReadFolderAsync(serverUrl: String, forced: Bool) async -> (metadatas: [tableMetadata]?, error: NKError, reloadRequired: Bool) {
+    private func networkReadFolderAsync(serverUrl: String, forced: Bool) async -> (metadatas: [tableMetadata]?, error: SCKError, reloadRequired: Bool) {
         var reloadRequired: Bool = false
         let account = session.account
         let resultsReadFile = await NCNetworking.shared.readFileAsync(serverUrlFileName: serverUrl, account: account) { task in
@@ -263,12 +263,12 @@ class NCFiles: NCCollectionViewCommon {
         )
 
         if shouldSkipUpdate {
-            return (nil, NKError(), reloadRequired)
+            return (nil, SCKError(), reloadRequired)
         }
 
         startGUIGetServerData()
 
-        let options = NKRequestOptions(timeout: 180)
+        let options = SCKRequestOptions(timeout: 180)
         let resultsReadFolder = await NCNetworking.shared.readFolderAsync(
             serverUrl: serverUrl,
             account: account,
@@ -329,7 +329,7 @@ class NCFiles: NCCollectionViewCommon {
                                                               serverUrl: serverUrl, session: self.session)
 
         if error == .success {
-            let capabilities = await NKCapabilities.shared.getCapabilities(for: self.session.account)
+            let capabilities = await SCKCapabilities.shared.getCapabilities(for: self.session.account)
             if version == "v1", capabilities.e2EEApiVersion.hasPrefix("2.") {
                 await showInfoBanner(windowScene: windowScene, text: "Conversion metadata v1 to v2 required, please wait...")
                 nkLog(tag: self.global.logTagE2EE, message: "Conversion v1 to v2")

@@ -29,7 +29,7 @@ import SwiftyJSON
 class NCNotification: UITableViewController, NCNotificationCellDelegate {
     let utilityFileSystem = NCUtilityFileSystem()
     let utility = NCUtility()
-    var notifications: [NKNotifications] = []
+    var notifications: [SCKNotifications] = []
     var session: NCSession.Session!
 
     @MainActor
@@ -250,7 +250,7 @@ class NCNotification: UITableViewController, NCNotificationCellDelegate {
 
     // MARK: - tap Action
 
-    func tapRemove(with notification: NKNotifications, sender: Any?) {
+    func tapRemove(with notification: SCKNotifications, sender: Any?) {
         ScaleCloudKit.shared.setNotification(serverUrl: nil, idNotification: notification.idNotification, method: "DELETE", account: session.account) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: self.session.account,
@@ -275,7 +275,7 @@ class NCNotification: UITableViewController, NCNotificationCellDelegate {
         }
     }
 
-    func tapAction(with notification: NKNotifications, label: String, sender: Any?) {
+    func tapAction(with notification: SCKNotifications, label: String, sender: Any?) {
         guard let actions = notification.actions,
               let jsonActions = JSON(actions).array,
               let action = jsonActions.first(where: { $0["label"].string == label })
@@ -378,7 +378,7 @@ class NCNotificationCell: UITableViewCell {
     var index = IndexPath()
 
     weak var delegate: NCNotificationCellDelegate?
-    var notification: NKNotifications?
+    var notification: SCKNotifications?
 
     @IBAction func touchUpInsideRemove(_ sender: Any) {
         guard let notification = notification else { return }
@@ -403,6 +403,6 @@ class NCNotificationCell: UITableViewCell {
 }
 
 protocol NCNotificationCellDelegate: AnyObject {
-    func tapRemove(with notification: NKNotifications, sender: Any?)
-    func tapAction(with notification: NKNotifications, label: String, sender: Any?)
+    func tapRemove(with notification: SCKNotifications, sender: Any?)
+    func tapAction(with notification: SCKNotifications, label: String, sender: Any?)
 }

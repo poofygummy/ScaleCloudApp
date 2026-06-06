@@ -11,7 +11,7 @@ import LucidBanner
 extension NCCollectionViewCommon: UICollectionViewDelegate {
     @MainActor
     func didSelectMetadata(_ metadata: tableMetadata, withOcIds: Bool) async {
-        let capabilities = await NKCapabilities.shared.getCapabilities(for: session.account)
+        let capabilities = await SCKCapabilities.shared.getCapabilities(for: session.account)
 
         if metadata.e2eEncrypted {
             if capabilities.e2EEEnabled {
@@ -19,7 +19,7 @@ extension NCCollectionViewCommon: UICollectionViewDelegate {
                     do {
                         let e2ee = NCEndToEndSetup(controller: controller)
                         try await e2ee.start()
-                    } catch let error as NKError {
+                    } catch let error as SCKError {
                         if error.errorCode == NSUserCancelledError {
                             return
                         }
@@ -29,7 +29,7 @@ extension NCCollectionViewCommon: UICollectionViewDelegate {
                         )
                         return
                     } catch {
-                        // fallback (non NKError)
+                        // fallback (non SCKError)
                         await showErrorBanner(
                             windowScene: windowScene,
                             text: error.localizedDescription
@@ -106,9 +106,9 @@ extension NCCollectionViewCommon: UICollectionViewDelegate {
 
             if metadata.isImage || metadata.isAudioOrVideo {
                 let metadatas = self.dataSource.getMetadatas()
-                let ocIds = metadatas.filter { $0.classFile == NKTypeClassFile.image.rawValue ||
-                    $0.classFile == NKTypeClassFile.video.rawValue ||
-                    $0.classFile == NKTypeClassFile.audio.rawValue }.map(\.ocId)
+                let ocIds = metadatas.filter { $0.classFile == SCKTypeClassFile.image.rawValue ||
+                    $0.classFile == SCKTypeClassFile.video.rawValue ||
+                    $0.classFile == SCKTypeClassFile.audio.rawValue }.map(\.ocId)
 
                 if let vc = await NCViewer().getViewerController(metadata: metadata, ocIds: withOcIds ? ocIds : nil, image: image, delegate: self) {
                     self.navigationController?.pushViewController(vc, animated: true)
@@ -161,7 +161,7 @@ extension NCCollectionViewCommon: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         guard let metadata = self.dataSource.getMetadata(indexPath: indexPath),
-              metadata.classFile != NKTypeClassFile.url.rawValue,
+              metadata.classFile != SCKTypeClassFile.url.rawValue,
               !isEditMode
         else {
             return nil

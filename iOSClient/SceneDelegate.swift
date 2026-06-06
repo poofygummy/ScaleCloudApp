@@ -427,7 +427,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             }
 
             Task { @MainActor in
-                let capabilities = await NKCapabilities.shared.getCapabilities(for: controller.account)
+                let capabilities = await SCKCapabilities.shared.getCapabilities(for: controller.account)
                 if capabilities.assistantEnabled {
                     let inputModel = NCAssistantInputModel(initialText: text)
                     let assistant = NCAssistant(assistantModel: NCAssistantModel(controller: controller, inputModel: inputModel), chatModel: NCAssistantChatModel(controller: controller, inputModel: inputModel), conversationsModel: NCAssistantChatConversationsModel(controller: controller))
@@ -477,7 +477,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                         NCDocumentCamera.shared.openScannerDocument(viewController: controller)
                     case self.global.actionTextDocument:
                         let session = SceneManager.shared.getSession(scene: scene)
-                        let capabilities = await NKCapabilities.shared.getCapabilities(for: session.account)
+                        let capabilities = await SCKCapabilities.shared.getCapabilities(for: session.account)
                         guard let creator = capabilities.directEditingCreators.first(where: { $0.editor == "text" }) else {
                             return
                         }

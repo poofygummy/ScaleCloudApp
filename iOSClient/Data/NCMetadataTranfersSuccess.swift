@@ -56,7 +56,7 @@ actor NCMetadataTranfersSuccess {
         }
 
         // Create Live Photo metadata
-        let capabilities = await NKCapabilities.shared.getCapabilities(for: metadata.account)
+        let capabilities = await SCKCapabilities.shared.getCapabilities(for: metadata.account)
         if capabilities.isLivePhotoServerAvailable,
            metadata.isLivePhoto {
             await NCManageDatabase.shared.setLivePhotoVideo(account: metadata.account,

@@ -61,7 +61,7 @@ class NCPushNotification {
         }
 
         let userAgent = String(format: "%@  (Strict VoIP)", NCBrandOptions.shared.getUserAgent())
-        let options = NKRequestOptions(customUserAgent: userAgent)
+        let options = SCKRequestOptions(customUserAgent: userAgent)
 
         let responsePushProxy = await ScaleCloudKit.shared.subscribingPushProxyAsync(proxyServerUrl: proxyServerUrl,
                                                                                     pushToken: preferences.deviceTokenPushNotification,
@@ -107,7 +107,7 @@ class NCPushNotification {
         }
 
         let userAgent = String(format: "%@  (Strict VoIP)", NCBrandOptions.shared.getUserAgent())
-        let options = NKRequestOptions(customUserAgent: userAgent)
+        let options = SCKRequestOptions(customUserAgent: userAgent)
         let proxyServerUrl = NCBrandOptions.shared.pushNotificationServerProxy
         let responseProxy = await ScaleCloudKit.shared.unsubscribingPushProxyAsync(proxyServerUrl: proxyServerUrl,
                                                                                   deviceIdentifier: deviceIdentifier,

@@ -135,7 +135,7 @@ class NCContextMenuMain: NSObject {
 
     private func buildMainActionsMenu(
         metadata: tableMetadata,
-        capabilities: NKCapabilities.Capabilities
+        capabilities: SCKCapabilities.Capabilities
     ) -> [UIMenuElement] {
         var mainActionsMenu: [UIMenuElement] = []
         // Lock/Unlock
@@ -211,7 +211,7 @@ class NCContextMenuMain: NSObject {
 
     private func addE2EEActions(
         metadata: tableMetadata,
-        capabilities: NKCapabilities.Capabilities,
+        capabilities: SCKCapabilities.Capabilities,
         mainActionsMenu: inout [UIMenuElement]
     ) {
         // Set folder E2EE
@@ -340,7 +340,7 @@ class NCContextMenuMain: NSObject {
             image: utility.loadImage(named: "text.cursor", colors: [NCBrandColor.shared.iconImageColor])
         ) { _ in
             Task { @MainActor in
-                let capabilities = await NKCapabilities.shared.getCapabilities(for: metadata.account)
+                let capabilities = await SCKCapabilities.shared.getCapabilities(for: metadata.account)
                 let fileNameNew = await UIAlertController.renameFileAsync(
                     fileName: metadata.fileNameView,
                     isDirectory: metadata.directory,
@@ -539,7 +539,7 @@ class NCContextMenuMain: NSObject {
 
     // MARK: Client Integration
 
-    private func buildClientIntegrationMenuItems(capabilities: NKCapabilities.Capabilities, metadata: tableMetadata) -> [UIMenuElement] {
+    private func buildClientIntegrationMenuItems(capabilities: SCKCapabilities.Capabilities, metadata: tableMetadata) -> [UIMenuElement] {
         var clientIntegrationMenu: [UIMenuElement] = []
         guard let apps = capabilities.clientIntegration?.apps else { return [] }
 

@@ -14,7 +14,7 @@ extension NCNetworking {
         }
 
         let showHiddenFiles = NCPreferences().getShowHiddenFiles(account: session.account)
-        var recommendationsToInsert: [NKRecommendation] = []
+        var recommendationsToInsert: [SCKRecommendation] = []
         let results = await ScaleCloudKit.shared.getRecommendedFilesAsync(account: session.account, taskHandler: { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: session.account,

@@ -21,7 +21,7 @@ extension NCShareExtension: UICollectionViewDelegate {
                 self.showAlert(title: "_info_", description: "_e2e_goto_settings_for_enable_")
                 return
             }
-            let capabilities = await NKCapabilities.shared.getCapabilities(for: tblAccount.account)
+            let capabilities = await SCKCapabilities.shared.getCapabilities(for: tblAccount.account)
 
             if let fileNameError = FileNameValidator.checkFileName(metadata.fileNameView, account: tblAccount.account, capabilities: capabilities) {
                 let message = "\(fileNameError.errorDescription) \(NSLocalizedString("_please_rename_file_", comment: ""))"

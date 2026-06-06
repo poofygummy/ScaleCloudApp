@@ -165,7 +165,7 @@ func getFilesDataEntry(configuration: AccountIntent?, isPreview: Bool, displaySi
     ScaleCloudKit.configureLogger(logLevel: (NCBrandOptions.shared.disable_log ? .disabled : NCPreferences().log))
     nkLog(debug: "Start \(NCBrandOptions.shared.brand) widget session " + versionNextcloudiOS)
 
-    let options = NKRequestOptions(timeout: 30, queue: ScaleCloudKit.shared.nkCommonInstance.backgroundQueue)
+    let options = SCKRequestOptions(timeout: 30, queue: ScaleCloudKit.shared.nkCommonInstance.backgroundQueue)
     let results = await ScaleCloudKit.shared.searchBodyRequestAsync(serverUrl: activeTableAccount.urlBase, requestBody: requestBody, showHiddenFiles: showHiddenFiles, account: activeTableAccount.account, options: options)
 
     var datas: [FilesData] = []
@@ -176,7 +176,7 @@ func getFilesDataEntry(configuration: AccountIntent?, isPreview: Bool, displaySi
         var useTypeIconFile = false
         var image: UIImage?
 
-        if file.directory || (!file.livePhotoFile.isEmpty && file.classFile == NKTypeClassFile.video.rawValue) {
+        if file.directory || (!file.livePhotoFile.isEmpty && file.classFile == SCKTypeClassFile.video.rawValue) {
             continue
         }
 

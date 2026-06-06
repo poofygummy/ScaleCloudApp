@@ -17,8 +17,8 @@ struct NCAccountSettingsView: View {
     @State private var showAddAccount: Bool = false
     @State private var animation: Bool = false
 
-    var capabilities: NKCapabilities.Capabilities {
-        NCNetworking.shared.capabilities[model.controller?.account ?? ""] ?? NKCapabilities.Capabilities()
+    var capabilities: SCKCapabilities.Capabilities {
+        NCNetworking.shared.capabilities[model.controller?.account ?? ""] ?? SCKCapabilities.Capabilities()
     }
 
     @Environment(\.presentationMode) var presentationMode

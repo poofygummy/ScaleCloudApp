@@ -20,7 +20,7 @@ import ScaleCloudKit
     }
 
     let controller: NCMainTabBarController?
-    var predefinedStatuses: [NKUserStatus] = []
+    var predefinedStatuses: [SCKUserStatus] = []
     var emojiText: String = ""
     var statusText: String = ""
     var clearAfterString = "_dont_clear_"
@@ -33,7 +33,7 @@ import ScaleCloudKit
         self.controller = controller
     }
 
-    func chooseStatusPreset(preset: NKUserStatus, clearAtText: String) {
+    func chooseStatusPreset(preset: SCKUserStatus, clearAtText: String) {
         emojiText = preset.icon ?? ""
         statusText = preset.message ?? ""
         clearAfterString = clearAtText
@@ -210,8 +210,8 @@ import ScaleCloudKit
         }
     }
 
-    private func createStatusesForPreview() -> [NKUserStatus] {
-        let meeting = NKUserStatus()
+    private func createStatusesForPreview() -> [SCKUserStatus] {
+        let meeting = SCKUserStatus()
         meeting.clearAt = nil
         meeting.clearAtTime = "3600"
         meeting.clearAtType = "period"
@@ -222,7 +222,7 @@ import ScaleCloudKit
         meeting.status = "busy"
         meeting.userId = "preview_user"
 
-        let commuting = NKUserStatus()
+        let commuting = SCKUserStatus()
         commuting.clearAt = nil
         commuting.clearAtTime = "1800"
         commuting.clearAtType = "period"

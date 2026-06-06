@@ -34,16 +34,16 @@ final class LoginIntegrationTests: XCTestCase {
 
         // Test creating folder
         NCNetworking.shared.createFolder(fileName: folderName, serverUrl: serverUrl, account: account, urlBase: baseUrl, userId: userId, withPush: true) { error in
-            XCTAssertEqual(NKError.success.errorCode, error.errorCode)
-            XCTAssertEqual(NKError.success.errorDescription, error.errorDescription)
+            XCTAssertEqual(SCKError.success.errorCode, error.errorCode)
+            XCTAssertEqual(SCKError.success.errorDescription, error.errorDescription)
 
             Thread.sleep(forTimeInterval: 0.2)
 
             // Test reading folder, should exist
             NCNetworking.shared.readFolder(serverUrl: serverUrlFileName, account: self.user) { account, metadataFolder, metadatas, metadatasUpdate, metadatasLocalUpdate, metadatasDelete, error in
                 XCTAssertEqual(self.account, account)
-                XCTAssertEqual(NKError.success.errorCode, error.errorCode)
-                XCTAssertEqual(NKError.success.errorDescription, error.errorDescription)
+                XCTAssertEqual(SCKError.success.errorCode, error.errorCode)
+                XCTAssertEqual(SCKError.success.errorDescription, error.errorDescription)
                 XCTAssertEqual(metadataFolder?.fileName, folderName)
 
                 // Check Realm directory, should exist
@@ -56,8 +56,8 @@ final class LoginIntegrationTests: XCTestCase {
                     // Test deleting folder
                     await _ = NCNetworking.shared.deleteMetadata(metadataFolder!, onlyLocalCache: false)
 
-                    XCTAssertEqual(NKError.success.errorCode, error.errorCode)
-                    XCTAssertEqual(NKError.success.errorDescription, error.errorDescription)
+                    XCTAssertEqual(SCKError.success.errorCode, error.errorCode)
+                    XCTAssertEqual(SCKError.success.errorDescription, error.errorDescription)
 
                     try await Task.sleep(for: .milliseconds(200))
 

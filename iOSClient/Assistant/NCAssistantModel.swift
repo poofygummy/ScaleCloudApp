@@ -41,7 +41,7 @@ class NCAssistantModel {
         self.controller = controller
         self.inputModel = inputModel
         self.session = NCSession.shared.getSession(controller: controller)
-        let capabilities = NCNetworking.shared.capabilities[session.account] ?? NKCapabilities.Capabilities()
+        let capabilities = NCNetworking.shared.capabilities[session.account] ?? SCKCapabilities.Capabilities()
 
         useV2 = capabilities.serverVersionMajor >= NCGlobal.shared.nextcloudVersion30
         loadAllTypes()
@@ -85,13 +85,13 @@ class NCAssistantModel {
             } else {
                 ScaleCloudKit.shared.textProcessingGetTask(taskId: Int(task.id), account: session.account) { _, task, _, error in
                     guard let task else { return }
-                    let taskV2 = NKTextProcessingTask.toV2(tasks: [task]).tasks.first
+                    let taskV2 = SCKTextProcessingTask.toV2(tasks: [task]).tasks.first
                     handle(task: taskV2, error: error)
                 }
             }
         }
 
-        func handle(task: AssistantTask?, error: NKError?) {
+        func handle(task: AssistantTask?, error: SCKError?) {
             self.isLoading = false
 
             if error != .success {
@@ -113,13 +113,13 @@ class NCAssistantModel {
                 handle(task: result.task, error: result.error)
             } else {
                 ScaleCloudKit.shared.textProcessingSchedule(input: input, typeId: selectedType?.id ?? "", identifier: "assistant", account: session.account) { _, task, _, error in
-                    guard let task, let taskV2 = NKTextProcessingTask.toV2(tasks: [task]).tasks.first else { return }
+                    guard let task, let taskV2 = SCKTextProcessingTask.toV2(tasks: [task]).tasks.first else { return }
                     handle(task: taskV2, error: error)
                 }
             }
         }
 
-        func handle(task: AssistantTask?, error: NKError?) {
+        func handle(task: AssistantTask?, error: SCKError?) {
             self.isLoading = false
 
             if error != .success {
@@ -148,7 +148,7 @@ class NCAssistantModel {
             }
         }
 
-        func handle(task: AssistantTask, error: NKError?) {
+        func handle(task: AssistantTask, error: SCKError?) {
             self.isLoading = false
 
             if error != .success {
@@ -176,14 +176,14 @@ class NCAssistantModel {
             } else {
                 ScaleCloudKit.shared.textProcessingGetTypes(account: session.account) { _, types, _, error in
                     guard let types else { return }
-                    let typesV2 = NKTextProcessingTaskType.toV2(type: types).types
+                    let typesV2 = SCKTextProcessingTaskType.toV2(type: types).types
 
                     handle(types: typesV2, error: error)
                 }
             }
         }
 
-        func handle(types: [TaskTypeData]?, error: NKError) {
+        func handle(types: [TaskTypeData]?, error: SCKError) {
             self.isLoading = false
 
             if error != .success {
@@ -214,12 +214,12 @@ class NCAssistantModel {
             } else {
                 ScaleCloudKit.shared.textProcessingTaskList(appId: appId, account: session.account) { _, tasks, _, error in
                     guard let tasks else { return }
-                    handle(tasks: NKTextProcessingTask.toV2(tasks: tasks).tasks, error: error)
+                    handle(tasks: SCKTextProcessingTask.toV2(tasks: tasks).tasks, error: error)
                 }
             }
         }
 
-        func handle(tasks: [AssistantTask], error: NKError?) {
+        func handle(tasks: [AssistantTask], error: SCKError?) {
             isLoading = false
             isRefreshing = false
 

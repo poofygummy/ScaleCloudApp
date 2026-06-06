@@ -25,23 +25,23 @@ enum NCSharePermissions {
     static let permissionDownloadShare: Int = 0
 
     static func hasPermissionToRead(_ permission: Int) -> Bool {
-        return ((permission & NKShare.Permission.read.rawValue) > 0)
+        return ((permission & SCKShare.Permission.read.rawValue) > 0)
     }
 
     static func hasPermissionToDelete(_ permission: Int) -> Bool {
-        return ((permission & NKShare.Permission.delete.rawValue) > 0)
+        return ((permission & SCKShare.Permission.delete.rawValue) > 0)
     }
 
     static func hasPermissionToCreate(_ permission: Int) -> Bool {
-        return ((permission & NKShare.Permission.create.rawValue) > 0)
+        return ((permission & SCKShare.Permission.create.rawValue) > 0)
     }
 
     static func hasPermissionToEdit(_ permission: Int) -> Bool {
-        return ((permission & NKShare.Permission.update.rawValue) > 0)
+        return ((permission & SCKShare.Permission.update.rawValue) > 0)
     }
 
     static func hasPermissionToShare(_ permission: Int) -> Bool {
-        return ((permission & NKShare.Permission.share.rawValue) > 0)
+        return ((permission & SCKShare.Permission.share.rawValue) > 0)
     }
 
     static func isAnyPermissionToEdit(_ permission: Int) -> Bool {
@@ -65,20 +65,20 @@ enum NCSharePermissions {
         var permission = 0
 
         if canRead {
-            permission = permission + NKShare.Permission.read.rawValue
+            permission = permission + SCKShare.Permission.read.rawValue
         }
 
         if canCreate && isDirectory {
-            permission = permission + NKShare.Permission.create.rawValue
+            permission = permission + SCKShare.Permission.create.rawValue
         }
         if canEdit {
-            permission = permission + NKShare.Permission.update.rawValue
+            permission = permission + SCKShare.Permission.update.rawValue
         }
         if canDelete && isDirectory {
-            permission = permission + NKShare.Permission.delete.rawValue
+            permission = permission + SCKShare.Permission.delete.rawValue
         }
         if canShare {
-            permission = permission + NKShare.Permission.share.rawValue
+            permission = permission + SCKShare.Permission.share.rawValue
         }
 
         return permission

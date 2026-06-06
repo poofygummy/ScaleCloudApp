@@ -70,12 +70,12 @@ extension NCCollectionViewCommon: UIEditMenuInteractionDelegate {
 
             for (index, items) in UIPasteboard.general.items.enumerated() {
                 for item in items {
-                    let capabilities = await NKCapabilities.shared.getCapabilities(for: session.account)
+                    let capabilities = await SCKCapabilities.shared.getCapabilities(for: session.account)
                     let identifier = item.key
                     let resolvedType = UTType(mimeType: identifier) ?? UTType(identifier)
                     let resolvedMimeType = resolvedType?.preferredMIMEType ?? identifier
                     let resolvedExtension = resolvedType?.preferredFilenameExtension ?? ""
-                    let results = NKFilePropertyResolver().resolve(mimeType: resolvedMimeType,
+                    let results = SCKFilePropertyResolver().resolve(mimeType: resolvedMimeType,
                                                                    fileExtension: resolvedExtension,
                                                                    typeIdentifier: resolvedType?.identifier ?? identifier,
                                                                    capabilities: capabilities)

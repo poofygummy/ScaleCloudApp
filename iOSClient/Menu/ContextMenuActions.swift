@@ -95,8 +95,8 @@ enum ContextMenuActions {
                      completion?()
                      return
                  }
-                 var fileNameError: NKError?
-                 let capabilities = await NKCapabilities.shared.getCapabilities(for: account)
+                 var fileNameError: SCKError?
+                 let capabilities = await SCKCapabilities.shared.getCapabilities(for: account)
 
                  for metadata in metadatas {
                      if let sceneIdentifier = metadata.sceneIdentifier,

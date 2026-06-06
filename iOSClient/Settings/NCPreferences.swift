@@ -177,10 +177,10 @@ final class NCPreferences: NSObject {
     }
 
     /// Stores and retrieves the current log level from the keychain.
-    var log: NKLogLevel {
+    var log: SCKLogLevel {
         get {
-            let value = getIntPreference(key: "logLevel", defaultValue: NKLogLevel.normal.rawValue)
-            return NKLogLevel(rawValue: value) ?? NKLogLevel.normal
+            let value = getIntPreference(key: "logLevel", defaultValue: SCKLogLevel.normal.rawValue)
+            return SCKLogLevel(rawValue: value) ?? SCKLogLevel.normal
         }
         set {
             setUserDefaults(newValue.rawValue, forKey: "logLevel")

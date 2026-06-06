@@ -195,7 +195,7 @@ extension NCSectionFirstHeader: UICollectionViewDataSource {
                                     for case let cell as NCRecommendationsCell in self.collectionViewRecommendations.visibleCells {
                                         if cell.metadata?.fileId == recommendedFiles.id {
                                             cell.image.contentMode = .scaleAspectFill
-                                            if metadata.classFile == NKTypeClassFile.document.rawValue {
+                                            if metadata.classFile == SCKTypeClassFile.document.rawValue {
                                                 cell.setImageCorner(withBorder: true)
                                             }
                                             UIView.transition(with: cell.image, duration: 0.75, options: .transitionCrossDissolve, animations: {
@@ -211,7 +211,7 @@ extension NCSectionFirstHeader: UICollectionViewDataSource {
                 }
             }
 
-            if metadata.hasPreview, metadata.classFile == NKTypeClassFile.document.rawValue, imagePreview != nil {
+            if metadata.hasPreview, metadata.classFile == SCKTypeClassFile.document.rawValue, imagePreview != nil {
                 cell.setImageCorner(withBorder: true)
             } else {
                 cell.setImageCorner(withBorder: false)
@@ -242,7 +242,7 @@ extension NCSectionFirstHeader: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, contextMenuConfigurationForItemAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         let recommendedFiles = self.recommendations[indexPath.row]
         guard let metadata = NCManageDatabase.shared.getMetadataFromFileId(recommendedFiles.id),
-              metadata.classFile != NKTypeClassFile.url.rawValue,
+              metadata.classFile != SCKTypeClassFile.url.rawValue,
               let viewController else {
             return nil
         }

@@ -5,7 +5,7 @@
 import ScaleCloudKit
 
 ///
-/// Shared requirements of data models used in the share link user interface  (transient ``NCTableShareOptions``, persisted ``tableShare`` and `NKShare` transfer object).
+/// Shared requirements of data models used in the share link user interface  (transient ``NCTableShareOptions``, persisted ``tableShare`` and `SCKShare` transfer object).
 ///
 protocol Shareable: AnyObject {
     var shareType: Int { get set }
@@ -67,9 +67,9 @@ extension tableShare: Shareable {
     }
 }
 
-// MARK: - NKShare Extension
+// MARK: - SCKShare Extension
 
-extension NKShare: Shareable {
+extension SCKShare: Shareable {
     var downloadAndSync: Bool {
         get {
              NCManageDatabase.shared.isAttributeDownloadEnabled(attributes: attributes)

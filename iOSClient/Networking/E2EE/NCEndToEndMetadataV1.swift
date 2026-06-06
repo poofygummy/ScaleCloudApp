@@ -70,7 +70,7 @@ extension NCEndToEndMetadata {
     // MARK: Ecode JSON Metadata V1.2
     // --------------------------------------------------------------------------------------------
 
-    func encodeMetadataV1(account: String, serverUrl: String, ocIdServerUrl: String) async -> (metadata: String?, signature: String?, counter: Int, error: NKError) {
+    func encodeMetadataV1(account: String, serverUrl: String, ocIdServerUrl: String) async -> (metadata: String?, signature: String?, counter: Int, error: SCKError) {
 
         let encoder = JSONEncoder()
         var metadataKey: String = ""
@@ -117,7 +117,7 @@ extension NCEndToEndMetadata {
                     }
                     fileNameIdentifiers.append(e2eEncryption.fileNameIdentifier)
                 } catch let error {
-                    return (nil, nil, 0, NKError(errorCode: NCGlobal.shared.errorE2EEJSon, errorDescription: error.localizedDescription))
+                    return (nil, nil, 0, SCKError(errorCode: NCGlobal.shared.errorE2EEJSon, errorDescription: error.localizedDescription))
                 }
             }
 
@@ -144,7 +144,7 @@ extension NCEndToEndMetadata {
                         filedrop.updateValue(record, forKey: e2eEncryption.fileNameIdentifier)
                     }
                 } catch let error {
-                    return (nil, nil, 0, NKError(errorCode: NCGlobal.shared.errorE2EEJSon, errorDescription: error.localizedDescription))
+                    return (nil, nil, 0, SCKError(errorCode: NCGlobal.shared.errorE2EEJSon, errorDescription: error.localizedDescription))
                 }
             }
         }
@@ -167,9 +167,9 @@ extension NCEndToEndMetadata {
             if await self.database.getE2eMetadataAsync(account: account, serverUrl: serverUrl) == nil {
                 await self.database.setE2eMetadataAsync(account: account, serverUrl: serverUrl, metadataKey: metadataKey, version: metadataVersion)
             }
-            return (jsonString, nil, 0, NKError())
+            return (jsonString, nil, 0, SCKError())
         } catch let error {
-            return (nil, nil, 0, NKError(errorCode: NCGlobal.shared.errorE2EEJSon, errorDescription: error.localizedDescription))
+            return (nil, nil, 0, SCKError(errorCode: NCGlobal.shared.errorE2EEJSon, errorDescription: error.localizedDescription))
         }
     }
 
@@ -177,10 +177,10 @@ extension NCEndToEndMetadata {
     // MARK: Decode JSON Metadata V1.2
     // --------------------------------------------------------------------------------------------
 
-    func decodeMetadataV12(_ json: String, serverUrl: String, ocIdServerUrl: String, session: NCSession.Session) async -> NKError {
+    func decodeMetadataV12(_ json: String, serverUrl: String, ocIdServerUrl: String, session: NCSession.Session) async -> SCKError {
 
         guard let data = json.data(using: .utf8) else {
-            return NKError(errorCode: NCGlobal.shared.errorE2EEJSon,
+            return SCKError(errorCode: NCGlobal.shared.errorE2EEJSon,
                            errorDescription: NSLocalizedString("_e2ee_decode_metadata_", comment: ""))
         }
 
@@ -209,7 +209,7 @@ extension NCEndToEndMetadata {
                 let key = String(data: keyData, encoding: .utf8) {
                 metadataKey = key
             } else {
-                return NKError(errorCode: NCGlobal.shared.errorE2EEKeyDecodeMetadataV12,
+                return SCKError(errorCode: NCGlobal.shared.errorE2EEKeyDecodeMetadataV12,
                                errorDescription: NSLocalizedString("_e2ee_no_decrypt_metadata_", comment: ""))
             }
 
@@ -255,7 +255,7 @@ extension NCEndToEndMetadata {
                                 // Update metadata on tableMetadata
                                 metadata.fileNameView = encrypted.filename
 
-                                let results = await NKTypeIdentifiers.shared.getInternalType(fileName: encrypted.filename, mimeType: metadata.contentType, directory: metadata.directory, account: session.account)
+                                let results = await SCKTypeIdentifiers.shared.getInternalType(fileName: encrypted.filename, mimeType: metadata.contentType, directory: metadata.directory, account: session.account)
 
                                 metadata.contentType = results.mimeType
                                 metadata.iconName = results.iconName
@@ -266,7 +266,7 @@ extension NCEndToEndMetadata {
                             }
 
                         } catch let error {
-                            return NKError(errorCode: NCGlobal.shared.errorE2EEJSon, errorDescription: error.localizedDescription)
+                            return SCKError(errorCode: NCGlobal.shared.errorE2EEJSon, errorDescription: error.localizedDescription)
                         }
                     }
                 }
@@ -315,7 +315,7 @@ extension NCEndToEndMetadata {
                                 metadata.fileNameView = encrypted.filename
 
                                 // Update file type
-                                let results = await NKTypeIdentifiers.shared.getInternalType(fileName: encrypted.filename, mimeType: metadata.contentType, directory: metadata.directory, account: session.account)
+                                let results = await SCKTypeIdentifiers.shared.getInternalType(fileName: encrypted.filename, mimeType: metadata.contentType, directory: metadata.directory, account: session.account)
 
                                 metadata.contentType = results.mimeType
                                 metadata.iconName = results.iconName
@@ -326,7 +326,7 @@ extension NCEndToEndMetadata {
                             }
 
                         } catch let error {
-                            return NKError(errorCode: NCGlobal.shared.errorE2EEJSon, errorDescription: error.localizedDescription)
+                            return SCKError(errorCode: NCGlobal.shared.errorE2EEJSon, errorDescription: error.localizedDescription)
                         }
                     }
                 }
@@ -337,24 +337,24 @@ extension NCEndToEndMetadata {
             let dataChecksum = (passphrase + fileNameIdentifiers.sorted().joined() + metadata.metadataKey).data(using: .utf8)
             let checksum = NCEndToEndEncryption.shared().createSHA256(dataChecksum)
             if metadata.checksum != checksum {
-                return NKError(errorCode: NCGlobal.shared.errorE2EEKeyChecksums,
+                return SCKError(errorCode: NCGlobal.shared.errorE2EEKeyChecksums,
                                errorDescription: NSLocalizedString("_e2ee_no_match_checksum_", comment: ""))
             }
         } catch let error {
-            return NKError(errorCode: NCGlobal.shared.errorE2EEJSon, errorDescription: error.localizedDescription)
+            return SCKError(errorCode: NCGlobal.shared.errorE2EEJSon, errorDescription: error.localizedDescription)
         }
 
-        return NKError()
+        return SCKError()
     }
 
     // --------------------------------------------------------------------------------------------
     // MARK: Decode JSON Metadata V1.1
     // --------------------------------------------------------------------------------------------
 
-    func decodeMetadataV1(_ json: String, serverUrl: String, ocIdServerUrl: String, session: NCSession.Session) async -> NKError {
+    func decodeMetadataV1(_ json: String, serverUrl: String, ocIdServerUrl: String, session: NCSession.Session) async -> SCKError {
 
         guard let data = json.data(using: .utf8) else {
-            return NKError(errorCode: NCGlobal.shared.errorE2EEJSon,
+            return SCKError(errorCode: NCGlobal.shared.errorE2EEJSon,
                            errorDescription: NSLocalizedString("_e2ee_decode_metadata_", comment: ""))
         }
 
@@ -391,7 +391,7 @@ extension NCEndToEndMetadata {
             //
             if let tableE2eMetadata = await self.database.getE2eMetadataAsync(account: session.account, serverUrl: serverUrl) {
                 if tableE2eMetadata.version > metadataVersion {
-                    return NKError(errorCode: NCGlobal.shared.errorE2EEVersion, errorDescription: "Version \(tableE2eMetadata.version)")
+                    return SCKError(errorCode: NCGlobal.shared.errorE2EEVersion, errorDescription: "Version \(tableE2eMetadata.version)")
                 }
             }
 
@@ -436,7 +436,7 @@ extension NCEndToEndMetadata {
                                 metadata.fileNameView = encrypted.filename
 
                                 // Update file type
-                                let results = await NKTypeIdentifiers.shared.getInternalType(fileName: encrypted.filename, mimeType: metadata.contentType, directory: metadata.directory, account: session.account)
+                                let results = await SCKTypeIdentifiers.shared.getInternalType(fileName: encrypted.filename, mimeType: metadata.contentType, directory: metadata.directory, account: session.account)
 
                                 metadata.contentType = results.mimeType
                                 metadata.iconName = results.iconName
@@ -447,15 +447,15 @@ extension NCEndToEndMetadata {
                             }
 
                         } catch let error {
-                            return NKError(errorCode: NCGlobal.shared.errorE2EEJSon, errorDescription: error.localizedDescription)
+                            return SCKError(errorCode: NCGlobal.shared.errorE2EEJSon, errorDescription: error.localizedDescription)
                         }
                     }
                 }
             }
         } catch let error {
-            return NKError(errorCode: NCGlobal.shared.errorE2EEJSon, errorDescription: error.localizedDescription)
+            return SCKError(errorCode: NCGlobal.shared.errorE2EEJSon, errorDescription: error.localizedDescription)
         }
 
-        return NKError()
+        return SCKError()
     }
 }

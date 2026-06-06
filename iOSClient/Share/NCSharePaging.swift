@@ -118,7 +118,7 @@ class NCSharePaging: UIViewController {
 
         navigationController?.setNavigationBarAppearance()
 
-        let capabilities = NCNetworking.shared.capabilities[metadata.account] ?? NKCapabilities.Capabilities()
+        let capabilities = NCNetworking.shared.capabilities[metadata.account] ?? SCKCapabilities.Capabilities()
 
         if !capabilities.fileSharingApiEnabled && !capabilities.filesComments && capabilities.activity.isEmpty {
             self.dismiss(animated: false, completion: nil)

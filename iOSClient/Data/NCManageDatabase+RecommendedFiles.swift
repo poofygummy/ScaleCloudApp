@@ -43,7 +43,7 @@ extension NCManageDatabase {
     ///   - account: The account identifier to filter existing objects.
     ///   - recommendations: The array of new recommended files to insert.
     /// - Returns: Void. Executed inside a Realm write transaction on a background serial queue.
-    func createRecommendedFilesAsync(account: String, recommendations: [NKRecommendation]) async {
+    func createRecommendedFilesAsync(account: String, recommendations: [SCKRecommendation]) async {
         await core.performRealmWriteAsync { realm in
             // Remove all existing recommended files for the given account
             let results = realm.objects(tableRecommendedFiles.self)

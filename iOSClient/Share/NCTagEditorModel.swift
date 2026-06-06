@@ -9,7 +9,7 @@ import ScaleCloudKit
 @MainActor
 @Observable final class NCTagEditorModel {
     var searchText: String = ""
-    private(set) var tags: [NKTag] = []
+    private(set) var tags: [SCKTag] = []
     private(set) var selectedTagIDs: Set<String> = []
     private(set) var isLoading = false
     private(set) var isSaving = false
@@ -28,7 +28,7 @@ import ScaleCloudKit
         metadata.account
     }
 
-    var filteredTags: [NKTag] {
+    var filteredTags: [SCKTag] {
         let trimmed = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else {
             return tags.sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
@@ -54,7 +54,7 @@ import ScaleCloudKit
         return trimmed
     }
 
-    func isSelected(_ tag: NKTag) -> Bool {
+    func isSelected(_ tag: SCKTag) -> Bool {
         selectedTagIDs.contains(tag.id)
     }
 
@@ -62,7 +62,7 @@ import ScaleCloudKit
         _ = await reloadTags(keepCurrentSelection: false)
     }
 
-    func toggleSelection(for tag: NKTag) {
+    func toggleSelection(for tag: SCKTag) {
         if selectedTagIDs.contains(tag.id) {
             selectedTagIDs.remove(tag.id)
         } else {
@@ -70,7 +70,7 @@ import ScaleCloudKit
         }
     }
 
-    func openTagColorPicker(for tag: NKTag) {
+    func openTagColorPicker(for tag: SCKTag) {
         guard let picker = UIStoryboard(name: "NCColorPicker", bundle: nil).instantiateInitialViewController() as? NCColorPicker,
               let presenter = topViewController() else {
             return
@@ -125,13 +125,13 @@ import ScaleCloudKit
         return createdTag.name
     }
 
-    var selectedTags: [NKTag] {
+    var selectedTags: [SCKTag] {
         tags
             .filter { selectedTagIDs.contains($0.id) }
             .sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
     }
 
-    func saveChanges() async -> [NKTag]? {
+    func saveChanges() async -> [SCKTag]? {
         guard !metadata.fileId.isEmpty else {
             await showErrorBanner(
                 windowScene: windowScene,
@@ -238,7 +238,7 @@ import ScaleCloudKit
         }
 
         let oldTag = tags[index]
-        tags[index] = NKTag(id: oldTag.id, name: oldTag.name, color: colorHex)
+        tags[index] = SCKTag(id: oldTag.id, name: oldTag.name, color: colorHex)
     }
 
     private func topViewController() -> UIViewController? {

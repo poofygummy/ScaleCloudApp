@@ -27,7 +27,7 @@ protocol NCTransferDelegate: AnyObject {
                         selector: String?,
                         ocId: String,
                         destination: String?,
-                        error: NKError)
+                        error: SCKError)
     func transferReloadDataSource(serverUrl: String?, requestData: Bool, status: Int?)
     func transferReloadData(serverUrl: String?)
     func transferProgressDidUpdate(progress: Float,
@@ -56,10 +56,10 @@ class NCNetworking: @unchecked Sendable, NextcloudKitDelegate {
 
     let utilityFileSystem = NCUtilityFileSystem()
     let global = NCGlobal.shared
-    let backgroundSession = NKBackground(nkCommonInstance: ScaleCloudKit.shared.nkCommonInstance)
+    let backgroundSession = SCKBackground(nkCommonInstance: ScaleCloudKit.shared.nkCommonInstance)
 
     var lastReachability: Bool = true
-    var networkReachability: NKTypeReachability?
+    var networkReachability: SCKTypeReachability?
     weak var certificateDelegate: ClientCertificateDelegate?
     var p12Data: Data?
     var p12Password: String?
@@ -68,14 +68,14 @@ class NCNetworking: @unchecked Sendable, NextcloudKitDelegate {
     internal var controller: UIViewController?
 
     var isOffline: Bool {
-        return networkReachability == NKTypeReachability.notReachable || networkReachability == NKTypeReachability.unknown
+        return networkReachability == SCKTypeReachability.notReachable || networkReachability == SCKTypeReachability.unknown
     }
     var isOnline: Bool {
-        return networkReachability == NKTypeReachability.reachableEthernetOrWiFi || networkReachability == NKTypeReachability.reachableCellular
+        return networkReachability == SCKTypeReachability.reachableEthernetOrWiFi || networkReachability == SCKTypeReachability.reachableCellular
     }
 
     // Capabilities
-    var capabilities = ThreadSafeDictionary<String, NKCapabilities.Capabilities>()
+    var capabilities = ThreadSafeDictionary<String, SCKCapabilities.Capabilities>()
 
     // Actors
     let transferDispatcher = NCTransferDelegateDispatcher()

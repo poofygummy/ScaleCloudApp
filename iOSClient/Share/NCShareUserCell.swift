@@ -76,7 +76,7 @@ class NCShareUserCell: UITableViewCell {
 
         if NCSharePermissions.canEdit(tableShare.permissions, isDirectory: isDirectory) { // Can edit
             labelQuickStatus.text = NSLocalizedString("_share_editing_", comment: "")
-        } else if tableShare.permissions == NKShare.Permission.read.rawValue { // Read only
+        } else if tableShare.permissions == SCKShare.Permission.read.rawValue { // Read only
             labelQuickStatus.text = NSLocalizedString("_share_read_only_", comment: "")
         } else { // Custom permissions
             labelQuickStatus.text = NSLocalizedString("_custom_permissions_", comment: "")
@@ -87,7 +87,7 @@ class NCShareUserCell: UITableViewCell {
 
         imageItem.contentMode = .scaleAspectFill
 
-        if tableShare.shareType == NKShare.ShareType.team.rawValue {
+        if tableShare.shareType == SCKShare.ShareType.team.rawValue {
             imageItem.image = utility.loadImage(named: "custom.person.3.circle.fill", colors: [NCBrandColor.shared.iconImageColor2])
         } else if results.image == nil {
             imageItem.image = utility.loadUserImage(for: tableShare.shareWith, displayName: tableShare.shareWithDisplayname, urlBase: metadata.urlBase)
@@ -111,11 +111,11 @@ class NCShareUserCell: UITableViewCell {
 
     private func getTypeString(_ tableShare: tableShareV2) -> String {
         switch tableShare.shareType {
-        case NKShare.ShareType.federatedCloud.rawValue:
+        case SCKShare.ShareType.federatedCloud.rawValue:
             return NSLocalizedString("_remote_", comment: "")
-        case NKShare.ShareType.federatedGroup.rawValue:
+        case SCKShare.ShareType.federatedGroup.rawValue:
             return NSLocalizedString("_remote_group_", comment: "")
-        case NKShare.ShareType.talkConversation.rawValue:
+        case SCKShare.ShareType.talkConversation.rawValue:
             return NSLocalizedString("_conversation_", comment: "")
         default:
             return ""
@@ -170,7 +170,7 @@ class NCSearchUserDropDownCell: DropDownCell {
     var index = IndexPath()
     private let utilityFileSystem = NCUtilityFileSystem()
 
-    func setupCell(sharee: NKSharee, session: NCSession.Session) {
+    func setupCell(sharee: SCKSharee, session: NCSession.Session) {
         let utility = NCUtility()
         imageItem.image = NCShareCommon.getImageShareType(shareType: sharee.shareType)
         imageShareeType.image = NCShareCommon.getImageShareType(shareType: sharee.shareType)

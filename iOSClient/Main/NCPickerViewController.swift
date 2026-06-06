@@ -141,7 +141,7 @@ class NCDocumentPickerViewController: NSObject, UIDocumentPickerDelegate {
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         Task { @MainActor in
             let session = NCSession.shared.getSession(controller: self.controller)
-            let capabilities = await NKCapabilities.shared.getCapabilities(for: session.account)
+            let capabilities = await SCKCapabilities.shared.getCapabilities(for: session.account)
 
             if isViewerMedia,
                let urlIn = urls.first,
@@ -157,8 +157,8 @@ class NCDocumentPickerViewController: NSObject, UIDocumentPickerDelegate {
                     session: session,
                     sceneIdentifier: self.controller.sceneIdentifier)
 
-                if metadata.classFile == NKTypeClassFile.unknow.rawValue {
-                    metadata.classFile = NKTypeClassFile.video.rawValue
+                if metadata.classFile == SCKTypeClassFile.unknow.rawValue {
+                    metadata.classFile = SCKTypeClassFile.video.rawValue
                 }
 
                 if let fileNameError = FileNameValidator.checkFileName(metadata.fileNameView, account: self.controller.account, capabilities: capabilities) {

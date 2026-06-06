@@ -23,8 +23,8 @@ extension NCNetworking {
               length: Int64,
               headers: [AnyHashable: Any]?,
               afError: AFError?,
-              nkError: NKError ) {
-        let options = NKRequestOptions(queue: ScaleCloudKit.shared.nkCommonInstance.backgroundQueue)
+              nkError: SCKError ) {
+        let options = SCKRequestOptions(queue: ScaleCloudKit.shared.nkCommonInstance.backgroundQueue)
         let fileNameLocalPath = utilityFileSystem.getDirectoryProviderStorageOcId(metadata.ocId, fileName: metadata.fileName, userId: metadata.userId, urlBase: metadata.urlBase)
 
         if metadata.status == global.metadataStatusDownloading || metadata.status == global.metadataStatusUploading {
@@ -78,10 +78,10 @@ extension NCNetworking {
 
         Task {
             await progressQuantizer.clear(serverUrlFileName: metadata.serverUrlFileName)
-            var error = NKError()
+            var error = SCKError()
 
             if results.afError?.isExplicitlyCancelledError ?? false || (results.afError?.underlyingError as? URLError)?.code.rawValue == -999 {
-                error = NKError(errorCode: self.global.errorRequestExplicityCancelled, errorDescription: "error request explicity cancelled")
+                error = SCKError(errorCode: self.global.errorRequestExplicityCancelled, errorDescription: "error request explicity cancelled")
             }
 
             if error == .success {
@@ -99,7 +99,7 @@ extension NCNetworking {
     @discardableResult
     func downloadFileInBackground(metadata: tableMetadata,
                                   taskHandler: @escaping (_ task: URLSessionDownloadTask?) -> Void = { _ in },
-                                  start: @escaping () -> Void = { }) async -> NKError {
+                                  start: @escaping () -> Void = { }) async -> SCKError {
         let fileNameLocalPath = utilityFileSystem.getDirectoryProviderStorageOcId(metadata.ocId, fileName: metadata.fileNameView, userId: metadata.userId, urlBase: metadata.urlBase)
 
         start()
@@ -180,7 +180,7 @@ extension NCNetworking {
 
     // MARK: - DOWNLOAD ERROR
 
-    func downloadError(withMetadata metadata: tableMetadata, error: NKError) async {
+    func downloadError(withMetadata metadata: tableMetadata, error: SCKError) async {
         await ScaleCloudKit.shared.nkCommonInstance.appendServerErrorAccount(metadata.account, errorCode: error.errorCode)
 
         nkLog(error: "Downloaded file: " + metadata.serverUrlFileName + ", result: error \(error.errorCode)")
@@ -233,7 +233,7 @@ extension NCNetworking {
 
     internal func synchronizationDownload(account: String, serverUrl: String, userId: String, urlBase: String, metadatasInDownload: [tableMetadata]?) async {
         let showHiddenFiles = NCPreferences().getShowHiddenFiles(account: account)
-        let options = NKRequestOptions(timeout: 300, taskDescription: NCGlobal.shared.taskDescriptionSynchronization, queue: ScaleCloudKit.shared.nkCommonInstance.backgroundQueue)
+        let options = SCKRequestOptions(timeout: 300, taskDescription: NCGlobal.shared.taskDescriptionSynchronization, queue: ScaleCloudKit.shared.nkCommonInstance.backgroundQueue)
 
         nkLog(tag: self.global.logTagSync, emoji: .start, message: "Start read infinite folder: \(serverUrl)")
 

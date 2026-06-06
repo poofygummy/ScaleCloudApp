@@ -20,8 +20,8 @@ class NCManageE2EE: NSObject, ObservableObject, ViewOnAppearHandling, TOPasscode
         NCSession.shared.getSession(controller: controller)
     }
 
-    var capabilities: NKCapabilities.Capabilities {
-        NCNetworking.shared.capabilities[session.account] ?? NKCapabilities.Capabilities()
+    var capabilities: SCKCapabilities.Capabilities {
+        NCNetworking.shared.capabilities[session.account] ?? SCKCapabilities.Capabilities()
     }
 
     var windowScene: UIWindowScene? {
@@ -101,7 +101,7 @@ class NCManageE2EE: NSObject, ObservableObject, ViewOnAppearHandling, TOPasscode
                     let e2ee = NCEndToEndSetup(controller: controller)
                     try await e2ee.start()
                     isEndToEndEnabled = true
-                } catch let error as NKError {
+                } catch let error as SCKError {
                     if error.errorCode == NSUserCancelledError {
                         return
                     }
@@ -110,7 +110,7 @@ class NCManageE2EE: NSObject, ObservableObject, ViewOnAppearHandling, TOPasscode
                         text: error.errorDescription
                     )
                 } catch {
-                    // fallback (non NKError)
+                    // fallback (non SCKError)
                     await showErrorBanner(
                         windowScene: windowScene,
                         text: error.localizedDescription

@@ -78,7 +78,7 @@ class NCDragDrop: NSObject {
 
         var invalidNameIndexes: [Int] = []
         let session = NCSession.shared.getSession(controller: controller)
-        let capabilities = NCNetworking.shared.capabilities[session.account] ?? NKCapabilities.Capabilities()
+        let capabilities = NCNetworking.shared.capabilities[session.account] ?? SCKCapabilities.Capabilities()
 
         for (index, metadata) in metadatas.enumerated() {
             if let fileNameError = FileNameValidator.checkFileName(metadata.fileName, account: session.account, capabilities: capabilities) {
@@ -114,7 +114,7 @@ class NCDragDrop: NSObject {
             let data = try Data(contentsOf: url)
             let ocId = NSUUID().uuidString
             let session = NCSession.shared.getSession(controller: controller)
-            let capabilities = await NKCapabilities.shared.getCapabilities(for: session.account)
+            let capabilities = await SCKCapabilities.shared.getCapabilities(for: session.account)
             let newFileName = FileAutoRenamer.rename(url.lastPathComponent, capabilities: capabilities)
             let fileNamePath = utilityFileSystem.getDirectoryProviderStorageOcId(ocId, fileName: newFileName, userId: session.userId, urlBase: session.urlBase)
 

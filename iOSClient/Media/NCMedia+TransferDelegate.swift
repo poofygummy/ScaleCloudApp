@@ -35,7 +35,7 @@ extension NCMedia: NCTransferDelegate {
                         selector: String?,
                         ocId: String,
                         destination: String?,
-                        error: NKError) {
+                        error: SCKError) {
         Task {
             await self.debouncerSearch.call {
                 await self.loadDataSource()

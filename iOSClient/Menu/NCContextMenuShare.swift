@@ -34,7 +34,7 @@ class NCContextMenuShare: NSObject {
         var actions: [UIMenuElement] = []
 
         // Add share link (only for public links with reshare permission)
-        if share.shareType == NKShare.ShareType.publicLink.rawValue, canReshare {
+        if share.shareType == SCKShare.ShareType.publicLink.rawValue, canReshare {
             let addLinkAction = UIAction(
                 title: NSLocalizedString("_share_add_sharelink_", comment: ""),
                 image: utility.loadImage(named: "plus", colors: [NCBrandColor.shared.iconImageColor])
@@ -71,9 +71,9 @@ class NCContextMenuShare: NSObject {
     func quickPermissionsMenu() -> UIMenu {
         var actions: [UIMenuElement] = []
 
-        let isReadOnly = share.permissions == (NKShare.Permission.read.rawValue + NKShare.Permission.share.rawValue) || share.permissions == NKShare.Permission.read.rawValue
+        let isReadOnly = share.permissions == (SCKShare.Permission.read.rawValue + SCKShare.Permission.share.rawValue) || share.permissions == SCKShare.Permission.read.rawValue
         let isEditing = hasUploadPermission()
-        let isFileDrop = share.permissions == NKShare.Permission.create.rawValue
+        let isFileDrop = share.permissions == SCKShare.Permission.create.rawValue
 
         // Read Only
         let readOnlyAction = UIAction(
@@ -98,7 +98,7 @@ class NCContextMenuShare: NSObject {
         actions.append(editingAction)
 
         // File Drop (only for directories with public link or email share)
-        if isDirectory && (share.shareType == NKShare.ShareType.publicLink.rawValue || share.shareType == NKShare.ShareType.email.rawValue) {
+        if isDirectory && (share.shareType == SCKShare.ShareType.publicLink.rawValue || share.shareType == SCKShare.ShareType.email.rawValue) {
             let fileDropAction = UIAction(
                 title: NSLocalizedString("_share_file_drop_", comment: ""),
                 image: utility.loadImage(named: "arrow.up.document", colors: [NCBrandColor.shared.iconImageColor]),
@@ -153,9 +153,9 @@ class NCContextMenuShare: NSObject {
 
     @MainActor
     private func performUnshare(shareController: NCShare) async {
-        let capabilities = NCNetworking.shared.capabilities[share.account] ?? NKCapabilities.Capabilities()
+        let capabilities = NCNetworking.shared.capabilities[share.account] ?? SCKCapabilities.Capabilities()
 
-        if share.shareType != NKShare.ShareType.publicLink.rawValue,
+        if share.shareType != SCKShare.ShareType.publicLink.rawValue,
            let metadata = shareController.metadata,
            metadata.e2eEncrypted && capabilities.e2EEApiVersion.hasPrefix("2.") {
             if await NCNetworkingE2EE().isInUpload(account: metadata.account, serverUrl: metadata.serverUrlFileName) {

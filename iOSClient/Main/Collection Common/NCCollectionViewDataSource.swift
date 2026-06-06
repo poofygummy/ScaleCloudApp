@@ -14,8 +14,8 @@ class NCCollectionViewDataSource: NSObject {
 
     private var sections: [String] = []
     private var isSections: Bool = false
-    private var searchResults: [NKSearchResult]?
-    private var providers: [NKSearchProvider]?
+    private var searchResults: [SCKSearchResult]?
+    private var providers: [SCKSearchProvider]?
     private var metadatas: [tableMetadata] = []
     private var metadatasForSection: [NCMetadataForSection] = []
     private var layoutForView: NCDBLayoutForView?
@@ -28,7 +28,7 @@ class NCCollectionViewDataSource: NSObject {
     init(metadatas: [tableMetadata],
          layoutForView: NCDBLayoutForView? = nil,
          isSections: Bool = false,
-         searchResults: [NKSearchResult]? = nil,
+         searchResults: [SCKSearchResult]? = nil,
          account: String? = nil) {
         super.init()
         removeAll()
@@ -59,11 +59,11 @@ class NCCollectionViewDataSource: NSObject {
         hasGetServerData = state
     }
 
-    func setProviders(_ providers: [NKSearchProvider]) {
+    func setProviders(_ providers: [SCKSearchProvider]) {
         self.providers = providers
     }
 
-    func getProvider(id: String) -> NKSearchProvider? {
+    func getProvider(id: String) -> SCKSearchProvider? {
         return providers?.filter({ $0.id == id}).first
     }
 
@@ -75,7 +75,7 @@ class NCCollectionViewDataSource: NSObject {
         self.metadatasForSection.removeAll()
     }
 
-    func addSection(metadatas: [tableMetadata], searchResult: NKSearchResult?) {
+    func addSection(metadatas: [tableMetadata], searchResult: SCKSearchResult?) {
         self.metadatas.append(contentsOf: metadatas)
 
         if let searchResult = searchResult {
@@ -88,7 +88,7 @@ class NCCollectionViewDataSource: NSObject {
     internal func createSections() {
         for metadata in metadatas {
             if metadata.isLivePhoto,
-               metadata.classFile == NKTypeClassFile.video.rawValue {
+               metadata.classFile == SCKTypeClassFile.video.rawValue {
                 continue
             }
 
@@ -140,7 +140,7 @@ class NCCollectionViewDataSource: NSObject {
     }
 
     internal func createMetadataForSection(section: String) {
-        var searchResult: NKSearchResult?
+        var searchResult: SCKSearchResult?
         if isSections, let searchResults = self.searchResults {
             searchResult = searchResults.filter({ $0.name == section}).first
         }
@@ -156,7 +156,7 @@ class NCCollectionViewDataSource: NSObject {
 
     // MARK: -
 
-    func appendMetadatasToSection(_ metadatas: [tableMetadata], metadataForSection: NCMetadataForSection, lastSearchResult: NKSearchResult) {
+    func appendMetadatasToSection(_ metadatas: [tableMetadata], metadataForSection: NCMetadataForSection, lastSearchResult: SCKSearchResult) {
         guard let sectionIndex = getSectionIndex(metadataForSection.section)
         else {
             return
@@ -302,7 +302,7 @@ class NCCollectionViewDataSource: NSObject {
 class NCMetadataForSection: NSObject {
     var section: String
     var metadatas: [tableMetadata]
-    var lastSearchResult: NKSearchResult?
+    var lastSearchResult: SCKSearchResult?
     var unifiedSearchInProgress: Bool = false
     var layoutForView: NCDBLayoutForView?
     var directoryOnTop: Bool
@@ -318,7 +318,7 @@ class NCMetadataForSection: NSObject {
     public var numFile: Int = 0
     public var totalSize: Int64 = 0
 
-    init(section: String, metadatas: [tableMetadata], lastSearchResult: NKSearchResult?, layoutForView: NCDBLayoutForView?, favoriteOnTop: Bool, directoryOnTop: Bool) {
+    init(section: String, metadatas: [tableMetadata], lastSearchResult: SCKSearchResult?, layoutForView: NCDBLayoutForView?, favoriteOnTop: Bool, directoryOnTop: Bool) {
         self.section = section
         self.metadatas = metadatas
         self.lastSearchResult = lastSearchResult
@@ -387,7 +387,7 @@ class NCMetadataForSection: NSObject {
 
             // skipped livePhoto VIDEO part
             if metadata.isLivePhoto,
-               metadata.classFile == NKTypeClassFile.video.rawValue {
+               metadata.classFile == SCKTypeClassFile.video.rawValue {
                 continue
             }
 

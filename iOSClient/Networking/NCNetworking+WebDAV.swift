@@ -14,8 +14,8 @@ extension NCNetworking {
     /// Async wrapper for `readFolder(...)`, returns a tuple with account, metadataFolder, metadatas, and error.
     func readFolderAsync(serverUrl: String,
                          account: String,
-                         options: NKRequestOptions = NKRequestOptions(),
-                         taskHandler: @escaping (_ task: URLSessionTask) -> Void = { _ in }) async -> (account: String, metadataFolder: tableMetadata?, metadatas: [tableMetadata]?, error: NKError) {
+                         options: SCKRequestOptions = SCKRequestOptions(),
+                         taskHandler: @escaping (_ task: URLSessionTask) -> Void = { _ in }) async -> (account: String, metadataFolder: tableMetadata?, metadatas: [tableMetadata]?, error: SCKError) {
 
         let showHiddenFiles = NCPreferences().getShowHiddenFiles(account: account)
 
@@ -43,7 +43,7 @@ extension NCNetworking {
     func readFile(serverUrlFileName: String,
                   account: String,
                   taskHandler: @escaping (_ task: URLSessionTask) -> Void = { _ in },
-                  completion: @escaping (_ account: String, _ metadata: tableMetadata?, _ file: NKFile?, _ error: NKError) -> Void) {
+                  completion: @escaping (_ account: String, _ metadata: tableMetadata?, _ file: SCKFile?, _ error: SCKError) -> Void) {
         let showHiddenFiles = NCPreferences().getShowHiddenFiles(account: account)
 
         ScaleCloudKit.shared.readFileOrFolder(serverUrlFileName: serverUrlFileName, depth: "0", showHiddenFiles: showHiddenFiles, account: account) { task in
@@ -68,7 +68,7 @@ extension NCNetworking {
 
     func readFileAsync(serverUrlFileName: String,
                        account: String,
-                       taskHandler: @escaping (_ task: URLSessionTask) -> Void = { _ in }) async -> (account: String, metadata: tableMetadata?, error: NKError) {
+                       taskHandler: @escaping (_ task: URLSessionTask) -> Void = { _ in }) async -> (account: String, metadata: tableMetadata?, error: SCKError) {
         let showHiddenFiles = NCPreferences().getShowHiddenFiles(account: account)
         let results = await ScaleCloudKit.shared.readFileOrFolderAsync(serverUrlFileName: serverUrlFileName,
                                                                       depth: "0",
@@ -90,8 +90,8 @@ extension NCNetworking {
         return(account, metadata, results.error)
     }
 
-    func fileExists(serverUrlFileName: String, account: String) async -> NKError {
-        let requestBody = NKDataFileXML(nkCommonInstance: ScaleCloudKit.shared.nkCommonInstance).getRequestBodyFileExists().data(using: .utf8)
+    func fileExists(serverUrlFileName: String, account: String) async -> SCKError {
+        let requestBody = SCKDataFileXML(nkCommonInstance: ScaleCloudKit.shared.nkCommonInstance).getRequestBodyFileExists().data(using: .utf8)
 
         let results = await ScaleCloudKit.shared.readFileOrFolderAsync(serverUrlFileName: serverUrlFileName,
                                                                       depth: "0",
@@ -182,14 +182,14 @@ extension NCNetworking {
                       overwrite: Bool,
                       session: NCSession.Session,
                       selector: String? = nil,
-                      options: NKRequestOptions = NKRequestOptions()) async -> NKError {
-        let capabilities = await NKCapabilities.shared.getCapabilities(for: session.account)
+                      options: SCKRequestOptions = SCKRequestOptions()) async -> SCKError {
+        let capabilities = await SCKCapabilities.shared.getCapabilities(for: session.account)
         var fileNameFolder = FileAutoRenamer.rename(fileName, isFolderPath: true, capabilities: capabilities)
         if !overwrite {
             fileNameFolder = utilityFileSystem.createFileName(fileNameFolder, serverUrl: serverUrl, account: session.account)
         }
         if fileNameFolder.isEmpty {
-            return NKError(errorCode: global.errorIncorrectFileName, errorDescription: "")
+            return SCKError(errorCode: global.errorIncorrectFileName, errorDescription: "")
         }
         let serverUrlFileName = utilityFileSystem.createServerUrl(serverUrl: serverUrl, fileName: fileNameFolder)
 
@@ -229,7 +229,7 @@ extension NCNetworking {
         return resultCreateFolder.error
     }
 
-    func createFolderForAutoUpload(serverUrlFileName: String, account: String) async -> NKError {
+    func createFolderForAutoUpload(serverUrlFileName: String, account: String) async -> SCKError {
         // Fast path: directory already exists → cleanup + success
         let existsResult = await fileExists(serverUrlFileName: serverUrlFileName, account: account)
         if existsResult == .success {
@@ -268,8 +268,8 @@ extension NCNetworking {
         return results.error
     }
 
-    func createFolder(metadata: tableMetadata) async -> NKError {
-        var error: NKError = .success
+    func createFolder(metadata: tableMetadata) async -> SCKError {
+        var error: SCKError = .success
 
         if metadata.sessionSelector == self.global.selectorUploadAutoUpload {
             error = await createFolderForAutoUpload(serverUrlFileName: metadata.serverUrlFileName, account: metadata.account)
@@ -352,7 +352,7 @@ extension NCNetworking {
         }
     }
 
-    func setStatusWaitDelete(metadatas: [tableMetadata]) async -> NKError {
+    func setStatusWaitDelete(metadatas: [tableMetadata]) async -> SCKError {
         var ocIds = Set<String>()
         var serverUrls = Set<String>()
 
@@ -369,7 +369,7 @@ extension NCNetworking {
 
             let permission = NCMetadataPermissions.permissionsContainsString(metadata.permissions, permissions: NCMetadataPermissions.permissionCanDeleteOrUnshare)
             if (!metadata.permissions.isEmpty && permission == false) || (metadata.status != global.metadataStatusNormal) {
-                return NKError(errorCode: global.errorNotPermission, errorDescription: "_no_permission_delete_file_")
+                return SCKError(errorCode: global.errorNotPermission, errorDescription: "_no_permission_delete_file_")
             }
 
             ocIds.insert(metadata.ocId)
@@ -392,7 +392,7 @@ extension NCNetworking {
         return .success
     }
 
-    func deleteFileOrFolder(metadata: tableMetadata) async -> NKError {
+    func deleteFileOrFolder(metadata: tableMetadata) async -> SCKError {
         var results = await ScaleCloudKit.shared.deleteFileOrFolderAsync(serverUrlFileName: metadata.serverUrlFileName, account: metadata.account) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: metadata.account,
@@ -442,21 +442,21 @@ extension NCNetworking {
 
     // MARK: - Rename
 
-    func setStatusWaitRename(_ metadata: tableMetadata, fileNameNew: String, windowScene: UIWindowScene?) async -> NKError {
+    func setStatusWaitRename(_ metadata: tableMetadata, fileNameNew: String, windowScene: UIWindowScene?) async -> SCKError {
         let permission = NCMetadataPermissions.permissionsContainsString(metadata.permissions, permissions: NCMetadataPermissions.permissionCanRename)
         if (!metadata.permissions.isEmpty && permission == false) ||
             (metadata.status != global.metadataStatusNormal && metadata.status != global.metadataStatusWaitRename) {
-            return NKError(errorCode: global.errorNotPermission, errorDescription: "_no_permission_modify_file_")
+            return SCKError(errorCode: global.errorNotPermission, errorDescription: "_no_permission_modify_file_")
         }
 
         if metadata.isDirectoryE2EE {
             if isOffline {
-                return NKError(errorCode: global.errorOfflineNotAllowed, errorDescription: "_offline_not_allowed_")
+                return SCKError(errorCode: global.errorOfflineNotAllowed, errorDescription: "_offline_not_allowed_")
             }
 
             let error = await NCNetworkingE2EERename().rename(metadata: metadata, fileNameNew: fileNameNew, windowScene: windowScene)
             if error != .success {
-                return NKError(errorCode: error.errorCode, errorDescription: error.errorDescription)
+                return SCKError(errorCode: error.errorCode, errorDescription: error.errorDescription)
             }
         } else {
             let ocId = metadata.ocId
@@ -470,7 +470,7 @@ extension NCNetworking {
         return .success
     }
 
-    func renameFileOrFolder(metadata: tableMetadata) async -> NKError {
+    func renameFileOrFolder(metadata: tableMetadata) async -> SCKError {
         let serverUrlFileNameSource = metadata.serverUrlFileName
         let serverUrlFileNameDestination = utilityFileSystem.createServerUrl(serverUrl: metadata.serverUrl, fileName: metadata.fileName)
 
@@ -505,12 +505,12 @@ extension NCNetworking {
 
     // MARK: - Move
 
-    func setStatusWaitMove(_ metadata: tableMetadata, destination: String, overwrite: Bool) async -> NKError {
+    func setStatusWaitMove(_ metadata: tableMetadata, destination: String, overwrite: Bool) async -> SCKError {
         let permission = NCMetadataPermissions.permissionsContainsString(metadata.permissions, permissions: NCMetadataPermissions.permissionCanRename)
 
         if (!metadata.permissions.isEmpty && !permission) ||
             (metadata.status != global.metadataStatusNormal && metadata.status != global.metadataStatusWaitMove) {
-            return NKError(errorCode: global.errorNotPermission, errorDescription: "_no_permission_modify_file_")
+            return SCKError(errorCode: global.errorNotPermission, errorDescription: "_no_permission_modify_file_")
         }
 
         let ocId = metadata.ocId
@@ -523,7 +523,7 @@ extension NCNetworking {
         return .success
     }
 
-    func moveFileOrFolder(metadata: tableMetadata) async -> NKError {
+    func moveFileOrFolder(metadata: tableMetadata) async -> SCKError {
         let destination = metadata.destination
         let serverUrlFileNameDestination = utilityFileSystem.createServerUrl(serverUrl: destination, fileName: metadata.fileName)
         let overwrite = (metadata.storeFlag as? NSString)?.boolValue ?? false
@@ -569,12 +569,12 @@ extension NCNetworking {
 
     // MARK: - Copy
 
-    func setStatusWaitCopy(_ metadata: tableMetadata, destination: String, overwrite: Bool) async -> NKError {
+    func setStatusWaitCopy(_ metadata: tableMetadata, destination: String, overwrite: Bool) async -> SCKError {
         let permission = NCMetadataPermissions.permissionsContainsString(metadata.permissions, permissions: NCMetadataPermissions.permissionCanRename)
 
         if (!metadata.permissions.isEmpty && !permission) ||
             (metadata.status != global.metadataStatusNormal && metadata.status != global.metadataStatusWaitCopy) {
-            return NKError(errorCode: global.errorNotPermission, errorDescription: "_no_permission_modify_file_")
+            return SCKError(errorCode: global.errorNotPermission, errorDescription: "_no_permission_modify_file_")
         }
 
         let ocId = metadata.ocId
@@ -587,7 +587,7 @@ extension NCNetworking {
         return .success
     }
 
-    func copyFileOrFolder(metadata: tableMetadata) async -> NKError {
+    func copyFileOrFolder(metadata: tableMetadata) async -> SCKError {
         let destination = metadata.destination
         var serverUrlFileNameDestination = utilityFileSystem.createServerUrl(serverUrl: destination, fileName: metadata.fileName)
         let overwrite = (metadata.storeFlag as? NSString)?.boolValue ?? false
@@ -633,10 +633,10 @@ extension NCNetworking {
 
     // MARK: - Favorite
 
-    func setStatusWaitFavorite(_ metadata: tableMetadata) async -> NKError {
+    func setStatusWaitFavorite(_ metadata: tableMetadata) async -> SCKError {
         if metadata.status != global.metadataStatusNormal,
            metadata.status != global.metadataStatusWaitFavorite {
-            return NKError(errorCode: global.errorNotPermission, errorDescription: "_no_permission_favorite_file_")
+            return SCKError(errorCode: global.errorNotPermission, errorDescription: "_no_permission_favorite_file_")
         }
 
         let ocId = metadata.ocId
@@ -650,7 +650,7 @@ extension NCNetworking {
         return .success
     }
 
-    func setFavorite(metadata: tableMetadata) async -> NKError {
+    func setFavorite(metadata: tableMetadata) async -> SCKError {
         let session = NCSession.Session(account: metadata.account, urlBase: metadata.urlBase, user: metadata.user, userId: metadata.userId)
         let fileName = utilityFileSystem.getRelativeFilePath(metadata.fileName, serverUrl: metadata.serverUrl, session: session)
 
@@ -692,7 +692,7 @@ extension NCNetworking {
 
     // MARK: - Lock Files
 
-    func lockUnlockFile(_ metadata: tableMetadata, shouldLock: Bool) async -> NKError {
+    func lockUnlockFile(_ metadata: tableMetadata, shouldLock: Bool) async -> SCKError {
         do {
             _ = try await ScaleCloudKit.shared.lockUnlockFile(serverUrlFileName: metadata.serverUrlFileName, shouldLock: shouldLock, account: metadata.account)
 
@@ -707,7 +707,7 @@ extension NCNetworking {
             await self.transferDispatcher.notifyAllDelegates { delegate in
                 delegate.transferReloadDataSource(serverUrl: metadata.serverUrl, requestData: false, status: nil)
             }
-        } catch let nkError as NKError {
+        } catch let nkError as SCKError {
             return nkError
         } catch {
             print(error)
@@ -719,7 +719,7 @@ extension NCNetworking {
     // MARK: - Direct Download
 
     func getVideoUrl(metadata: tableMetadata,
-                     completition: @escaping (_ url: URL?, _ autoplay: Bool, _ error: NKError) -> Void) {
+                     completition: @escaping (_ url: URL?, _ autoplay: Bool, _ error: SCKError) -> Void) {
         if !metadata.url.isEmpty {
             if metadata.url.hasPrefix("/") {
                 completition(URL(fileURLWithPath: metadata.url), true, .success)
@@ -781,7 +781,7 @@ class NCOperationDownloadAvatar: ConcurrentOperation, @unchecked Sendable {
                                            avatarSizeRounded: NCGlobal.shared.avatarSizeRounded,
                                            etagResource: self.etag,
                                            account: account,
-                                           options: NKRequestOptions(queue: ScaleCloudKit.shared.nkCommonInstance.backgroundQueue)) { task in
+                                           options: SCKRequestOptions(queue: ScaleCloudKit.shared.nkCommonInstance.backgroundQueue)) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: self.account,
                                                                                             path: self.user,

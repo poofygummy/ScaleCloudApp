@@ -22,11 +22,11 @@ class NCCreate: NSObject {
         }
         var UUID = NSUUID().uuidString
         UUID = "TEMP" + UUID.replacingOccurrences(of: "-", with: "")
-        var options = NKRequestOptions()
+        var options = SCKRequestOptions()
         let serverUrl = controller.currentServerUrl()
 
         if let creatorId, let adapter = NCDirectEditorAdapter.resolve(from: [editorId]) {
-            options = NKRequestOptions(customUserAgent: adapter.userAgent(utility))
+            options = SCKRequestOptions(customUserAgent: adapter.userAgent(utility))
             let results = await ScaleCloudKit.shared.textCreateFileAsync(fileNamePath: fileNamePath, editorId: editorId, creatorId: creatorId, templateId: templateId, account: account, options: options) { task in
                 Task {
                     let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
@@ -85,13 +85,13 @@ class NCCreate: NSObject {
         }
     }
 
-    func getTemplate(editorId: String, templateId: String, account: String) async -> (templates: [NKEditorTemplate], selectedTemplate: NKEditorTemplate, ext: String) {
-        var templates: [NKEditorTemplate] = []
-        var selectedTemplate = NKEditorTemplate()
+    func getTemplate(editorId: String, templateId: String, account: String) async -> (templates: [SCKEditorTemplate], selectedTemplate: SCKEditorTemplate, ext: String) {
+        var templates: [SCKEditorTemplate] = []
+        var selectedTemplate = SCKEditorTemplate()
         var ext: String = ""
 
         if let adapter = NCDirectEditorAdapter.resolve(from: [editorId]) {
-            let options = NKRequestOptions(customUserAgent: adapter.userAgent(NCUtility()))
+            let options = SCKRequestOptions(customUserAgent: adapter.userAgent(NCUtility()))
 
             let results = await ScaleCloudKit.shared.textGetListOfTemplatesAsync(account: account, options: options) { task in
                 Task {
@@ -102,7 +102,7 @@ class NCCreate: NSObject {
             }
             if results.error == .success, let resultTemplates = results.templates {
                 for template in resultTemplates {
-                    var temp = NKEditorTemplate()
+                    var temp = SCKEditorTemplate()
                     temp.identifier = template.identifier
                     temp.ext = template.ext
                     temp.name = template.name
@@ -117,7 +117,7 @@ class NCCreate: NSObject {
             }
 
             if templates.isEmpty {
-                var temp = NKEditorTemplate()
+                var temp = SCKEditorTemplate()
                 temp.identifier = ""
                 temp.ext = adapter.defaultExt(templateId)
                 temp.name = "Empty"
@@ -139,7 +139,7 @@ class NCCreate: NSObject {
             }
             if results.error == .success {
                 for template in results.templates! {
-                    var temp = NKEditorTemplate()
+                    var temp = SCKEditorTemplate()
                     temp.identifier = "\(template.templateId)"
                     temp.ext = template.ext
                     temp.name = template.name
@@ -161,7 +161,7 @@ class NCCreate: NSObject {
         guard let controller else {
             return
         }
-        let capabilities = NCNetworking.shared.capabilities[metadata.account] ?? NKCapabilities.Capabilities()
+        let capabilities = NCNetworking.shared.capabilities[metadata.account] ?? SCKCapabilities.Capabilities()
 
         NCNetworking.shared.readFile(serverUrlFileName: metadata.serverUrlFileName, account: metadata.account) { _, metadata, file, error in
             Task { @MainActor in

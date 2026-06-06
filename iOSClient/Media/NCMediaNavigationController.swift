@@ -32,7 +32,7 @@ class NCMediaNavigationController: NCMainNavigationController {
     }
 
     private func mediaTrailingItemGroups() async {
-        let capabilities = await NKCapabilities.shared.getCapabilities(for: session.account)
+        let capabilities = await SCKCapabilities.shared.getCapabilities(for: session.account)
         var desiredItems: [UIBarButtonItem] = []
 
         if controller?.availableNotifications ?? false {

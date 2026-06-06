@@ -392,7 +392,7 @@ extension NCShareExtension {
 
     @MainActor
     func uploadAndExit() async {
-        var error: NKError?
+        var error: SCKError?
         guard let window = self.view.window else {
             return
         }
@@ -435,11 +435,11 @@ extension NCShareExtension {
     }
 
     @MainActor
-    func upload(metadata: tableMetadata) async -> NKError? {
+    func upload(metadata: tableMetadata) async -> SCKError? {
         let session = NCShareExtensionData.shared.getSession()
-        var error: NKError = .success
+        var error: SCKError = .success
 
-        let results = await NKTypeIdentifiers.shared.getInternalType(fileName: metadata.fileNameView, mimeType: metadata.contentType, directory: false, account: session.account)
+        let results = await SCKTypeIdentifiers.shared.getInternalType(fileName: metadata.fileNameView, mimeType: metadata.contentType, directory: false, account: session.account)
         metadata.contentType = results.mimeType
         metadata.iconName = results.iconName
         metadata.classFile = results.classFile
@@ -448,7 +448,7 @@ extension NCShareExtension {
 
         // CHUNK
         var chunkSize = NCGlobal.shared.chunkSizeMBCellular
-        if NCNetworking.shared.networkReachability == NKTypeReachability.reachableEthernetOrWiFi {
+        if NCNetworking.shared.networkReachability == SCKTypeReachability.reachableEthernetOrWiFi {
             chunkSize = NCGlobal.shared.chunkSizeMBEthernetOrWiFi
         }
         if metadata.size > chunkSize {
@@ -472,7 +472,7 @@ extension NCShareExtension {
             banner?.update(payload: LucidBannerPayload.Update(systemImage: "gearshape.arrow.triangle.2.circlepath",
                                                               imageAnimation: .rotate),
                                       for: self.token)
-            let task = Task { () -> (account: String, file: NKFile?, error: NKError) in
+            let task = Task { () -> (account: String, file: SCKFile?, error: SCKError) in
                 let results = await NCNetworking.shared.uploadChunkFile(metadata: metadata) { total, counter in
                     Task {@MainActor in
                         self.banner?.update(payload: LucidBannerPayload.Update(progress: Double(counter) / Double(total)), for: self.token)

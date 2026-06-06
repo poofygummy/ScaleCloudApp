@@ -87,7 +87,7 @@ class NCAccount: NSObject {
         }
     }
 
-    func changeAccount(_ account: String, userProfile: NKUserProfile?, controller: NCMainTabBarController?) async {
+    func changeAccount(_ account: String, userProfile: SCKUserProfile?, controller: NCMainTabBarController?) async {
         if let tblAccount = await database.setAccountActiveAsync(account) {
             // Set account
             controller?.account = account
@@ -156,7 +156,7 @@ class NCAccount: NSObject {
         // Remove session
         NCSession.shared.removeSession(account: account)
         // Remove capabilities
-        await NKCapabilities.shared.removeCapabilities(for: account)
+        await SCKCapabilities.shared.removeCapabilities(for: account)
         NCNetworking.shared.capabilities.removeValue(forKey: account)
         // Remove keychain security
         NCPreferences().setPassword(account: account, password: nil)
@@ -176,16 +176,16 @@ class NCAccount: NSObject {
 
     func updateAppsShareAccounts() async -> Error? {
         guard let dirGroupApps = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: NCBrandOptions.shared.capabilitiesGroupApps) else { return nil }
-        var accounts = [NKShareAccounts.DataAccounts]()
+        var accounts = [SCKShareAccounts.DataAccounts]()
 
         for account in await database.getAllTableAccountAsync() {
             let name = account.alias.isEmpty ? account.displayName : account.alias
             let fileName = NCSession.shared.getFileName(urlBase: account.urlBase, user: account.user)
             let fileNamePath = self.utilityFileSystem.createServerUrl(serverUrl: self.utilityFileSystem.directoryUserData, fileName: fileName)
             let image = UIImage(contentsOfFile: fileNamePath)
-            accounts.append(NKShareAccounts.DataAccounts(withUrl: account.urlBase, user: account.user, name: name, image: image))
+            accounts.append(SCKShareAccounts.DataAccounts(withUrl: account.urlBase, user: account.user, name: name, image: image))
         }
-        return NKShareAccounts().putShareAccounts(at: dirGroupApps, app: global.appScheme, dataAccounts: accounts)
+        return SCKShareAccounts().putShareAccounts(at: dirGroupApps, app: global.appScheme, dataAccounts: accounts)
     }
 
     func checkRemoteUser(account: String, controller: NCMainTabBarController?) async {

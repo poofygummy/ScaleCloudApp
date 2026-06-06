@@ -26,9 +26,9 @@ class NCNetworkingE2EEUpload: NSObject {
                 stageBanner: LucidBanner.Stage?,
                 tokenBanner: Int?,
                 requestHandle: @escaping (_ request: UploadRequest) -> Void = { _ in },
-                currentUploadTask: @escaping (_ task: Task<(account: String, file: NKFile?, error: NKError), Never>?) -> Void = { _ in })
-    async -> NKError {
-        var finalError: NKError = .success
+                currentUploadTask: @escaping (_ task: Task<(account: String, file: SCKFile?, error: SCKError), Never>?) -> Void = { _ in })
+    async -> SCKError {
+        var finalError: SCKError = .success
         var session = session
         let ocId = metadata.ocIdTransfer
 
@@ -37,7 +37,7 @@ class NCNetworkingE2EEUpload: NSObject {
         }
         guard let session,
               !session.account.isEmpty else {
-            return NKError(errorCode: NCGlobal.shared.errorNCSessionNotFound,
+            return SCKError(errorCode: NCGlobal.shared.errorNCSessionNotFound,
                            errorDescription: NSLocalizedString("_e2ee_no_session_", comment: ""))
         }
 
@@ -72,24 +72,24 @@ class NCNetworkingE2EEUpload: NSObject {
         }
 
         guard let directory = await self.database.getTableDirectoryAsync(predicate: NSPredicate(format: "account == %@ AND serverUrl == %@", metadata.account, metadata.serverUrl)) else {
-            finalError = NKError(errorCode: NCGlobal.shared.errorUnexpectedResponseFromDB,
+            finalError = SCKError(errorCode: NCGlobal.shared.errorUnexpectedResponseFromDB,
                                  errorDescription: NSLocalizedString("_e2ee_no_dir_", comment: ""))
             return finalError
         }
 
-        func sendE2ee(e2eToken: String, fileId: String) async -> NKError {
+        func sendE2ee(e2eToken: String, fileId: String) async -> SCKError {
             var key: NSString?, initializationVector: NSString?, authenticationTag: NSString?
             var method = "POST"
 
             // ENCRYPT FILE
             //
             if NCEndToEndEncryption.shared().encryptFile(metadata.fileNameView, fileNameIdentifier: metadata.fileName, directory: utilityFileSystem.getDirectoryProviderStorageOcId(metadata.ocId, userId: metadata.userId, urlBase: metadata.urlBase), key: &key, initializationVector: &initializationVector, authenticationTag: &authenticationTag) == false {
-                finalError = NKError(errorCode: NCGlobal.shared.errorE2EEEncryptFile,
+                finalError = SCKError(errorCode: NCGlobal.shared.errorE2EEEncryptFile,
                                      errorDescription: NSLocalizedString("_e2ee_no_enc_file_", comment: ""))
                 return finalError
             }
             guard let key = key as? String, let initializationVector = initializationVector as? String else {
-                finalError = NKError(errorCode: NCGlobal.shared.errorE2EEEncodedKey,
+                finalError = SCKError(errorCode: NCGlobal.shared.errorE2EEEncodedKey,
                                      errorDescription: NSLocalizedString("_e2ee_no_enc_key_", comment: ""))
                 return finalError
             }
@@ -113,7 +113,7 @@ class NCNetworkingE2EEUpload: NSObject {
                 object.metadataKeyIndex = results.metadataKeyIndex
             } else {
                 guard let key = NCEndToEndEncryption.shared().generateKey() as NSData? else {
-                    finalError = NKError(errorCode: NCGlobal.shared.errorE2EEGenerateKey,
+                    finalError = SCKError(errorCode: NCGlobal.shared.errorE2EEGenerateKey,
                                          errorDescription: NSLocalizedString("_e2ee_no_generate_key_", comment: ""))
                     return finalError
                 }
@@ -150,7 +150,7 @@ class NCNetworkingE2EEUpload: NSObject {
                 resultsLock.error == .success
         else {
             await self.database.deleteMetadataAsync(predicate: NSPredicate(format: "ocIdTransfer == %@", metadata.ocIdTransfer))
-            finalError = NKError(errorCode: NCGlobal.shared.errorE2EELock,
+            finalError = SCKError(errorCode: NCGlobal.shared.errorE2EELock,
                                  errorDescription: NSLocalizedString("_e2ee_no_lock_", comment: ""))
             return finalError
         }
@@ -237,8 +237,8 @@ class NCNetworkingE2EEUpload: NSObject {
                           stageBanner: LucidBanner.Stage?,
                           tokenBanner: Int?,
                           requestHandle: @escaping (_ request: UploadRequest) -> Void = { _ in },
-                          currentUploadTask: @escaping (_ task: Task<(account: String, file: NKFile?, error: NKError), Never>?) -> Void = { _ in })
-    async -> (ocId: String?, etag: String?, date: Date?, error: NKError) {
+                          currentUploadTask: @escaping (_ task: Task<(account: String, file: SCKFile?, error: SCKError), Never>?) -> Void = { _ in })
+    async -> (ocId: String?, etag: String?, date: Date?, error: SCKError) {
         if metadata.chunk > 0 {
             let payload = LucidBannerPayload.Update(
                 title: NSLocalizedString("_wait_file_preparation_", comment: ""),
@@ -249,7 +249,7 @@ class NCNetworkingE2EEUpload: NSObject {
             )
             banner?.update(payload: payload, for: tokenBanner)
 
-            let task = Task { () -> (account: String, file: NKFile?, error: NKError) in
+            let task = Task { () -> (account: String, file: SCKFile?, error: SCKError) in
                 let results = await NCNetworking.shared.uploadChunkFile(metadata: metadata) { total, counter in
                     Task {@MainActor in
                         let progress = Double(counter) / Double(total)

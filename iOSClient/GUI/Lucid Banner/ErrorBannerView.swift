@@ -9,7 +9,7 @@ import Alamofire
 
 @MainActor
 func showErrorBanner(windowScene: UIWindowScene?,
-                     error: NKError) async {
+                     error: SCKError) async {
     await showErrorBanner(windowScene: windowScene,
                           title: "_error_",
                           text: error.errorDescription,

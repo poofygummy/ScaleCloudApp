@@ -65,37 +65,37 @@ extension NCManageDatabase {
     /// from the local Realm `tableCapabilities` object associated with the specified account.
     ///
     /// - If `capabilities` is found, it is applied using `ScaleCloudKit.shared.setCapabilitiesAsync`.
-    /// - If `editors` is found, the data is decoded via `NKEditorDetailsConverter` into
-    ///   `[NKEditorDetailsEditor]` and `[NKEditorDetailsCreator]`, then injected into the shared `NKCapabilities` object.
+    /// - If `editors` is found, the data is decoded via `SCKEditorDetailsConverter` into
+    ///   `[SCKEditorDetailsEditor]` and `[SCKEditorDetailsCreator]`, then injected into the shared `SCKCapabilities` object.
     ///
     /// The combined updated capabilities are then re-appended via `appendCapabilitiesAsync`.
     /// Errors during decoding or async storage are caught and logged.
     ///
     /// - Parameter account: The identifier of the account whose cached capabilities should be applied.
     @discardableResult
-    func getCapabilities(account: String) async -> NKCapabilities.Capabilities? {
+    func getCapabilities(account: String) async -> SCKCapabilities.Capabilities? {
         let results = await core.performRealmReadAsync { realm in
             realm.object(ofType: tableCapabilities.self, forPrimaryKey: account)
                 .map { tableCapabilities(value: $0) }
         }
-        var capabilities: NKCapabilities.Capabilities?
+        var capabilities: SCKCapabilities.Capabilities?
 
         do {
             if let data = results?.capabilities {
                 capabilities = try await ScaleCloudKit.shared.setCapabilitiesAsync(account: account, data: data)
             }
             if let data = results?.editors {
-                let (editors, creators) = try NKEditorDetailsConverter.from(data: data)
+                let (editors, creators) = try SCKEditorDetailsConverter.from(data: data)
 
                 if capabilities == nil {
-                    capabilities = await NKCapabilities.shared.getCapabilities(for: account)
+                    capabilities = await SCKCapabilities.shared.getCapabilities(for: account)
                 }
 
                 capabilities?.directEditingEditors = editors
                 capabilities?.directEditingCreators = creators
 
                 if let capabilities {
-                    await NKCapabilities.shared.setCapabilities(for: account, capabilities: capabilities)
+                    await SCKCapabilities.shared.setCapabilities(for: account, capabilities: capabilities)
                 }
             }
         } catch {

@@ -48,12 +48,12 @@ extension NCManageDatabase {
 
     // MARK: - Realm write
 
-    /// Adds a list of `NKTrash` items to the Realm database, associated with the given account.
+    /// Adds a list of `SCKTrash` items to the Realm database, associated with the given account.
     /// This function creates new `tableTrash` objects and inserts or updates them in the Realm, wrapped in an async write operation.
     /// - Parameters:
     ///   - account: The account string used to associate each trash item.
-    ///   - items: An array of `NKTrash` items to be added to the database.
-    func addTrashAsync(items: [NKTrash], account: String) async {
+    ///   - items: An array of `SCKTrash` items to be added to the database.
+    func addTrashAsync(items: [SCKTrash], account: String) async {
         let itemsFiltered = filterOutVideosMatchingImages(items)
 
         await core.performRealmWriteAsync { realm in
@@ -186,9 +186,9 @@ extension NCManageDatabase {
     ///     marked with `isLivePhoto = true`.
     ///   - All other items are returned unchanged.
     ///
-    /// - Parameter items: An array of `NKTrash` items to process.
+    /// - Parameter items: An array of `SCKTrash` items to process.
     /// - Returns: A filtered array where Live Photo videos are removed and matching images are marked as Live Photos.
-    func filterOutVideosMatchingImages(_ items: [NKTrash]) -> [NKTrash] {
+    func filterOutVideosMatchingImages(_ items: [SCKTrash]) -> [SCKTrash] {
         var suffixMap: [String: (hasImage: Bool, hasVideo: Bool)] = [:]
 
         for item in items {
@@ -206,7 +206,7 @@ extension NCManageDatabase {
             suffixMap[suffix] = entry
         }
 
-        return items.compactMap { item -> NKTrash? in
+        return items.compactMap { item -> SCKTrash? in
             guard let suffix = trashSuffix(from: item.fileName) else {
                 return item
             }

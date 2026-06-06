@@ -383,7 +383,7 @@ final class NCManageDatabase: @unchecked Sendable {
 
             switch metadata.classFile {
 
-            case NKTypeClassFile.image.rawValue:
+            case SCKTypeClassFile.image.rawValue:
                 // Keep the image as the canonical Live Photo item.
                 // If the paired file is missing, clear the broken reference.
                 if hasLivePhotoLink && !linkedTargetExists {
@@ -391,7 +391,7 @@ final class NCManageDatabase: @unchecked Sendable {
                 }
                 return metadata
 
-            case NKTypeClassFile.video.rawValue:
+            case SCKTypeClassFile.video.rawValue:
                 // Remove every Live Photo video:
                 // - if the paired image exists, it is a duplicate representation
                 // - if the paired image does not exist, it is an orphan and should not be shown
@@ -463,13 +463,13 @@ final class NCManageDatabase: @unchecked Sendable {
         let account2 = "mariorossi https://cloudtest.nextcloud.com"
         await addAccountAsync(account, urlBase: "https://cloudtest.nextcloud.com", user: "marinofaggiana", userId: "marinofaggiana", password: "password")
         await addAccountAsync(account2, urlBase: "https://cloudtest.nextcloud.com", user: "mariorossi", userId: "mariorossi", password: "password")
-        let userProfile = NKUserProfile()
+        let userProfile = SCKUserProfile()
         userProfile.displayName = "Marino Faggiana"
         userProfile.address = "Hirschstrasse 26, 70192 Stuttgart, Germany"
         userProfile.phone = "+49 (711) 252 428 - 90"
         userProfile.email = "cloudtest@nextcloud.com"
         await setAccountUserProfileAsync(account: account, userProfile: userProfile)
-        let userProfile2 = NKUserProfile()
+        let userProfile2 = SCKUserProfile()
         userProfile2.displayName = "Mario Rossi"
         userProfile2.email = "cloudtest@nextcloud.com"
         await setAccountUserProfileAsync(account: account2, userProfile: userProfile2)

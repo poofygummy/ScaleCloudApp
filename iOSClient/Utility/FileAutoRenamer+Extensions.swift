@@ -7,7 +7,7 @@ import Foundation
 import ScaleCloudKit
 
 extension FileAutoRenamer {
-    static func rename(_ filename: String, isFolderPath: Bool = false, capabilities: NKCapabilities.Capabilities) -> String {
+    static func rename(_ filename: String, isFolderPath: Bool = false, capabilities: SCKCapabilities.Capabilities) -> String {
         let autoRenamer = FileAutoRenamer(capabilities: capabilities)
         return autoRenamer.rename(filename: filename, isFolderPath: isFolderPath)
     }

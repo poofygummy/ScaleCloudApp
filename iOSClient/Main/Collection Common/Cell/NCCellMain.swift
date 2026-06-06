@@ -90,10 +90,10 @@ extension NCCollectionViewCommon {
         } else if isShare {
             cell.previewImg?.image = imageCache.getFolderSharedWithMe(account: metadata.account)
         } else if !metadata.shareType.isEmpty {
-            metadata.shareType.contains(NKShare.ShareType.publicLink.rawValue) ?
+            metadata.shareType.contains(SCKShare.ShareType.publicLink.rawValue) ?
             (cell.previewImg?.image = imageCache.getFolderPublic(account: metadata.account)) :
             (cell.previewImg?.image = imageCache.getFolderSharedWithMe(account: metadata.account))
-        } else if !metadata.shareType.isEmpty && metadata.shareType.contains(NKShare.ShareType.publicLink.rawValue) {
+        } else if !metadata.shareType.isEmpty && metadata.shareType.contains(SCKShare.ShareType.publicLink.rawValue) {
             cell.previewImg?.image = imageCache.getFolderPublic(account: metadata.account)
         } else if metadata.mountType == "group" {
             cell.previewImg?.image = imageCache.getFolderGroup(account: metadata.account)

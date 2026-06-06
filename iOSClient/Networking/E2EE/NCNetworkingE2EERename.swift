@@ -13,9 +13,9 @@ class NCNetworkingE2EERename: NSObject {
     let utilityFileSystem = NCUtilityFileSystem()
 
     @MainActor
-    func rename(metadata: tableMetadata, fileNameNew: String, windowScene: UIWindowScene?) async -> NKError {
+    func rename(metadata: tableMetadata, fileNameNew: String, windowScene: UIWindowScene?) async -> SCKError {
         let session = NCSession.shared.getSession(account: metadata.account)
-        var error = NKError()
+        var error = SCKError()
         var banner: LucidBanner?
         var token: Int?
 
@@ -31,11 +31,11 @@ class NCNetworkingE2EERename: NSObject {
 
         // verify if exists the new fileName
         if await self.database.getE2eEncryptionAsync(predicate: NSPredicate(format: "account == %@ AND serverUrl == %@ AND fileName == %@", metadata.account, metadata.serverUrl, fileNameNew)) != nil {
-            error = NKError(errorCode: NCGlobal.shared.errorUnexpectedResponseFromDB, errorDescription: "_file_already_exists_")
+            error = SCKError(errorCode: NCGlobal.shared.errorUnexpectedResponseFromDB, errorDescription: "_file_already_exists_")
             return error
         }
         guard let directory = await self.database.getTableDirectoryAsync(predicate: NSPredicate(format: "account == %@ AND serverUrl == %@", metadata.account, metadata.serverUrl)) else {
-            error = NKError(errorCode: NCGlobal.shared.errorUnexpectedResponseFromDB,
+            error = SCKError(errorCode: NCGlobal.shared.errorUnexpectedResponseFromDB,
                            errorDescription: NSLocalizedString("_e2ee_no_dir_", comment: ""))
             return error
         }
@@ -43,7 +43,7 @@ class NCNetworkingE2EERename: NSObject {
         // TEST UPLOAD IN PROGRESS
         //
         if await networkingE2EE.isInUpload(account: metadata.account, serverUrl: metadata.serverUrl) {
-            error = NKError(errorCode: NCGlobal.shared.errorE2EEUploadInProgress, errorDescription: NSLocalizedString("_e2e_in_upload_", comment: ""))
+            error = SCKError(errorCode: NCGlobal.shared.errorE2EEUploadInProgress, errorDescription: NSLocalizedString("_e2e_in_upload_", comment: ""))
             return error
         }
 

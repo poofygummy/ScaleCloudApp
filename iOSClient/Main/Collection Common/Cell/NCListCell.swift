@@ -414,7 +414,7 @@ class NCListLayout: UICollectionViewFlowLayout {
 extension NCCollectionViewCommon {
     func listCell(cell: NCListCell, indexPath: IndexPath, metadata: tableMetadata) -> NCListCell {
         defer {
-            let capabilities = NCNetworking.shared.capabilities[session.account] ?? NKCapabilities.Capabilities()
+            let capabilities = NCNetworking.shared.capabilities[session.account] ?? SCKCapabilities.Capabilities()
             if !metadata.isSharable() || (!capabilities.fileSharingApiEnabled && !capabilities.filesComments && capabilities.activity.isEmpty) {
                 cell.hideButtonShare(true)
             }
@@ -480,7 +480,7 @@ extension NCCollectionViewCommon {
         if isShare {
             cell.buttonShared.setImage(imageCache.getImageShared(), for: .normal)
         } else if !metadata.shareType.isEmpty {
-            metadata.shareType.contains(NKShare.ShareType.publicLink.rawValue) ?
+            metadata.shareType.contains(SCKShare.ShareType.publicLink.rawValue) ?
             (cell.buttonShared.setImage(imageCache.getImageShareByLink(), for: .normal)) :
             (cell.buttonShared.setImage(imageCache.getImageShared(), for: .normal))
         } else {
@@ -522,7 +522,7 @@ extension NCCollectionViewCommon {
         }
 
         // URL
-        if metadata.classFile == NKTypeClassFile.url.rawValue {
+        if metadata.classFile == SCKTypeClassFile.url.rawValue {
             cell.imageLocal.image = nil
             cell.setButtonsHidden(true)
         }

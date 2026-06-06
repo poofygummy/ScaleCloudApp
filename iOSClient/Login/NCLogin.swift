@@ -35,7 +35,7 @@ class NCLogin: UIViewController, UITextFieldDelegate, NCLoginQRCodeDelegate {
     private var activeTextfieldDiff: CGFloat = 0
     private var activeTextField = UITextField()
 
-    private var shareAccounts: [NKShareAccounts.DataAccounts]?
+    private var shareAccounts: [SCKShareAccounts.DataAccounts]?
 
     /// Controller
     var controller: NCMainTabBarController?
@@ -158,8 +158,8 @@ class NCLogin: UIViewController, UITextFieldDelegate, NCLoginQRCodeDelegate {
                 await NCAccount().updateAppsShareAccounts()
             }
             // Nextcloud get share accounts
-            if let shareAccounts = NKShareAccounts().getShareAccount(at: dirGroupApps, application: UIApplication.shared) {
-                var accountTemp = [NKShareAccounts.DataAccounts]()
+            if let shareAccounts = SCKShareAccounts().getShareAccount(at: dirGroupApps, application: UIApplication.shared) {
+                var accountTemp = [SCKShareAccounts.DataAccounts]()
                 for shareAccount in shareAccounts {
                     if NCManageDatabase.shared.getTableAccount(predicate: NSPredicate(format: "urlBase == %@ AND user == %@", shareAccount.url, shareAccount.user)) == nil {
                         accountTemp.append(shareAccount)
@@ -466,7 +466,7 @@ class NCLogin: UIViewController, UITextFieldDelegate, NCLoginQRCodeDelegate {
                     return
                 }
 
-                let loginOptions = NKRequestOptions(customUserAgent: userAgent)
+                let loginOptions = SCKRequestOptions(customUserAgent: userAgent)
                 ScaleCloudKit.shared.getLoginFlowV2(serverUrl: url, options: loginOptions) { [self] token, endpoint, login, _, error in
                     // Login Flow V2
                     if error == .success, let token, let endpoint, let login {

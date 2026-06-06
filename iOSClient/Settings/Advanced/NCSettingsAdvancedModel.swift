@@ -28,7 +28,7 @@ class NCSettingsAdvancedModel: ObservableObject, ViewOnAppearHandling {
     @Published var logFileCleared: Bool = false
     // Properties for log level and cache deletion
     // State variable for storing the selected log level.
-    @Published var selectedLogLevel: NKLogLevel = .normal
+    @Published var selectedLogLevel: SCKLogLevel = .normal
     // State variable for storing the selected cache deletion interval.
     @Published var selectedInterval: CacheDeletionInterval = .never
     // Root View Controller
@@ -92,7 +92,7 @@ class NCSettingsAdvancedModel: ObservableObject, ViewOnAppearHandling {
     /// Updates the value of `selectedLogLevel` in the keychain and sets it for ScaleCloudKit.
     func updateSelectedLogLevel() {
         keychain.log = selectedLogLevel
-        NKLogFileManager.shared.logLevel = selectedLogLevel
+        SCKLogFileManager.shared.logLevel = selectedLogLevel
     }
 
     /// Remove directory LOG
@@ -157,7 +157,7 @@ class NCSettingsAdvancedModel: ObservableObject, ViewOnAppearHandling {
     /// Presents the log file viewer.
     func viewLogFile() {
         // Path of the current (active) log file
-        let currentLogURL = NKLogFileManager.shared.currentLogFileURL()
+        let currentLogURL = SCKLogFileManager.shared.currentLogFileURL()
 
         // Create NCViewerQuickLook with the current log file
         let viewerQuickLook = NCViewerQuickLook(

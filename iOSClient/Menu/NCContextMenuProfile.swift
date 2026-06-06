@@ -34,7 +34,7 @@ class NCContextMenuProfile: NSObject {
 
     /// Returns a UIMenu that loads the hovercard data asynchronously using UIDeferredMenuElement
     func viewMenu() -> UIMenu {
-        let capabilities = NCNetworking.shared.capabilities[session.account] ?? NKCapabilities.Capabilities()
+        let capabilities = NCNetworking.shared.capabilities[session.account] ?? SCKCapabilities.Capabilities()
 
         guard capabilities.serverVersionMajor >= NCGlobal.shared.nextcloudVersion23 else {
             return UIMenu()
@@ -78,7 +78,7 @@ class NCContextMenuProfile: NSObject {
 
     // MARK: - Builder Methods
 
-    private func buildProfileMenu(from card: NKHovercard) -> [UIMenuElement] {
+    private func buildProfileMenu(from card: SCKHovercard) -> [UIMenuElement] {
         var menuElements: [UIMenuElement] = []
 
         let actionsMenu = buildActionsMenu(from: card.actions)
@@ -90,13 +90,13 @@ class NCContextMenuProfile: NSObject {
         return menuElements
     }
 
-    private func buildActionsMenu(from actions: [NKHovercard.Action]) -> [UIMenuElement] {
+    private func buildActionsMenu(from actions: [SCKHovercard.Action]) -> [UIMenuElement] {
         return actions.map { makeActionItem(from: $0) }
     }
 
     // MARK: - Action Makers
 
-    private func makeActionItem(from action: NKHovercard.Action) -> UIAction {
+    private func makeActionItem(from action: SCKHovercard.Action) -> UIAction {
         // Placeholder
         let placeholder = utility.loadImage(named: "person", colors: [NCBrandColor.shared.iconImageColor])
         let uiAction = UIAction(
@@ -130,7 +130,7 @@ class NCContextMenuProfile: NSObject {
 
     // MARK: - Action Handlers
 
-    private func handleProfileAction(_ action: NKHovercard.Action) {
+    private func handleProfileAction(_ action: SCKHovercard.Action) {
         switch action.appId {
         case "email":
             handleEmailAction(action)
@@ -143,7 +143,7 @@ class NCContextMenuProfile: NSObject {
         }
     }
 
-    private func handleEmailAction(_ action: NKHovercard.Action) {
+    private func handleEmailAction(_ action: SCKHovercard.Action) {
         guard let url = action.hyperlinkUrl,
               url.scheme == "mailto",
               let components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
@@ -163,7 +163,7 @@ class NCContextMenuProfile: NSObject {
         viewController.present(mail, animated: true)
     }
 
-    private func handleSpreedAction(_ action: NKHovercard.Action) {
+    private func handleSpreedAction(_ action: SCKHovercard.Action) {
         guard let talkUrl = URL(string: "nextcloudtalk://open-conversation?server=\(session.urlBase)&user=\(session.userId)&withUser=\(userId)"),
               UIApplication.shared.canOpenURL(talkUrl) else {
             handleDefaultAction(action)
@@ -173,7 +173,7 @@ class NCContextMenuProfile: NSObject {
         UIApplication.shared.open(talkUrl)
     }
 
-    private func handleDefaultAction(_ action: NKHovercard.Action) {
+    private func handleDefaultAction(_ action: SCKHovercard.Action) {
         guard let url = action.hyperlinkUrl,
               UIApplication.shared.canOpenURL(url) else {
             showError("_open_url_error_")

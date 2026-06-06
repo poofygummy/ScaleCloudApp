@@ -59,20 +59,20 @@ class NCShareDateCell: UITableViewCell {
     }
 
     private func isExpireDateEnforced(account: String) -> Bool {
-        let capabilities = NCNetworking.shared.capabilities[account] ?? NKCapabilities.Capabilities()
+        let capabilities = NCNetworking.shared.capabilities[account] ?? SCKCapabilities.Capabilities()
 
         switch self.shareType {
-        case NKShare.ShareType.publicLink.rawValue,
-            NKShare.ShareType.email.rawValue,
-            NKShare.ShareType.guest.rawValue:
+        case SCKShare.ShareType.publicLink.rawValue,
+            SCKShare.ShareType.email.rawValue,
+            SCKShare.ShareType.guest.rawValue:
             return capabilities.fileSharingPubExpireDateEnforced
-        case NKShare.ShareType.user.rawValue,
-            NKShare.ShareType.group.rawValue,
-            NKShare.ShareType.team.rawValue,
-            NKShare.ShareType.talkConversation.rawValue:
+        case SCKShare.ShareType.user.rawValue,
+            SCKShare.ShareType.group.rawValue,
+            SCKShare.ShareType.team.rawValue,
+            SCKShare.ShareType.talkConversation.rawValue:
             return capabilities.fileSharingInternalExpireDateEnforced
-        case NKShare.ShareType.federatedCloud.rawValue,
-            NKShare.ShareType.federatedGroup.rawValue:
+        case SCKShare.ShareType.federatedCloud.rawValue,
+            SCKShare.ShareType.federatedGroup.rawValue:
             return capabilities.fileSharingRemoteExpireDateEnforced
         default:
             return false
@@ -80,20 +80,20 @@ class NCShareDateCell: UITableViewCell {
     }
 
     private func defaultExpirationDays(account: String) -> Int {
-        let capabilities = NCNetworking.shared.capabilities[account] ?? NKCapabilities.Capabilities()
+        let capabilities = NCNetworking.shared.capabilities[account] ?? SCKCapabilities.Capabilities()
 
         switch self.shareType {
-        case NKShare.ShareType.publicLink.rawValue,
-            NKShare.ShareType.email.rawValue,
-            NKShare.ShareType.guest.rawValue:
+        case SCKShare.ShareType.publicLink.rawValue,
+            SCKShare.ShareType.email.rawValue,
+            SCKShare.ShareType.guest.rawValue:
             return capabilities.fileSharingPubExpireDateDays
-        case NKShare.ShareType.user.rawValue,
-            NKShare.ShareType.group.rawValue,
-            NKShare.ShareType.team.rawValue,
-            NKShare.ShareType.talkConversation.rawValue:
+        case SCKShare.ShareType.user.rawValue,
+            SCKShare.ShareType.group.rawValue,
+            SCKShare.ShareType.team.rawValue,
+            SCKShare.ShareType.talkConversation.rawValue:
             return capabilities.fileSharingInternalExpireDateDays
-        case NKShare.ShareType.federatedCloud.rawValue,
-            NKShare.ShareType.federatedGroup.rawValue:
+        case SCKShare.ShareType.federatedCloud.rawValue,
+            SCKShare.ShareType.federatedGroup.rawValue:
             return capabilities.fileSharingRemoteExpireDateDays
         default:
             return 0

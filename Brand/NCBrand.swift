@@ -128,7 +128,7 @@ final class NCBrandOptions: @unchecked Sendable {
         return userAgent
     }
 
-    func isServerVersion(_ capabilities: NKCapabilities.Capabilities,
+    func isServerVersion(_ capabilities: SCKCapabilities.Capabilities,
                          greaterOrEqualTo major: Int,
                          _ minor: Int,
                          _ micro: Int) -> Bool {
@@ -238,7 +238,7 @@ final class NCBrandColor: @unchecked Sendable {
     }
 
     @discardableResult
-    func settingThemingColor(account: String, capabilities: NKCapabilities.Capabilities) -> Bool {
+    func settingThemingColor(account: String, capabilities: SCKCapabilities.Capabilities) -> Bool {
         let darker: CGFloat = 30    // %
         let lighter: CGFloat = 30   // %
         var colorThemingColor: UIColor?

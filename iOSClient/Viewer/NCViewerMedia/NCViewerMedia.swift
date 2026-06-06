@@ -349,7 +349,7 @@ class NCViewerMedia: UIViewController {
             ScaleCloudKit.shared.downloadPreview(fileId: metadata.fileId,
                                                 etag: metadata.etag,
                                                 account: metadata.account,
-                                                options: NKRequestOptions(queue: .main)) { task in
+                                                options: SCKRequestOptions(queue: .main)) { task in
                 Task {
                     let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: metadata.account,
                                                                                                 path: metadata.fileId,
@@ -642,7 +642,7 @@ extension NCViewerMedia: NCTransferDelegate {
                         selector: String?,
                         ocId: String,
                         destination: String?,
-                        error: NKError) {
+                        error: SCKError) {
         if status == self.global.networkingStatusDownloaded {
             DispatchQueue.main.async {
                 self.closeDetail()

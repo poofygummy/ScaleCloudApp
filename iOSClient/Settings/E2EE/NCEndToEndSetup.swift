@@ -46,7 +46,7 @@ class NCEndToEndSetup {
     /// 2. Ensure a valid certificate exists (fetch or create/sign)
     /// 3. Ensure a valid private key exists (fetch or create)
     ///
-    /// - Throws: `NKError` if any step fails (network, crypto, validation, or user cancellation)
+    /// - Throws: `SCKError` if any step fails (network, crypto, validation, or user cancellation)
     func start() async throws {
         // Clear all keys
         NCPreferences().clearAllKeysEndToEnd(account: session.account)
@@ -63,8 +63,8 @@ class NCEndToEndSetup {
     /// - The returned certificate is verified against the locally generated public key
     ///
     /// - Throws:
-    ///   - `NKError` if CSR generation fails
-    ///   - `NKError` if certificate is missing or invalid
+    ///   - `SCKError` if CSR generation fails
+    ///   - `SCKError` if certificate is missing or invalid
     ///   - Server errors propagated from ScaleCloudKit
     private func getPublicKey() async throws {
         let results = await ScaleCloudKit.shared.getE2EECertificateAsync(account: session.account)
@@ -72,7 +72,7 @@ class NCEndToEndSetup {
         switch results.error.errorCode {
         case .zero:
             guard let certificate = results.certificate else {
-                throw NKError(errorCode: global.errorInternalError,
+                throw SCKError(errorCode: global.errorInternalError,
                               errorDescription: NSLocalizedString("_e2ee_setup_get_certificate_", comment: ""))
             }
             NCPreferences().setEndToEndCertificate(account: self.session.account, certificate: certificate)
@@ -81,7 +81,7 @@ class NCEndToEndSetup {
         case NCGlobal.shared.errorResourceNotFound:
             // Create CSR
             guard let csr = NCEndToEndEncryption.shared().createCSR(self.session.userId, directory: self.utilityFileSystem.directoryUserData) else {
-                throw NKError(errorCode: global.errorInternalError,
+                throw SCKError(errorCode: global.errorInternalError,
                               errorDescription: NSLocalizedString("_e2ee_setup_create_csr_", comment: ""))
             }
 
@@ -91,7 +91,7 @@ class NCEndToEndSetup {
                   let certificate = results.certificate
             else {
                 throw results.error == .success
-                    ? NKError(
+                    ? SCKError(
                         errorCode: global.errorInternalError,
                         errorDescription: NSLocalizedString("_e2ee_setup_sign_certificate_", comment: "")
                     )
@@ -101,7 +101,7 @@ class NCEndToEndSetup {
             // Verify PublicKey
             let extractedPublicKey = NCEndToEndEncryption.shared().extractPublicKey(fromCertificate: certificate)
             guard extractedPublicKey == NCEndToEndEncryption.shared().generatedPublicKey else {
-                throw NKError(
+                throw SCKError(
                     errorCode: global.errorInternalError,
                     errorDescription: NSLocalizedString("_e2ee_setup_extract_publickey_", comment: "")
                 )
@@ -129,8 +129,8 @@ class NCEndToEndSetup {
     /// - Clears E2EE database tables
     ///
     /// - Throws:
-    ///   - `NKError` for decryption failures
-    ///   - `NKError` for missing data
+    ///   - `SCKError` for decryption failures
+    ///   - `SCKError` for missing data
     ///   - `NSUserCancelledError` if user cancels input
     ///   - Server errors propagated from ScaleCloudKit
     private func getPrivateKey() async throws {
@@ -139,7 +139,7 @@ class NCEndToEndSetup {
         switch results.error.errorCode {
         case .zero:
             guard let privateKeyCipher = results.privateKey else {
-                throw NKError(
+                throw SCKError(
                     errorCode: global.errorInternalError,
                     errorDescription: NSLocalizedString("_e2ee_setup_get_privatekey_", comment: "")
                 )
@@ -151,7 +151,7 @@ class NCEndToEndSetup {
                   let keyData = Data(base64Encoded: privateKeyData),
                   let privateKey = String(data: keyData, encoding: .utf8)
             else {
-                throw NKError(
+                throw SCKError(
                     errorCode: global.errorInternalError,
                     errorDescription: NSLocalizedString("_e2ee_setup_passphrase_error_", comment: "")
                 )
@@ -166,7 +166,7 @@ class NCEndToEndSetup {
                   let publicKey = results.publicKey
             else {
                 throw results.error == .success
-                    ? NKError(
+                    ? SCKError(
                         errorCode: global.errorInternalError,
                         errorDescription: NSLocalizedString("_e2ee_setup_get_publickey_", comment: "")
                     )
@@ -207,8 +207,8 @@ class NCEndToEndSetup {
     ///   - copyPassphrase: Whether to copy the passphrase to the pasteboard
     ///
     /// - Throws:
-    ///   - `NKError` if encryption fails
-    ///   - `NKError` if server responses are invalid
+    ///   - `SCKError` if encryption fails
+    ///   - `SCKError` if server responses are invalid
     ///   - Server errors propagated from ScaleCloudKit
     private func createNewE2EE(e2ePassphrase: String, copyPassphrase: Bool) async throws {
         var privateKeyString: NSString?
@@ -219,7 +219,7 @@ class NCEndToEndSetup {
             passphrase: e2ePassphrase,
             privateKey: &privateKeyString
         ) else {
-            throw NKError(
+            throw SCKError(
                 errorCode: global.errorInternalError,
                 errorDescription: NSLocalizedString("_e2ee_setup_encript_privatekey_", comment: "")
             )
@@ -236,7 +236,7 @@ class NCEndToEndSetup {
         case .zero:
 
             guard let privateKeyString else {
-                throw NKError(
+                throw SCKError(
                     errorCode: global.errorInternalError,
                     errorDescription: NSLocalizedString("_e2ee_setup_store_privatekey_", comment: "")
                 )
@@ -256,7 +256,7 @@ class NCEndToEndSetup {
                   let publicKey = publicKeyResults.publicKey
             else {
                 throw publicKeyResults.error == .success
-                    ? NKError(
+                    ? SCKError(
                         errorCode: global.errorInternalError,
                         errorDescription: NSLocalizedString("_e2ee_setup_get_publickey_", comment: "")
                     )
@@ -286,12 +286,12 @@ class NCEndToEndSetup {
     /// - Parameter publicKey: Public key retrieved from the server
     ///
     /// - Throws:
-    ///   - `NKError` if certificate is missing or validation fails
+    ///   - `SCKError` if certificate is missing or validation fails
     private func verifyPublicKey(_ publicKey: String) throws {
         guard let certificate = NCPreferences().getEndToEndCertificate(account: session.account),
               NCEndToEndEncryption.shared().verifyCertificate(certificate, publicKey: publicKey)
         else {
-            throw NKError(
+            throw SCKError(
                 errorCode: global.errorInternalError,
                 errorDescription: NSLocalizedString("_e2ee_setup_verify_publickey_", comment: "")
             )
@@ -303,7 +303,7 @@ class NCEndToEndSetup {
     /// - Returns: The user-entered passphrase
     ///
     /// - Throws:
-    ///   - `NKError` with `NSUserCancelledError` if the user cancels the dialog
+    ///   - `SCKError` with `NSUserCancelledError` if the user cancels the dialog
     ///
     /// - Note:
     ///   - Always executed on MainActor due to UIKit usage
@@ -323,7 +323,7 @@ class NCEndToEndSetup {
             }
 
             let cancel = UIAlertAction(title: "Cancel", style: .cancel) { _ in
-                continuation.resume(throwing: NKError(
+                continuation.resume(throwing: SCKError(
                     errorCode: NSUserCancelledError,
                     errorDescription: "User cancelled"
                 ))
@@ -351,13 +351,13 @@ class NCEndToEndSetup {
     /// - Returns: `PassphraseChoice` indicating user action and passphrase
     ///
     /// - Throws:
-    ///   - `NKError` if passphrase generation fails
+    ///   - `SCKError` if passphrase generation fails
     ///
     /// - Note:
     ///   - Always executed on MainActor due to UIKit usage
     func requestNewPassphraseAsync() async throws -> PassphraseChoice {
         guard let e2ePassphrase = NYMnemonic.generateString(128, language: "english") else {
-            throw NKError(
+            throw SCKError(
                 errorCode: global.errorInternalError,
                 errorDescription: NSLocalizedString("_e2ee_setup_generate_passphrase_", comment: "")
             )

@@ -104,7 +104,7 @@ class NCShareLinkCell: UITableViewCell {
                 labelQuickStatus.text = NSLocalizedString("_share_read_only_", comment: "")
             }
 
-            if tableShare.shareType == NKShare.ShareType.email.rawValue {
+            if tableShare.shareType == SCKShare.ShareType.email.rawValue {
                 labelTitle.text = tableShare.shareWithDisplayname
                 imageItem.image = NCUtility().loadImage(named: "envelope.circle.fill", colors: [NCBrandColor.shared.getElement(account: tableShare.account)])
             }

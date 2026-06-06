@@ -11,10 +11,10 @@ import LucidBanner
 class NCNetworkingE2EEMarkFolder: NSObject {
     let database = NCManageDatabase.shared
 
-    func markFolderE2ee(account: String, serverUrlFileName: String, userId: String, sceneIdentifier: String?) async -> NKError {
+    func markFolderE2ee(account: String, serverUrlFileName: String, userId: String, sceneIdentifier: String?) async -> SCKError {
         var banner: LucidBanner?
         var token: Int?
-        var error = NKError()
+        var error = SCKError()
 
         defer {
             if let banner, let token {
@@ -48,7 +48,7 @@ class NCNetworkingE2EEMarkFolder: NSObject {
             error = resultsReadFileOrFolder.error
             return error
         }
-        let capabilities = await NKCapabilities.shared.getCapabilities(for: account)
+        let capabilities = await SCKCapabilities.shared.getCapabilities(for: account)
         let resultsMarkE2EEFolder = await ScaleCloudKit.shared.markE2EEFolderAsync(fileId: file.fileId, delete: false, account: account, options: NCNetworkingE2EE().getOptions(account: account, capabilities: capabilities)) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,

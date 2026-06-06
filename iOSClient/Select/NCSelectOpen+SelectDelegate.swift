@@ -41,7 +41,7 @@ final class NCSelectOpen: NCSelectDelegate {
         let topViewController = navigationController?.topViewController as? NCSelect
         var listViewController = [NCSelect]()
         var copyItems: [tableMetadata] = []
-        let capabilities = NCNetworking.shared.capabilities[controller?.account ?? ""] ?? NKCapabilities.Capabilities()
+        let capabilities = NCNetworking.shared.capabilities[controller?.account ?? ""] ?? SCKCapabilities.Capabilities()
 
         for item in items {
             if let fileNameError = FileNameValidator.checkFileName(item.fileNameView, account: controller?.account, capabilities: capabilities) {

@@ -311,7 +311,7 @@ extension NCCollectionViewCommon {
         cellMainStatus(cell: cell, metadata: metadata, a11yValues: &a11yValues)
 
         // URL
-        if metadata.classFile == NKTypeClassFile.url.rawValue {
+        if metadata.classFile == SCKTypeClassFile.url.rawValue {
             cell.imageLocal.image = nil
         }
 

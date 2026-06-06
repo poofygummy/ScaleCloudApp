@@ -104,7 +104,7 @@ struct NCStatusMessageView: View {
 
 private struct StatusPresetRow: View {
     @Binding var model: NCStatusMessageModel
-    let preset: NKUserStatus
+    let preset: SCKUserStatus
 
     var body: some View {
         let cleatAtText = model.getPredefinedClearStatusString(clearAt: preset.clearAt, clearAtTime: preset.clearAtTime, clearAtType: preset.clearAtType)

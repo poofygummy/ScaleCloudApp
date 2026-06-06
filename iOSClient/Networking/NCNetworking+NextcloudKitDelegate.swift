@@ -11,8 +11,8 @@ import LucidBanner
 extension NCNetworking {
 
 #if !EXTENSION
-    func networkReachabilityObserver(_ typeReachability: NKTypeReachability) {
-        if typeReachability == NKTypeReachability.reachableCellular || typeReachability == NKTypeReachability.reachableEthernetOrWiFi {
+    func networkReachabilityObserver(_ typeReachability: SCKTypeReachability) {
+        if typeReachability == SCKTypeReachability.reachableCellular || typeReachability == SCKTypeReachability.reachableEthernetOrWiFi {
             lastReachability = true
         } else {
             if lastReachability {
@@ -45,7 +45,7 @@ extension NCNetworking {
                           dateLastModified: Date?,
                           length: Int64,
                           task: URLSessionTask,
-                          error: NKError) {
+                          error: SCKError) {
         Task {
             await progressQuantizer.clear(serverUrlFileName: serverUrl + "/" + fileName)
 
@@ -126,7 +126,7 @@ extension NCNetworking {
                         date: Date?,
                         size: Int64,
                         task: URLSessionTask,
-                        error: NKError) {
+                        error: SCKError) {
         Task {
             await progressQuantizer.clear(serverUrlFileName: serverUrl + "/" + fileName)
 

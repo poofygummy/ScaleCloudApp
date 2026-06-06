@@ -194,7 +194,7 @@ class NCLoginProvider: NSObject, ASWebAuthenticationPresentationContextProviding
     ///
     /// Fetch the server response and process it.
     ///
-    private func poll(token: String, endpoint: String, options: NKRequestOptions) async -> (urlBase: String, loginName: String, appPassword: String)? {
+    private func poll(token: String, endpoint: String, options: SCKRequestOptions) async -> (urlBase: String, loginName: String, appPassword: String)? {
         await withCheckedContinuation { continuation in
             ScaleCloudKit.shared.getLoginFlowV2Poll(token: token, endpoint: endpoint, options: options) { server, loginName, appPassword, _, error in
 
@@ -259,7 +259,7 @@ class NCLoginProvider: NSObject, ASWebAuthenticationPresentationContextProviding
     /// Sets up polling.
     ///
     private func createPollingTask(token: String, endpoint: String) -> Task<Void, any Error> {
-        let options = NKRequestOptions(customUserAgent: userAgent)
+        let options = SCKRequestOptions(customUserAgent: userAgent)
         var grantValues: (urlBase: String, loginName: String, appPassword: String)?
 
         return Task { @MainActor in

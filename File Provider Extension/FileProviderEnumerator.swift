@@ -178,7 +178,7 @@ class FileProviderEnumerator: NSObject, NSFileProviderEnumerator {
             // make items
             for metadata in metadatas {
                 // NO E2EE OR NO VIDEO PART OF LIVE PHOTO
-                if metadata.e2eEncrypted || (metadata.classFile == NKTypeClassFile.video.rawValue && !metadata.livePhotoFile.isEmpty) {
+                if metadata.e2eEncrypted || (metadata.classFile == SCKTypeClassFile.video.rawValue && !metadata.livePhotoFile.isEmpty) {
                     continue
                 }
 
@@ -205,7 +205,7 @@ class FileProviderEnumerator: NSObject, NSFileProviderEnumerator {
            paginateOffset = getOffset(for: pageNumber)
         }
         let optionsPaginate = await FileProviderData.shared.isPaginatedAvailabile(serverUrl: serverUrl, session: session)
-        let options = NKRequestOptions(paginate: optionsPaginate,
+        let options = SCKRequestOptions(paginate: optionsPaginate,
                                        paginateToken: self.paginateToken,
                                        paginateOffset: paginateOffset,
                                        paginateCount: paginateCount,

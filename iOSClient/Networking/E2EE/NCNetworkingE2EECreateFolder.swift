@@ -16,10 +16,10 @@ class NCNetworkingE2EECreateFolder: NSObject {
     let global = NCGlobal.shared
 
     @MainActor
-    func createFolder(fileName: String, serverUrl: String, sceneIdentifier: String?, session: NCSession.Session) async -> NKError {
+    func createFolder(fileName: String, serverUrl: String, sceneIdentifier: String?, session: NCSession.Session) async -> SCKError {
         var banner: LucidBanner?
         var token: Int?
-        var error = NKError()
+        var error = SCKError()
 
         defer {
             if let banner, let token {
@@ -31,14 +31,14 @@ class NCNetworkingE2EECreateFolder: NSObject {
             }
         }
 
-        let capabilities = await NKCapabilities.shared.getCapabilities(for: session.account)
+        let capabilities = await SCKCapabilities.shared.getCapabilities(for: session.account)
         var fileNameFolder = FileAutoRenamer.rename(fileName, isFolderPath: true, capabilities: capabilities)
 
         let fileNameIdentifier = networkingE2EE.generateRandomIdentifier()
         let serverUrlFileName = utilityFileSystem.createServerUrl(serverUrl: serverUrl, fileName: fileNameIdentifier)
         fileNameFolder = utilityFileSystem.createFileName(fileNameFolder, serverUrl: serverUrl, account: session.account)
         if fileNameFolder.isEmpty {
-            error = NKError(errorCode: global.errorUnexpectedResponseFromDB,
+            error = SCKError(errorCode: global.errorUnexpectedResponseFromDB,
                             errorDescription: NSLocalizedString("_e2ee_no_dir_", comment: ""))
             return error
         }
@@ -46,7 +46,7 @@ class NCNetworkingE2EECreateFolder: NSObject {
         // TEST UPLOAD IN PROGRESS
         //
         if await networkingE2EE.isInUpload(account: session.account, serverUrl: serverUrl) {
-            error = NKError(errorCode: global.errorE2EEUploadInProgress,
+            error = SCKError(errorCode: global.errorE2EEUploadInProgress,
                             errorDescription: NSLocalizedString("_e2e_in_upload_", comment: ""))
             return error
         }
@@ -65,7 +65,7 @@ class NCNetworkingE2EECreateFolder: NSObject {
         guard let e2eToken = resultsLock.e2eToken,
               let fileId = resultsLock.fileId,
               resultsLock.error == .success else {
-            error = NKError(errorCode: global.errorE2EELock,
+            error = SCKError(errorCode: global.errorE2EELock,
                             errorDescription: NSLocalizedString("_e2ee_no_lock_", comment: ""))
             return error
         }
@@ -85,7 +85,7 @@ class NCNetworkingE2EECreateFolder: NSObject {
 
         // CREATE FOLDER
         //
-        let resultsCreateFolder = await ScaleCloudKit.shared.createFolderAsync(serverUrlFileName: serverUrlFileName, account: session.account, options: NKRequestOptions(customHeader: ["e2e-token": e2eToken])) { task in
+        let resultsCreateFolder = await ScaleCloudKit.shared.createFolderAsync(serverUrlFileName: serverUrlFileName, account: session.account, options: SCKRequestOptions(customHeader: ["e2e-token": e2eToken])) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: session.account,
                                                                                             path: serverUrlFileName,
@@ -161,13 +161,13 @@ class NCNetworkingE2EECreateFolder: NSObject {
                         fileId: String,
                         fileNameIdentifier: String,
                         fileNameFolder: String,
-                        session: NCSession.Session) async -> NKError {
+                        session: NCSession.Session) async -> SCKError {
         var key: NSString?
         var initializationVector: NSString?
         var method = "POST"
 
         guard let directory = await self.database.getTableDirectoryAsync(predicate: NSPredicate(format: "account == %@ AND serverUrl == %@", session.account, serverUrl)) else {
-            return NKError(errorCode: global.errorUnexpectedResponseFromDB,
+            return SCKError(errorCode: global.errorUnexpectedResponseFromDB,
                            errorDescription: NSLocalizedString("_e2ee_no_dir_", comment: ""))
         }
 
@@ -182,7 +182,7 @@ class NCNetworkingE2EECreateFolder: NSObject {
 
         NCEndToEndEncryption.shared().encodedkey(&key, initializationVector: &initializationVector)
         guard let key = key as? String, let initializationVector = initializationVector as? String else {
-            return NKError(errorCode: global.errorE2EEEncodedKey,
+            return SCKError(errorCode: global.errorE2EEEncodedKey,
                            errorDescription: NSLocalizedString("_e2ee_no_generate_key_", comment: ""))
         }
 
@@ -193,7 +193,7 @@ class NCNetworkingE2EECreateFolder: NSObject {
             object.metadataKeyIndex = results.metadataKeyIndex
         } else {
             guard let key = NCEndToEndEncryption.shared().generateKey() as NSData? else {
-                return NKError(errorCode: global.errorE2EEGenerateKey,
+                return SCKError(errorCode: global.errorE2EEGenerateKey,
                                errorDescription: NSLocalizedString("_e2ee_no_generate_key_", comment: ""))
             }
             object.metadataKey = key.base64EncodedString()

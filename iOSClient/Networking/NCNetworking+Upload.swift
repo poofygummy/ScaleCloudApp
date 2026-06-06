@@ -26,8 +26,8 @@ extension NCNetworking {
               date: Date?,
               size: Int64,
               response: AFDataResponse<Data>?,
-              error: NKError) {
-        let options = NKRequestOptions(customHeader: customHeaders, queue: ScaleCloudKit.shared.nkCommonInstance.backgroundQueue)
+              error: SCKError) {
+        let options = SCKRequestOptions(customHeader: customHeaders, queue: ScaleCloudKit.shared.nkCommonInstance.backgroundQueue)
         let results = await ScaleCloudKit.shared.uploadAsync(serverUrlFileName: serverUrlFileName,
                                                             fileNameLocalPath: fileNameLocalPath,
                                                             dateCreationFile: creationDate,
@@ -61,20 +61,20 @@ extension NCNetworking {
                          uploadStart: @escaping (_ filesChunk: [(fileName: String, size: Int64)]) -> Void = { _ in },
                          uploadProgressHandler: @escaping (_ totalBytesExpected: Int64, _ totalBytes: Int64, _ fractionCompleted: Double) -> Void = { _, _, _ in },
                          assembling: @escaping () -> Void = { }) async -> (account: String,
-                                                                           file: NKFile?,
-                                                                           error: NKError) {
+                                                                           file: SCKFile?,
+                                                                           error: SCKError) {
         let directory = utilityFileSystem.getDirectoryProviderStorageOcId(metadata.ocId,
                                                                           userId: metadata.userId,
                                                                           urlBase: metadata.urlBase)
         let chunkFolder = NCManageDatabase.shared.getChunkFolder(account: metadata.account, ocId: metadata.ocId)
         let filesChunk = NCManageDatabase.shared.getChunks(account: metadata.account, ocId: metadata.ocId)
         var chunkSize = self.global.chunkSizeMBCellular
-        if networkReachability == NKTypeReachability.reachableEthernetOrWiFi {
+        if networkReachability == SCKTypeReachability.reachableEthernetOrWiFi {
             chunkSize = self.global.chunkSizeMBEthernetOrWiFi
         }
-        let options = NKRequestOptions(customHeader: customHeaders, queue: ScaleCloudKit.shared.nkCommonInstance.backgroundQueue)
-        var backupError = NKError()
-        var backupFile: NKFile?
+        let options = SCKRequestOptions(customHeader: customHeaders, queue: ScaleCloudKit.shared.nkCommonInstance.backgroundQueue)
+        var backupError = SCKError()
+        var backupFile: SCKFile?
 
         do {
             let (_, file) = try await ScaleCloudKit.shared.uploadChunkAsync(
@@ -153,9 +153,9 @@ extension NCNetworking {
 
             backupFile = file
         } catch is CancellationError {
-            backupError = NKError(errorCode: -5, errorDescription: "Transfers was cancelled.")
+            backupError = SCKError(errorCode: -5, errorDescription: "Transfers was cancelled.")
             await uploadCancelFile(metadata: metadata, directoryChunks: directory)
-        } catch let error as NKError {
+        } catch let error as SCKError {
             backupError = error
             if error.errorCode == -5 {
                 await uploadCancelFile(metadata: metadata, directoryChunks: directory)
@@ -165,7 +165,7 @@ extension NCNetworking {
                 }
             }
         } catch let error {
-            backupError = NKError(error: error)
+            backupError = SCKError(error: error)
             if performPostProcessing {
                 await uploadError(withMetadata: metadata, error: backupError)
             }
@@ -180,7 +180,7 @@ extension NCNetworking {
     func uploadFileInBackground(metadata: tableMetadata,
                                 taskHandler: @escaping (_ task: URLSessionUploadTask?) -> Void = { _ in },
                                 start: @escaping () -> Void = { })
-    async -> NKError {
+    async -> SCKError {
         let fileNameLocalPath = utilityFileSystem.getDirectoryProviderStorageOcId(metadata.ocId,
                                                                                   fileName: metadata.fileName,
                                                                                   userId: metadata.userId,
@@ -191,7 +191,7 @@ extension NCNetworking {
         // Check file dim > 0
         if utilityFileSystem.getFileSize(filePath: fileNameLocalPath) == 0 && metadata.size != 0 {
             await NCManageDatabase.shared.deleteMetadataAsync(id: metadata.ocId)
-            return NKError(errorCode: self.global.errorResourceNotFound, errorDescription: NSLocalizedString("_error_not_found_", value: "The requested resource could not be found", comment: ""))
+            return SCKError(errorCode: self.global.errorResourceNotFound, errorDescription: NSLocalizedString("_error_not_found_", value: "The requested resource could not be found", comment: ""))
         } else {
             let (task, error) = await backgroundSession.uploadAsync(serverUrlFileName: metadata.serverUrlFileName,
                                                                     fileNameLocalPath: fileNameLocalPath,
@@ -282,7 +282,7 @@ extension NCNetworking {
 
     // MARK: - UPLOAD ERROR
 
-    func uploadError(withMetadata metadata: tableMetadata, error: NKError) async {
+    func uploadError(withMetadata metadata: tableMetadata, error: SCKError) async {
         await ScaleCloudKit.shared.nkCommonInstance.appendServerErrorAccount(metadata.account, errorCode: error.errorCode)
 
         nkLog(error: "Upload file: " + metadata.serverUrlFileName + ", result: error \(error.errorCode)")
@@ -304,7 +304,7 @@ extension NCNetworking {
                                                                   status: self.global.metadataStatusUploadError,
                                                                   errorCode: error.errorCode)
 #if !EXTENSION
-            let capabilities = await NKCapabilities.shared.getCapabilities(for: metadata.account)
+            let capabilities = await SCKCapabilities.shared.getCapabilities(for: metadata.account)
             if !isAppInBackground {
                 if capabilities.termsOfService {
                     await termsOfService(metadata: metadata)
@@ -360,7 +360,7 @@ extension NCNetworking {
 
 #if !EXTENSION
     @MainActor
-    func uploadForbidden(metadata: tableMetadata, error: NKError) async {
+    func uploadForbidden(metadata: tableMetadata, error: SCKError) async {
         let newFileName = self.utilityFileSystem.createFileName(metadata.fileName, serverUrl: metadata.serverUrl, account: metadata.account)
         let alertController = UIAlertController(title: error.errorDescription, message: NSLocalizedString("_change_upload_filename_", comment: ""), preferredStyle: .alert)
 
@@ -397,7 +397,7 @@ extension NCNetworking {
 
     @MainActor
     func termsOfService(metadata: tableMetadata) async {
-        let options = NKRequestOptions(checkInterceptor: false, queue: .main)
+        let options = SCKRequestOptions(checkInterceptor: false, queue: .main)
         let results = await ScaleCloudKit.shared.getTermsOfServiceAsync(account: metadata.account, options: options, taskHandler: { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: metadata.account,
@@ -486,7 +486,7 @@ extension NCNetworking {
         }
 
         // Live Photo
-        let capabilities = await NKCapabilities.shared.getCapabilities(for: metadata.account)
+        let capabilities = await SCKCapabilities.shared.getCapabilities(for: metadata.account)
         if capabilities.isLivePhotoServerAvailable,
            metadata.isLivePhoto {
             livePhoto = tableMetadata(value: metadata)

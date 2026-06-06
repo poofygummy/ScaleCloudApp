@@ -11,7 +11,7 @@ extension NCMedia {
         guard let tblAccount = await self.database.getTableAccountAsync(predicate: NSPredicate(format: "account == %@", self.session.account)) else {
             return
         }
-        let capabilities = await NKCapabilities.shared.getCapabilities(for: self.session.account)
+        let capabilities = await SCKCapabilities.shared.getCapabilities(for: self.session.account)
         let mediaPredicate = self.imageCache.getMediaPredicate(session: self.session,
                                                                mediaPath: tblAccount.mediaPath,
                                                                showOnlyImages: self.showOnlyImages,
@@ -71,7 +71,7 @@ extension NCMedia {
             return
         }
 
-        let capabilities = await NKCapabilities.shared.getCapabilities(for: session.account)
+        let capabilities = await SCKCapabilities.shared.getCapabilities(for: session.account)
         var lessDate = Date.distantFuture
         var greaterDate = Date.distantPast
         var visibleCells: [NCMediaCell] = []
@@ -133,7 +133,7 @@ extension NCMedia {
             max(self.collectionView.visibleCells.count * 3, 300)
         }
 
-        let options = NKRequestOptions(timeout: 180, taskDescription: self.global.taskDescriptionRetrievesProperties, queue: ScaleCloudKit.shared.nkCommonInstance.backgroundQueue)
+        let options = SCKRequestOptions(timeout: 180, taskDescription: self.global.taskDescriptionRetrievesProperties, queue: ScaleCloudKit.shared.nkCommonInstance.backgroundQueue)
 
         let result = await searchMediaAsync(path: tblAccount.mediaPath,
                                             lessDate: lessDate,
@@ -257,7 +257,7 @@ public class NCMediaDataSource: NSObject {
     }
 
     private func getMetadataFromTableMetadata(_ metadata: tableMetadata) -> Metadata {
-        let capabilities = NCNetworking.shared.capabilities[metadata.account] ?? NKCapabilities.Capabilities()
+        let capabilities = NCNetworking.shared.capabilities[metadata.account] ?? SCKCapabilities.Capabilities()
         let date: Date
         if capabilities.serverVersionMajor >= self.global.nextcloudVersionFuture {
             date = metadata.datePhotosOriginal as Date
@@ -267,9 +267,9 @@ public class NCMediaDataSource: NSObject {
         return Metadata(date: date,
                         etag: metadata.etag,
                         imageSize: CGSize(width: metadata.width, height: metadata.height),
-                        isImage: metadata.classFile == NKTypeClassFile.image.rawValue,
+                        isImage: metadata.classFile == SCKTypeClassFile.image.rawValue,
                         isLivePhoto: !metadata.livePhotoFile.isEmpty,
-                        isVideo: metadata.classFile == NKTypeClassFile.video.rawValue,
+                        isVideo: metadata.classFile == SCKTypeClassFile.video.rawValue,
                         ocId: metadata.ocId)
     }
 

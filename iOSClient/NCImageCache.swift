@@ -146,7 +146,7 @@ final class NCImageCache: @unchecked Sendable {
         mediaSearch == true AND
         hasPreview == true AND
         (
-        classFile == '\(NKTypeClassFile.image.rawValue)' OR classFile == '\(NKTypeClassFile.video.rawValue)'
+        classFile == '\(SCKTypeClassFile.image.rawValue)' OR classFile == '\(SCKTypeClassFile.video.rawValue)'
         ) AND
         NOT (status IN %@)
         """
@@ -157,7 +157,7 @@ final class NCImageCache: @unchecked Sendable {
         mediaSearch == true AND
         hasPreview == true AND
         (
-        classFile == '\(NKTypeClassFile.image.rawValue)' OR (classFile == '\(NKTypeClassFile.video.rawValue)' AND livePhotoFile != '')
+        classFile == '\(SCKTypeClassFile.image.rawValue)' OR (classFile == '\(SCKTypeClassFile.video.rawValue)' AND livePhotoFile != '')
         ) AND
         NOT (status IN %@)
         """

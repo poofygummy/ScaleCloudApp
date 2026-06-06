@@ -82,7 +82,7 @@ class NCShareHeader: UIView {
         }
     }
 
-    func presentTagEditor(from sourceViewController: UIViewController, onApplied: (([NKTag]) -> Void)? = nil) {
+    func presentTagEditor(from sourceViewController: UIViewController, onApplied: (([SCKTag]) -> Void)? = nil) {
         let editor = NCTagEditorView(
             metadata: metadata.detachedCopy(),
             windowScene: sourceViewController.view.window?.windowScene,
@@ -108,7 +108,7 @@ class NCShareHeader: UIView {
         sourceViewController.present(hosting, animated: true)
     }
 
-    private func refreshTags(_ tags: [String], tagModels: [NKTag]? = nil) {
+    private func refreshTags(_ tags: [String], tagModels: [SCKTag]? = nil) {
         let tagModels = tagModels ?? []
 
         tagListView.removeAllTags()

@@ -299,9 +299,9 @@ extension NCManageDatabase {
     /// Asynchronously sets the user profile properties for a specific account in the Realm database.
     /// - Parameters:
     ///   - account: The account identifier.
-    ///   - userProfile: A `NKUserProfile` instance containing updated user profile data.
+    ///   - userProfile: A `SCKUserProfile` instance containing updated user profile data.
     ///   - async: Whether the Realm write should be executed asynchronously (default is true).
-    func setAccountUserProfileAsync(account: String, userProfile: NKUserProfile) async {
+    func setAccountUserProfileAsync(account: String, userProfile: SCKUserProfile) async {
         await core.performRealmWriteAsync { realm in
             if let result = realm.objects(tableAccount.self)
                 .filter("account == %@", account)

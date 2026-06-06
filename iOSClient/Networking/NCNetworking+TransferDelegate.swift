@@ -26,7 +26,7 @@ extension NCNetworking: NCTransferDelegate {
                         selector: String?,
                         ocId: String,
                         destination: String?,
-                        error: NKError) {
+                        error: SCKError) {
         Task { @MainActor in
             // DOWNLOADED
             guard error == .success,
@@ -89,7 +89,7 @@ extension NCNetworking: NCTransferDelegate {
 
                 if metadata.contentType.contains("opendocument") && !NCUtility().isTypeFileRichDocument(metadata) {
                     await NCCreate().createActivityViewController(selectedMetadata: [metadata], controller: controller, sender: nil)
-                } else if metadata.classFile == NKTypeClassFile.compress.rawValue || metadata.classFile == NKTypeClassFile.unknow.rawValue {
+                } else if metadata.classFile == SCKTypeClassFile.compress.rawValue || metadata.classFile == SCKTypeClassFile.unknow.rawValue {
                     await NCCreate().createActivityViewController(selectedMetadata: [metadata], controller: controller, sender: nil)
                 } else {
                     if let viewController = controller.currentViewController() {

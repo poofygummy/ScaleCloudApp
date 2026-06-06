@@ -81,7 +81,7 @@ class tableShareV2: Object {
 }
 
 extension NCManageDatabase {
-    func addShare(account: String, home: String, shares: [NKShare]) {
+    func addShare(account: String, home: String, shares: [SCKShare]) {
         do {
             let realm = try Realm()
             try realm.write {
@@ -139,12 +139,12 @@ extension NCManageDatabase {
         }
     }
 
-    /// Asynchronously adds a list of `NKShare` objects to the database for a specific account.
+    /// Asynchronously adds a list of `SCKShare` objects to the database for a specific account.
     /// - Parameters:
     ///   - account: The account identifier associated with the shares.
     ///   - home: The home directory path used to compute the `serverUrl`.
-    ///   - shares: An array of `NKShare` objects to be stored in the database.
-    func addShareAsync(account: String, home: String, shares: [NKShare]) async {
+    ///   - shares: An array of `SCKShare` objects to be stored in the database.
+    func addShareAsync(account: String, home: String, shares: [SCKShare]) async {
         await core.performRealmWriteAsync { realm in
             for share in shares {
                 guard let serverDirectoryUp = self.utilityFileSystem.serverDirectoryUp(serverUrl: home + share.path, home: home) else {

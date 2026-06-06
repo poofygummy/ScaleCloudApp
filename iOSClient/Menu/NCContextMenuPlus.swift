@@ -44,7 +44,7 @@ class NCContextMenuPlus: NSObject {
         guard let controller, let menuToolbar else {
             return
         }
-        let capabilities = await NCManageDatabase.shared.getCapabilities(account: session.account) ?? NKCapabilities.Capabilities()
+        let capabilities = await NCManageDatabase.shared.getCapabilities(account: session.account) ?? SCKCapabilities.Capabilities()
         let utilityFileSystem = NCUtilityFileSystem()
         let utility = NCUtility()
         let serverUrl = controller.currentServerUrl()
@@ -242,7 +242,7 @@ class NCContextMenuPlus: NSObject {
                       editorId != "text" else { continue }
 
                 let sortedCreators = creatorsByEditor[editorId]!
-                    .compactMap { creator -> (NKEditorDetailsCreator, CreatorMenuInfo)? in
+                    .compactMap { creator -> (SCKEditorDetailsCreator, CreatorMenuInfo)? in
                         guard let info = NCContextMenuPlus.menuInfo(for: creator.ext) else { return nil }
                         return (creator, info)
                     }

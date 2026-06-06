@@ -70,7 +70,7 @@ class NCViewerProviderContextMenu: UIViewController {
                 if utilityFileSystem.fileProviderStorageExists(metadata) {
                     viewVideo(metadata: metadata)
                 } else {
-                    if self.networking.networkReachability == NKTypeReachability.reachableCellular {
+                    if self.networking.networkReachability == SCKTypeReachability.reachableCellular {
                         maxDownload = NCGlobal.shared.maxAutoDownloadCellular
                     } else {
                         maxDownload = NCGlobal.shared.maxAutoDownload
@@ -292,7 +292,7 @@ extension NCViewerProviderContextMenu: NCTransferDelegate {
                         selector: String?,
                         ocId: String,
                         destination: String?,
-                        error: NKError) {
+                        error: SCKError) {
         if error != .success {
             Task {
                 let windowScene = SceneManager.shared.getWindow(sceneIdentifier: self.sceneIdentifier)?.windowScene

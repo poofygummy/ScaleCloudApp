@@ -158,7 +158,7 @@ class NCSelect: UIViewController, UIGestureRecognizerDelegate, UIAdaptivePresent
 
         Task { @MainActor in
             let folderPath = utilityFileSystem.getRelativeFilePath("", serverUrl: serverUrl, session: session)
-            let capabilities = await NKCapabilities.shared.getCapabilities(for: session.account)
+            let capabilities = await SCKCapabilities.shared.getCapabilities(for: session.account)
 
             if serverUrl.isEmpty || !FileNameValidator.checkFolderPath(folderPath, account: session.account, capabilities: capabilities) {
                 serverUrl = utilityFileSystem.getHomeServer(session: session)
@@ -229,7 +229,7 @@ class NCSelect: UIViewController, UIGestureRecognizerDelegate, UIAdaptivePresent
                         selector: String?,
                         ocId: String,
                         destination: String?,
-                        error: NKError) {
+                        error: SCKError) {
         if error != .success {
             Task {
                 let windowScene = SceneManager.shared.getWindow(sceneIdentifier: sceneIdentifier)?.windowScene
@@ -273,7 +273,7 @@ class NCSelect: UIViewController, UIGestureRecognizerDelegate, UIAdaptivePresent
 
     func createFolderButtonPressed(_ sender: UIButton) {
         Task { @MainActor in
-            let capabilities = await NKCapabilities.shared.getCapabilities(for: session.account)
+            let capabilities = await SCKCapabilities.shared.getCapabilities(for: session.account)
             let alertController = UIAlertController.createFolderWith(serverUrl: serverUrl, session: session, capabilities: capabilities) { error in
                 if error != .success {
                     Task {
@@ -302,7 +302,7 @@ class NCSelect: UIViewController, UIGestureRecognizerDelegate, UIAdaptivePresent
             guard let viewController = UIStoryboard(name: "NCSelect", bundle: nil).instantiateViewController(withIdentifier: "NCSelect.storyboard") as? NCSelect else {
                 return
             }
-            let capabilities = await NKCapabilities.shared.getCapabilities(for: metadata.account)
+            let capabilities = await SCKCapabilities.shared.getCapabilities(for: metadata.account)
 
             // Set Last Opening Date
             await database.setDirectoryLastOpeningDateAsync(ocId: metadata.ocId)

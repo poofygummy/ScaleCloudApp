@@ -19,7 +19,7 @@ class NCShareAccounts: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
 
-    public var accounts: [NKShareAccounts.DataAccounts] = []
+    public var accounts: [SCKShareAccounts.DataAccounts] = []
     public let heightCell: CGFloat = 60
     public var enableTimerProgress: Bool = true
     public var dismissDidEnterBackground: Bool = true

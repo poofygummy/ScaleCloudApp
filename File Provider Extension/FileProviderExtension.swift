@@ -117,7 +117,7 @@ final class FileProviderExtension: NSFileProviderExtension {
         Task {
             autoreleasepool {
                 Task {
-                    let backgroundSession = NKBackground(nkCommonInstance: ScaleCloudKit.shared.nkCommonInstance)
+                    let backgroundSession = SCKBackground(nkCommonInstance: ScaleCloudKit.shared.nkCommonInstance)
                     let pathComponents = url.pathComponents
                     let utilityFileSystem = NCUtilityFileSystem()
                     let itemIdentifier = NSFileProviderItemIdentifier(pathComponents[pathComponents.count - 2])
@@ -186,7 +186,7 @@ final class FileProviderExtension: NSFileProviderExtension {
         Task {
             autoreleasepool {
                 Task {
-                    let backgroundSession = NKBackground(nkCommonInstance: ScaleCloudKit.shared.nkCommonInstance)
+                    let backgroundSession = SCKBackground(nkCommonInstance: ScaleCloudKit.shared.nkCommonInstance)
                     let pathComponents = url.pathComponents
                     assert(pathComponents.count > 2)
                     let itemIdentifier = NSFileProviderItemIdentifier(pathComponents[pathComponents.count - 2])
@@ -337,7 +337,7 @@ final class FileProviderExtension: NSFileProviderExtension {
                                                                                               fileName: fileName,
                                                                                               userId: session.userId,
                                                                                               urlBase: session.urlBase)
-                    let nkBackground = NKBackground(nkCommonInstance: ScaleCloudKit.shared.nkCommonInstance)
+                    let nkBackground = SCKBackground(nkCommonInstance: ScaleCloudKit.shared.nkCommonInstance)
 
                     let (task, error) = await nkBackground.uploadAsync(serverUrlFileName: serverUrlFileName,
                                                                       fileNameLocalPath: fileNameLocalPath,

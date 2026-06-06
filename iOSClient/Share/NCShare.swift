@@ -54,7 +54,7 @@ class NCShare: UIViewController, NCSharePagingContent {
     var shareLinksCount = 0
 
     var canReshare: Bool {
-        return ((metadata.sharePermissionsCollaborationServices & NKShare.Permission.share.rawValue) != 0)
+        return ((metadata.sharePermissionsCollaborationServices & SCKShare.Permission.share.rawValue) != 0)
     }
 
     @MainActor
@@ -64,7 +64,7 @@ class NCShare: UIViewController, NCSharePagingContent {
 
     var shares: (firstShareLink: tableShare?, share: [tableShare]?) = (nil, nil)
 
-    var capabilities = NKCapabilities.Capabilities()
+    var capabilities = SCKCapabilities.Capabilities()
 
     private var dropDown = DropDown()
     private var avatarButton: UIButton!
@@ -95,7 +95,7 @@ class NCShare: UIViewController, NCSharePagingContent {
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: NSNotification.Name(rawValue: NCGlobal.shared.notificationCenterReloadDataNCShare), object: nil)
 
         Task {
-            self.capabilities = await NKCapabilities.shared.getCapabilities(for: metadata.account)
+            self.capabilities = await SCKCapabilities.shared.getCapabilities(for: metadata.account)
             if metadata.e2eEncrypted {
                 let metadataDirectory = await self.database.getMetadataDirectoryAsync(serverUrl: metadata.serverUrl, account: metadata.account)
                 if capabilities.e2EEApiVersion == "1.2" ||
@@ -122,7 +122,7 @@ class NCShare: UIViewController, NCSharePagingContent {
         guard
             let advancePermission = UIStoryboard(name: "NCShare", bundle: nil).instantiateViewController(withIdentifier: "NCShareAdvancePermission") as? NCShareAdvancePermission,
             let navigationController = self.navigationController else { return }
-        self.checkEnforcedPassword(shareType: NKShare.ShareType.publicLink.rawValue) { password in
+        self.checkEnforcedPassword(shareType: SCKShare.ShareType.publicLink.rawValue) { password in
             advancePermission.networking = self.networking
             advancePermission.share = TransientShare.shareLink(metadata: self.metadata, password: password)
             advancePermission.metadata = self.metadata
@@ -213,7 +213,7 @@ class NCShare: UIViewController, NCSharePagingContent {
 
     func checkEnforcedPassword(shareType: Int, completion: @escaping (String?) -> Void) {
         guard capabilities.fileSharingPubPasswdEnforced,
-              shareType == NKShare.ShareType.publicLink.rawValue || shareType == NKShare.ShareType.email.rawValue
+              shareType == SCKShare.ShareType.publicLink.rawValue || shareType == SCKShare.ShareType.email.rawValue
         else { return completion(nil) }
 
         self.present(UIAlertController.password(titleKey: "_enforce_password_protection_", completion: completion), animated: true)
@@ -249,7 +249,7 @@ class NCShare: UIViewController, NCSharePagingContent {
         alertController.addAction(editingAction)
 
         // File Drop (only for directories with public link or email share)
-        if isDirectory && (share.shareType == NKShare.ShareType.publicLink.rawValue || share.shareType == NKShare.ShareType.email.rawValue) {
+        if isDirectory && (share.shareType == SCKShare.ShareType.publicLink.rawValue || share.shareType == SCKShare.ShareType.email.rawValue) {
             let fileDropAction = UIAlertAction(title: NSLocalizedString("_share_file_drop_", comment: ""), style: .default) { [weak self] _ in
                 let permissions = NCSharePermissions.getPermissionValue(canRead: false, canCreate: true, canEdit: false, canDelete: false, canShare: false, isDirectory: isDirectory)
                 self?.updateSharePermissions(share: share, permissions: permissions)
@@ -335,7 +335,7 @@ extension NCShare: NCShareNetworkingDelegate {
         reloadData()
     }
 
-    func getSharees(sharees: [NKSharee]?) {
+    func getSharees(sharees: [SCKSharee]?) {
         guard let sharees else {
             return
         }
@@ -367,7 +367,7 @@ extension NCShare: NCShareNetworkingDelegate {
             if let shares = existingShares.share, shares.contains(where: {$0.shareWith == sharee.shareWith}) { continue } // do not show already existing sharees
             if metadata.ownerDisplayName == sharee.shareWith { continue } // do not show owner of the share 
             var label = sharee.label
-            if sharee.shareType == NKShare.ShareType.team.rawValue {
+            if sharee.shareType == SCKShare.ShareType.team.rawValue {
                 label += " (\(sharee.circleInfo), \(sharee.circleOwner))"
             }
 
@@ -474,7 +474,7 @@ extension NCShare: UITableViewDataSource {
         guard let tableShare = orderedShares?[indexPath.row] else { return UITableViewCell() }
 
         // LINK, EMAIL
-        if tableShare.shareType == NKShare.ShareType.publicLink.rawValue || tableShare.shareType == NKShare.ShareType.email.rawValue {
+        if tableShare.shareType == SCKShare.ShareType.publicLink.rawValue || tableShare.shareType == SCKShare.ShareType.email.rawValue {
             if let cell = tableView.dequeueReusableCell(withIdentifier: "cellLink", for: indexPath) as? NCShareLinkCell {
                 cell.indexPath = indexPath
                 cell.tableShare = tableShare
@@ -483,7 +483,7 @@ extension NCShare: UITableViewDataSource {
                 cell.setupCellUI(titleAppendString: String(shareLinksCount))
                 cell.menuButton.menu = NCContextMenuShare(share: tableShare, isDirectory: metadata.isDirectory, canReshare: canReshare, shareController: self, controller: controller).viewMenu()
                 cell.menuButton.showsMenuAsPrimaryAction = true
-                if tableShare.shareType == NKShare.ShareType.publicLink.rawValue { shareLinksCount += 1 }
+                if tableShare.shareType == SCKShare.ShareType.publicLink.rawValue { shareLinksCount += 1 }
                 return cell
             }
         } else {

@@ -85,7 +85,7 @@ private var hasChangesQuickLook: Bool = false
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        if let metadata = metadata, metadata.classFile != NKTypeClassFile.image.rawValue {
+        if let metadata = metadata, metadata.classFile != SCKTypeClassFile.image.rawValue {
             dismissView(nil)
         }
     }

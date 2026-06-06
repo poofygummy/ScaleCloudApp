@@ -66,7 +66,7 @@ class NCCollectionViewCommon: UIViewController, NCAccountSettingsModelDelegate, 
     //
     internal var isSearchingMode: Bool = false
     internal var networkSearchInProgress: Bool = false
-    internal var searchOperationHandle = NKOperationHandle()
+    internal var searchOperationHandle = SCKOperationHandle()
     internal var searchTask: URLSessionTask?
     internal var searchResultText: String?
     internal var searchResultStore: String?
@@ -119,7 +119,7 @@ class NCCollectionViewCommon: UIViewController, NCAccountSettingsModelDelegate, 
     }
 
     internal var isRecommendationActived: Bool {
-        let capabilities = NCNetworking.shared.capabilities[session.account] ?? NKCapabilities.Capabilities()
+        let capabilities = NCNetworking.shared.capabilities[session.account] ?? SCKCapabilities.Capabilities()
         return self.serverUrl == self.utilityFileSystem.getHomeServer(session: self.session) && capabilities.recommendations
     }
 
@@ -173,7 +173,7 @@ class NCCollectionViewCommon: UIViewController, NCAccountSettingsModelDelegate, 
     }
 
     func isRecommendationActived() async -> Bool {
-        let capabilities = await NKCapabilities.shared.getCapabilities(for: session.account)
+        let capabilities = await SCKCapabilities.shared.getCapabilities(for: session.account)
         return self.serverUrl == self.utilityFileSystem.getHomeServer(session: self.session) && capabilities.recommendations
     }
 
@@ -822,7 +822,7 @@ extension NCCollectionViewCommon: NCTransferDelegate {
                         selector: String?,
                         ocId: String,
                         destination: String?,
-                        error: NKError) {
+                        error: SCKError) {
         Task {
             if error != .success,
                error.errorCode != global.errorResourceNotFound {

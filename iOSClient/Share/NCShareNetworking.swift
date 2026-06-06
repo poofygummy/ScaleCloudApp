@@ -51,7 +51,7 @@ class NCShareNetworking: NSObject {
         super.init()
     }
 
-    private func readDownloadLimit(account: String, token: String) async throws -> NKDownloadLimit? {
+    private func readDownloadLimit(account: String, token: String) async throws -> SCKDownloadLimit? {
         return try await withCheckedThrowingContinuation { continuation in
             ScaleCloudKit.shared.getDownloadLimit(account: account, token: token) { limit, error in
                 if error != .success {
@@ -78,7 +78,7 @@ class NCShareNetworking: NSObject {
             NCActivityIndicator.shared.start(backgroundView: view)
         }
         let filenamePath = utilityFileSystem.getRelativeFilePath(metadata.fileName, serverUrl: metadata.serverUrl, session: session)
-        let parameter = NKShareParameter(path: filenamePath)
+        let parameter = SCKShareParameter(path: filenamePath)
 
         ScaleCloudKit.shared.readShares(parameters: parameter, account: metadata.account) { task in
             Task {
@@ -130,7 +130,7 @@ class NCShareNetworking: NSObject {
     func createShare(_ shareable: Shareable, downloadLimit: DownloadLimitViewModel) {
         NCActivityIndicator.shared.start(backgroundView: view)
         let filenamePath = utilityFileSystem.getRelativeFilePath(metadata.fileName, serverUrl: metadata.serverUrl, session: session)
-        let capabilities = NCNetworking.shared.capabilities[self.metadata.account] ?? NKCapabilities.Capabilities()
+        let capabilities = NCNetworking.shared.capabilities[self.metadata.account] ?? SCKCapabilities.Capabilities()
 
         ScaleCloudKit.shared.createShare(path: filenamePath,
                                         shareType: shareable.shareType,
@@ -162,7 +162,7 @@ class NCShareNetworking: NSObject {
                 } else {
                     if case let .limited(limit, _) = downloadLimit,
                        capabilities.fileSharingDownloadLimit,
-                       shareable.shareType == NKShare.ShareType.publicLink.rawValue,
+                       shareable.shareType == SCKShare.ShareType.publicLink.rawValue,
                        shareable.itemType == NCShareCommon.itemTypeFile {
                         self.setShareDownloadLimit(limit, token: share.token)
                     }
@@ -226,13 +226,13 @@ class NCShareNetworking: NSObject {
 
             if error == .success, let share = share {
                 let home = self.utilityFileSystem.getHomeServer(session: self.session)
-                let capabilities = NCNetworking.shared.capabilities[self.metadata.account] ?? NKCapabilities.Capabilities()
+                let capabilities = NCNetworking.shared.capabilities[self.metadata.account] ?? SCKCapabilities.Capabilities()
 
                 self.database.addShare(account: self.metadata.account, home: home, shares: [share])
                 self.delegate?.readShareCompleted()
 
                 if capabilities.fileSharingDownloadLimit,
-                   shareable.shareType == NKShare.ShareType.publicLink.rawValue,
+                   shareable.shareType == SCKShare.ShareType.publicLink.rawValue,
                    shareable.itemType == NCShareCommon.itemTypeFile,
                    changeDownloadLimit {
                     if case let .limited(limit, _) = downloadLimit {
@@ -286,7 +286,7 @@ class NCShareNetworking: NSObject {
     /// Remove the download limit on the share, if existent.
     ///
     func removeShareDownloadLimit(token: String) {
-        let capabilities = NCNetworking.shared.capabilities[self.metadata.account] ?? NKCapabilities.Capabilities()
+        let capabilities = NCNetworking.shared.capabilities[self.metadata.account] ?? SCKCapabilities.Capabilities()
 
         if !capabilities.fileSharingDownloadLimit || token.isEmpty {
             return
@@ -313,7 +313,7 @@ class NCShareNetworking: NSObject {
     /// - Parameter limit: The new download limit to set.
     ///
     func setShareDownloadLimit(_ limit: Int, token: String) {
-        let capabilities = NCNetworking.shared.capabilities[self.metadata.account] ?? NKCapabilities.Capabilities()
+        let capabilities = NCNetworking.shared.capabilities[self.metadata.account] ?? SCKCapabilities.Capabilities()
 
         if !capabilities.fileSharingDownloadLimit || token.isEmpty {
             return

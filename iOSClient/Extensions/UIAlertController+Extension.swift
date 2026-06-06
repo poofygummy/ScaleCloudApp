@@ -37,8 +37,8 @@ extension UIAlertController {
                                  session: NCSession.Session,
                                  markE2ee: Bool = false,
                                  sceneIdentifier: String? = nil,
-                                 capabilities: NKCapabilities.Capabilities,
-                                 completion: ((_ error: NKError) -> Void)? = nil) -> UIAlertController {
+                                 capabilities: SCKCapabilities.Capabilities,
+                                 completion: ((_ error: SCKError) -> Void)? = nil) -> UIAlertController {
         let alertController = UIAlertController(title: NSLocalizedString("_create_folder_", comment: ""), message: nil, preferredStyle: .alert)
         let isDirectoryEncrypted = NCUtilityFileSystem().isDirectoryE2EE(serverUrl: serverUrl, urlBase: session.urlBase, userId: session.userId, account: session.account)
 
@@ -47,7 +47,7 @@ extension UIAlertController {
 
             if markE2ee {
                 if NCNetworking.shared.isOffline {
-                    completion?(NKError(errorCode: NCGlobal.shared.errorOfflineNotAllowed, errorDescription: "_offline_not_allowed_"))
+                    completion?(SCKError(errorCode: NCGlobal.shared.errorOfflineNotAllowed, errorDescription: "_offline_not_allowed_"))
                     return
                 }
                 Task {
@@ -83,13 +83,13 @@ extension UIAlertController {
                         if let banner {
                             banner.dismiss()
                         }
-                        completion?(NKError(errorCode: createFolderResults.error.errorCode, errorDescription: createFolderResults.error.errorDescription))
+                        completion?(SCKError(errorCode: createFolderResults.error.errorCode, errorDescription: createFolderResults.error.errorDescription))
                     }
                 }
             } else if isDirectoryEncrypted {
                 Task {
                     if NCNetworking.shared.isOffline {
-                        completion?(NKError(errorCode: NCGlobal.shared.errorOfflineNotAllowed, errorDescription: "_offline_not_allowed_"))
+                        completion?(SCKError(errorCode: NCGlobal.shared.errorOfflineNotAllowed, errorDescription: "_offline_not_allowed_"))
                         return
                     }
 
@@ -235,7 +235,7 @@ extension UIAlertController {
 
     static func renameFile(fileName: String,
                            isDirectory: Bool = false,
-                           capabilities: NKCapabilities.Capabilities,
+                           capabilities: SCKCapabilities.Capabilities,
                            account: String,
                            completion: @escaping (_ newFileName: String) -> Void) -> UIAlertController {
         let alertController = UIAlertController(title: NSLocalizedString(isDirectory ? "_rename_folder_" : "_rename_file_", comment: ""), message: nil, preferredStyle: .alert)
@@ -321,7 +321,7 @@ extension UIAlertController {
     @MainActor
     static func renameFileAsync(fileName: String,
                                 isDirectory: Bool = false,
-                                capabilities: NKCapabilities.Capabilities,
+                                capabilities: SCKCapabilities.Capabilities,
                                 account: String,
                                 presenter: UIViewController) async -> String {
         await withCheckedContinuation { continuation in

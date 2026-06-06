@@ -595,7 +595,7 @@ extension NCViewerMediaPage: NCTransferDelegate {
                         selector: String?,
                         ocId: String,
                         destination: String?,
-                        error: NKError) {
+                        error: SCKError) {
         Task {@MainActor in
             switch status {
             // DELETE

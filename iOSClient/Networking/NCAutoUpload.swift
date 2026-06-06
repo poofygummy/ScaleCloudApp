@@ -106,7 +106,7 @@ class NCAutoUpload: NSObject {
                               assets: [PHAsset],
                               fileNames: [String],
                               sourceCollections: [PHAssetCollection] = []) async -> Int {
-        let capabilities = await NKCapabilities.shared.getCapabilities(for: tblAccount.account)
+        let capabilities = await SCKCapabilities.shared.getCapabilities(for: tblAccount.account)
         let autoMkcol = capabilities.serverVersionMajor >= NCGlobal.shared.nextcloudVersion33
         let session = NCSession.shared.getSession(account: tblAccount.account)
         let autoUploadServerUrlBase = await self.database.getAccountAutoUploadServerUrlBaseAsync(account: tblAccount.account, urlBase: tblAccount.urlBase, userId: tblAccount.userId)
@@ -172,16 +172,16 @@ class NCAutoUpload: NSObject {
 
             metadata.classFile = {
                 switch mediaType {
-                case .video: return NKTypeClassFile.video.rawValue
-                case .image: return NKTypeClassFile.image.rawValue
+                case .video: return SCKTypeClassFile.video.rawValue
+                case .image: return SCKTypeClassFile.image.rawValue
                 default: return ""
                 }
             }()
 
             metadata.iconName = {
                 switch mediaType {
-                case .video: return NKTypeIconFile.video.rawValue
-                case .image: return NKTypeIconFile.image.rawValue
+                case .video: return SCKTypeIconFile.video.rawValue
+                case .image: return SCKTypeIconFile.image.rawValue
                 default: return ""
                 }
             }()
@@ -352,12 +352,12 @@ class NCAutoUpload: NSObject {
 
         // Resolve capabilities once per account.
         let accounts = Array(Set(pendingCreateFolders.map { $0.account }))
-        var capabilitiesByAccount: [String: NKCapabilities.Capabilities] = [:]
+        var capabilitiesByAccount: [String: SCKCapabilities.Capabilities] = [:]
 
         for account in accounts {
             guard !Task.isCancelled else { return }
 
-            let capabilities = await NKCapabilities.shared.getCapabilities(for: account)
+            let capabilities = await SCKCapabilities.shared.getCapabilities(for: account)
             capabilitiesByAccount[account] = capabilities
         }
 

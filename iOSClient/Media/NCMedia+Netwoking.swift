@@ -12,14 +12,14 @@ extension NCMedia {
                           greaterDate: Date,
                           limit: Int,
                           account: String,
-                          options: NKRequestOptions = NKRequestOptions(),
+                          options: SCKRequestOptions = SCKRequestOptions(),
                           taskHandler: @escaping (_ task: URLSessionTask) -> Void = { _ in }
-    ) async -> (account: String, files: [NKFile]?, error: NKError) {
+    ) async -> (account: String, files: [SCKFile]?, error: SCKError) {
         guard let nkSession = ScaleCloudKit.shared.nkCommonInstance.nksessions.session(forAccount: account) else {
             return (account, nil, .urlError)
         }
-        let capabilities = await NKCapabilities.shared.getCapabilities(for: account)
-        let files: [NKFile] = []
+        let capabilities = await SCKCapabilities.shared.getCapabilities(for: account)
+        let files: [SCKFile] = []
         let href = "/files/" + nkSession.userId + path
 
         let elementDate: String
@@ -55,15 +55,15 @@ extension NCMedia {
         return(results.account, results.files, results.error)
     }
 
-    func getRequestBodySearchMedia(createProperties: [NKProperties]?,
-                                   removeProperties: [NKProperties] = [],
+    func getRequestBodySearchMedia(createProperties: [SCKProperties]?,
+                                   removeProperties: [SCKProperties] = [],
                                    href: String,
                                    elementDate: String,
                                    lessDate: String,
                                    greaterDate: String,
                                    limit: String) -> String {
         // Build the DAV property list (merged create/remove rules)
-        let properties = NKProperties.properties(createProperties: createProperties, removeProperties: removeProperties)
+        let properties = SCKProperties.properties(createProperties: createProperties, removeProperties: removeProperties)
 
         let request = """
         <?xml version=\"1.0\"?>
@@ -155,6 +155,6 @@ extension NCMedia {
 
 extension Date {
     func formatted(using format: String) -> String {
-        NKLogFileManager.shared.convertDate(self, format: format)
+        SCKLogFileManager.shared.convertDate(self, format: format)
     }
 }

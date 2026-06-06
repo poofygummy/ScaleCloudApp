@@ -17,7 +17,7 @@ class NCTermOfServiceModel: ObservableObject {
     @Published var termsId: [String: Int] = [:]
 
     // Initialization code
-    init(controller: NCMainTabBarController?, tos: NKTermsOfService?) {
+    init(controller: NCMainTabBarController?, tos: SCKTermsOfService?) {
         self.controller = controller
 
         if let terms = tos?.getTerms() {

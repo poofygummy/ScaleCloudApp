@@ -59,7 +59,7 @@ enum NCShareCommon {
     }
 
     static func getImageShareType(shareType: Int) -> UIImage? {
-        typealias type = NKShare.ShareType
+        typealias type = SCKShare.ShareType
 
         switch shareType {
         case type.group.rawValue:

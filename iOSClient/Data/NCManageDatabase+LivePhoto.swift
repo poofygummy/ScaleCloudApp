@@ -46,10 +46,10 @@ extension NCManageDatabase {
             }
 
             // Update only the relevant fields based on metadata content type
-            if classFile == NKTypeClassFile.video.rawValue {
+            if classFile == SCKTypeClassFile.video.rawValue {
                 livePhoto.serverUrlFileNameVideo = serverUrlFileName
                 livePhoto.fileIdVideo = fileId
-            } else if classFile == NKTypeClassFile.image.rawValue {
+            } else if classFile == SCKTypeClassFile.image.rawValue {
                 livePhoto.serverUrlFileNameImage = serverUrlFileName
                 livePhoto.fileIdImage = fileId
             }

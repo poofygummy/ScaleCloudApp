@@ -191,7 +191,7 @@ class NCContextMenuNavigation: NSObject {
         }
 
         let showRecommendedFilesKeychain = NCPreferences().showRecommendedFiles
-        let capabilities = NCNetworking.shared.capabilities[session.account] ?? NKCapabilities.Capabilities()
+        let capabilities = NCNetworking.shared.capabilities[session.account] ?? SCKCapabilities.Capabilities()
         let capabilityRecommendations = capabilities.recommendations
 
         if capabilityRecommendations {

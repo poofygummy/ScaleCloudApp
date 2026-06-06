@@ -7,12 +7,12 @@ import Foundation
 import ScaleCloudKit
 
 extension FileNameValidator {
-    static func checkFileName(_ filename: String, account: String?, capabilities: NKCapabilities.Capabilities) -> NKError? {
+    static func checkFileName(_ filename: String, account: String?, capabilities: SCKCapabilities.Capabilities) -> SCKError? {
         let fileNameValidator = FileNameValidator(capabilities: capabilities)
         return fileNameValidator.checkFileName(filename)
     }
 
-    static func checkFolderPath(_ folderPath: String, account: String?, capabilities: NKCapabilities.Capabilities) -> Bool {
+    static func checkFolderPath(_ folderPath: String, account: String?, capabilities: SCKCapabilities.Capabilities) -> Bool {
         let fileNameValidator = FileNameValidator(capabilities: capabilities)
         return fileNameValidator.checkFolderPath(folderPath)
     }

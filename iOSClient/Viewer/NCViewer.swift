@@ -19,7 +19,7 @@ class NCViewer: NSObject {
         await self.database.setLocalFileLastOpeningDateAsync(metadata: metadata)
 
         // URL
-        if metadata.classFile == NKTypeClassFile.url.rawValue,
+        if metadata.classFile == SCKTypeClassFile.url.rawValue,
            !NCUtilityFileSystem().isDirectoryE2EE(serverUrl: metadata.serverUrl, urlBase: session.urlBase, userId: session.userId, account: session.account) {
             // nextcloudtalk://open-conversation?server={serverURL}&user={userId}&withRoomToken={roomToken}
             if metadata.name == NCGlobal.shared.talkName {
@@ -56,7 +56,7 @@ class NCViewer: NSObject {
         }
 
         // DOCUMENTS
-        else if metadata.classFile == NKTypeClassFile.document.rawValue,
+        else if metadata.classFile == SCKTypeClassFile.document.rawValue,
                 !NCUtilityFileSystem().isDirectoryE2EE(serverUrl: metadata.serverUrl, urlBase: session.urlBase, userId: session.userId, account: session.account) {
 
             // PDF
@@ -79,7 +79,7 @@ class NCViewer: NSObject {
                 }
                 let editor = editorAdapter.apiKey
                 let editorViewController = editorAdapter.viewControllerEditor
-                let options = NKRequestOptions(customUserAgent: editorAdapter.userAgent(utility))
+                let options = SCKRequestOptions(customUserAgent: editorAdapter.userAgent(utility))
                 if metadata.url.isEmpty {
                     let fileNamePath = utilityFileSystem.getRelativeFilePath(metadata.fileName, serverUrl: metadata.serverUrl, session: session)
 

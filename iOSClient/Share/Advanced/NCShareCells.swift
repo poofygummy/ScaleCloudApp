@@ -65,11 +65,11 @@ enum NCUserPermission: CaseIterable, NCPermission {
 
     var permissionBitFlag: Int {
         return switch self {
-        case .read: NKShare.Permission.read.rawValue
-        case .reshare: NKShare.Permission.share.rawValue
-        case .edit: NKShare.Permission.update.rawValue
-        case .create: NKShare.Permission.create.rawValue
-        case .delete: NKShare.Permission.delete.rawValue
+        case .read: SCKShare.Permission.read.rawValue
+        case .reshare: SCKShare.Permission.share.rawValue
+        case .edit: SCKShare.Permission.update.rawValue
+        case .create: SCKShare.Permission.create.rawValue
+        case .delete: SCKShare.Permission.delete.rawValue
         }
     }
 
@@ -82,7 +82,7 @@ enum NCUserPermission: CaseIterable, NCPermission {
     }
 
     static func forDirectoryE2EE(account: String) -> [NCPermission] {
-        let capabilities = NCNetworking.shared.capabilities[account] ?? NKCapabilities.Capabilities()
+        let capabilities = NCNetworking.shared.capabilities[account] ?? SCKCapabilities.Capabilities()
         if capabilities.e2EEApiVersion.hasPrefix("2.") {
             return NCUserPermission.allCases
         }
@@ -106,7 +106,7 @@ enum NCUserPermission: CaseIterable, NCPermission {
 
 enum NCLinkEmailPermission: CaseIterable, NCPermission {
     static func forDirectoryE2EE(account: String) -> [any NCPermission] {
-        let capabilities = NCNetworking.shared.capabilities[account] ?? NKCapabilities.Capabilities()
+        let capabilities = NCNetworking.shared.capabilities[account] ?? SCKCapabilities.Capabilities()
         if capabilities.e2EEApiVersion.hasPrefix("2.") {
             return NCUserPermission.allCases
         }
@@ -123,10 +123,10 @@ enum NCLinkEmailPermission: CaseIterable, NCPermission {
 
     var permissionBitFlag: Int {
         return switch self {
-        case .read: NKShare.Permission.read.rawValue
-        case .edit: NKShare.Permission.update.rawValue
-        case .create: NKShare.Permission.create.rawValue
-        case .delete: NKShare.Permission.delete.rawValue
+        case .read: SCKShare.Permission.read.rawValue
+        case .edit: SCKShare.Permission.update.rawValue
+        case .create: SCKShare.Permission.create.rawValue
+        case .delete: SCKShare.Permission.delete.rawValue
         }
     }
 
@@ -225,12 +225,12 @@ struct NCShareConfig {
         self.shareable = share
         self.sharePermission = parentMetadata.sharePermissionsCollaborationServices
         self.isDirectory = parentMetadata.directory
-        let type: NCPermission.Type = (share.shareType == NKShare.ShareType.publicLink.rawValue || share.shareType == NKShare.ShareType.email.rawValue) ? NCLinkEmailPermission.self : NCUserPermission.self
+        let type: NCPermission.Type = (share.shareType == SCKShare.ShareType.publicLink.rawValue || share.shareType == SCKShare.ShareType.email.rawValue) ? NCLinkEmailPermission.self : NCUserPermission.self
         self.permissions = parentMetadata.directory ? (parentMetadata.e2eEncrypted ? type.forDirectoryE2EE(account: parentMetadata.account) : type.forDirectory) : type.forFile
 
         switch share.shareType {
-        case NKShare.ShareType.publicLink.rawValue:
-            let capabilities = NCNetworking.shared.capabilities[parentMetadata.account] ?? NKCapabilities.Capabilities()
+        case SCKShare.ShareType.publicLink.rawValue:
+            let capabilities = NCNetworking.shared.capabilities[parentMetadata.account] ?? SCKCapabilities.Capabilities()
             let hasDownloadLimitCapability = capabilities.fileSharingDownloadLimit
 
             if parentMetadata.isDirectory || hasDownloadLimitCapability == false {
@@ -238,7 +238,7 @@ struct NCShareConfig {
             } else {
                 self.advanced = NCAdvancedPermission.forLink
             }
-        case NKShare.ShareType.email.rawValue:
+        case SCKShare.ShareType.email.rawValue:
             self.advanced = NCAdvancedPermission.forEmail
         default:
             self.advanced = NCAdvancedPermission.forUser

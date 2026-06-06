@@ -15,7 +15,7 @@ class NCFilesNavigationController: NCMainNavigationController {
                 self.collectionViewCommon?.showTipAccounts()
             }
             guard let userInfo = notification.userInfo as NSDictionary?,
-                  let error = userInfo["error"] as? NKError,
+                  let error = userInfo["error"] as? SCKError,
                   error.errorCode != self.global.errorNotModified
             else {
                 return

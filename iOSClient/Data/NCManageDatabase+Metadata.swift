@@ -152,31 +152,31 @@ extension tableMetadata {
     }
 
     var isSavebleInCameraRoll: Bool {
-        return (classFile == NKTypeClassFile.image.rawValue && contentType != "image/svg+xml") || classFile == NKTypeClassFile.video.rawValue
+        return (classFile == SCKTypeClassFile.image.rawValue && contentType != "image/svg+xml") || classFile == SCKTypeClassFile.video.rawValue
     }
 
     var isAudioOrVideo: Bool {
-        return classFile == NKTypeClassFile.audio.rawValue || classFile == NKTypeClassFile.video.rawValue
+        return classFile == SCKTypeClassFile.audio.rawValue || classFile == SCKTypeClassFile.video.rawValue
     }
 
     var isImageOrVideo: Bool {
-        return classFile == NKTypeClassFile.image.rawValue || classFile == NKTypeClassFile.video.rawValue
+        return classFile == SCKTypeClassFile.image.rawValue || classFile == SCKTypeClassFile.video.rawValue
     }
 
     var isVideo: Bool {
-        return classFile == NKTypeClassFile.video.rawValue
+        return classFile == SCKTypeClassFile.video.rawValue
     }
 
     var isAudio: Bool {
-        return classFile == NKTypeClassFile.audio.rawValue
+        return classFile == SCKTypeClassFile.audio.rawValue
     }
 
     var isImage: Bool {
-        return classFile == NKTypeClassFile.image.rawValue
+        return classFile == SCKTypeClassFile.image.rawValue
     }
 
     var isSavebleAsImage: Bool {
-        classFile == NKTypeClassFile.image.rawValue && contentType != "image/svg+xml"
+        classFile == SCKTypeClassFile.image.rawValue && contentType != "image/svg+xml"
     }
 
     var isCopyableInPasteboard: Bool {
@@ -244,7 +244,7 @@ extension tableMetadata {
 
     var isAvailableEditorView: Bool {
         guard !isPDF,
-              classFile == NKTypeClassFile.document.rawValue,
+              classFile == SCKTypeClassFile.document.rawValue,
               ScaleCloudKit.shared.isNetworkReachable() else {
             return false
         }
@@ -267,7 +267,7 @@ extension tableMetadata {
 
     var isAvailableRichDocumentEditorView: Bool {
         guard let capabilities = NCNetworking.shared.capabilities[account],
-              classFile == NKTypeClassFile.document.rawValue,
+              classFile == SCKTypeClassFile.document.rawValue,
               capabilities.richDocumentsEnabled,
               ScaleCloudKit.shared.isNetworkReachable() else { return false }
 
@@ -278,7 +278,7 @@ extension tableMetadata {
     }
 
     var isAvailableDirectEditingEditorView: Bool {
-        guard (classFile == NKTypeClassFile.document.rawValue) && ScaleCloudKit.shared.isNetworkReachable() else {
+        guard (classFile == SCKTypeClassFile.document.rawValue) && ScaleCloudKit.shared.isNetworkReachable() else {
             return false
         }
         let editors = NCUtility().editorsDirectEditing(account: account, contentType: contentType)
@@ -320,11 +320,11 @@ extension tableMetadata {
     }
 
     var isLivePhotoVideo: Bool {
-        !livePhotoFile.isEmpty && classFile == NKTypeClassFile.video.rawValue
+        !livePhotoFile.isEmpty && classFile == SCKTypeClassFile.video.rawValue
     }
 
     var isLivePhotoImage: Bool {
-        !livePhotoFile.isEmpty && classFile == NKTypeClassFile.image.rawValue
+        !livePhotoFile.isEmpty && classFile == SCKTypeClassFile.image.rawValue
     }
 
     var isNotFlaggedAsLivePhotoByServer: Bool {
@@ -752,7 +752,7 @@ extension NCManageDatabase {
         }
     }
 
-    func setMetadataTagsAsync(ocId: String, account: String, tags: [NKTag]) async {
+    func setMetadataTagsAsync(ocId: String, account: String, tags: [SCKTag]) async {
         await core.performRealmWriteAsync { realm in
             guard let result = realm.objects(tableMetadata.self)
                 .filter("account == %@ AND ocId == %@", account, ocId)
@@ -1372,7 +1372,7 @@ extension NCManageDatabase {
     /// - Returns: A tuple containing the relative path and filename.
     func relativeDavComponents(for metadata: tableMetadata) -> (path: String, fileName: String) {
         let fullPath = metadata.serverUrlFileName
-        let prefix = NKDav.homeURLStringNoSlash(urlBase: metadata.urlBase, userId: metadata.userId)
+        let prefix = SCKDav.homeURLStringNoSlash(urlBase: metadata.urlBase, userId: metadata.userId)
 
         guard fullPath.hasPrefix(prefix) else {
             return (path: "", fileName: metadata.fileName)
@@ -1397,7 +1397,7 @@ class tableMetadataTag: Object {
     @Persisted var name = ""
     @Persisted var color: String?
 
-    convenience init(tag: NKTag, account: String) {
+    convenience init(tag: SCKTag, account: String) {
         self.init()
         self.account = account
         self.id = tag.id
@@ -1406,8 +1406,8 @@ class tableMetadataTag: Object {
         self.primaryKey = account + id
     }
 
-    var nkTag: NKTag {
-        NKTag(id: id, name: name, color: color)
+    var nkTag: SCKTag {
+        SCKTag(id: id, name: name, color: color)
     }
 
     static func == (lhs: tableMetadataTag, rhs: tableMetadataTag) -> Bool {
@@ -1416,7 +1416,7 @@ class tableMetadataTag: Object {
 }
 
 extension List where Element == tableMetadataTag {
-    func append(_ tag: NKTag, account: String) {
+    func append(_ tag: SCKTag, account: String) {
         let object = tableMetadataTag(tag: tag, account: account)
 
         if let realm {
@@ -1430,7 +1430,7 @@ extension List where Element == tableMetadataTag {
         append(object)
     }
 
-    func append(objectsIn tags: [NKTag], account: String) {
+    func append(objectsIn tags: [SCKTag], account: String) {
         for tag in tags {
             append(tag, account: account)
         }

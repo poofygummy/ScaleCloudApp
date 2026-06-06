@@ -12,7 +12,7 @@ protocol NCShareNetworkingDelegate: AnyObject {
     func shareCompleted()
     func unShareCompleted()
     func updateShareWithError(idShare: Int)
-    func getSharees(sharees: [NKSharee]?)
+    func getSharees(sharees: [SCKSharee]?)
 
     // MARK: - Download Limit
 

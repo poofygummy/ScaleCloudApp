@@ -168,7 +168,7 @@ class NCMainNavigationController: UINavigationController, UINavigationController
             }
 
             Task { @MainActor in
-                let capabilities = await NKCapabilities.shared.getCapabilities(for: account)
+                let capabilities = await SCKCapabilities.shared.getCapabilities(for: account)
                 let session = NCSession.shared.getSession(account: account)
 
                 // Notification
@@ -300,7 +300,7 @@ class NCMainNavigationController: UINavigationController, UINavigationController
             return
         }
 
-        let capabilities = await NKCapabilities.shared.getCapabilities(for: session.account)
+        let capabilities = await SCKCapabilities.shared.getCapabilities(for: session.account)
 
         // ---------------------------------------------------------
         // Build desired items

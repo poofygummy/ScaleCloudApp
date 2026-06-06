@@ -32,7 +32,7 @@ final class NCConfigServer: NSObject, UIActionSheetDelegate, URLSessionDelegate 
         let dataTask = defaultSession.dataTask(with: urlRequest) { data, _, error in
             if let error {
                 Task {
-                    await showErrorBanner(windowScene: self.windowScene, error: NKError(error: error))
+                    await showErrorBanner(windowScene: self.windowScene, error: SCKError(error: error))
                 }
             } else if let data = data {
                 self.start(data: data)
@@ -82,7 +82,7 @@ final class NCConfigServer: NSObject, UIActionSheetDelegate, URLSessionDelegate 
                 UIApplication.shared.open(url)
             } catch {
                 Task {
-                    await showErrorBanner(windowScene: self.windowScene, error: NKError(error: error))
+                    await showErrorBanner(windowScene: self.windowScene, error: SCKError(error: error))
                 }
                 self.stop()
             }

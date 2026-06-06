@@ -28,12 +28,12 @@ class NCNetworkingE2EE: NSObject {
         return UUID
     }
 
-    func getOptions(account: String, capabilities: NKCapabilities.Capabilities) -> NKRequestOptions {
+    func getOptions(account: String, capabilities: SCKCapabilities.Capabilities) -> SCKRequestOptions {
         var version = e2EEApiVersion1
         if capabilities.e2EEApiVersion.hasPrefix("2.") {
             version = e2EEApiVersion2
         }
-        return NKRequestOptions(version: version)
+        return SCKRequestOptions(version: version)
     }
 
     // MARK: -
@@ -43,12 +43,12 @@ class NCNetworkingE2EE: NSObject {
                                                                                    e2eMetadata: String?,
                                                                                    signature: String?,
                                                                                    responseData: AFDataResponse<Data>?,
-                                                                                   error: NKError) {
-        let capabilities = await NKCapabilities.shared.getCapabilities(for: account)
+                                                                                   error: SCKError) {
+        let capabilities = await SCKCapabilities.shared.getCapabilities(for: account)
 
         switch capabilities.e2EEApiVersion {
         case let v where v.hasPrefix("1."):
-            let options = NKRequestOptions(version: e2EEApiVersion1)
+            let options = SCKRequestOptions(version: e2EEApiVersion1)
             let results = await ScaleCloudKit.shared.getE2EEMetadataAsync(fileId: fileId, e2eToken: e2eToken, account: account, options: options) { task in
                 Task {
                     let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
@@ -59,7 +59,7 @@ class NCNetworkingE2EE: NSObject {
             }
             return (results.account, self.e2EEApiVersion1, results.e2eMetadata, results.signature, results.responseData, results.error)
         case let v where v.hasPrefix("2."):
-            var options = NKRequestOptions(version: e2EEApiVersion2)
+            var options = SCKRequestOptions(version: e2EEApiVersion2)
             let results = await ScaleCloudKit.shared.getE2EEMetadataAsync(fileId: fileId, e2eToken: e2eToken, account: account, options: options) { task in
                 Task {
                     let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
@@ -71,7 +71,7 @@ class NCNetworkingE2EE: NSObject {
             if results.error == .success || results.error.errorCode == NCGlobal.shared.errorResourceNotFound {
                 return (results.account, self.e2EEApiVersion2, results.e2eMetadata, results.signature, results.responseData, results.error)
             } else {
-                options = NKRequestOptions(version: self.e2EEApiVersion1)
+                options = SCKRequestOptions(version: self.e2EEApiVersion1)
                 let results = await ScaleCloudKit.shared.getE2EEMetadataAsync(fileId: fileId, e2eToken: e2eToken, account: account, options: options) { task in
                     Task {
                         let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
@@ -83,7 +83,7 @@ class NCNetworkingE2EE: NSObject {
                 if results.error == .success || results.error.errorCode == NCGlobal.shared.errorResourceNotFound {
                     return (results.account, self.e2EEApiVersion2, results.e2eMetadata, results.signature, results.responseData, results.error)
                 } else {
-                    options = NKRequestOptions(version: self.e2EEApiVersion1)
+                    options = SCKRequestOptions(version: self.e2EEApiVersion1)
                     let results = await ScaleCloudKit.shared.getE2EEMetadataAsync(fileId: fileId, e2eToken: e2eToken, account: account, options: options) { task in
                         Task {
                             let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
@@ -96,7 +96,7 @@ class NCNetworkingE2EE: NSObject {
                 }
             }
         default:
-            return ("", "", nil, nil, nil, NKError(errorCode: NCGlobal.shared.errorInternalError, errorDescription: "version e2ee not available"))
+            return ("", "", nil, nil, nil, SCKError(errorCode: NCGlobal.shared.errorInternalError, errorDescription: "version e2ee not available"))
         }
     }
 
@@ -107,13 +107,13 @@ class NCNetworkingE2EE: NSObject {
                         addUserId: String? = nil,
                         removeUserId: String? = nil,
                         updateVersionV1V2: Bool = false,
-                        account: String) async -> NKError {
+                        account: String) async -> SCKError {
         var addCertificate: String?
         var method = "POST"
         let session = NCSession.shared.getSession(account: account)
-        let capabilities = await NKCapabilities.shared.getCapabilities(for: account)
+        let capabilities = await SCKCapabilities.shared.getCapabilities(for: account)
         guard let directory = self.database.getTableDirectory(predicate: NSPredicate(format: "account == %@ AND serverUrl == %@", session.account, serverUrl)) else {
-            return NKError(errorCode: NCGlobal.shared.errorUnexpectedResponseFromDB,
+            return SCKError(errorCode: NCGlobal.shared.errorUnexpectedResponseFromDB,
                            errorDescription: NSLocalizedString("_e2ee_no_dir_", comment: ""))
         }
 
@@ -174,7 +174,7 @@ class NCNetworkingE2EE: NSObject {
         //
         await unlock(account: session.account, serverUrl: serverUrl)
 
-        return NKError()
+        return SCKError()
     }
 
     func uploadMetadata(serverUrl: String,
@@ -185,7 +185,7 @@ class NCNetworkingE2EE: NSObject {
                         addUserId: String? = nil,
                         addCertificate: String? = nil,
                         removeUserId: String? = nil,
-                        session: NCSession.Session) async -> NKError {
+                        session: NCSession.Session) async -> SCKError {
         let resultsEncodeMetadata = await NCEndToEndMetadata().encodeMetadata(serverUrl: serverUrl, addUserId: addUserId, addCertificate: addCertificate, removeUserId: removeUserId, session: session)
         guard resultsEncodeMetadata.error == .success,
               let e2eMetadata = resultsEncodeMetadata.metadata else {
@@ -193,7 +193,7 @@ class NCNetworkingE2EE: NSObject {
             await self.database.addDiagnosticAsync(account: session.account, issue: NCGlobal.shared.diagnosticIssueE2eeErrors)
             return resultsEncodeMetadata.error
         }
-        let capabilities = await NKCapabilities.shared.getCapabilities(for: session.account)
+        let capabilities = await SCKCapabilities.shared.getCapabilities(for: session.account)
 
         let putE2EEMetadataResults = await ScaleCloudKit.shared.putE2EEMetadataAsync(fileId: fileId, e2eToken: e2eToken, e2eMetadata: e2eMetadata, signature: resultsEncodeMetadata.signature, method: method, account: session.account, options: NCNetworkingE2EE().getOptions(account: session.account, capabilities: capabilities)) { task in
             Task {
@@ -211,7 +211,7 @@ class NCNetworkingE2EE: NSObject {
         //
         await self.database.updateCounterE2eMetadataAsync(account: session.account, ocIdServerUrl: ocIdServerUrl, counter: resultsEncodeMetadata.counter)
 
-        return NKError()
+        return SCKError()
     }
 
     // MARK: -
@@ -219,7 +219,7 @@ class NCNetworkingE2EE: NSObject {
     func downloadMetadata(serverUrl: String,
                           fileId: String,
                           e2eToken: String,
-                          session: NCSession.Session) async -> NKError {
+                          session: NCSession.Session) async -> SCKError {
         let resultsGetE2EEMetadata = await getMetadata(fileId: fileId, e2eToken: e2eToken, account: session.account)
         guard resultsGetE2EEMetadata.error == .success, let e2eMetadata = resultsGetE2EEMetadata.e2eMetadata else {
             return resultsGetE2EEMetadata.error
@@ -232,20 +232,20 @@ class NCNetworkingE2EE: NSObject {
             return resultsDecodeMetadataError
         }
 
-        return NKError()
+        return SCKError()
     }
 
     // MARK: -
 
     func lock(account: String,
-              serverUrl: String) async -> (fileId: String?, e2eToken: String?, error: NKError) {
+              serverUrl: String) async -> (fileId: String?, e2eToken: String?, error: SCKError) {
         var e2eToken: String?
         var e2eCounter = "1"
         guard let directory = self.database.getTableDirectory(predicate: NSPredicate(format: "account == %@ AND serverUrl == %@", account, serverUrl)) else {
-            return (nil, nil, NKError(errorCode: NCGlobal.shared.errorUnexpectedResponseFromDB,
+            return (nil, nil, SCKError(errorCode: NCGlobal.shared.errorUnexpectedResponseFromDB,
                                       errorDescription: NSLocalizedString("_e2ee_no_dir_", comment: "")))
         }
-        let capabilities = await NKCapabilities.shared.getCapabilities(for: account)
+        let capabilities = await SCKCapabilities.shared.getCapabilities(for: account)
 
         if let tableLock = await self.database.getE2ETokenLockAsync(account: account, serverUrl: serverUrl) {
             e2eToken = tableLock.e2eToken
@@ -275,7 +275,7 @@ class NCNetworkingE2EE: NSObject {
         guard let tableLock = await self.database.getE2ETokenLockAsync(account: account, serverUrl: serverUrl) else {
             return
         }
-        let capabilities = await NKCapabilities.shared.getCapabilities(for: account)
+        let capabilities = await SCKCapabilities.shared.getCapabilities(for: account)
         let resultsLockE2EEFolder = await ScaleCloudKit.shared.lockE2EEFolderAsync(fileId: tableLock.fileId, e2eToken: tableLock.e2eToken, e2eCounter: nil, method: "DELETE", account: account, options: NCNetworkingE2EE().getOptions(account: account, capabilities: capabilities)) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
@@ -293,7 +293,7 @@ class NCNetworkingE2EE: NSObject {
 
     func unlockAll(account: String) async {
         guard NCPreferences().isEndToEndEnabled(account: account) else { return }
-        let capabilities = await NKCapabilities.shared.getCapabilities(for: account)
+        let capabilities = await SCKCapabilities.shared.getCapabilities(for: account)
         let results = await self.database.getE2EAllTokenLockAsync(account: account)
         for result in results {
             let resultsLockE2EEFolder = await ScaleCloudKit.shared.lockE2EEFolderAsync(fileId: result.fileId, e2eToken: result.e2eToken, e2eCounter: nil, method: "DELETE", account: account, options: NCNetworkingE2EE().getOptions(account: account, capabilities: capabilities)) { task in

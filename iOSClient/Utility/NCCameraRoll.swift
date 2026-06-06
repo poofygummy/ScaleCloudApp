@@ -71,7 +71,7 @@ final class NCCameraRoll: CameraRollExtractor {
                                                                              fileName: metadataSource.fileName,
                                                                              userId: metadataSource.userId,
                                                                              urlBase: metadata.urlBase)
-            let results = await NKTypeIdentifiers.shared.getInternalType(fileName: metadataSource.fileNameView, mimeType: metadataSource.contentType, directory: false, account: metadataSource.account)
+            let results = await SCKTypeIdentifiers.shared.getInternalType(fileName: metadataSource.fileNameView, mimeType: metadataSource.contentType, directory: false, account: metadataSource.account)
 
             metadataSource.contentType = results.mimeType
             metadataSource.iconName = results.iconName
