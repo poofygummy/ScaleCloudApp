@@ -48,7 +48,6 @@ Package.resolved
 *.generated.swift
 /.env-vars
 
-# SCGo framework folder is tracked so NextcloudKit builds work out of the box.
+# ScaleCloudGo framework folder is tracked so NextcloudKit builds work out of the box.
 # We ignore the zip version (user keeps it manually for backup).
-NextcloudKit/SCGo-xcframework.zip
-NextcloudKit/*-xcframework.zip
+# NextCloudKit/*-xcframework.zip

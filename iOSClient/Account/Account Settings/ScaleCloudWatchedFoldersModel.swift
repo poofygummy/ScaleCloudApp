@@ -1,6 +1,8 @@
 // SPDX-FileCopyrightText: 2026 Nextcloud GmbH and Nextcloud contributors
 // SPDX-License-Identifier: GPL-3.0-or-later
 
+// withscalecloud
+
 /// =============================================================================
 /// WHAT THIS FILE DOES (for people learning the code)
 /// =============================================================================
