@@ -4,7 +4,7 @@
 
 import Foundation
 import RealmSwift
-import NextcloudKit
+import ScaleCloudKit
 
 class tableRecommendedFiles: Object {
     @Persisted var account = ""

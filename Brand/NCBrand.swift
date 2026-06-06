@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 
 let userAgent: String = {
     let appVersion: String = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as! String

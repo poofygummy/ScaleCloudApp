@@ -2,7 +2,7 @@
 // SPDX-FileCopyrightText: 2025 Milen Pivchev
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-import NextcloudKit
+import ScaleCloudKit
 
 /// A collection of default UI actions used throughout the app
 enum ContextMenuActions {

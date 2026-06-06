@@ -2,7 +2,7 @@
 // SPDX-FileCopyrightText: 2025 Milen Pivchev
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-import NextcloudKit
+import ScaleCloudKit
 
 @MainActor
 @Observable class NCUserStatusModel {
@@ -43,7 +43,7 @@ import NextcloudKit
 
     func getStatus(account: String) {
         Task {
-            let result = await NextcloudKit.shared.getUserStatusAsync(account: account) { task in
+            let result = await ScaleCloudKit.shared.getUserStatusAsync(account: account) { task in
                 Task {
                     let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: self.account, name: "getUserStatus")
                     await NCNetworking.shared.networkingTasks.track(identifier: identifier, task: task)
@@ -60,7 +60,7 @@ import NextcloudKit
 
     func setStatus(account: String) {
         Task {
-            let result = await NextcloudKit.shared.setUserStatusAsync(status: selectedStatus ?? "", account: account) { task in
+            let result = await ScaleCloudKit.shared.setUserStatusAsync(status: selectedStatus ?? "", account: account) { task in
                 Task {
                     let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: self.account, name: "setUserStatus")
                     await NCNetworking.shared.networkingTasks.track(identifier: identifier, task: task)
@@ -76,7 +76,7 @@ import NextcloudKit
 
     func setAccountUserStatus(account: String) {
         Task {
-            let result = await NextcloudKit.shared.getUserStatusAsync(account: account) { task in
+            let result = await ScaleCloudKit.shared.getUserStatusAsync(account: account) { task in
                 Task {
                     let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: self.account, name: "getUserStatus")
                     await NCNetworking.shared.networkingTasks.track(identifier: identifier, task: task)

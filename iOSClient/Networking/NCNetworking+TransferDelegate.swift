@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 import Photos
 
 extension NCNetworking: NCTransferDelegate {
@@ -225,7 +225,7 @@ extension NCNetworking: NCTransferDelegate {
             }
         }
 
-        let resultsFile = await NextcloudKit.shared.getFileFromFileIdAsync(fileId: fileId, account: account) { task in
+        let resultsFile = await ScaleCloudKit.shared.getFileFromFileIdAsync(fileId: fileId, account: account) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(
                     account: account,
@@ -261,7 +261,7 @@ extension NCNetworking: NCTransferDelegate {
             return
         }
 
-        let download = await NextcloudKit.shared.downloadAsync(
+        let download = await ScaleCloudKit.shared.downloadAsync(
             serverUrlFileName: metadata.serverUrlFileName,
             fileNameLocalPath: fileNameLocalPath,
             account: account) { _ in

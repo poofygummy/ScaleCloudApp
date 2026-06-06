@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import Foundation
-import NextcloudKit
+import ScaleCloudKit
 import CoreMedia
 import UIKit
 import AVKit
@@ -354,7 +354,7 @@ extension NCPlayerToolBar: NCSelectDelegate {
                     }
                 }
 
-                NextcloudKit.shared.download(serverUrlFileName: metadata.serverUrlFileName, fileNameLocalPath: fileNameLocalPath, account: metadata.account, requestHandler: { request in
+                ScaleCloudKit.shared.download(serverUrlFileName: metadata.serverUrlFileName, fileNameLocalPath: fileNameLocalPath, account: metadata.account, requestHandler: { request in
                     downloadRequest = request
                 }, taskHandler: { task in
                     Task {

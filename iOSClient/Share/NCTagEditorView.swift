@@ -4,7 +4,7 @@
 
 import SwiftUI
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 
 struct NCTagEditorView: View {
     @Environment(\.dismiss) private var dismiss

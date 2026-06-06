@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 import RealmSwift
-import NextcloudKit
+import ScaleCloudKit
 import Photos
 
 final class NCManageDatabaseCreateMetadata {
@@ -95,7 +95,7 @@ final class NCManageDatabaseCreateMetadata {
 
             let metadata = await convertFileToMetadataAsync(file, mediaSearch: mediaSearch, isDirectoryE2EE: isDirectoryE2EE)
 
-            if serverUrlMetadataFolder == metadata.serverUrlFileName || metadata.fileName == NextcloudKit.shared.nkCommonInstance.rootFileName {
+            if serverUrlMetadataFolder == metadata.serverUrlFileName || metadata.fileName == ScaleCloudKit.shared.nkCommonInstance.rootFileName {
                 metadataFolder = metadata
             } else {
                 metadatas.append(metadata)
@@ -123,7 +123,7 @@ final class NCManageDatabaseCreateMetadata {
             }
 
             convertFileToMetadata(file, capabilities: capabilities, isDirectoryE2EE: isDirectoryE2EE) { metadata in
-                if serverUrlMetadataFolder == metadata.serverUrlFileName || metadata.fileName == NextcloudKit.shared.nkCommonInstance.rootFileName {
+                if serverUrlMetadataFolder == metadata.serverUrlFileName || metadata.fileName == ScaleCloudKit.shared.nkCommonInstance.rootFileName {
                     metadataFolder = metadata.detachedCopy()
                 } else {
                     metadatas.append(metadata)

@@ -4,7 +4,7 @@
 
 import Foundation
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 import Alamofire
 import LucidBanner
 
@@ -117,7 +117,7 @@ extension NCCollectionViewCommon: UICollectionViewDelegate {
                 if let vc = await NCViewer().getViewerController(metadata: metadata, image: image, delegate: self) {
                     self.navigationController?.pushViewController(vc, animated: true)
                 }
-            } else if NextcloudKit.shared.isNetworkReachable() {
+            } else if ScaleCloudKit.shared.isNetworkReachable() {
                 guard let  metadata = await database.setMetadataSessionInWaitDownloadAsync(ocId: metadata.ocId,
                                                                                            session: self.networking.sessionDownload,
                                                                                            selector: global.selectorLoadFileView,

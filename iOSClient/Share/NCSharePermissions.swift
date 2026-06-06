@@ -9,7 +9,7 @@
 
 import UIKit
 import Foundation
-import NextcloudKit
+import ScaleCloudKit
 
 enum NCSharePermissions {
 

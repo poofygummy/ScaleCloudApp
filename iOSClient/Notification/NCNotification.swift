@@ -23,7 +23,7 @@
 //
 
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 import SwiftyJSON
 
 class NCNotification: UITableViewController, NCNotificationCellDelegate {
@@ -251,7 +251,7 @@ class NCNotification: UITableViewController, NCNotificationCellDelegate {
     // MARK: - tap Action
 
     func tapRemove(with notification: NKNotifications, sender: Any?) {
-        NextcloudKit.shared.setNotification(serverUrl: nil, idNotification: notification.idNotification, method: "DELETE", account: session.account) { task in
+        ScaleCloudKit.shared.setNotification(serverUrl: nil, idNotification: notification.idNotification, method: "DELETE", account: session.account) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: self.session.account,
                                                                                             path: "\(notification.idNotification)",
@@ -297,7 +297,7 @@ class NCNotification: UITableViewController, NCNotificationCellDelegate {
             return
         }
 
-        NextcloudKit.shared.setNotification(serverUrl: serverUrl, idNotification: 0, method: method, account: session.account) { task in
+        ScaleCloudKit.shared.setNotification(serverUrl: serverUrl, idNotification: 0, method: method, account: session.account) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: self.session.account,
                                                                                             name: "setNotification")
@@ -333,7 +333,7 @@ class NCNotification: UITableViewController, NCNotificationCellDelegate {
 
         self.tableView.reloadData()
 
-        let results = await NextcloudKit.shared.getNotificationsAsync(account: session.account) { task in
+        let results = await ScaleCloudKit.shared.getNotificationsAsync(account: session.account) { task in
             Task {
                 await NCNetworking.shared.networkingTasks.track(identifier: "NCNotification", task: task)
             }

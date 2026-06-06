@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 import RealmSwift
-import NextcloudKit
+import ScaleCloudKit
 
 class tableComments: Object, DateCompareable {
     var dateKey: Date { creationDateTime as Date }

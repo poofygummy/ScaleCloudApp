@@ -4,7 +4,7 @@
 
 import UIKit
 import MarkdownKit
-import NextcloudKit
+import ScaleCloudKit
 
 protocol NCSectionFirstHeaderDelegate: AnyObject {
     func tapRichWorkspace(_ sender: Any)
@@ -180,7 +180,7 @@ extension NCSectionFirstHeader: UICollectionViewDataSource {
                 cell.image.contentMode = .scaleAspectFit
                 if recommendedFiles.hasPreview {
                     Task {
-                        let resultsPreview = await NextcloudKit.shared.downloadPreviewAsync(fileId: metadata.fileId, etag: metadata.etag, account: metadata.account) { task in
+                        let resultsPreview = await ScaleCloudKit.shared.downloadPreviewAsync(fileId: metadata.fileId, etag: metadata.etag, account: metadata.account) { task in
                             Task {
                                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: metadata.account,
                                                                                                             path: metadata.fileId,

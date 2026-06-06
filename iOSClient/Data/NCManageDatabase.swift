@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 import RealmSwift
-import NextcloudKit
+import ScaleCloudKit
 import CoreMedia
 import Photos
 import CommonCrypto

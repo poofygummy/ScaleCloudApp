@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 
 // Global flag indicating whether the app has ever become active since launch.
 var hasBecomeActiveOnce: Bool = false

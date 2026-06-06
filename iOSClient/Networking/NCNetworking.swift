@@ -9,7 +9,7 @@ import SwiftUI
 #endif
 
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 import Alamofire
 
 protocol ClientCertificateDelegate: AnyObject {
@@ -45,18 +45,18 @@ class NCNetworking: @unchecked Sendable, NextcloudKitDelegate {
         var serverUrl: String
     }
 
-    let sessionDownload = NextcloudKit.shared.nkCommonInstance.identifierSessionDownload
-    let sessionDownloadBackground = NextcloudKit.shared.nkCommonInstance.identifierSessionDownloadBackground
-    let sessionDownloadBackgroundExt = NextcloudKit.shared.nkCommonInstance.identifierSessionDownloadBackgroundExt
+    let sessionDownload = ScaleCloudKit.shared.nkCommonInstance.identifierSessionDownload
+    let sessionDownloadBackground = ScaleCloudKit.shared.nkCommonInstance.identifierSessionDownloadBackground
+    let sessionDownloadBackgroundExt = ScaleCloudKit.shared.nkCommonInstance.identifierSessionDownloadBackgroundExt
 
-    let sessionUpload = NextcloudKit.shared.nkCommonInstance.identifierSessionUpload
-    let sessionUploadBackground = NextcloudKit.shared.nkCommonInstance.identifierSessionUploadBackground
-    let sessionUploadBackgroundWWan = NextcloudKit.shared.nkCommonInstance.identifierSessionUploadBackgroundWWan
-    let sessionUploadBackgroundExt = NextcloudKit.shared.nkCommonInstance.identifierSessionUploadBackgroundExt
+    let sessionUpload = ScaleCloudKit.shared.nkCommonInstance.identifierSessionUpload
+    let sessionUploadBackground = ScaleCloudKit.shared.nkCommonInstance.identifierSessionUploadBackground
+    let sessionUploadBackgroundWWan = ScaleCloudKit.shared.nkCommonInstance.identifierSessionUploadBackgroundWWan
+    let sessionUploadBackgroundExt = ScaleCloudKit.shared.nkCommonInstance.identifierSessionUploadBackgroundExt
 
     let utilityFileSystem = NCUtilityFileSystem()
     let global = NCGlobal.shared
-    let backgroundSession = NKBackground(nkCommonInstance: NextcloudKit.shared.nkCommonInstance)
+    let backgroundSession = NKBackground(nkCommonInstance: ScaleCloudKit.shared.nkCommonInstance)
 
     var lastReachability: Bool = true
     var networkReachability: NKTypeReachability?

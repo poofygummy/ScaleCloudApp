@@ -6,7 +6,7 @@ import UIKit
 import TLPhotoPicker
 import MobileCoreServices
 import Photos
-import NextcloudKit
+import ScaleCloudKit
 import SwiftUI
 
 // MARK: - Photo Picker

@@ -4,7 +4,7 @@
 
 import UIKit
 import UniformTypeIdentifiers
-import NextcloudKit
+import ScaleCloudKit
 import Alamofire
 import LucidBanner
 import SwiftUI

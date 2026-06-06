@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 
 class NCRecent: NCCollectionViewCommon {
     required init?(coder aDecoder: NSCoder) {
@@ -51,7 +51,7 @@ class NCRecent: NCCollectionViewCommon {
         let fourteenDaysAgo = Calendar.current.date(byAdding: .day, value: -14, to: Date()) ?? Date()
         let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [
             NSPredicate(format: "account == %@", session.account),
-            NSPredicate(format: "fileName != %@", NextcloudKit.shared.nkCommonInstance.rootFileName),
+            NSPredicate(format: "fileName != %@", ScaleCloudKit.shared.nkCommonInstance.rootFileName),
             NSCompoundPredicate(orPredicateWithSubpredicates: [
                 NSPredicate(format: "directory == %@", NSNumber(value: false)),
                 NSPredicate(format: "%K == %lld", "size", 0)
@@ -169,7 +169,7 @@ class NCRecent: NCCollectionViewCommon {
 
         startGUIGetServerData()
 
-        let resultsSearch = await NextcloudKit.shared.searchBodyRequestAsync(serverUrl: session.urlBase,
+        let resultsSearch = await ScaleCloudKit.shared.searchBodyRequestAsync(serverUrl: session.urlBase,
                                                                              requestBody: requestBody,
                                                                              showHiddenFiles: showHiddenFiles,
                                                                              account: session.account) { task in

@@ -26,7 +26,7 @@
 import UIKit
 import Parchment
 import DropDown
-import NextcloudKit
+import ScaleCloudKit
 import ContactsUI
 
 class NCShare: UIViewController, NCSharePagingContent {
@@ -168,7 +168,7 @@ class NCShare: UIViewController, NCSharePagingContent {
             let etag = self.database.getTableAvatar(fileName: fileName)?.etag
             let fileNameLocalPath = utilityFileSystem.createServerUrl(serverUrl: utilityFileSystem.directoryUserData, fileName: fileName)
 
-            NextcloudKit.shared.downloadAvatar(
+            ScaleCloudKit.shared.downloadAvatar(
                 user: metadata.ownerId,
                 fileNameLocalPath: fileNameLocalPath,
                 sizeImage: NCGlobal.shared.avatarSize,

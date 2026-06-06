@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 import QuickLook
 
 class NCViewer: NSObject {
@@ -84,7 +84,7 @@ class NCViewer: NSObject {
                     let fileNamePath = utilityFileSystem.getRelativeFilePath(metadata.fileName, serverUrl: metadata.serverUrl, session: session)
 
                     NCActivityIndicator.shared.start(backgroundView: delegate?.view)
-                    let results = await NextcloudKit.shared.textOpenFileAsync(fileNamePath: fileNamePath, editor: editor, account: metadata.account, options: options) { task in
+                    let results = await ScaleCloudKit.shared.textOpenFileAsync(fileNamePath: fileNamePath, editor: editor, account: metadata.account, options: options) { task in
                         Task {
                             let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: metadata.account,
                                                                                                         path: fileNamePath,
@@ -126,7 +126,7 @@ class NCViewer: NSObject {
             if metadata.isAvailableRichDocumentEditorView {
                 if metadata.url.isEmpty {
                     NCActivityIndicator.shared.start(backgroundView: delegate?.view)
-                    let results = await NextcloudKit.shared.createUrlRichdocumentsAsync(fileID: metadata.fileId, account: metadata.account) { task in
+                    let results = await ScaleCloudKit.shared.createUrlRichdocumentsAsync(fileID: metadata.fileId, account: metadata.account) { task in
                         Task {
                             let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: metadata.account,
                                                                                                         path: metadata.fileId,

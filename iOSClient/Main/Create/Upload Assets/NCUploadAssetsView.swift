@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import NextcloudKit
+import ScaleCloudKit
 import UniformTypeIdentifiers
 
 struct NCUploadAssetsView: View {

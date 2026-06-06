@@ -4,7 +4,7 @@
 
 import Foundation
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 import LucidBanner
 
 @MainActor
@@ -35,7 +35,7 @@ class NCNetworkingE2EEMarkFolder: NSObject {
         }
 #endif
 
-        let resultsReadFileOrFolder = await NextcloudKit.shared.readFileOrFolderAsync(serverUrlFileName: serverUrlFileName, depth: "0", account: account) { task in
+        let resultsReadFileOrFolder = await ScaleCloudKit.shared.readFileOrFolderAsync(serverUrlFileName: serverUrlFileName, depth: "0", account: account) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
                                                                                             path: serverUrlFileName,
@@ -49,7 +49,7 @@ class NCNetworkingE2EEMarkFolder: NSObject {
             return error
         }
         let capabilities = await NKCapabilities.shared.getCapabilities(for: account)
-        let resultsMarkE2EEFolder = await NextcloudKit.shared.markE2EEFolderAsync(fileId: file.fileId, delete: false, account: account, options: NCNetworkingE2EE().getOptions(account: account, capabilities: capabilities)) { task in
+        let resultsMarkE2EEFolder = await ScaleCloudKit.shared.markE2EEFolderAsync(fileId: file.fileId, delete: false, account: account, options: NCNetworkingE2EE().getOptions(account: account, capabilities: capabilities)) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
                                                                                             path: file.fileId,

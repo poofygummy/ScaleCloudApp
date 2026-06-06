@@ -4,7 +4,7 @@
 
 import UIKit
 import FileProvider
-import NextcloudKit
+import ScaleCloudKit
 import UniformTypeIdentifiers
 
 class FileProviderItem: NSObject, NSFileProviderItem {

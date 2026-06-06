@@ -4,7 +4,7 @@
 
 import UIKit
 import SwiftUI
-import NextcloudKit
+import ScaleCloudKit
 
 struct NavigationCollectionViewCommon {
     var serverUrl: String

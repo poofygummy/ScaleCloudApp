@@ -5,7 +5,7 @@
 import SwiftUI
 import QuickLook
 import Mantis
-import NextcloudKit
+import ScaleCloudKit
 
 struct NCViewerQuickLookView: UIViewControllerRepresentable {
     let url: URL

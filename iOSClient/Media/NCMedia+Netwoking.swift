@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import Foundation
-import NextcloudKit
+import ScaleCloudKit
 import Alamofire
 
 extension NCMedia {
@@ -15,7 +15,7 @@ extension NCMedia {
                           options: NKRequestOptions = NKRequestOptions(),
                           taskHandler: @escaping (_ task: URLSessionTask) -> Void = { _ in }
     ) async -> (account: String, files: [NKFile]?, error: NKError) {
-        guard let nkSession = NextcloudKit.shared.nkCommonInstance.nksessions.session(forAccount: account) else {
+        guard let nkSession = ScaleCloudKit.shared.nkCommonInstance.nksessions.session(forAccount: account) else {
             return (account, nil, .urlError)
         }
         let capabilities = await NKCapabilities.shared.getCapabilities(for: account)
@@ -50,7 +50,7 @@ extension NCMedia {
             return (account, files, .invalidData)
         }
 
-        let results = await NextcloudKit.shared.searchAsync(serverUrl: nkSession.urlBase, httpBody: httpBody, showHiddenFiles: false, includeHiddenFiles: [], account: account, options: options, taskHandler: taskHandler)
+        let results = await ScaleCloudKit.shared.searchAsync(serverUrl: nkSession.urlBase, httpBody: httpBody, showHiddenFiles: false, includeHiddenFiles: [], account: account, options: options, taskHandler: taskHandler)
 
         return(results.account, results.files, results.error)
     }

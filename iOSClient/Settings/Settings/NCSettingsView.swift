@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import SwiftUI
-import NextcloudKit
+import ScaleCloudKit
 import FirebaseCrashlytics
 
 /// Settings view for Nextcloud

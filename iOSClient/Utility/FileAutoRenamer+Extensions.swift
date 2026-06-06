@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import Foundation
-import NextcloudKit
+import ScaleCloudKit
 
 extension FileAutoRenamer {
     static func rename(_ filename: String, isFolderPath: Bool = false, capabilities: NKCapabilities.Capabilities) -> String {

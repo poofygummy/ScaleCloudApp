@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 
 /// A context menu created to be used universally with the different `NCViewer`s.
 /// See ``NCViewerImage``, ``NCViewerMedia``, ``NCViewerPDF`` for usage details.

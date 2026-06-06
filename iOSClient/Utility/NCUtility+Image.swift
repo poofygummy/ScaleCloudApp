@@ -4,7 +4,7 @@
 
 import Foundation
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 import PDFKit
 import Accelerate
 import CoreMedia
@@ -283,7 +283,7 @@ extension NCUtility {
         let pathPNG = utilityFileSystem.createServerUrl(serverUrl: utilityFileSystem.directoryUserData, fileName: fileNamePNG)
 
         if !FileManager.default.fileExists(atPath: pathPNG) || rewrite {
-            let results = await NextcloudKit.shared.downloadContentAsync(serverUrl: serverUrl, account: account) { task in
+            let results = await ScaleCloudKit.shared.downloadContentAsync(serverUrl: serverUrl, account: account) { task in
                 Task {
                     let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
                                                                                                 path: serverUrl,

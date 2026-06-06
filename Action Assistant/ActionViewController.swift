@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 import UniformTypeIdentifiers
 
 final class ActionViewController: UIViewController {

@@ -4,7 +4,7 @@
 
 import Foundation
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 
 class NCNetworkingE2EEDelete: NSObject {
     let database = NCManageDatabase.shared
@@ -37,7 +37,7 @@ class NCNetworkingE2EEDelete: NSObject {
         //
         let serverUrlFileName = self.utilityFileSystem.createServerUrl(serverUrl: metadata.serverUrl, fileName: metadata.fileName)
         let options = NKRequestOptions(customHeader: ["e2e-token": e2eToken])
-        let result = await NextcloudKit.shared.deleteFileOrFolderAsync(serverUrlFileName: serverUrlFileName, account: metadata.account, options: options) { task in
+        let result = await ScaleCloudKit.shared.deleteFileOrFolderAsync(serverUrlFileName: serverUrlFileName, account: metadata.account, options: options) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: metadata.account,
                                                                                             path: serverUrlFileName,

@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import Foundation
-import NextcloudKit
+import ScaleCloudKit
 
 /// A model that allows the user to configure the account
 class NCTermOfServiceModel: ObservableObject {

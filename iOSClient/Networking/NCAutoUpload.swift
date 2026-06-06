@@ -6,7 +6,7 @@
 
 import UIKit
 import CoreLocation
-import NextcloudKit
+import ScaleCloudKit
 import Photos
 import OrderedCollections
 import LucidBanner

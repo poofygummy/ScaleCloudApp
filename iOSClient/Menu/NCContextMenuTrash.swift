@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 
 /// A context menu for trash item actions (restore, delete).
 /// See ``NCTrash`` for usage details.

@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import SwiftUI
-import NextcloudKit
+import ScaleCloudKit
 
 struct NCManageE2EEView: View {
     @ObservedObject var model: NCManageE2EE
@@ -151,7 +151,7 @@ struct NCManageE2EEView: View {
             }
             .contentShape(Rectangle())
             .onTapGesture {
-                NextcloudKit.shared.deleteE2EECertificate(account: model.session.account) { task in
+                ScaleCloudKit.shared.deleteE2EECertificate(account: model.session.account) { task in
                     Task {
                         let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: model.session.account,
                                                                                                     name: "deleteE2EECertificate")
@@ -187,7 +187,7 @@ struct NCManageE2EEView: View {
             }
             .contentShape(Rectangle())
             .onTapGesture {
-                NextcloudKit.shared.deleteE2EEPrivateKey(account: model.session.account) { task in
+                ScaleCloudKit.shared.deleteE2EEPrivateKey(account: model.session.account) { task in
                     Task {
                         let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: model.session.account,
                                                                                                     name: "deleteE2EEPrivateKey")

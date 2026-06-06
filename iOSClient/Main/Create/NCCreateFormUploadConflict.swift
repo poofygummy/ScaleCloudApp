@@ -23,7 +23,7 @@
 
 import UIKit
 import SwiftUI
-import NextcloudKit
+import ScaleCloudKit
 import Photos
 
 protocol NCCreateFormUploadConflictDelegate: AnyObject {

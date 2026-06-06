@@ -7,7 +7,7 @@ import Foundation
 import UIKit
 import SwiftUI
 import LocalAuthentication
-import NextcloudKit
+import ScaleCloudKit
 
 class NCSettingsModel: ObservableObject, ViewOnAppearHandling {
     // Keychain access

@@ -4,7 +4,7 @@
 
 import Foundation
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 
 class NCContextMenuNavigation: NSObject {
     // MARK: - collectionViewCommon MENU OPTION ACTION

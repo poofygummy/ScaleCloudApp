@@ -2,7 +2,7 @@
 // SPDX-FileCopyrightText: 2026 Milen Pivchev
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-import NextcloudKit
+import ScaleCloudKit
 
 @MainActor
 @Observable
@@ -89,7 +89,7 @@ class NCAssistantChatModel {
     func generateChatSession() async {
         guard let sessionId = selectedConversation?.id else { return }
 
-        let result = await NextcloudKit.shared.generateAssistantChatSession(sessionId: sessionId, account: ncSession.account)
+        let result = await ScaleCloudKit.shared.generateAssistantChatSession(sessionId: sessionId, account: ncSession.account)
         chatMessageTaskId = result.sessionTask?.taskId
     }
 
@@ -101,14 +101,14 @@ class NCAssistantChatModel {
     }
 
     private func checkChatSession(sessionId: Int) async -> AssistantSession? {
-        let result = await NextcloudKit.shared.checkAssistantChatSession(sessionId: sessionId, account: ncSession.account)
+        let result = await ScaleCloudKit.shared.checkAssistantChatSession(sessionId: sessionId, account: ncSession.account)
         return result.session
     }
 
     private func loadAllMessages() async {
         guard let sessionId = selectedConversation?.id else { return }
 
-        let result = await NextcloudKit.shared.getAssistantChatMessages(sessionId: sessionId, account: ncSession.account)
+        let result = await ScaleCloudKit.shared.getAssistantChatMessages(sessionId: sessionId, account: ncSession.account)
 
         if result.error == .success {
             messages = result.chatMessages ?? []
@@ -120,7 +120,7 @@ class NCAssistantChatModel {
     private func loadLastMessage() async {
         guard let chatMessageTaskId else { return }
 
-        let result = await NextcloudKit.shared.checkAssistantChatGeneration(taskId: chatMessageTaskId, sessionId: selectedConversation?.id ?? 0, account: ncSession.account)
+        let result = await ScaleCloudKit.shared.checkAssistantChatGeneration(taskId: chatMessageTaskId, sessionId: selectedConversation?.id ?? 0, account: ncSession.account)
 
         // API sends expectation failed error (417) when a message is not ready yet. We should continue polling.
         if result.error != .success, result.error.errorCode != NCGlobal.shared.errorExpectationFailed {
@@ -143,7 +143,7 @@ class NCAssistantChatModel {
         isSendingDisabled = true
 
         Task {
-            let result = await NextcloudKit.shared.createAssistantChatMessage(messageRequest: request, account: ncSession.account)
+            let result = await ScaleCloudKit.shared.createAssistantChatMessage(messageRequest: request, account: ncSession.account)
             if result.error == .success {
                 guard let chatMessage = result.chatMessage else { return }
                 messages.append(chatMessage)

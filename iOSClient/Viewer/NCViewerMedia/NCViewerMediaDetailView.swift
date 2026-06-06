@@ -4,7 +4,7 @@
 
 import UIKit
 import MapKit
-import NextcloudKit
+import ScaleCloudKit
 
 public protocol NCViewerMediaDetailViewDelegate: AnyObject {
     func downloadFullResolution()

@@ -5,7 +5,7 @@
 import UIKit
 import WidgetKit
 import Intents
-import NextcloudKit
+import ScaleCloudKit
 
 struct FilesDataEntry: TimelineEntry {
     let date: Date
@@ -90,8 +90,8 @@ func getFilesDataEntry(configuration: AccountIntent?, isPreview: Bool, displaySi
         return (FilesDataEntry(date: Date(), datas: datasPlaceholder, isPlaceholder: true, isEmpty: false, userId: "", url: "", account: "", tile: getTitleFilesWidget(tableAccount: nil), footerImage: "xmark.icloud", footerText: NSLocalizedString("_no_active_account_", value: "No account found", comment: "")))
     }
 
-    NextcloudKit.shared.setup(groupIdentifier: NCBrandOptions.shared.capabilitiesGroup, delegate: NCNetworking.shared)
-    NextcloudKit.shared.appendSession(account: activeTableAccount.account,
+    ScaleCloudKit.shared.setup(groupIdentifier: NCBrandOptions.shared.capabilitiesGroup, delegate: NCNetworking.shared)
+    ScaleCloudKit.shared.appendSession(account: activeTableAccount.account,
                                       urlBase: activeTableAccount.urlBase,
                                       user: activeTableAccount.user,
                                       userId: activeTableAccount.userId,
@@ -162,11 +162,11 @@ func getFilesDataEntry(configuration: AccountIntent?, isPreview: Bool, displaySi
 
     // LOG
     let versionNextcloudiOS = String(format: NCBrandOptions.shared.textCopyrightNextcloudiOS, utility.getVersionBuild())
-    NextcloudKit.configureLogger(logLevel: (NCBrandOptions.shared.disable_log ? .disabled : NCPreferences().log))
+    ScaleCloudKit.configureLogger(logLevel: (NCBrandOptions.shared.disable_log ? .disabled : NCPreferences().log))
     nkLog(debug: "Start \(NCBrandOptions.shared.brand) widget session " + versionNextcloudiOS)
 
-    let options = NKRequestOptions(timeout: 30, queue: NextcloudKit.shared.nkCommonInstance.backgroundQueue)
-    let results = await NextcloudKit.shared.searchBodyRequestAsync(serverUrl: activeTableAccount.urlBase, requestBody: requestBody, showHiddenFiles: showHiddenFiles, account: activeTableAccount.account, options: options)
+    let options = NKRequestOptions(timeout: 30, queue: ScaleCloudKit.shared.nkCommonInstance.backgroundQueue)
+    let results = await ScaleCloudKit.shared.searchBodyRequestAsync(serverUrl: activeTableAccount.urlBase, requestBody: requestBody, showHiddenFiles: showHiddenFiles, account: activeTableAccount.account, options: options)
 
     var datas: [FilesData] = []
     let title = getTitleFilesWidget(tableAccount: activeTableAccount)
@@ -197,7 +197,7 @@ func getFilesDataEntry(configuration: AccountIntent?, isPreview: Bool, displaySi
                                  userId: activeTableAccount.userId,
                                  urlBase: activeTableAccount.urlBase)
         if image == nil, file.hasPreview {
-            let result = await NextcloudKit.shared.downloadPreviewAsync(fileId: file.fileId,
+            let result = await ScaleCloudKit.shared.downloadPreviewAsync(fileId: file.fileId,
                                                                         etag: file.etag,
                                                                         account: activeTableAccount.account,
                                                                         options: options)

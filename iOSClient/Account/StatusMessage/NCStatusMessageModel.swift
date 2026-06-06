@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import SwiftUI
-import NextcloudKit
+import ScaleCloudKit
 
 @MainActor
 @Observable class NCStatusMessageModel {
@@ -41,7 +41,7 @@ import NextcloudKit
 
     func getStatus(account: String) {
         Task {
-            let result = await NextcloudKit.shared.getUserStatusAsync(account: account) { task in
+            let result = await ScaleCloudKit.shared.getUserStatusAsync(account: account) { task in
                 Task {
                     let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account, name: "getUserStatus")
                     await NCNetworking.shared.networkingTasks.track(identifier: identifier, task: task)
@@ -58,7 +58,7 @@ import NextcloudKit
 
     func clearStatus(account: String) {
         Task {
-            let result = await NextcloudKit.shared.clearMessageAsync(account: account) { task in
+            let result = await ScaleCloudKit.shared.clearMessageAsync(account: account) { task in
                 Task {
                     let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account, name: "clearMessage")
                     await NCNetworking.shared.networkingTasks.track(identifier: identifier, task: task)
@@ -73,7 +73,7 @@ import NextcloudKit
 
     func getPredefinedStatusTexts(account: String) {
         Task {
-            let result = await NextcloudKit.shared.getUserStatusPredefinedStatusesAsync(account: account) { task in
+            let result = await ScaleCloudKit.shared.getUserStatusPredefinedStatusesAsync(account: account) { task in
                 Task {
                     let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account, name: "getUserStatusPredefinedStatuses")
                     await NCNetworking.shared.networkingTasks.track(identifier: identifier, task: task)
@@ -90,7 +90,7 @@ import NextcloudKit
 
     func submitStatus(account: String) {
         Task {
-            let result = await NextcloudKit.shared.setCustomMessageUserDefinedAsync(statusIcon: emojiText, message: statusText, clearAt: getClearAt(clearAfterString), account: account) { task in
+            let result = await ScaleCloudKit.shared.setCustomMessageUserDefinedAsync(statusIcon: emojiText, message: statusText, clearAt: getClearAt(clearAfterString), account: account) { task in
                 Task {
                     let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account, name: "setCustomMessageUserDefined")
                     await NCNetworking.shared.networkingTasks.track(identifier: identifier, task: task)
@@ -105,7 +105,7 @@ import NextcloudKit
 
     func setAccountUserStatus(account: String) {
         Task {
-            let result = await NextcloudKit.shared.getUserStatusAsync(account: account) { task in
+            let result = await ScaleCloudKit.shared.getUserStatusAsync(account: account) { task in
                 Task {
                     let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
                                                                                                 name: "getUserStatus")

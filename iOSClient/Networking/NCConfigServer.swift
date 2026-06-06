@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 import Swifter
-import NextcloudKit
+import ScaleCloudKit
 
 // Source:
 // https://stackoverflow.com/questions/2338035/installing-a-configuration-profile-on-iphone-programmatically
@@ -25,7 +25,7 @@ final class NCConfigServer: NSObject, UIActionSheetDelegate, URLSessionDelegate 
         let defaultSessionConfiguration = URLSessionConfiguration.default
         let defaultSession = URLSession(configuration: defaultSessionConfiguration, delegate: self, delegateQueue: .main)
         var urlRequest = URLRequest(url: url)
-        if let headers = NextcloudKit.shared.nkCommonInstance.getStandardHeaders(account: account) {
+        if let headers = ScaleCloudKit.shared.nkCommonInstance.getStandardHeaders(account: account) {
             urlRequest.headers = headers
         }
 

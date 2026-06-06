@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 import UserNotifications
-import NextcloudKit
+import ScaleCloudKit
 
 class NCPushNotification {
     static let shared = NCPushNotification()
@@ -39,7 +39,7 @@ class NCPushNotification {
             return
         }
 
-        let responsePN = await NextcloudKit.shared.subscribingPushNotificationAsync(serverUrl: urlBase,
+        let responsePN = await ScaleCloudKit.shared.subscribingPushNotificationAsync(serverUrl: urlBase,
                                                                                     pushTokenHash: pushTokenHash,
                                                                                     devicePublicKey: devicePublicKey,
                                                                                     proxyServerUrl: proxyServerUrl, account: account) { task in
@@ -63,7 +63,7 @@ class NCPushNotification {
         let userAgent = String(format: "%@  (Strict VoIP)", NCBrandOptions.shared.getUserAgent())
         let options = NKRequestOptions(customUserAgent: userAgent)
 
-        let responsePushProxy = await NextcloudKit.shared.subscribingPushProxyAsync(proxyServerUrl: proxyServerUrl,
+        let responsePushProxy = await ScaleCloudKit.shared.subscribingPushProxyAsync(proxyServerUrl: proxyServerUrl,
                                                                                     pushToken: preferences.deviceTokenPushNotification,
                                                                                     deviceIdentifier: deviceIdentifier,
                                                                                     signature: signature,
@@ -96,7 +96,7 @@ class NCPushNotification {
             return
         }
 
-        let responsePN = await NextcloudKit.shared.unsubscribingPushNotificationAsync(serverUrl: urlBase,
+        let responsePN = await ScaleCloudKit.shared.unsubscribingPushNotificationAsync(serverUrl: urlBase,
                                                                                       account: account) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
@@ -109,7 +109,7 @@ class NCPushNotification {
         let userAgent = String(format: "%@  (Strict VoIP)", NCBrandOptions.shared.getUserAgent())
         let options = NKRequestOptions(customUserAgent: userAgent)
         let proxyServerUrl = NCBrandOptions.shared.pushNotificationServerProxy
-        let responseProxy = await NextcloudKit.shared.unsubscribingPushProxyAsync(proxyServerUrl: proxyServerUrl,
+        let responseProxy = await ScaleCloudKit.shared.unsubscribingPushProxyAsync(proxyServerUrl: proxyServerUrl,
                                                                                   deviceIdentifier: deviceIdentifier,
                                                                                   signature: signature,
                                                                                   publicKey: subscribingPublicKey,

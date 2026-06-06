@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 
 public protocol NCAccountRequestDelegate: AnyObject {
     func accountRequestAddAccount()

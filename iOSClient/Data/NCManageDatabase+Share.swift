@@ -24,7 +24,7 @@
 import Foundation
 import UIKit
 import RealmSwift
-import NextcloudKit
+import ScaleCloudKit
 
 typealias tableShare = tableShareV2
 class tableShareV2: Object {

@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import Foundation
-import NextcloudKit
+import ScaleCloudKit
 
 extension NCCollectionViewCommon {
     /// Starts a detached task that accelerates metadata synchronization for the provided items.

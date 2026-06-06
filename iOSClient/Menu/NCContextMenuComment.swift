@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 
 /// A context menu for comment actions (edit, delete).
 /// See ``NCActivity`` for usage details.
@@ -48,7 +48,7 @@ class NCContextMenuComment: NSObject {
             alert.addAction(UIAlertAction(title: NSLocalizedString("_ok_", comment: ""), style: .default) { _ in
                 guard let message = alert.textFields?.first?.text, !message.isEmpty else { return }
 
-                NextcloudKit.shared.updateComments(
+                ScaleCloudKit.shared.updateComments(
                     fileId: self.metadata.fileId,
                     messageId: self.tableComments.messageId,
                     message: message,
@@ -83,7 +83,7 @@ class NCContextMenuComment: NSObject {
             image: utility.loadImage(named: "trash", colors: [.red]),
             attributes: .destructive
         ) { _ in
-            NextcloudKit.shared.deleteComments(
+            ScaleCloudKit.shared.deleteComments(
                 fileId: self.metadata.fileId,
                 messageId: self.tableComments.messageId,
                 account: self.metadata.account

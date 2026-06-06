@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 import RealmSwift
 
 extension NCMedia {
@@ -133,7 +133,7 @@ extension NCMedia {
             max(self.collectionView.visibleCells.count * 3, 300)
         }
 
-        let options = NKRequestOptions(timeout: 180, taskDescription: self.global.taskDescriptionRetrievesProperties, queue: NextcloudKit.shared.nkCommonInstance.backgroundQueue)
+        let options = NKRequestOptions(timeout: 180, taskDescription: self.global.taskDescriptionRetrievesProperties, queue: ScaleCloudKit.shared.nkCommonInstance.backgroundQueue)
 
         let result = await searchMediaAsync(path: tblAccount.mediaPath,
                                             lessDate: lessDate,

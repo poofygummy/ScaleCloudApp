@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 
 class NCFavorite: NCCollectionViewCommon {
     required init?(coder aDecoder: NSCoder) {
@@ -83,7 +83,7 @@ class NCFavorite: NCCollectionViewCommon {
         startGUIGetServerData()
 
         let showHiddenFiles = NCPreferences().getShowHiddenFiles(account: session.account)
-        let resultsListingFavorites = await NextcloudKit.shared.listingFavoritesAsync(showHiddenFiles: showHiddenFiles,
+        let resultsListingFavorites = await ScaleCloudKit.shared.listingFavoritesAsync(showHiddenFiles: showHiddenFiles,
                                                                                       account: session.account) { task in
             Task {
                 await NCNetworking.shared.networkingTasks.track(identifier: "NCFavorite", task: task)

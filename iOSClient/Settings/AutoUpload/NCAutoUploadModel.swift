@@ -6,7 +6,7 @@
 import Foundation
 import UIKit
 import Photos
-import NextcloudKit
+import ScaleCloudKit
 import SwiftUI
 
 enum AutoUploadTimespan: String, CaseIterable, Identifiable {

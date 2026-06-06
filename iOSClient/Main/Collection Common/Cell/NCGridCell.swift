@@ -4,7 +4,7 @@
 
 import Foundation
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 import RealmSwift
 
 protocol NCGridCellDelegate: AnyObject {

@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 import Queuer
 import Photos
 import LucidBanner
@@ -19,7 +19,7 @@ extension NCNetworking {
 
         let showHiddenFiles = NCPreferences().getShowHiddenFiles(account: account)
 
-        let resultsReadFolder = await NextcloudKit.shared.readFileOrFolderAsync(serverUrlFileName: serverUrl, depth: "1", showHiddenFiles: showHiddenFiles, account: account, options: options) { task in
+        let resultsReadFolder = await ScaleCloudKit.shared.readFileOrFolderAsync(serverUrlFileName: serverUrl, depth: "1", showHiddenFiles: showHiddenFiles, account: account, options: options) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
                                                                                             path: serverUrl,
@@ -46,7 +46,7 @@ extension NCNetworking {
                   completion: @escaping (_ account: String, _ metadata: tableMetadata?, _ file: NKFile?, _ error: NKError) -> Void) {
         let showHiddenFiles = NCPreferences().getShowHiddenFiles(account: account)
 
-        NextcloudKit.shared.readFileOrFolder(serverUrlFileName: serverUrlFileName, depth: "0", showHiddenFiles: showHiddenFiles, account: account) { task in
+        ScaleCloudKit.shared.readFileOrFolder(serverUrlFileName: serverUrlFileName, depth: "0", showHiddenFiles: showHiddenFiles, account: account) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
                                                                                             path: serverUrlFileName,
@@ -70,7 +70,7 @@ extension NCNetworking {
                        account: String,
                        taskHandler: @escaping (_ task: URLSessionTask) -> Void = { _ in }) async -> (account: String, metadata: tableMetadata?, error: NKError) {
         let showHiddenFiles = NCPreferences().getShowHiddenFiles(account: account)
-        let results = await NextcloudKit.shared.readFileOrFolderAsync(serverUrlFileName: serverUrlFileName,
+        let results = await ScaleCloudKit.shared.readFileOrFolderAsync(serverUrlFileName: serverUrlFileName,
                                                                       depth: "0",
                                                                       showHiddenFiles: showHiddenFiles,
                                                                       account: account) { task in
@@ -91,9 +91,9 @@ extension NCNetworking {
     }
 
     func fileExists(serverUrlFileName: String, account: String) async -> NKError {
-        let requestBody = NKDataFileXML(nkCommonInstance: NextcloudKit.shared.nkCommonInstance).getRequestBodyFileExists().data(using: .utf8)
+        let requestBody = NKDataFileXML(nkCommonInstance: ScaleCloudKit.shared.nkCommonInstance).getRequestBodyFileExists().data(using: .utf8)
 
-        let results = await NextcloudKit.shared.readFileOrFolderAsync(serverUrlFileName: serverUrlFileName,
+        let results = await ScaleCloudKit.shared.readFileOrFolderAsync(serverUrlFileName: serverUrlFileName,
                                                                       depth: "0",
                                                                       requestBody: requestBody,
                                                                       account: account) { task in
@@ -202,7 +202,7 @@ extension NCNetworking {
         }
 
         // Try to create the directory
-        let resultCreateFolder = await NextcloudKit.shared.createFolderAsync(serverUrlFileName: serverUrlFileName, account: session.account, options: options) { task in
+        let resultCreateFolder = await ScaleCloudKit.shared.createFolderAsync(serverUrlFileName: serverUrlFileName, account: session.account, options: options) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: session.account,
                                                                                             path: serverUrlFileName,
@@ -245,7 +245,7 @@ extension NCNetworking {
         }
 
         // Try to create the directory
-        let results = await NextcloudKit.shared.createFolderAsync(serverUrlFileName: serverUrlFileName, account: account) { task in
+        let results = await ScaleCloudKit.shared.createFolderAsync(serverUrlFileName: serverUrlFileName, account: account) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
                                                                                             path: serverUrlFileName,
@@ -393,7 +393,7 @@ extension NCNetworking {
     }
 
     func deleteFileOrFolder(metadata: tableMetadata) async -> NKError {
-        var results = await NextcloudKit.shared.deleteFileOrFolderAsync(serverUrlFileName: metadata.serverUrlFileName, account: metadata.account) { task in
+        var results = await ScaleCloudKit.shared.deleteFileOrFolderAsync(serverUrlFileName: metadata.serverUrlFileName, account: metadata.account) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: metadata.account,
                                                                                             path: metadata.serverUrlFileName,
@@ -474,7 +474,7 @@ extension NCNetworking {
         let serverUrlFileNameSource = metadata.serverUrlFileName
         let serverUrlFileNameDestination = utilityFileSystem.createServerUrl(serverUrl: metadata.serverUrl, fileName: metadata.fileName)
 
-        let results = await NextcloudKit.shared.moveFileOrFolderAsync(serverUrlFileNameSource: serverUrlFileNameSource, serverUrlFileNameDestination: serverUrlFileNameDestination, overwrite: false, account: metadata.account) { task in
+        let results = await ScaleCloudKit.shared.moveFileOrFolderAsync(serverUrlFileNameSource: serverUrlFileNameSource, serverUrlFileNameDestination: serverUrlFileNameDestination, overwrite: false, account: metadata.account) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: metadata.account,
                                                                                             path: serverUrlFileNameSource,
@@ -528,7 +528,7 @@ extension NCNetworking {
         let serverUrlFileNameDestination = utilityFileSystem.createServerUrl(serverUrl: destination, fileName: metadata.fileName)
         let overwrite = (metadata.storeFlag as? NSString)?.boolValue ?? false
 
-        let results = await NextcloudKit.shared.moveFileOrFolderAsync(serverUrlFileNameSource: metadata.serverUrlFileName, serverUrlFileNameDestination: serverUrlFileNameDestination, overwrite: overwrite, account: metadata.account) { task in
+        let results = await ScaleCloudKit.shared.moveFileOrFolderAsync(serverUrlFileNameSource: metadata.serverUrlFileName, serverUrlFileNameDestination: serverUrlFileNameDestination, overwrite: overwrite, account: metadata.account) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: metadata.account,
                                                                                             path: serverUrlFileNameDestination,
@@ -598,7 +598,7 @@ extension NCNetworking {
             serverUrlFileNameDestination = utilityFileSystem.createServerUrl(serverUrl: destination, fileName: fileNameCopy)
         }
 
-        let results = await NextcloudKit.shared.copyFileOrFolderAsync(serverUrlFileNameSource: metadata.serverUrlFileName, serverUrlFileNameDestination: serverUrlFileNameDestination, overwrite: overwrite, account: metadata.account) { task in
+        let results = await ScaleCloudKit.shared.copyFileOrFolderAsync(serverUrlFileNameSource: metadata.serverUrlFileName, serverUrlFileNameDestination: serverUrlFileNameDestination, overwrite: overwrite, account: metadata.account) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: metadata.account,
                                                                                             path: serverUrlFileNameDestination,
@@ -654,7 +654,7 @@ extension NCNetworking {
         let session = NCSession.Session(account: metadata.account, urlBase: metadata.urlBase, user: metadata.user, userId: metadata.userId)
         let fileName = utilityFileSystem.getRelativeFilePath(metadata.fileName, serverUrl: metadata.serverUrl, session: session)
 
-        let results = await NextcloudKit.shared.setFavoriteAsync(fileName: fileName, favorite: metadata.favorite, account: metadata.account) { task in
+        let results = await ScaleCloudKit.shared.setFavoriteAsync(fileName: fileName, favorite: metadata.favorite, account: metadata.account) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: metadata.account,
                                                                                             path: fileName,
@@ -694,7 +694,7 @@ extension NCNetworking {
 
     func lockUnlockFile(_ metadata: tableMetadata, shouldLock: Bool) async -> NKError {
         do {
-            _ = try await NextcloudKit.shared.lockUnlockFile(serverUrlFileName: metadata.serverUrlFileName, shouldLock: shouldLock, account: metadata.account)
+            _ = try await ScaleCloudKit.shared.lockUnlockFile(serverUrlFileName: metadata.serverUrlFileName, shouldLock: shouldLock, account: metadata.account)
 
             let results = await readFileAsync(serverUrlFileName: metadata.serverUrlFileName, account: metadata.account)
 
@@ -729,7 +729,7 @@ extension NCNetworking {
         } else if utilityFileSystem.fileProviderStorageExists(metadata) {
             completition(URL(fileURLWithPath: utilityFileSystem.getDirectoryProviderStorageOcId(metadata.ocId, fileName: metadata.fileNameView, userId: metadata.userId, urlBase: metadata.urlBase)), false, .success)
         } else {
-            NextcloudKit.shared.getDirectDownload(fileId: metadata.fileId, account: metadata.account) { task in
+            ScaleCloudKit.shared.getDirectDownload(fileId: metadata.fileId, account: metadata.account) { task in
                 Task {
                     let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: metadata.account,
                                                                                                 path: metadata.fileId,
@@ -775,13 +775,13 @@ class NCOperationDownloadAvatar: ConcurrentOperation, @unchecked Sendable {
         }
         let fileNameLocalPath = utilityFileSystem.createServerUrl(serverUrl: utilityFileSystem.directoryUserData, fileName: fileName)
 
-        NextcloudKit.shared.downloadAvatar(user: user,
+        ScaleCloudKit.shared.downloadAvatar(user: user,
                                            fileNameLocalPath: fileNameLocalPath,
                                            sizeImage: NCGlobal.shared.avatarSize,
                                            avatarSizeRounded: NCGlobal.shared.avatarSizeRounded,
                                            etagResource: self.etag,
                                            account: account,
-                                           options: NKRequestOptions(queue: NextcloudKit.shared.nkCommonInstance.backgroundQueue)) { task in
+                                           options: NKRequestOptions(queue: ScaleCloudKit.shared.nkCommonInstance.backgroundQueue)) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: self.account,
                                                                                             path: self.user,

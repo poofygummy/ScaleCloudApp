@@ -5,7 +5,7 @@
 
 import UIKit
 import BackgroundTasks
-import NextcloudKit
+import ScaleCloudKit
 import LocalAuthentication
 import Firebase
 import WidgetKit
@@ -59,22 +59,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
         // Setup Networking
         //
-        NextcloudKit.shared.setup(groupIdentifier: NCBrandOptions.shared.capabilitiesGroup,
+        ScaleCloudKit.shared.setup(groupIdentifier: NCBrandOptions.shared.capabilitiesGroup,
                                   delegate: NCNetworking.shared)
         NCNetworking.shared.setupTransferDelegate()
 
-        NextcloudKit.configureLogger(logLevel: (NCBrandOptions.shared.disable_log ? .disabled : NCPreferences().log))
+        ScaleCloudKit.configureLogger(logLevel: (NCBrandOptions.shared.disable_log ? .disabled : NCPreferences().log))
 
         #if DEBUG
 //      For the tags look NCGlobal LOG TAG
 
 //      var black: [String] = []
 //      black.append("NETWORKING TASKS")
-//      NextcloudKit.configureLoggerBlacklist(blacklist: black)
+//      ScaleCloudKit.configureLoggerBlacklist(blacklist: black)
 
 //      var white: [String] = []
 //      white.append("SYNC METADATA")
-//      NextcloudKit.configureLoggerWhitelist(whitelist: white)
+//      ScaleCloudKit.configureLoggerWhitelist(whitelist: white)
         #endif
 
         nkLog(start: "Start session with level \(NCPreferences().log) " + versionNextcloudiOS)

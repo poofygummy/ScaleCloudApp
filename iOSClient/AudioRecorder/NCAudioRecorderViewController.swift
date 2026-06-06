@@ -10,7 +10,7 @@
 import UIKit
 import AVFoundation
 import QuartzCore
-import NextcloudKit
+import ScaleCloudKit
 
 class NCAudioRecorderViewController: UIViewController, NCAudioRecorderDelegate {
     @IBOutlet weak var contentContainerView: UIView!

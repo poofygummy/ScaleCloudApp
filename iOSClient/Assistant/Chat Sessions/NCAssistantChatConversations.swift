@@ -4,7 +4,7 @@
 
 import Foundation
 import SwiftUI
-import NextcloudKit
+import ScaleCloudKit
 
 struct NCAssistantChatConversations: View {
     var conversationsModel: NCAssistantChatConversationsModel

@@ -20,7 +20,7 @@
 //
 
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 
 class NCShareNewUserAddComment: UIViewController, NCShareNavigationTitleSetting {
 

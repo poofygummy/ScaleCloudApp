@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 import RealmSwift
-import NextcloudKit
+import ScaleCloudKit
 
 typealias tableGPS = tableGPSV2
 class tableGPSV2: Object {

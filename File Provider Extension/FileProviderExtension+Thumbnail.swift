@@ -4,7 +4,7 @@
 
 import UIKit
 import FileProvider
-import NextcloudKit
+import ScaleCloudKit
 import Alamofire
 
 extension FileProviderExtension {
@@ -25,7 +25,7 @@ extension FileProviderExtension {
                 continue
             }
 
-            NextcloudKit.shared.downloadPreview(fileId: metadata.fileId,
+            ScaleCloudKit.shared.downloadPreview(fileId: metadata.fileId,
                                                 width: Int(NCGlobal.shared.size512.width),
                                                 height: Int(NCGlobal.shared.size512.height),
                                                 etag: metadata.etag,

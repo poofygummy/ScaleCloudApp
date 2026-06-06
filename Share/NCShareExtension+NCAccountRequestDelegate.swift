@@ -3,7 +3,7 @@
 // SPDX-FileCopyrightText: 2021 Henrik Storch
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-import NextcloudKit
+import ScaleCloudKit
 import UIKit
 
 extension NCShareExtension: NCAccountRequestDelegate {
@@ -54,8 +54,8 @@ extension NCShareExtension: NCAccountRequestDelegate {
                 return
             }
 
-            NextcloudKit.shared.setup(groupIdentifier: NCBrandOptions.shared.capabilitiesGroup, delegate: NCNetworking.shared)
-            NextcloudKit.shared.appendSession(account: tblAccount.account,
+            ScaleCloudKit.shared.setup(groupIdentifier: NCBrandOptions.shared.capabilitiesGroup, delegate: NCNetworking.shared)
+            ScaleCloudKit.shared.appendSession(account: tblAccount.account,
                                               urlBase: tblAccount.urlBase,
                                               user: tblAccount.user,
                                               userId: tblAccount.userId,

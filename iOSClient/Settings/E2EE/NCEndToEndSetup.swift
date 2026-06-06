@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 
 /// Coordinates the full End-to-End Encryption (E2EE) initialization flow.
 ///
@@ -17,7 +17,7 @@ import NextcloudKit
 ///
 /// Notes:
 /// - This class runs entirely on the MainActor due to UI interactions (alerts)
-/// - Networking is performed via NextcloudKit async APIs
+/// - Networking is performed via ScaleCloudKit async APIs
 /// - Errors are propagated using `throws` and must be handled by the caller
 @MainActor
 class NCEndToEndSetup {
@@ -65,9 +65,9 @@ class NCEndToEndSetup {
     /// - Throws:
     ///   - `NKError` if CSR generation fails
     ///   - `NKError` if certificate is missing or invalid
-    ///   - Server errors propagated from NextcloudKit
+    ///   - Server errors propagated from ScaleCloudKit
     private func getPublicKey() async throws {
-        let results = await NextcloudKit.shared.getE2EECertificateAsync(account: session.account)
+        let results = await ScaleCloudKit.shared.getE2EECertificateAsync(account: session.account)
 
         switch results.error.errorCode {
         case .zero:
@@ -86,7 +86,7 @@ class NCEndToEndSetup {
             }
 
             // Get certificate from server
-            let results = await NextcloudKit.shared.signE2EECertificateAsync(certificate: csr, account: self.session.account)
+            let results = await ScaleCloudKit.shared.signE2EECertificateAsync(certificate: csr, account: self.session.account)
             guard results.error == .success,
                   let certificate = results.certificate
             else {
@@ -132,9 +132,9 @@ class NCEndToEndSetup {
     ///   - `NKError` for decryption failures
     ///   - `NKError` for missing data
     ///   - `NSUserCancelledError` if user cancels input
-    ///   - Server errors propagated from NextcloudKit
+    ///   - Server errors propagated from ScaleCloudKit
     private func getPrivateKey() async throws {
-        let results = await NextcloudKit.shared.getE2EEPrivateKeyAsync(account: self.session.account)
+        let results = await ScaleCloudKit.shared.getE2EEPrivateKeyAsync(account: self.session.account)
 
         switch results.error.errorCode {
         case .zero:
@@ -161,7 +161,7 @@ class NCEndToEndSetup {
             NCPreferences().setEndToEndPrivateKey(account: session.account, privateKey: privateKey)
             NCPreferences().setEndToEndPassphrase(account: session.account, passphrase: passphrase)
 
-            let results = await NextcloudKit.shared.getE2EEPublicKeyAsync(account: self.session.account)
+            let results = await ScaleCloudKit.shared.getE2EEPublicKeyAsync(account: self.session.account)
             guard results.error == .success,
                   let publicKey = results.publicKey
             else {
@@ -209,7 +209,7 @@ class NCEndToEndSetup {
     /// - Throws:
     ///   - `NKError` if encryption fails
     ///   - `NKError` if server responses are invalid
-    ///   - Server errors propagated from NextcloudKit
+    ///   - Server errors propagated from ScaleCloudKit
     private func createNewE2EE(e2ePassphrase: String, copyPassphrase: Bool) async throws {
         var privateKeyString: NSString?
 
@@ -227,7 +227,7 @@ class NCEndToEndSetup {
 
         // Store cipher on server
 
-        let storeResults = await NextcloudKit.shared.storeE2EEPrivateKeyAsync(
+        let storeResults = await ScaleCloudKit.shared.storeE2EEPrivateKeyAsync(
             privateKey: privateKeyCipher,
             account: session.account
         )
@@ -250,7 +250,7 @@ class NCEndToEndSetup {
 
             // Fetch server public key
 
-            let publicKeyResults = await NextcloudKit.shared.getE2EEPublicKeyAsync(account: session.account)
+            let publicKeyResults = await ScaleCloudKit.shared.getE2EEPublicKeyAsync(account: session.account)
 
             guard publicKeyResults.error == .success,
                   let publicKey = publicKeyResults.publicKey

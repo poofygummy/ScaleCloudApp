@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import Foundation
-import NextcloudKit
+import ScaleCloudKit
 
 extension FileNameValidator {
     static func checkFileName(_ filename: String, account: String?, capabilities: NKCapabilities.Capabilities) -> NKError? {

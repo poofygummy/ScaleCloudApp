@@ -21,7 +21,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 
 class NCShareLinkCell: UITableViewCell {
     @IBOutlet private weak var imageItem: UIImageView!

@@ -5,7 +5,7 @@
 // withscalecloud
 
 import SwiftUI
-import NextcloudKit
+import ScaleCloudKit
 
 struct NCAccountSettingsView: View {
     @ObservedObject var model: NCAccountSettingsModel

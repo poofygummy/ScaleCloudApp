@@ -10,7 +10,7 @@ extension XCUIElement {
     ///
     /// This is the graceful alternative to ``awaitOrFail`` for use cases in which the absence of the `XCUIElement` is not considered an error.
     ///
-    /// > Important: This is a candidate for outsourcing into a dedicated library, if not NextcloudKit.
+    /// > Important: This is a candidate for outsourcing into a dedicated library, if not ScaleCloudKit.
     ///
     /// - Parameters:
     ///     - timeout: The number of seconds to wait.
@@ -32,7 +32,7 @@ extension XCUIElement {
     /// Convenience method to wait for the inexistence of a `XCUIElement` for the default time defined in the test constants.
     /// This will throw an error, if the user interface element did not appear or exist within given timeout.
     ///
-    /// > Important: This is a candidate for outsourcing into a dedicated library, if not NextcloudKit.
+    /// > Important: This is a candidate for outsourcing into a dedicated library, if not ScaleCloudKit.
     ///
     /// - Parameters:
     ///     - timeout: The number of seconds to wait.
@@ -65,7 +65,7 @@ extension XCUIElement {
     ///
     /// It is important to set `continueAfterFailure` to `false` for test implementations.
     ///
-    /// > Important: This is a candidate for outsourcing into a dedicated library, if not NextcloudKit.
+    /// > Important: This is a candidate for outsourcing into a dedicated library, if not ScaleCloudKit.
     ///
     /// - Parameters:
     ///     - timeout: The number of seconds to wait.

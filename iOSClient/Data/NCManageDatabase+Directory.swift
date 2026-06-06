@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 import RealmSwift
-import NextcloudKit
+import ScaleCloudKit
 
 class tableDirectory: Object {
     @objc dynamic var account = ""
@@ -47,7 +47,7 @@ extension NCManageDatabase {
 
         await core.performRealmWriteAsync { realm in
             var directoryServerUrl = NCUtilityFileSystem().createServerUrl(serverUrl: metadata.serverUrl, fileName: metadata.fileName)
-            if metadata.fileName == NextcloudKit.shared.nkCommonInstance.rootFileName {
+            if metadata.fileName == ScaleCloudKit.shared.nkCommonInstance.rootFileName {
                 directoryServerUrl = metadata.serverUrl
             }
 

@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 import EasyTipView
 import SwiftUI
 import MobileVLCKit
@@ -346,7 +346,7 @@ class NCViewerMedia: UIViewController {
             self.image = image
             self.imageVideoContainer.image = self.image
         } else {
-            NextcloudKit.shared.downloadPreview(fileId: metadata.fileId,
+            ScaleCloudKit.shared.downloadPreview(fileId: metadata.fileId,
                                                 etag: metadata.etag,
                                                 account: metadata.account,
                                                 options: NKRequestOptions(queue: .main)) { task in

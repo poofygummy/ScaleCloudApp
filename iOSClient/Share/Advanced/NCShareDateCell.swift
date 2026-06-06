@@ -2,7 +2,7 @@
 // SPDX-FileCopyrightText: 2022 Henrik Storch
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-import NextcloudKit
+import ScaleCloudKit
 
 ///
 /// Table view cell to manage the expiration date on a share in its details.

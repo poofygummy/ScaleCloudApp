@@ -22,7 +22,7 @@
 //
 
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 import CloudKit
 
 class NCShareAdvancePermission: UITableViewController, NCShareAdvanceFooterDelegate, NCShareNavigationTitleSetting {

@@ -2,7 +2,7 @@
 // SPDX-FileCopyrightText: 2025 Iva Horn
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-import NextcloudKit
+import ScaleCloudKit
 
 ///
 /// Delegate requirements for ``NCShareNetworking`` to handle results.

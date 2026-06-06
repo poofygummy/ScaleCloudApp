@@ -5,7 +5,7 @@
 import Foundation
 import Photos
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 import AVFoundation
 
 /// Structure representing an extracted asset result

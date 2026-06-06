@@ -7,7 +7,7 @@
 import Foundation
 import UIKit
 import KeychainAccess
-import NextcloudKit
+import ScaleCloudKit
 
 final class NCPreferences: NSObject {
     let keychain = Keychain(service: "com.nextcloud.keychain")

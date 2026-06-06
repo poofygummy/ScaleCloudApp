@@ -6,7 +6,7 @@ import Foundation
 import UIKit
 import SwiftUI
 import Alamofire
-import NextcloudKit
+import ScaleCloudKit
 import LucidBanner
 
 /// A context menu used in ``NCCollectionViewCommon`` and ``NCMedia``
@@ -256,7 +256,7 @@ class NCContextMenuMain: NSObject {
             image: utility.loadImage(named: "lock", colors: [NCBrandColor.shared.iconImageColor])
         ) { _ in
             Task {
-                let results = await NextcloudKit.shared.markE2EEFolderAsync(
+                let results = await ScaleCloudKit.shared.markE2EEFolderAsync(
                     fileId: metadata.fileId,
                     delete: true,
                     account: metadata.account
@@ -567,7 +567,7 @@ class NCContextMenuMain: NSObject {
                             var iconImage = UIImage(systemName: "exclamationmark.triangle.fill")
 
                             if let iconUrl = item.icon {
-                                let results = await NextcloudKit.shared.downloadContentAsync(serverUrl: metadata.urlBase + iconUrl, account: metadata.account)
+                                let results = await ScaleCloudKit.shared.downloadContentAsync(serverUrl: metadata.urlBase + iconUrl, account: metadata.account)
                                 if results.error == .success, let data = results.responseData?.data,
                                    let image = try? await NCSVGRenderer().renderSVGToUIImage(
                                     svgData: data,
@@ -584,7 +584,7 @@ class NCContextMenuMain: NSObject {
                                 image: iconImage
                             ) { _ in
                                 Task {
-                                    let results = await NextcloudKit.shared.sendRequestAsync(
+                                    let results = await ScaleCloudKit.shared.sendRequestAsync(
                                         account: metadata.account,
                                         fileId: metadata.fileId,
                                         filePath: self.utilityFileSystem.getRelativeFilePath(metadata.fileName, serverUrl: metadata.serverUrl, urlBase: metadata.urlBase, userId: metadata.userId),

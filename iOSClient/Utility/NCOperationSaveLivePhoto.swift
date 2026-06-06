@@ -4,7 +4,7 @@
 
 import UIKit
 import Queuer
-import NextcloudKit
+import ScaleCloudKit
 import LucidBanner
 
 class NCOperationSaveLivePhoto: ConcurrentOperation, @unchecked Sendable {

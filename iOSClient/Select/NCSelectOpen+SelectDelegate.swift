@@ -1,4 +1,4 @@
-import NextcloudKit
+import ScaleCloudKit
 
 final class NCSelectOpen: NCSelectDelegate {
     static let shared = NCSelectOpen()

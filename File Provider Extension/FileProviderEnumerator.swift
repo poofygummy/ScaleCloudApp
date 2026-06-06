@@ -5,7 +5,7 @@
 import UIKit
 import FileProvider
 import RealmSwift
-import NextcloudKit
+import ScaleCloudKit
 
 class FileProviderEnumerator: NSObject, NSFileProviderEnumerator {
     var enumeratedItemIdentifier: NSFileProviderItemIdentifier
@@ -209,12 +209,12 @@ class FileProviderEnumerator: NSObject, NSFileProviderEnumerator {
                                        paginateToken: self.paginateToken,
                                        paginateOffset: paginateOffset,
                                        paginateCount: paginateCount,
-                                       queue: NextcloudKit.shared.nkCommonInstance.backgroundQueue
+                                       queue: ScaleCloudKit.shared.nkCommonInstance.backgroundQueue
         )
 
         // Read folder metadata
         //
-        let resultsRead = await NextcloudKit.shared.readFileOrFolderAsync(
+        let resultsRead = await ScaleCloudKit.shared.readFileOrFolderAsync(
             serverUrlFileName: serverUrl,
             depth: "1",
             showHiddenFiles: showHiddenFiles,

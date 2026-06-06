@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 import RealmSwift
 
 class NCCollectionViewDataSource: NSObject {
@@ -381,7 +381,7 @@ class NCMetadataForSection: NSObject {
         for metadata in metadatasSorted {
 
             // skipped the root file
-            if metadata.fileName == NextcloudKit.shared.nkCommonInstance.rootFileName {
+            if metadata.fileName == ScaleCloudKit.shared.nkCommonInstance.rootFileName {
                 continue
             }
 

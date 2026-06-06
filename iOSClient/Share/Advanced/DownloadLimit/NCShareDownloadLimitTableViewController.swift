@@ -2,7 +2,7 @@
 // SPDX-FileCopyrightText: 2024 Iva Horn
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-import NextcloudKit
+import ScaleCloudKit
 import UIKit
 
 ///

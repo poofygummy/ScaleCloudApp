@@ -24,7 +24,7 @@
 
 import UIKit
 import Parchment
-import NextcloudKit
+import ScaleCloudKit
 import TagListView
 
 protocol NCSharePagingContent {

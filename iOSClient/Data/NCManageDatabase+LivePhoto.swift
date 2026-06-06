@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 import RealmSwift
-import NextcloudKit
+import ScaleCloudKit
 
 class tableLivePhoto: Object {
     @Persisted(primaryKey: true) var primaryKey: String

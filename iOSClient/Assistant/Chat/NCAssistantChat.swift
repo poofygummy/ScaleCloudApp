@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import SwiftUI
-import NextcloudKit
+import ScaleCloudKit
 
 struct NCAssistantChat: View {
     @Environment(NCAssistantChatModel.self) var chatModel

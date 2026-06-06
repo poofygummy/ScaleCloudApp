@@ -4,7 +4,7 @@
 
 import UIKit
 import UniformTypeIdentifiers
-import NextcloudKit
+import ScaleCloudKit
 
 extension NCShareExtension {
     func handleAssistantSharedTextIfNeeded(inputItems: [NSExtensionItem]) async -> Bool {

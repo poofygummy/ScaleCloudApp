@@ -2,7 +2,7 @@
 // SPDX-FileCopyrightText: 2025 Iva Horn
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-import NextcloudKit
+import ScaleCloudKit
 
 ///
 /// Shared requirements of data models used in the share link user interface  (transient ``NCTableShareOptions``, persisted ``tableShare`` and `NKShare` transfer object).

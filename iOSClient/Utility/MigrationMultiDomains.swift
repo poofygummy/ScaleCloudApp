@@ -5,7 +5,7 @@
 import Foundation
 import SwiftUI
 import RealmSwift
-import NextcloudKit
+import ScaleCloudKit
 
 /// A modal SwiftUI view responsible for migrating existing folders under File Provider Storage
 /// to the appropriate domain subdirectories. This is used when transitioning to multi-domain support.

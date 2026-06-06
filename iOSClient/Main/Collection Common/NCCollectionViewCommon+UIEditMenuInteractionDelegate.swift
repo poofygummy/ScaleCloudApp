@@ -4,7 +4,7 @@
 
 import UIKit
 import UniformTypeIdentifiers
-import NextcloudKit
+import ScaleCloudKit
 import RealmSwift
 import LucidBanner
 

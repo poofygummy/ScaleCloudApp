@@ -21,7 +21,7 @@
 
 import UIKit
 import UserNotifications
-import NextcloudKit
+import ScaleCloudKit
 
 class NotificationService: UNNotificationServiceExtension {
     var contentHandler: ((UNNotificationContent) -> Void)?
@@ -33,7 +33,7 @@ class NotificationService: UNNotificationServiceExtension {
         self.request = request
         bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
 
-        NextcloudKit.configureLogger(logLevel: .verbose)
+        ScaleCloudKit.configureLogger(logLevel: .verbose)
 
         if let bestAttemptContent = bestAttemptContent {
             bestAttemptContent.title = ""

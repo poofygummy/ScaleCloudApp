@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 import LRUCache
-import NextcloudKit
+import ScaleCloudKit
 import RealmSwift
 
 final class NCImageCache: @unchecked Sendable {

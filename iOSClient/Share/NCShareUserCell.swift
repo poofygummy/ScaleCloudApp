@@ -22,7 +22,7 @@
 
 import UIKit
 import DropDown
-import NextcloudKit
+import ScaleCloudKit
 
 class NCShareUserCell: UITableViewCell {
     @IBOutlet weak var imageItem: UIImageView!
@@ -197,7 +197,7 @@ class NCSearchUserDropDownCell: DropDownCell {
             let etag = NCManageDatabase.shared.getTableAvatar(fileName: fileName)?.etag
             let fileNameLocalPath = utilityFileSystem.createServerUrl(serverUrl: utilityFileSystem.directoryUserData, fileName: fileName)
 
-            NextcloudKit.shared.downloadAvatar(
+            ScaleCloudKit.shared.downloadAvatar(
                 user: sharee.shareWith,
                 fileNameLocalPath: fileNameLocalPath,
                 sizeImage: NCGlobal.shared.avatarSize,

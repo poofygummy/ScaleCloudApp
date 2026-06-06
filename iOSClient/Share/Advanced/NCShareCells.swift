@@ -23,7 +23,7 @@
 
 import UIKit
 import OSLog
-import NextcloudKit
+import ScaleCloudKit
 
 protocol NCShareCellConfig {
     var title: String { get }

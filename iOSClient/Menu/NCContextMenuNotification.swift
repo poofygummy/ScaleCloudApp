@@ -4,7 +4,7 @@
 
 import UIKit
 import SwiftyJSON
-import NextcloudKit
+import ScaleCloudKit
 
 /// A context menu for notification actions.
 /// See ``NCNotification`` for usage details.

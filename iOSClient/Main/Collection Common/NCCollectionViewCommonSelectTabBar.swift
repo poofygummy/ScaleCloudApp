@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 import SwiftUI
-import NextcloudKit
+import ScaleCloudKit
 
 protocol NCCollectionViewCommonSelectTabBarDelegate: AnyObject {
     func selectAll()

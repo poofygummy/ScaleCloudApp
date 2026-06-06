@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 import RealmSwift
-import NextcloudKit
+import ScaleCloudKit
 
 class NCDBLayoutForView: Object {
     @Persisted(primaryKey: true) var index = ""

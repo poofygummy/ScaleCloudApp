@@ -5,7 +5,7 @@
 import UIKit
 import SwiftUI
 import RealmSwift
-import NextcloudKit
+import ScaleCloudKit
 import EasyTipView
 import LucidBanner
 

@@ -24,7 +24,7 @@
 import Foundation
 import UIKit
 import RealmSwift
-import NextcloudKit
+import ScaleCloudKit
 
 class tableE2eEncryptionLock: Object {
     @Persisted(primaryKey: true) var fileId = ""

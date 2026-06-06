@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 import Alamofire
 import Queuer
 import RealmSwift
@@ -24,14 +24,14 @@ extension NCNetworking {
               headers: [AnyHashable: Any]?,
               afError: AFError?,
               nkError: NKError ) {
-        let options = NKRequestOptions(queue: NextcloudKit.shared.nkCommonInstance.backgroundQueue)
+        let options = NKRequestOptions(queue: ScaleCloudKit.shared.nkCommonInstance.backgroundQueue)
         let fileNameLocalPath = utilityFileSystem.getDirectoryProviderStorageOcId(metadata.ocId, fileName: metadata.fileName, userId: metadata.userId, urlBase: metadata.urlBase)
 
         if metadata.status == global.metadataStatusDownloading || metadata.status == global.metadataStatusUploading {
             return(metadata.account, metadata.etag, metadata.date as Date, metadata.size, nil, nil, .success)
         }
 
-        let results = await NextcloudKit.shared.downloadAsync(serverUrlFileName: metadata.serverUrlFileName,
+        let results = await ScaleCloudKit.shared.downloadAsync(serverUrlFileName: metadata.serverUrlFileName,
                                                               fileNameLocalPath: fileNameLocalPath,
                                                               account: metadata.account,
                                                               options: options) { request in
@@ -181,7 +181,7 @@ extension NCNetworking {
     // MARK: - DOWNLOAD ERROR
 
     func downloadError(withMetadata metadata: tableMetadata, error: NKError) async {
-        await NextcloudKit.shared.nkCommonInstance.appendServerErrorAccount(metadata.account, errorCode: error.errorCode)
+        await ScaleCloudKit.shared.nkCommonInstance.appendServerErrorAccount(metadata.account, errorCode: error.errorCode)
 
         nkLog(error: "Downloaded file: " + metadata.serverUrlFileName + ", result: error \(error.errorCode)")
 
@@ -233,11 +233,11 @@ extension NCNetworking {
 
     internal func synchronizationDownload(account: String, serverUrl: String, userId: String, urlBase: String, metadatasInDownload: [tableMetadata]?) async {
         let showHiddenFiles = NCPreferences().getShowHiddenFiles(account: account)
-        let options = NKRequestOptions(timeout: 300, taskDescription: NCGlobal.shared.taskDescriptionSynchronization, queue: NextcloudKit.shared.nkCommonInstance.backgroundQueue)
+        let options = NKRequestOptions(timeout: 300, taskDescription: NCGlobal.shared.taskDescriptionSynchronization, queue: ScaleCloudKit.shared.nkCommonInstance.backgroundQueue)
 
         nkLog(tag: self.global.logTagSync, emoji: .start, message: "Start read infinite folder: \(serverUrl)")
 
-        let results = await NextcloudKit.shared.readFileOrFolderAsync(serverUrlFileName: serverUrl, depth: "infinity", showHiddenFiles: showHiddenFiles, account: account, options: options) { task in
+        let results = await ScaleCloudKit.shared.readFileOrFolderAsync(serverUrlFileName: serverUrl, depth: "infinity", showHiddenFiles: showHiddenFiles, account: account, options: options) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
                                                                                             path: serverUrl,

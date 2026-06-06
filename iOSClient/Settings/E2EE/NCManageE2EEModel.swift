@@ -4,7 +4,7 @@
 
 import UIKit
 import SwiftUI
-import NextcloudKit
+import ScaleCloudKit
 import LocalAuthentication
 
 @MainActor
@@ -41,7 +41,7 @@ class NCManageE2EE: NSObject, ObservableObject, ViewOnAppearHandling, TOPasscode
             if isEndToEndEnabled {
                 statusOfService = NSLocalizedString("_status_e2ee_configured_", comment: "")
             } else {
-                NextcloudKit.shared.getE2EECertificate(account: session.account) { _ in
+                ScaleCloudKit.shared.getE2EECertificate(account: session.account) { _ in
                 } completion: { _, _, _, _, error in
                     if error == .success {
                         self.statusOfService = NSLocalizedString("_status_e2ee_on_server_", comment: "")

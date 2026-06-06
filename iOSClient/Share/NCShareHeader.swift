@@ -24,7 +24,7 @@
 import UIKit
 import TagListView
 import SwiftUI
-import NextcloudKit
+import ScaleCloudKit
 
 class NCShareHeader: UIView {
     @IBOutlet weak var imageView: UIImageView!

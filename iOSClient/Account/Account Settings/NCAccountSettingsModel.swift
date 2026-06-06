@@ -7,7 +7,7 @@
 import Foundation
 import UIKit
 import RealmSwift
-import NextcloudKit
+import ScaleCloudKit
 
 /// Protocol for know when the Account Settings has dimissed
 protocol NCAccountSettingsModelDelegate: AnyObject {

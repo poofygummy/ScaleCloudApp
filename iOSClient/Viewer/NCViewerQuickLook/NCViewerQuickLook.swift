@@ -4,7 +4,7 @@
 
 import UIKit
 import QuickLook
-import NextcloudKit
+import ScaleCloudKit
 import Mantis
 import SwiftUI
 

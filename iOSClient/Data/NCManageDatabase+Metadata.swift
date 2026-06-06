@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 import RealmSwift
-import NextcloudKit
+import ScaleCloudKit
 import Photos
 
 class tableMetadata: Object {
@@ -245,7 +245,7 @@ extension tableMetadata {
     var isAvailableEditorView: Bool {
         guard !isPDF,
               classFile == NKTypeClassFile.document.rawValue,
-              NextcloudKit.shared.isNetworkReachable() else {
+              ScaleCloudKit.shared.isNetworkReachable() else {
             return false
         }
         let utility = NCUtility()
@@ -269,7 +269,7 @@ extension tableMetadata {
         guard let capabilities = NCNetworking.shared.capabilities[account],
               classFile == NKTypeClassFile.document.rawValue,
               capabilities.richDocumentsEnabled,
-              NextcloudKit.shared.isNetworkReachable() else { return false }
+              ScaleCloudKit.shared.isNetworkReachable() else { return false }
 
         if NCUtility().isTypeFileRichDocument(self) {
             return true
@@ -278,7 +278,7 @@ extension tableMetadata {
     }
 
     var isAvailableDirectEditingEditorView: Bool {
-        guard (classFile == NKTypeClassFile.document.rawValue) && NextcloudKit.shared.isNetworkReachable() else {
+        guard (classFile == NKTypeClassFile.document.rawValue) && ScaleCloudKit.shared.isNetworkReachable() else {
             return false
         }
         let editors = NCUtility().editorsDirectEditing(account: account, contentType: contentType)
@@ -718,7 +718,7 @@ extension NCManageDatabase {
             )
 
             let resultsToDelete = realm.objects(tableMetadata.self)
-                .filter("account == %@ AND serverUrl == %@ AND status == %d AND fileName != %@", account, serverUrl, NCGlobal.shared.metadataStatusNormal, NextcloudKit.shared.nkCommonInstance.rootFileName)
+                .filter("account == %@ AND serverUrl == %@ AND status == %d AND fileName != %@", account, serverUrl, NCGlobal.shared.metadataStatusNormal, ScaleCloudKit.shared.nkCommonInstance.rootFileName)
                 .filter { !ocIdsToSkip.contains($0.ocId) }
 
             // Cache mediaSearch (and anything else needed) before deletion, keyed by ocId.
@@ -1036,7 +1036,7 @@ extension NCManageDatabase {
         let home = NCUtilityFileSystem().getHomeServer(session: session)
 
         if home == serverUrl {
-            fileName = NextcloudKit.shared.nkCommonInstance.rootFileName
+            fileName = ScaleCloudKit.shared.nkCommonInstance.rootFileName
         } else {
             fileName = (serverUrl as NSString).lastPathComponent
             if let serverDirectoryUp = NCUtilityFileSystem().serverDirectoryUp(serverUrl: serverUrl, home: home) {
@@ -1165,7 +1165,7 @@ extension NCManageDatabase {
     func getRootContainerMetadataAsync(accout: String) async -> tableMetadata? {
         return await core.performRealmReadAsync { realm in
             realm.objects(tableMetadata.self)
-                .filter("fileName == %@ AND account == %@", NextcloudKit.shared.nkCommonInstance.rootFileName, accout)
+                .filter("fileName == %@ AND account == %@", ScaleCloudKit.shared.nkCommonInstance.rootFileName, accout)
                 .first
                 .map { $0.detachedCopy() }
         }
@@ -1236,10 +1236,10 @@ extension NCManageDatabase {
                                      withAccount account: String,
                                      withLayout layoutForView: NCDBLayoutForView?,
                                      withPreficate predicateSource: NSPredicate? = nil) async -> [tableMetadata] {
-        var predicate = NSPredicate(format: "account == %@ AND serverUrl == %@ AND fileName != %@ AND NOT (status IN %@)", account, serverUrl, NextcloudKit.shared.nkCommonInstance.rootFileName, NCGlobal.shared.metadataStatusHideInView)
+        var predicate = NSPredicate(format: "account == %@ AND serverUrl == %@ AND fileName != %@ AND NOT (status IN %@)", account, serverUrl, ScaleCloudKit.shared.nkCommonInstance.rootFileName, NCGlobal.shared.metadataStatusHideInView)
 
         if NCPreferences().getPersonalFilesOnly(account: account) {
-            predicate = NSPredicate(format: "account == %@ AND serverUrl == %@ AND fileName != %@ AND (ownerId == %@ || ownerId == '') AND mountType == '' AND NOT (status IN %@)", account, serverUrl, NextcloudKit.shared.nkCommonInstance.rootFileName, userId, NCGlobal.shared.metadataStatusHideInView)
+            predicate = NSPredicate(format: "account == %@ AND serverUrl == %@ AND fileName != %@ AND (ownerId == %@ || ownerId == '') AND mountType == '' AND NOT (status IN %@)", account, serverUrl, ScaleCloudKit.shared.nkCommonInstance.rootFileName, userId, NCGlobal.shared.metadataStatusHideInView)
         }
 
         if let predicateSource {

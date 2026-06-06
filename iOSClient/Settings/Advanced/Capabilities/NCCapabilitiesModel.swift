@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 import SwiftUI
-import NextcloudKit
+import ScaleCloudKit
 
 ///
  /// Data model for ``NCCapabilitiesView``.

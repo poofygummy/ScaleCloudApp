@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 import Alamofire
 
 extension NCNetworking {
@@ -27,8 +27,8 @@ extension NCNetworking {
               size: Int64,
               response: AFDataResponse<Data>?,
               error: NKError) {
-        let options = NKRequestOptions(customHeader: customHeaders, queue: NextcloudKit.shared.nkCommonInstance.backgroundQueue)
-        let results = await NextcloudKit.shared.uploadAsync(serverUrlFileName: serverUrlFileName,
+        let options = NKRequestOptions(customHeader: customHeaders, queue: ScaleCloudKit.shared.nkCommonInstance.backgroundQueue)
+        let results = await ScaleCloudKit.shared.uploadAsync(serverUrlFileName: serverUrlFileName,
                                                             fileNameLocalPath: fileNameLocalPath,
                                                             dateCreationFile: creationDate,
                                                             dateModificationFile: dateModificationFile,
@@ -72,12 +72,12 @@ extension NCNetworking {
         if networkReachability == NKTypeReachability.reachableEthernetOrWiFi {
             chunkSize = self.global.chunkSizeMBEthernetOrWiFi
         }
-        let options = NKRequestOptions(customHeader: customHeaders, queue: NextcloudKit.shared.nkCommonInstance.backgroundQueue)
+        let options = NKRequestOptions(customHeader: customHeaders, queue: ScaleCloudKit.shared.nkCommonInstance.backgroundQueue)
         var backupError = NKError()
         var backupFile: NKFile?
 
         do {
-            let (_, file) = try await NextcloudKit.shared.uploadChunkAsync(
+            let (_, file) = try await ScaleCloudKit.shared.uploadChunkAsync(
                 directory: directory,
                 fileName: metadata.fileName,
                 date: metadata.date as Date,
@@ -283,7 +283,7 @@ extension NCNetworking {
     // MARK: - UPLOAD ERROR
 
     func uploadError(withMetadata metadata: tableMetadata, error: NKError) async {
-        await NextcloudKit.shared.nkCommonInstance.appendServerErrorAccount(metadata.account, errorCode: error.errorCode)
+        await ScaleCloudKit.shared.nkCommonInstance.appendServerErrorAccount(metadata.account, errorCode: error.errorCode)
 
         nkLog(error: "Upload file: " + metadata.serverUrlFileName + ", result: error \(error.errorCode)")
 
@@ -398,7 +398,7 @@ extension NCNetworking {
     @MainActor
     func termsOfService(metadata: tableMetadata) async {
         let options = NKRequestOptions(checkInterceptor: false, queue: .main)
-        let results = await NextcloudKit.shared.getTermsOfServiceAsync(account: metadata.account, options: options, taskHandler: { task in
+        let results = await ScaleCloudKit.shared.getTermsOfServiceAsync(account: metadata.account, options: options, taskHandler: { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: metadata.account,
                                                                                             name: "getTermsOfService")

@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 import Photos
 import RealmSwift
 import Alamofire
@@ -37,9 +37,9 @@ actor NCNetworkingProcess {
     private let minInterval: TimeInterval = 2.5
     private let offlineInterval: TimeInterval = 10
 
-    private let sessionForUpload = [NextcloudKit.shared.nkCommonInstance.identifierSessionUpload,
-                                    NextcloudKit.shared.nkCommonInstance.identifierSessionUploadBackground,
-                                    NextcloudKit.shared.nkCommonInstance.identifierSessionUploadBackgroundWWan]
+    private let sessionForUpload = [ScaleCloudKit.shared.nkCommonInstance.identifierSessionUpload,
+                                    ScaleCloudKit.shared.nkCommonInstance.identifierSessionUploadBackground,
+                                    ScaleCloudKit.shared.nkCommonInstance.identifierSessionUploadBackgroundWWan]
 
     private init() {
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: NCGlobal.shared.notificationCenterPlayerIsPlaying), object: nil, queue: nil) { [weak self] _ in

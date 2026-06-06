@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 import MessageUI
-import NextcloudKit
+import ScaleCloudKit
 
 /// A context menu for user profile actions (email, talk, etc.)
 /// See ``NCShare``, ``NCActivity``, ``NCActivityTableViewCell`` for usage details.
@@ -55,7 +55,7 @@ class NCContextMenuProfile: NSObject {
     // MARK: - Private Async Loading
 
     private func loadProfileMenu() async -> [UIMenuElement] {
-        let results = await NextcloudKit.shared.getHovercardAsync(
+        let results = await ScaleCloudKit.shared.getHovercardAsync(
             for: userId,
             account: session.account
         ) { task in

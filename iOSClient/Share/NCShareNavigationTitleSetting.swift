@@ -2,7 +2,7 @@
 // SPDX-FileCopyrightText: 2025 Iva Horn
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-import NextcloudKit
+import ScaleCloudKit
 
 ///
 /// View controllers conforming to this gain the convenience method ``setNavigationTitle()`` to set the navigation title in a convenient and consistent way.

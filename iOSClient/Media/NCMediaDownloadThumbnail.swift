@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 import Queuer
 
 class NCMediaDownloadThumbnail: ConcurrentOperation, @unchecked Sendable {
@@ -28,7 +28,7 @@ class NCMediaDownloadThumbnail: ConcurrentOperation, @unchecked Sendable {
            }
            var image: UIImage?
 
-           let resultsDownloadPreview = await NextcloudKit.shared.downloadPreviewAsync(fileId: tblMetadata.fileId, etag: tblMetadata.etag, account: tblMetadata.account, options: NKRequestOptions(queue: NextcloudKit.shared.nkCommonInstance.backgroundQueue)) { task in
+           let resultsDownloadPreview = await ScaleCloudKit.shared.downloadPreviewAsync(fileId: tblMetadata.fileId, etag: tblMetadata.etag, account: tblMetadata.account, options: NKRequestOptions(queue: ScaleCloudKit.shared.nkCommonInstance.backgroundQueue)) { task in
                Task {
                    let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: tblMetadata.account,
                                                                                                path: tblMetadata.fileId,

@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 
 class NCMediaNavigationController: NCMainNavigationController {
     override func setNavigationRightItems() async {

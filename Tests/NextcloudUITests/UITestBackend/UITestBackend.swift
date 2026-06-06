@@ -8,9 +8,9 @@ import XCTest
 ///
 /// An API to abstract and simplify interaction with the backend used for the UI tests.
 ///
-/// This does not rely on NextcloudKit for now because the latter is implemented as global state which violates the test isolation principle.
+/// This does not rely on ScaleCloudKit for now because the latter is implemented as global state which violates the test isolation principle.
 /// Also, using `URLSession` enables use of the ephemeral configuration, further improving test isolation.
-/// At the time of writing, NextcloudKit also does not support structured concurrency with `async` and `await` yet which simplifies test code drastically.
+/// At the time of writing, ScaleCloudKit also does not support structured concurrency with `async` and `await` yet which simplifies test code drastically.
 ///
 class UITestBackend {
     ///

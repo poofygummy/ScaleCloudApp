@@ -4,7 +4,7 @@
 
 import Foundation
 import RealmSwift
-import NextcloudKit
+import ScaleCloudKit
 
 // Global flag used to control Realm write/read operations
 var isSuspendingDatabaseOperation: Bool = false

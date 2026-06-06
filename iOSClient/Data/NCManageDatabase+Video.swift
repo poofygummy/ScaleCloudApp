@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 import RealmSwift
-import NextcloudKit
+import ScaleCloudKit
 
 typealias tableVideo = tableVideoV4
 class tableVideoV4: Object {

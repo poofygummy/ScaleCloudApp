@@ -21,7 +21,7 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 
 class NCShareNetworking: NSObject {
     let utilityFileSystem = NCUtilityFileSystem()
@@ -53,7 +53,7 @@ class NCShareNetworking: NSObject {
 
     private func readDownloadLimit(account: String, token: String) async throws -> NKDownloadLimit? {
         return try await withCheckedThrowingContinuation { continuation in
-            NextcloudKit.shared.getDownloadLimit(account: account, token: token) { limit, error in
+            ScaleCloudKit.shared.getDownloadLimit(account: account, token: token) { limit, error in
                 if error != .success {
                     continuation.resume(throwing: error.error)
                     return
@@ -80,7 +80,7 @@ class NCShareNetworking: NSObject {
         let filenamePath = utilityFileSystem.getRelativeFilePath(metadata.fileName, serverUrl: metadata.serverUrl, session: session)
         let parameter = NKShareParameter(path: filenamePath)
 
-        NextcloudKit.shared.readShares(parameters: parameter, account: metadata.account) { task in
+        ScaleCloudKit.shared.readShares(parameters: parameter, account: metadata.account) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: self.metadata.account,
                                                                                             path: filenamePath,
@@ -93,7 +93,7 @@ class NCShareNetworking: NSObject {
                 let home = self.utilityFileSystem.getHomeServer(session: self.session)
                 self.database.addShare(account: self.metadata.account, home: home, shares: shares)
 
-                NextcloudKit.shared.getGroupfolders(account: account) { task in
+                ScaleCloudKit.shared.getGroupfolders(account: account) { task in
                     Task {
                         let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
                                                                                                     name: "getGroupfolders")
@@ -132,7 +132,7 @@ class NCShareNetworking: NSObject {
         let filenamePath = utilityFileSystem.getRelativeFilePath(metadata.fileName, serverUrl: metadata.serverUrl, session: session)
         let capabilities = NCNetworking.shared.capabilities[self.metadata.account] ?? NKCapabilities.Capabilities()
 
-        NextcloudKit.shared.createShare(path: filenamePath,
+        ScaleCloudKit.shared.createShare(path: filenamePath,
                                         shareType: shareable.shareType,
                                         shareWith: shareable.shareWith,
                                         publicUpload: false,
@@ -185,7 +185,7 @@ class NCShareNetworking: NSObject {
 
     func unShare(idShare: Int) {
         NCActivityIndicator.shared.start(backgroundView: view)
-        NextcloudKit.shared.deleteShare(idShare: idShare, account: metadata.account) { task in
+        ScaleCloudKit.shared.deleteShare(idShare: idShare, account: metadata.account) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: self.metadata.account,
                                                                                             path: "_\(idShare)",
@@ -214,7 +214,7 @@ class NCShareNetworking: NSObject {
 
     func updateShare(_ shareable: Shareable, downloadLimit: DownloadLimitViewModel, changeDownloadLimit: Bool = false) {
         NCActivityIndicator.shared.start(backgroundView: view)
-        NextcloudKit.shared.updateShare(idShare: shareable.idShare, password: shareable.password, expireDate: shareable.formattedDateString, permissions: shareable.permissions, note: shareable.note, label: shareable.label, hideDownload: shareable.hideDownload, attributes: shareable.attributes, account: metadata.account) { task in
+        ScaleCloudKit.shared.updateShare(idShare: shareable.idShare, password: shareable.password, expireDate: shareable.formattedDateString, permissions: shareable.permissions, note: shareable.note, label: shareable.label, hideDownload: shareable.hideDownload, attributes: shareable.attributes, account: metadata.account) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: self.metadata.account,
                                                                                             path: "_\(shareable.idShare)",
@@ -258,7 +258,7 @@ class NCShareNetworking: NSObject {
 
     func getSharees(searchString: String) {
         NCActivityIndicator.shared.start(backgroundView: view)
-        NextcloudKit.shared.searchSharees(search: searchString, account: metadata.account) { task in
+        ScaleCloudKit.shared.searchSharees(search: searchString, account: metadata.account) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: self.metadata.account,
                                                                                             path: searchString,
@@ -294,7 +294,7 @@ class NCShareNetworking: NSObject {
 
         NCActivityIndicator.shared.start(backgroundView: view)
 
-        NextcloudKit.shared.removeShareDownloadLimit(account: metadata.account, token: token) { error in
+        ScaleCloudKit.shared.removeShareDownloadLimit(account: metadata.account, token: token) { error in
             NCActivityIndicator.shared.stop()
 
             if error == .success {
@@ -321,7 +321,7 @@ class NCShareNetworking: NSObject {
 
         NCActivityIndicator.shared.start(backgroundView: view)
 
-        NextcloudKit.shared.setShareDownloadLimit(account: metadata.account, token: token, limit: limit) { error in
+        ScaleCloudKit.shared.setShareDownloadLimit(account: metadata.account, token: token, limit: limit) { error in
             NCActivityIndicator.shared.stop()
 
             if error == .success {

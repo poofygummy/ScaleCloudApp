@@ -22,7 +22,7 @@
 //
 
 import SwiftUI
-import NextcloudKit
+import ScaleCloudKit
 
 struct NCCapabilitiesView: View {
     @ObservedObject var model: NCCapabilitiesModel

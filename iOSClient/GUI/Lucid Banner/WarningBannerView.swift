@@ -4,7 +4,7 @@
 
 import SwiftUI
 import LucidBanner
-import NextcloudKit
+import ScaleCloudKit
 import Alamofire
 
 // MARK: - Show Banner

@@ -5,7 +5,7 @@
 
 import Foundation
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 import Combine
 import SwiftUI
 
@@ -89,7 +89,7 @@ class NCSettingsAdvancedModel: ObservableObject, ViewOnAppearHandling {
         keychain.disableCrashservice = crashReporter
     }
 
-    /// Updates the value of `selectedLogLevel` in the keychain and sets it for NextcloudKit.
+    /// Updates the value of `selectedLogLevel` in the keychain and sets it for ScaleCloudKit.
     func updateSelectedLogLevel() {
         keychain.log = selectedLogLevel
         NKLogFileManager.shared.logLevel = selectedLogLevel

@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import UIKit
-@preconcurrency import NextcloudKit
+@preconcurrency import ScaleCloudKit
 import RealmSwift
 
 class NCService: NSObject {
@@ -52,7 +52,7 @@ class NCService: NSObject {
     private func requestServerStatus(account: String, controller: NCMainTabBarController?) async -> Bool {
         let serverUrl = NCSession.shared.getSession(account: account).urlBase
         let userId = NCSession.shared.getSession(account: account).userId
-        let resultServerStatus = await NextcloudKit.shared.getServerStatusAsync(serverUrl: serverUrl) { task in
+        let resultServerStatus = await ScaleCloudKit.shared.getServerStatusAsync(serverUrl: serverUrl) { task in
             Task {
                 let identifier = serverUrl + "_getServerStatus"
                 await NCNetworking.shared.networkingTasks.track(identifier: identifier, task: task)
@@ -79,7 +79,7 @@ class NCService: NSObject {
             return false
         }
 
-        let resultUserProfile = await NextcloudKit.shared.getUserMetadataAsync(account: account, userId: userId, options: NKRequestOptions(queue: NextcloudKit.shared.nkCommonInstance.backgroundQueue)) { task in
+        let resultUserProfile = await ScaleCloudKit.shared.getUserMetadataAsync(account: account, userId: userId, options: NKRequestOptions(queue: ScaleCloudKit.shared.nkCommonInstance.backgroundQueue)) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
                                                                                             path: userId,
@@ -102,7 +102,7 @@ class NCService: NSObject {
         let fileName = NCSession.shared.getFileName(urlBase: session.urlBase, user: session.user)
         let fileNameLocalPath = utilityFileSystem.createServerUrl(serverUrl: utilityFileSystem.directoryUserData, fileName: fileName)
         let tblAvatar = await self.database.getTableAvatarAsync(fileName: fileName)
-        let resultsDownload = await NextcloudKit.shared.downloadAvatarAsync(user: session.userId,
+        let resultsDownload = await ScaleCloudKit.shared.downloadAvatarAsync(user: session.userId,
                                                                             fileNameLocalPath: fileNameLocalPath,
                                                                             sizeImage: NCGlobal.shared.avatarSize,
                                                                             etagResource: tblAvatar?.etag,
@@ -126,14 +126,14 @@ class NCService: NSObject {
     }
 
     private func requestDashboardWidget(account: String) async {
-        let resultsDashboardWidget = await NextcloudKit.shared.getDashboardWidgetAsync(account: account)
+        let resultsDashboardWidget = await ScaleCloudKit.shared.getDashboardWidgetAsync(account: account)
         if resultsDashboardWidget.error == .success,
            let dashboardWidgets = resultsDashboardWidget.dashboardWidgets {
             await NCManageDatabase.shared.addDashboardWidgetAsync(account: account, dashboardWidgets: dashboardWidgets)
             for widget in dashboardWidgets {
                 if let url = URL(string: widget.iconUrl),
                    let fileName = widget.iconClass {
-                    let resultsDownloadPreview = await NextcloudKit.shared.downloadPreviewAsync(url: url, account: account)
+                    let resultsDownloadPreview = await ScaleCloudKit.shared.downloadPreviewAsync(url: url, account: account)
                     if resultsDownloadPreview.error == .success,
                        let data = resultsDownloadPreview.responseData?.data {
                         var image: UIImage?
@@ -160,7 +160,7 @@ class NCService: NSObject {
     }
 
     private func requestServerCapabilities(account: String, controller: NCMainTabBarController?) async {
-        let resultsCapabilities = await NextcloudKit.shared.getCapabilitiesAsync(account: account) { task in
+        let resultsCapabilities = await ScaleCloudKit.shared.getCapabilitiesAsync(account: account) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
                                                                                             name: "getCapabilities")
@@ -175,7 +175,7 @@ class NCService: NSObject {
         await self.database.setDataCapabilities(data: data, account: account)
 
         // Text direct editor (Nextcloud Text, Office, Collabora)
-        let resultsTextEditor = await NextcloudKit.shared.textObtainEditorDetailsAsync(account: account) { task in
+        let resultsTextEditor = await ScaleCloudKit.shared.textObtainEditorDetailsAsync(account: account) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
                                                                                             name: "textObtainEditorDetails")
@@ -203,7 +203,7 @@ class NCService: NSObject {
 
         // External file Server
         if capabilities.externalSites {
-            let results = await NextcloudKit.shared.getExternalSiteAsync(account: account) { task in
+            let results = await ScaleCloudKit.shared.getExternalSiteAsync(account: account) { task in
                 Task {
                     let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
                                                                                                 name: "getExternalSite")
@@ -222,7 +222,7 @@ class NCService: NSObject {
 
         // User Status
         if capabilities.userStatusEnabled {
-            let results = await NextcloudKit.shared.getUserStatusAsync(account: account) { task in
+            let results = await ScaleCloudKit.shared.getUserStatusAsync(account: account) { task in
                 Task {
                     let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
                                                                                                 name: "getUserStatus")
@@ -254,7 +254,7 @@ class NCService: NSObject {
 
         nkLog(tag: self.global.logTagSync, emoji: .start, message: "Synchronize favorite for account: \(account)")
 
-        let resultsFavorite = await NextcloudKit.shared.listingFavoritesAsync(showHiddenFiles: showHiddenFiles, account: account) { task in
+        let resultsFavorite = await ScaleCloudKit.shared.listingFavoritesAsync(showHiddenFiles: showHiddenFiles, account: account) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
                                                                                             name: "listingFavorites")
@@ -404,7 +404,7 @@ class NCService: NSObject {
                 let issues = Issues(syncConflicts: syncConflicts, virusDetected: virusDetected, e2eeErrors: e2eeErrors, problems: problems)
                 let data = try JSONEncoder().encode(issues)
                 data.printJson()
-                let results = await NextcloudKit.shared.sendClientDiagnosticsRemoteOperationAsync(data: data, account: account) { task in
+                let results = await ScaleCloudKit.shared.sendClientDiagnosticsRemoteOperationAsync(data: data, account: account) { task in
                     Task {
                         let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
                                                                                                     name: "sendClientDiagnosticsRemoteOperation")

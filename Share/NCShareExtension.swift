@@ -5,7 +5,7 @@
 
 import UIKit
 import UniformTypeIdentifiers
-import NextcloudKit
+import ScaleCloudKit
 import LucidBanner
 import SwiftUI
 
@@ -87,7 +87,7 @@ class NCShareExtension: UIViewController {
         uploadView.addGestureRecognizer(uploadGesture)
 
         let versionNextcloudiOS = String(format: NCBrandOptions.shared.textCopyrightNextcloudiOS, utility.getVersionBuild())
-        NextcloudKit.configureLogger(logLevel: (NCBrandOptions.shared.disable_log ? .disabled : NCPreferences().log))
+        ScaleCloudKit.configureLogger(logLevel: (NCBrandOptions.shared.disable_log ? .disabled : NCPreferences().log))
 
         nkLog(start: "Start Share session " + versionNextcloudiOS)
 

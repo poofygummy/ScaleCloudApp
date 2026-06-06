@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 
 class NCShares: NCCollectionViewCommon {
     @MainActor private var fileIds: Set<String> = []
@@ -78,7 +78,7 @@ class NCShares: NCCollectionViewCommon {
 
         startGUIGetServerData()
 
-        let resultsReadShares = await NextcloudKit.shared.readSharesAsync(parameters: NKShareParameter(), account: session.account) { task in
+        let resultsReadShares = await ScaleCloudKit.shared.readSharesAsync(parameters: NKShareParameter(), account: session.account) { task in
             Task {
                 await NCNetworking.shared.networkingTasks.track(identifier: "NCShares", task: task)
             }

@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import Foundation
-import NextcloudKit
+import ScaleCloudKit
 
 @Observable class NCAssistantChatConversationsModel {
     var conversations: [AssistantConversation] = []
@@ -19,14 +19,14 @@ import NextcloudKit
 
     func loadAllSessions() {
         Task {
-            let result = await NextcloudKit.shared.getAssistantChatConversations(account: ncSession.account)
+            let result = await ScaleCloudKit.shared.getAssistantChatConversations(account: ncSession.account)
             conversations = result.sessions ?? []
         }
     }
 
     func createNewConversation(title: String? = nil) async -> AssistantConversation? {
         let timestamp = Int(Date().timeIntervalSince1970)
-        let result = await NextcloudKit.shared.createAssistantChatConversation(title: title, timestamp: timestamp, account: ncSession.account)
+        let result = await ScaleCloudKit.shared.createAssistantChatConversation(title: title, timestamp: timestamp, account: ncSession.account)
         if result.error == .success, let newConversation = result.conversation?.conversation {
             conversations.insert(newConversation, at: 0)
             return newConversation

@@ -5,7 +5,7 @@
 import Foundation
 import SwiftUI
 import RealmSwift
-import NextcloudKit
+import ScaleCloudKit
 
 /// A modal SwiftUI view responsible for maintenance database
 struct Maintenance: View {

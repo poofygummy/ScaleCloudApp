@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 import Alamofire
 
 /// Actor-based dispatcher that manages weak NCTransferDelegate references

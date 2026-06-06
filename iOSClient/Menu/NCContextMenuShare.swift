@@ -4,7 +4,7 @@
 
 import Foundation
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 
 /// A context menu for share actions (details, unshare, permissions).
 /// See ``NCShare`` for usage details.

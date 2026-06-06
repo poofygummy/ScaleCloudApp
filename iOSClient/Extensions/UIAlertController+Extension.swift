@@ -23,7 +23,7 @@
 
 import Foundation
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 import LucidBanner
 
 extension UIAlertController {
@@ -59,7 +59,7 @@ extension UIAlertController {
                     }
 #endif
                     let serverUrlFileName = NCUtilityFileSystem().createServerUrl(serverUrl: serverUrl, fileName: fileNameFolder)
-                    let createFolderResults = await NextcloudKit.shared.createFolderAsync(serverUrlFileName: serverUrlFileName, account: session.account) { task in
+                    let createFolderResults = await ScaleCloudKit.shared.createFolderAsync(serverUrlFileName: serverUrlFileName, account: session.account) { task in
                         Task {
                             let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(
                                 account: session.account,

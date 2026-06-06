@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 import Queuer
 
 extension NCNetworking {
@@ -19,7 +19,7 @@ extension NCNetworking {
         for result in results {
             // VIDEO PART
             //
-            let resultLivePhotoVideo = await NextcloudKit.shared.setLivephotoAsync(
+            let resultLivePhotoVideo = await ScaleCloudKit.shared.setLivephotoAsync(
                 serverUrlfileNamePath: result.serverUrlFileNameVideo,
                 livePhotoFile: result.fileIdImage,
                 account: account) { task in
@@ -48,7 +48,7 @@ extension NCNetworking {
 
             // IMAGE PART
             //
-            let resultLivePhotoImage = await NextcloudKit.shared.setLivephotoAsync(
+            let resultLivePhotoImage = await ScaleCloudKit.shared.setLivephotoAsync(
                 serverUrlfileNamePath: result.serverUrlFileNameImage,
                 livePhotoFile: result.fileIdVideo,
                 account: account) { task in

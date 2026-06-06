@@ -22,7 +22,7 @@
 //
 
 import SwiftUI
-import NextcloudKit
+import ScaleCloudKit
 import Vision
 import VisionKit
 import Photos

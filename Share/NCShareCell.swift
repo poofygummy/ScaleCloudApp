@@ -4,7 +4,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 
 protocol NCShareCellDelegate: AnyObject {
     func removeFile(named fileName: String)

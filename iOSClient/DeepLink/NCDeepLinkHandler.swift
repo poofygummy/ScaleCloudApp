@@ -6,7 +6,7 @@
 import Foundation
 import UIKit
 import SwiftUI
-import NextcloudKit
+import ScaleCloudKit
 
 enum DeepLink: String {
     case openFiles              // nextcloud://openFiles

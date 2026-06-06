@@ -4,7 +4,7 @@
 
 import Foundation
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 
 protocol NCListCellDelegate: AnyObject {
     func onMenuIntent(with metadata: tableMetadata?)

@@ -4,9 +4,9 @@
 // withscalecloud
 
 import Foundation
-import NextcloudKit
+import ScaleCloudKit
 
-/// This enum acts as a container (namespace) for all logic related to scanning
+/// This enum acts as a container (namespace) for all logic relíated to scanning
 /// user-chosen "Download" folders for new files on ScaleCloud accounts.
 ///
 /// The goal is: When the normal photo auto-upload detects new pictures for a

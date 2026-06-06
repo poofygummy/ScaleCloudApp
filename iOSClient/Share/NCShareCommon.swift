@@ -22,7 +22,7 @@
 
 import UIKit
 import DropDown
-import NextcloudKit
+import ScaleCloudKit
 
 enum NCShareCommon {
     static let itemTypeFile = "file"

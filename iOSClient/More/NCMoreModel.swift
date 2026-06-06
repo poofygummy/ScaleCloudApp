@@ -5,7 +5,7 @@
 import Foundation
 import UIKit
 import SwiftUI
-import NextcloudKit
+import ScaleCloudKit
 
 /// View model used by `NCMoreView` to build and handle the content of the More tab.
 ///

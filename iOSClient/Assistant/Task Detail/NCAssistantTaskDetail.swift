@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import NextcloudKit
+import ScaleCloudKit
 
 struct NCAssistantTaskDetail: View {
     @Environment(NCAssistantModel.self) var assistantModel

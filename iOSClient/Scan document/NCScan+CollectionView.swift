@@ -24,7 +24,7 @@
 import Foundation
 import UIKit
 import QuickLook
-import NextcloudKit
+import ScaleCloudKit
 
 extension NCScan: UICollectionViewDataSource {
 

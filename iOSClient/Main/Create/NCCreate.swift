@@ -4,7 +4,7 @@
 
 import Foundation
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 import LucidBanner
 import Alamofire
 
@@ -27,7 +27,7 @@ class NCCreate: NSObject {
 
         if let creatorId, let adapter = NCDirectEditorAdapter.resolve(from: [editorId]) {
             options = NKRequestOptions(customUserAgent: adapter.userAgent(utility))
-            let results = await NextcloudKit.shared.textCreateFileAsync(fileNamePath: fileNamePath, editorId: editorId, creatorId: creatorId, templateId: templateId, account: account, options: options) { task in
+            let results = await ScaleCloudKit.shared.textCreateFileAsync(fileNamePath: fileNamePath, editorId: editorId, creatorId: creatorId, templateId: templateId, account: account, options: options) { task in
                 Task {
                     let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
                                                                                                 path: fileNamePath,
@@ -55,7 +55,7 @@ class NCCreate: NSObject {
 
         } else if editorId == "collabora" {
 
-            let results = await NextcloudKit.shared.createRichdocumentsAsync(path: fileNamePath, templateId: templateId, account: account) { task in
+            let results = await ScaleCloudKit.shared.createRichdocumentsAsync(path: fileNamePath, templateId: templateId, account: account) { task in
                 Task {
                     let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
                                                                                                 path: fileNamePath,
@@ -93,7 +93,7 @@ class NCCreate: NSObject {
         if let adapter = NCDirectEditorAdapter.resolve(from: [editorId]) {
             let options = NKRequestOptions(customUserAgent: adapter.userAgent(NCUtility()))
 
-            let results = await NextcloudKit.shared.textGetListOfTemplatesAsync(account: account, options: options) { task in
+            let results = await ScaleCloudKit.shared.textGetListOfTemplatesAsync(account: account, options: options) { task in
                 Task {
                     let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
                                                                                                 name: "textGetListOfTemplates")
@@ -129,7 +129,7 @@ class NCCreate: NSObject {
         }
 
         if editorId == "collabora" {
-            let results = await NextcloudKit.shared.getTemplatesRichdocumentsAsync(typeTemplate: templateId, account: account) { task in
+            let results = await ScaleCloudKit.shared.getTemplatesRichdocumentsAsync(typeTemplate: templateId, account: account) { task in
                 Task {
                     let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
                                                                                                 path: templateId,

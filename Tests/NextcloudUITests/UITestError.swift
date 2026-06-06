@@ -8,7 +8,7 @@ import XCTest
 ///
 /// Errors specific to the automated user interface tests.
 ///
-/// > Important: This is a candidate for outsourcing into a dedicated library, if not NextcloudKit.
+/// > Important: This is a candidate for outsourcing into a dedicated library, if not ScaleCloudKit.
 ///
 enum UITestError: Error {
     ///

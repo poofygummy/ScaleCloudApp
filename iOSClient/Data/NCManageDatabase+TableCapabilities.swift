@@ -4,7 +4,7 @@
 
 import Foundation
 import RealmSwift
-import NextcloudKit
+import ScaleCloudKit
 
 class tableCapabilities: Object {
     @Persisted(primaryKey: true) var account = ""

@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import Foundation
-import NextcloudKit
+import ScaleCloudKit
 import Alamofire
 
 extension NCCollectionViewCommon {
@@ -47,7 +47,7 @@ extension NCCollectionViewCommon {
         let showHiddenFiles = NCPreferences().getShowHiddenFiles(account: session.account)
         let urlBase = NCSession.shared.getSession(account: session.account).urlBase
 
-        let results = await NextcloudKit.shared.searchLiteralAsync(
+        let results = await ScaleCloudKit.shared.searchLiteralAsync(
             serverUrl: urlBase,
             depth: "infinity",
             literal: text,
@@ -110,7 +110,7 @@ extension NCCollectionViewCommon {
         self.collectionView.reloadData()
 
         // ---> Get providers
-        let results = await NextcloudKit.shared.unifiedSearchProviders(account: session.account, handle: searchOperationHandle) { _ in
+        let results = await ScaleCloudKit.shared.unifiedSearchProviders(account: session.account, handle: searchOperationHandle) { _ in
             // example filter
             // ["calendar", "files", "fulltextsearch"].contains(provider.id)
             return true
@@ -139,7 +139,7 @@ extension NCCollectionViewCommon {
 
         // ---> Get metadatas for providers
         for provider in providers {
-            let results = await NextcloudKit.shared.unifiedSearch(
+            let results = await ScaleCloudKit.shared.unifiedSearch(
                 providerId: provider.id,
                 term: text,
                 limit: 5,
@@ -198,7 +198,7 @@ extension NCCollectionViewCommon {
         metadataForSection.unifiedSearchInProgress = true
         self.collectionView.reloadData()
 
-        let results = await NextcloudKit.shared.unifiedSearch(
+        let results = await ScaleCloudKit.shared.unifiedSearch(
             providerId: lastSearchResult.id,
             term: searchResultStore,
             limit: 5,

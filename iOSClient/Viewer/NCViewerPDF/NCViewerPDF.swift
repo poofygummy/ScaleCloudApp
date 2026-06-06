@@ -5,7 +5,7 @@
 import UIKit
 import PDFKit
 import EasyTipView
-import NextcloudKit
+import ScaleCloudKit
 
 class NCViewerPDF: UIViewController, NCViewerPDFSearchDelegate {
     @IBOutlet weak var pdfContainer: UIView!

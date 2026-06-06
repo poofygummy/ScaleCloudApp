@@ -4,7 +4,7 @@
 
 import UIKit
 import WidgetKit
-import NextcloudKit
+import ScaleCloudKit
 
 struct ToolbarDataEntry: TimelineEntry {
     let date: Date

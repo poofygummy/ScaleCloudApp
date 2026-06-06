@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import Foundation
-import NextcloudKit
+import ScaleCloudKit
 import PhotosUI
 
 final class NCUtilityFileSystem: NSObject, @unchecked Sendable {

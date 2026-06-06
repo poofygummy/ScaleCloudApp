@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import UIKit
-import NextcloudKit
+import ScaleCloudKit
 
 class FileProviderDomain: NSObject {
     /// Registers a File Provider domain for the specified user and server URL, if it is not already registered.

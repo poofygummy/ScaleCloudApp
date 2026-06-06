@@ -3,7 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import CoreLocation
-import NextcloudKit
+import ScaleCloudKit
 
 class NCBackgroundLocationUploadManager: NSObject, CLLocationManagerDelegate {
     static let shared = NCBackgroundLocationUploadManager()

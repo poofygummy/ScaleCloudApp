@@ -2,7 +2,7 @@
 // SPDX-FileCopyrightText: 2025 Iva Horn
 // SPDX-License-Identifier: GPL-3.0-or-later
 
-import NextcloudKit
+import ScaleCloudKit
 
 ///
 /// Transient data model for describing a share to be used in the share link user interface.

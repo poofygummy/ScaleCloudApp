@@ -4,7 +4,7 @@
 
 import UIKit
 import Foundation
-import NextcloudKit
+import ScaleCloudKit
 import LucidBanner
 
 extension NCCollectionViewCommon: NCCollectionViewCommonSelectTabBarDelegate {

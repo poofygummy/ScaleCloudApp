@@ -741,7 +741,7 @@ You can stop it at any time, adjust the settings, and enable it again.";
 // MARK: Login poll
 "_poll_desc_"                    = "Please complete the log in process in your browser.";
 
-// MARK: File name validator (used by NextcloudKit, don't remove)
+// MARK: File name validator (used by ScaleCloudKit, don't remove)
 "_file_name_validator_error_ends_with_space_period_" = "Name must not contain spaces at the beginning or end.";
 "_file_name_validator_error_reserved_name_" = "\"%@\" is a forbidden name.";
 "_file_name_validator_error_forbidden_file_extension_" = "\".%@\" is a forbidden file extension.";
