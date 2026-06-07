@@ -4,7 +4,8 @@ import ProjectDescription
 let baseSettings: SettingsDictionary = [
     "IPHONEOS_DEPLOYMENT_TARGET": "14.0",
     "MARKETING_VERSION": "1.0",
-    "CURRENT_PROJECT_VERSION": "1"
+    "CURRENT_PROJECT_VERSION": "1",
+    "FRAMEWORK_SEARCH_PATHS": "$(inherited) $(BUILT_PRODUCTS_DIR) $(PROJECT_DIR)/../ScaleCloudKit/prebuilt $(PROJECT_DIR)/../ScaleCloudGo/prebuilt"
 ]
 
 let project = Project(
@@ -22,7 +23,8 @@ let project = Project(
             sources: ["iOSClient/**/*.swift", "Brand/**/*.swift"],
             resources: ["iOSClient/**/*.xcassets", "iOSClient/**/*.storyboard", "Brand/**/*.xcassets"],
             dependencies: [
-                .project(target: "ScaleCloudKit", path: "../ScaleCloudKit")
+                .framework(path: "../ScaleCloudKit/prebuilt/ScaleCloudKit.framework"),
+                .xcframework(path: "../ScaleCloudGo/prebuilt/ScaleCloudGo.xcframework")
             ],
             settings: .settings(base: baseSettings)
         )
