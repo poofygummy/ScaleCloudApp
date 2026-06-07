@@ -23,8 +23,7 @@ let project = Project(
             sources: ["iOSClient/**/*.swift", "Brand/**/*.swift"],
             resources: ["iOSClient/**/*.xcassets", "iOSClient/**/*.storyboard", "Brand/**/*.xcassets"],
             dependencies: [
-                .framework(path: "../ScaleCloudKit/prebuilt/ScaleCloudKit.framework"),
-                .xcframework(path: "../ScaleCloudGo/prebuilt/ScaleCloudGo.xcframework")
+                .project(target: "ScaleCloudKit", path: "../ScaleCloudKit")
             ],
             settings: .settings(base: baseSettings)
         )
