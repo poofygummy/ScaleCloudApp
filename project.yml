@@ -1,0 +1,40 @@
+# SPDX-FileCopyrightText: 2026 Nextcloud GmbH and Nextcloud contributors
+# SPDX-License-Identifier: GPL-2.0-or-later
+
+# ScaleCloudApp lightweight xcodegen spec (based on the small historical form).
+# This is secondary / for quick reference paths only.
+#
+# The primary, maximally upstream-compatible vehicle for the App layer build
+# is the adapted copy of upstream nextcloud/ios Nextcloud.xcodeproj (see the
+# edited project.pbxproj under ScaleCloudApp/ScaleCloudApp.xcodeproj or sibling).
+# That pbxproj already correctly declares the many dozens of real client
+# dependencies (RealmSwift, LucidBanner, MobileVLCKit, etc.) and will be
+# narrowly edited for our layout (iOSClient/ + Brand/), plist, and ScaleCloudKit
+# prebuilt linkage + FRAMEWORK_SEARCH_PATHS.
+#
+# The historical small yml form pointed at a flat "Sources". We preserve the
+# overall shape here for easy diff vs history. If using this yml for a quick
+# path, adjust sources below to the actual layout and ensure a ScaleCloudKit
+# prebuilt (or generated project) is available via the project reference.
+
+name: ScaleCloudApp
+settings:
+  base:
+    IPHONEOS_DEPLOYMENT_TARGET: "14.0"
+targets:
+  ScaleCloudApp:
+    type: application
+    platform: iOS
+    deploymentTarget: "14.0"
+    # NOTE: For the lightweight yml path, point at the real transplanted sources
+    # used in this ScaleCloud tree (iOSClient/ contains the bulk of the client,
+    # Brand/ contains the ScaleCloud customizations, plists, assets, etc.).
+    # The authoritative description is the adapted upstream pbxproj.
+    sources:
+      - path: iOSClient
+      - path: Brand
+    dependencies:
+      - target: ScaleCloudKit
+projectReferences:
+  ScaleCloudKit:
+    path: ../ScaleCloudKit/ScaleCloudKit.xcodeproj
