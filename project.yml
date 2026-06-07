@@ -18,6 +18,8 @@
 # prebuilt (or generated project) is available via the project reference.
 
 name: ScaleCloudApp
+options:
+  xcodeVersion: "15.4"
 settings:
   base:
     IPHONEOS_DEPLOYMENT_TARGET: "14.0"
