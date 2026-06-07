@@ -21,31 +21,31 @@ This keeps future diffs with upstream nextcloud/ios tractable.
 
 A thin secondary xcodegen `project.yml` exists for quick paths / projectReference consumers but is not the source of truth for the full client.
 
-## CI independent build (artifact download into prebuilt)
+## CI independent build (manual prebuilt placement)
 
 Workflow: **Build ScaleCloudApp** (testbuildSCApp.yml)
 
-Optional input `kit_run_id`:
-- A prior "Build ScaleCloudKit" run that published `ScaleCloudKit-prebuilt`.
-- The workflow downloads the artifact and unpacks it under `ScaleCloudKit/prebuilt/`.
-- The pbxproj + search paths then see a working NextcloudKit.framework exactly as if it had been built in-tree.
+Before dispatching:
+- Download the `ScaleCloudKit-prebuilt` artifact from a prior successful "Build ScaleCloudKit" run (and the Go prebuilt if you don't have it committed).
+- Manually unpack them so that `ScaleCloudKit/prebuilt/NextcloudKit.framework` (and `ScaleCloudGo/prebuilt/...`) exist in the tree.
+- The adapted `ScaleCloudApp.xcodeproj` (with its explicit file reference and `FRAMEWORK_SEARCH_PATHS`) will then see the prebuilt exactly as if it had been built in the same job.
 
 Result artifacts (among others):
 - `ScaleCloudApp-xcarchive`
 - `ScaleCloudApp-prebuilt`
 
-To stand up a full Wrap without rebuilding any of Go/Kit/App, a Wrap dispatch job can receive an `app_run_id` and materialize the App artifact under `ScaleCloudApp/prebuilt`.
+To stand up a full Wrap without rebuilding any of Go/Kit/App, download the `ScaleCloudApp-prebuilt` artifact yourself and unpack its payload into `ScaleCloudApp/prebuilt/` before you dispatch Wrap.
 
 **There is no supported local build for this layer using generators or `xcodebuild` on a workstation.**
 
 The authoritative description of the App target is the adapted upstream project under `ScaleCloudApp/ScaleCloudApp.xcodeproj/` (a narrow-edit copy of the `Nextcloud.xcodeproj` tree from `nextcloud/ios`). The only place this project (and the full iOSClient + Brand source surface it references) is built is inside the official **Build ScaleCloudApp** GitHub Actions workflow (`testbuildSCApp.yml`).
 
 Typical independent usage:
-- Supply a `kit_run_id` (from a prior successful "Build ScaleCloudKit" run that published `ScaleCloudKit-prebuilt`).
-- Dispatch the App workflow with that input.
-- The job materializes `NextcloudKit.framework` (and its Go transitive dep) under `ScaleCloudKit/prebuilt/`.
-- It then uses the adapted `.xcodeproj` (or the lightweight `project.yml` for quicker paths) + `xcodebuild archive`.
-- Resulting artifacts (`ScaleCloudApp-xcarchive` and `ScaleCloudApp-prebuilt`) can be fed to Wrap via an `app_run_id`.
+- Dispatch Kit (after you have manually placed a Go prebuilt).
+- Download the `ScaleCloudKit-prebuilt` artifact from that run.
+- Unpack it into `ScaleCloudKit/prebuilt/` (and ensure Go prebuilt is also present).
+- Dispatch the App workflow (it takes no run-id style inputs). The job only checks (in the first step) that the Go and Kit prebuilts you placed by hand are already present under their respective prebuilt/ trees, then builds using the adapted `.xcodeproj`.
+- Resulting artifacts can be fed to Wrap by you downloading the App prebuilt artifact and manually unpacking it under `ScaleCloudApp/prebuilt/` before the Wrap dispatch.
 
 ## Used by
 
