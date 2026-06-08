@@ -950,6 +950,17 @@
 		F7FFFCA22FB300600015441E /* NCAssistantSharedTextStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FFFC9D2FB300440015441E /* NCAssistantSharedTextStore.swift */; };
 		F7FFFCA42FB3088E0015441E /* NCShareExtension+Assistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FFFCA32FB3088D0015441E /* NCShareExtension+Assistant.swift */; };
 		B2C3D4E5F6A7B8C9D0E1F2A3 /* NextcloudKit in Frameworks */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6A7B8C9D0E1F2 /* NextcloudKit.framework */; };
+		6A5BA6BB6AC84BCCAC9AC16E /* ScaleCloudGo.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 961D2E68CAEB458BB91C7C82 /* ScaleCloudGo.xcframework */; };
+		A5F71992835F48AE85F14C2E /* ScaleCloudGo.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 961D2E68CAEB458BB91C7C82 /* ScaleCloudGo.xcframework */; };
+		6AAADBBDDB674A8BB2FA6C94 /* ScaleCloudGo.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 961D2E68CAEB458BB91C7C82 /* ScaleCloudGo.xcframework */; };
+		E96F8035408A405DA6F4C7A6 /* ScaleCloudGo.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 961D2E68CAEB458BB91C7C82 /* ScaleCloudGo.xcframework */; };
+		9EF05CBAC54B48E2BADACBC5 /* ScaleCloudGo.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 961D2E68CAEB458BB91C7C82 /* ScaleCloudGo.xcframework */; };
+		B6DC36229212401281157CF1 /* ScaleCloudGo.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 961D2E68CAEB458BB91C7C82 /* ScaleCloudGo.xcframework */; };
+		C2FDC72155ED4F87ACC1CD46 /* ScaleCloudGo.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 961D2E68CAEB458BB91C7C82 /* ScaleCloudGo.xcframework */; };
+		CE0CAED9C6854BBE91D6BA13 /* ScaleCloudGo.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 961D2E68CAEB458BB91C7C82 /* ScaleCloudGo.xcframework */; };
+		585D611C9D5B47A09DA41CB2 /* ScaleCloudGo.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 961D2E68CAEB458BB91C7C82 /* ScaleCloudGo.xcframework */; };
+		C3C6F2DFEA84420BB188329D /* ScaleCloudGo.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 961D2E68CAEB458BB91C7C82 /* ScaleCloudGo.xcframework */; };
+		BD4367A0D8424850A1BF36A5 /* ScaleCloudGo.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 961D2E68CAEB458BB91C7C82 /* ScaleCloudGo.xcframework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1871,6 +1882,7 @@
 		F7FFFC9D2FB300440015441E /* NCAssistantSharedTextStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NCAssistantSharedTextStore.swift; sourceTree = "<group>"; };
 		F7FFFCA32FB3088D0015441E /* NCShareExtension+Assistant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NCShareExtension+Assistant.swift"; sourceTree = "<group>"; };
 		A1B2C3D4E5F6A7B8C9D0E1F2 /* NextcloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NextcloudKit.framework; path = ../ScaleCloudKit/prebuilt/NextcloudKit.framework; sourceTree = "<group>"; };
+		961D2E68CAEB458BB91C7C82 /* ScaleCloudGo.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ScaleCloudGo.xcframework; path = ../ScaleCloudGo/prebuilt/ScaleCloudGo.xcframework; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -1887,7 +1899,7 @@
 				F72AD71128C24BBB006CB92D /* NextcloudKit in Frameworks */,
 				F710FC88277B7D3F00AA9FBF /* RealmSwift in Frameworks */,
 				F760DE0F2AE66EE60027D78A /* KeychainAccess in Frameworks */,
-			);
+				6A5BA6BB6AC84BCCAC9AC16E /* ScaleCloudGo.xcframework in Frameworks */,);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		AF8ED1F62757821000B8DBC4 /* Frameworks */ = {
@@ -1895,7 +1907,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F3F0419B2B9F7E6700D5155F /* RealmSwift in Frameworks */,
-			);
+				A5F71992835F48AE85F14C2E /* ScaleCloudGo.xcframework in Frameworks */,);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C0046CD72A17B98400D87C9D /* Frameworks */ = {
@@ -1920,7 +1932,7 @@
 				F37208B82BAB63EF006B5430 /* NextcloudKit in Frameworks */,
 				F37208B42BAB63EF006B5430 /* Parchment in Frameworks */,
 				F37208BE2BAB63F0006B5430 /* Swifter in Frameworks */,
-			);
+				6AAADBBDDB674A8BB2FA6C94 /* ScaleCloudGo.xcframework in Frameworks */,);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C04E2F1D2A17BB4D001BAD85 /* Frameworks */ = {
@@ -1929,7 +1941,7 @@
 			files = (
 				F3F0419D2B9F7E6E00D5155F /* RealmSwift in Frameworks */,
 				F3391B082B4C52C5001C0C4B /* FirebaseDatabase in Frameworks */,
-			);
+				E96F8035408A405DA6F4C7A6 /* ScaleCloudGo.xcframework in Frameworks */,);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F70716E02987F81400E72C1D /* Frameworks */ = {
@@ -1940,7 +1952,7 @@
 				F7490E7229882BB4009DCE94 /* RealmSwift in Frameworks */,
 				F71221802F51AF9F00ACEB08 /* LucidBanner in Frameworks */,
 				F760DE0D2AE66EDF0027D78A /* KeychainAccess in Frameworks */,
-			);
+				9EF05CBAC54B48E2BADACBC5 /* ScaleCloudGo.xcframework in Frameworks */,);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F7145A141D12E3B700CAFEEC /* Frameworks */ = {
@@ -1958,7 +1970,7 @@
 				F70821D829E59E6D001CA2D7 /* TagListView in Frameworks */,
 				F7F623B72A5EFA0C0022D3D4 /* Gzip in Frameworks */,
 				F72D7EB7263B1207000B3DFC /* MarkdownKit in Frameworks */,
-			);
+				B6DC36229212401281157CF1 /* ScaleCloudGo.xcframework in Frameworks */,);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F7346E0D28B0EF5B006CE2D2 /* Frameworks */ = {
@@ -1970,7 +1982,7 @@
 				F7160A7D2BE931DE0034DCB3 /* RealmSwift in Frameworks */,
 				F760DE052AE66EBE0027D78A /* KeychainAccess in Frameworks */,
 				F7A560462AE15D3D00BE8FD6 /* Queuer in Frameworks */,
-			);
+				C2FDC72155ED4F87ACC1CD46 /* ScaleCloudGo.xcframework in Frameworks */,);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F771E3CD20E2392D00AFB62D /* Frameworks */ = {
@@ -1981,7 +1993,7 @@
 				F710FC84277B7D3500AA9FBF /* RealmSwift in Frameworks */,
 				F712217E2F51AF9500ACEB08 /* LucidBanner in Frameworks */,
 				F72AD71328C24BCC006CB92D /* NextcloudKit in Frameworks */,
-			);
+				CE0CAED9C6854BBE91D6BA13 /* ScaleCloudGo.xcframework in Frameworks */,);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F77B0EDC1D118A16002130FE /* Frameworks */ = {
@@ -2017,7 +2029,7 @@
 				F7F623B52A5EF4D30022D3D4 /* Gzip in Frameworks */,
 				F72DA9B425F53E4E00B87DB1 /* SwiftRichString in Frameworks */,
 				F76B649E2ADFFDEC00014640 /* LRUCache in Frameworks */,
-			);
+				585D611C9D5B47A09DA41CB2 /* ScaleCloudGo.xcframework in Frameworks */,);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F7C55C772FB5AEF7004A974F /* Frameworks */ = {
@@ -2026,7 +2038,7 @@
 			files = (
 				F7C55C9F2FB5B83A004A974F /* NextcloudKit in Frameworks */,
 				F7C55C7C2FB5AEF7004A974F /* UniformTypeIdentifiers.framework in Frameworks */,
-			);
+				C3C6F2DFEA84420BB188329D /* ScaleCloudGo.xcframework in Frameworks */,);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F7C9738D28F17131002C43E2 /* Frameworks */ = {
@@ -2038,7 +2050,7 @@
 				F7A8D72428F1771B008BBE1C /* NextcloudKit in Frameworks */,
 				F33EE6E52BF4C02000CA1A51 /* NIOSSL in Frameworks */,
 				F760DE072AE66EC70027D78A /* KeychainAccess in Frameworks */,
-			);
+				BD4367A0D8424850A1BF36A5 /* ScaleCloudGo.xcframework in Frameworks */,);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */

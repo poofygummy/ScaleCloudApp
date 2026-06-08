@@ -10,6 +10,7 @@
 ## Nextcloud
 *.xcodeproj
 !Nextcloud.xcodeproj
+!ScaleCloudApp.xcodeproj
 Documentation/
 Custom/
 GoogleService-Info.plist
