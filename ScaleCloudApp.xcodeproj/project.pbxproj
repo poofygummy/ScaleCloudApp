@@ -5800,7 +5800,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/iOSClient/Nextcloud-Bridging-Header.h";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt";
 				_EXPERIMENTAL_SWIFT_EXPLICIT_MODULES = NO;
 			};
 			name = Debug;
@@ -5823,7 +5823,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/iOSClient/Nextcloud-Bridging-Header.h";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt";
 				_EXPERIMENTAL_SWIFT_EXPLICIT_MODULES = NO;
 			};
 			name = Release;
