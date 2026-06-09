@@ -942,6 +942,9 @@
 		F7FDFF6C2E437E55000D7688 /* NCShareAccounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FDFF542E437E55000D7688 /* NCShareAccounts.swift */; };
 		F7FDFF6D2E437E55000D7688 /* NCAccountSettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FDFF562E437E55000D7688 /* NCAccountSettingsModel.swift */; };
 		F7FDFF6E2E437E55000D7688 /* NCAccountSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FDFF572E437E55000D7688 /* NCAccountSettingsView.swift */; };
+		052BC52BFCB0474FA470514D /* ScaleCloudWatchedFoldersModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCC8E314AD94E6D9EDF6472 /* ScaleCloudWatchedFoldersModel.swift */; };
+		0E6B52E66369416F8479C61A /* ScaleCloudWatchedFoldersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2252E40FB05477C97F6F21E /* ScaleCloudWatchedFoldersView.swift */; };
+		05388DCFF7354DEAB98B07A7 /* ScaleCloudDownloadsHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3729FE4C077B475889840738 /* ScaleCloudDownloadsHelper.swift */; };
 		F7FDFF6F2E437E55000D7688 /* NCAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FDFF592E437E55000D7688 /* NCAccount.swift */; };
 		F7FDFF702E437E55000D7688 /* NCAccountRequest.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7FDFF512E437E55000D7688 /* NCAccountRequest.storyboard */; };
 		F7FDFF722E437E55000D7688 /* NCAccountRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FDFF522E437E55000D7688 /* NCAccountRequest.swift */; };
@@ -1877,6 +1880,9 @@
 		F7FDFF542E437E55000D7688 /* NCShareAccounts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NCShareAccounts.swift; sourceTree = "<group>"; };
 		F7FDFF562E437E55000D7688 /* NCAccountSettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NCAccountSettingsModel.swift; sourceTree = "<group>"; };
 		F7FDFF572E437E55000D7688 /* NCAccountSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NCAccountSettingsView.swift; sourceTree = "<group>"; };
+		8DCC8E314AD94E6D9EDF6472 /* ScaleCloudWatchedFoldersModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleCloudWatchedFoldersModel.swift; sourceTree = "<group>"; };
+		B2252E40FB05477C97F6F21E /* ScaleCloudWatchedFoldersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleCloudWatchedFoldersView.swift; sourceTree = "<group>"; };
+		3729FE4C077B475889840738 /* ScaleCloudDownloadsHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleCloudDownloadsHelper.swift; sourceTree = "<group>"; };
 		F7FDFF592E437E55000D7688 /* NCAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NCAccount.swift; sourceTree = "<group>"; };
 		F7FF2CB02842159500EBB7A1 /* NCSectionHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NCSectionHeader.xib; sourceTree = "<group>"; };
 		F7FFFC9D2FB300440015441E /* NCAssistantSharedTextStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NCAssistantSharedTextStore.swift; sourceTree = "<group>"; };
@@ -3028,6 +3034,7 @@
 				F359D8662A7D03420023F405 /* NCUtility+Exif.swift */,
 				AF93474B27E34120002537EE /* NCUtility+Image.swift */,
 				F74AF3A3247FB6AE00AC767B /* NCUtilityFileSystem.swift */,
+				3729FE4C077B475889840738 /* ScaleCloudDownloadsHelper.swift */,
 				F702F2FC25EE5D2C008F8E80 /* NYMnemonic */,
 				F33EE6F12BF4C9B200CA1A51 /* PKCS12.swift */,
 				F3E173BE2C9B1057006D177A /* ScreenAwakeManager */,
@@ -3442,6 +3449,8 @@
 			children = (
 				F7FDFF562E437E55000D7688 /* NCAccountSettingsModel.swift */,
 				F7FDFF572E437E55000D7688 /* NCAccountSettingsView.swift */,
+				8DCC8E314AD94E6D9EDF6472 /* ScaleCloudWatchedFoldersModel.swift */,
+				B2252E40FB05477C97F6F21E /* ScaleCloudWatchedFoldersView.swift */,
 			);
 			path = "Account Settings";
 			sourceTree = "<group>";
@@ -4862,6 +4871,9 @@
 				F7FDFF6C2E437E55000D7688 /* NCShareAccounts.swift in Sources */,
 				F7FDFF6D2E437E55000D7688 /* NCAccountSettingsModel.swift in Sources */,
 				F7FDFF6E2E437E55000D7688 /* NCAccountSettingsView.swift in Sources */,
+				052BC52BFCB0474FA470514D /* ScaleCloudWatchedFoldersModel.swift in Sources */,
+				0E6B52E66369416F8479C61A /* ScaleCloudWatchedFoldersView.swift in Sources */,
+				05388DCFF7354DEAB98B07A7 /* ScaleCloudDownloadsHelper.swift in Sources */,
 				F7FDFF6F2E437E55000D7688 /* NCAccount.swift in Sources */,
 				F769454822E9F20D000A798A /* NCShareNetworking.swift in Sources */,
 				F749B64A297B0CBB00087535 /* NCManageDatabase+Share.swift in Sources */,
