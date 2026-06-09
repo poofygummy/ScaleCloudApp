@@ -107,8 +107,9 @@ enum ScaleCloudDownloadsHelper {
         let database = NCManageDatabase.shared
         let networking = NCNetworking.shared
 
-        guard let session = NCSession.shared.getSession(account: account.account) else {
-            nkLog(error: "ScaleCloudDownloadsHelper: No session for account \(account.account)")
+        let session = NCSession.shared.getSession(account: account.account)
+        guard !session.account.isEmpty else {
+            nkLog(error: "ScaleCloudDownloadsHelper: No valid session for account \(account.account)")
             return
         }
 
