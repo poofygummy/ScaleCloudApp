@@ -376,8 +376,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 account: accountId,
                 urlBase: serverUrl,
                 user: username,
-                userId: userId,
-                password: ""
+                userId: userId
             )
             await NCManageDatabase.shared.setAccountAutoUploadDirectoryAsync(cameraRemotePath, session: session)
 
