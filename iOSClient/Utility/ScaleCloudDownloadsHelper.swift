@@ -33,11 +33,11 @@ enum ScaleCloudDownloadsHelper {
         for bookmarkData in bookmarks {
 
             // Turn the saved bookmark Data back into a real URL we can use.
-            // The "withSecurityScope" option is required so iOS knows we have
-            // permission to access this folder later.
+            // On iOS, security scope is automatically included for URLs from UIDocumentPickerViewController.
+            // We use empty options [] instead of .withSecurityScope (which is macOS-only).
             var isStale = false
             guard let url = try? URL(resolvingBookmarkData: bookmarkData,
-                                     options: .withSecurityScope,
+                                     options: [],
                                      relativeTo: nil,
                                      bookmarkDataIsStale: &isStale),
                   !isStale else {

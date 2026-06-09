@@ -72,10 +72,10 @@ class ScaleCloudWatchedFoldersModel: ObservableObject {
             var isStale = false
 
             // Turn the saved bookmark Data back into a real URL.
-            // The .withSecurityScope option tells iOS we want to keep the permission
-            // to access this folder in the future.
+            // On iOS, security scope is automatically included for URLs from UIDocumentPickerViewController.
+            // We use empty options [] instead of .withSecurityScope (which is macOS-only).
             if let url = try? URL(resolvingBookmarkData: data,
-                                  options: .withSecurityScope,
+                                  options: [],
                                   relativeTo: nil,
                                   bookmarkDataIsStale: &isStale),
                !isStale {
@@ -112,8 +112,9 @@ class ScaleCloudWatchedFoldersModel: ObservableObject {
 
         do {
             // Ask iOS to create a bookmark token for this folder.
-            // .withSecurityScope means the bookmark will carry permission to access the folder later.
-            let bookmarkData = try url.bookmarkData(options: .withSecurityScope,
+            // On iOS, security scope is automatically included for URLs from UIDocumentPickerViewController.
+            // We use empty options [] instead of .withSecurityScope (which is macOS-only).
+            let bookmarkData = try url.bookmarkData(options: [],
                                                     includingResourceValuesForKeys: nil,
                                                     relativeTo: nil)
 
@@ -150,10 +151,8 @@ class ScaleCloudWatchedFoldersModel: ObservableObject {
         preferences.setScaleCloudWatchedDownloadBookmarks(account: account, bookmarks: current)
     }
 
-    //deinit to stop accessing all security scoped resources when this model is deallocated
-    deinit {
-    for url in watchedFolders {
-        url.stopAccessingSecurityScopedResource()
-    }
-}
+    // Note: We don't need a deinit to call stopAccessingSecurityScopedResource()
+    // because iOS automatically releases security-scoped resources when the URL is deallocated.
+    // Attempting to access @MainActor-isolated 'watchedFolders' from deinit would cause a
+    // compilation error since deinit can run on any thread.
 }
