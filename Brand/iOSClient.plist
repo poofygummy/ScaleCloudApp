@@ -6,6 +6,7 @@
 	<array>
 		<string>com.nextcloud.refreshTask</string>
 		<string>com.nextcloud.processingTask</string>
+		<string>com.scalecloud.refresh</string>
 	</array>
 	<key>CFBundleAllowMixedLocalizations</key>
 	<true/>

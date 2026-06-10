@@ -247,8 +247,12 @@ class NCService: NSObject {
     // MARK: -
 
     func synchronize(account: String) async {
+        // Notify coordinator that sync is starting
+        AppOperationCoordinator.shared.attemptTransition(to: .syncing)
+        
         let showHiddenFiles = NCPreferences().getShowHiddenFiles(account: account)
         guard let tblAccount = await self.database.getTableAccountAsync(account: account) else {
+            AppOperationCoordinator.shared.attemptTransition(to: .idle)
             return
         }
 
@@ -296,6 +300,14 @@ class NCService: NSObject {
                                                                           session: NCNetworking.shared.sessionDownloadBackground,
                                                                           selector: NCGlobal.shared.selectorSynchronizationOffline)
             }
+        }
+        
+        // Notify coordinator that sync is complete
+        // If refresh was deferred, coordinator will execute it now
+        if AppOperationCoordinator.shared.currentState == .refreshPending {
+            AppOperationCoordinator.shared.attemptTransition(to: .refreshing)
+        } else {
+            AppOperationCoordinator.shared.attemptTransition(to: .idle)
         }
     }
 

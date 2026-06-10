@@ -7,6 +7,7 @@
 import Foundation
 import UIKit
 import ScaleCloudKit
+import ScaleCloudSign
 import WidgetKit
 import SwiftUI
 import CoreLocation
@@ -387,10 +388,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-        guard let controller = SceneManager.shared.getController(scene: scene),
-              let url = URLContexts.first?.url else { return }
+        guard let url = URLContexts.first?.url else { return }
         let scheme = url.scheme
         let action = url.host
+        
+        guard let controller = SceneManager.shared.getController(scene: scene) else { return }
         let versionApp = NCUtility().getVersionMaintenance()
 
         // Test version
@@ -573,7 +575,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             scene.open(url, options: nil)
         }
     }
-
+    
     private func showPrivacyProtectionWindow() {
         guard let windowScene = self.window?.windowScene else {
             return
@@ -606,6 +608,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 }
             } else if NCPreferences().accountRequest {
                 requestedAccount(controller: controller)
+            } else {
+                // Present setup flow if not completed
+                self.presentSetupFlowIfNeeded(controller: controller)
             }
         }
 
@@ -623,6 +628,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
 
         NotificationCenter.default.postOnMainThread(name: global.notificationCenterRichdocumentGrabFocus)
+    }
+    
+    // MARK: - Setup Flow
+    
+    private func presentSetupFlowIfNeeded(controller: UIViewController) {
+        // Only show setup once per install
+        guard !UserDefaults.standard.setupCompleted else {
+            return
+        }
+        
+        // Present setup flow after a short delay to allow UI to settle
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            let setupCoordinator = SetupCoordinator()
+            setupCoordinator.onCompletion = {
+                print("[Setup] Setup flow completed successfully")
+            }
+            setupCoordinator.start(from: controller)
+        }
     }
 }
 
