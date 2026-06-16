@@ -6,7 +6,7 @@
 import UIKit
 import BackgroundTasks
 import ScaleCloudKit
-import ScaleCloudSign
+import ScaleCloudRenew
 import AltStoreCore
 import LocalAuthentication
 import Firebase

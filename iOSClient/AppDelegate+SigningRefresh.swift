@@ -3,7 +3,7 @@
 
 import UIKit
 import BackgroundTasks
-import ScaleCloudSign
+import ScaleCloudRenew
 import AltStoreCore
 
 extension AppDelegate {

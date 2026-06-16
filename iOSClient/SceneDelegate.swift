@@ -7,7 +7,7 @@
 import Foundation
 import UIKit
 import ScaleCloudKit
-import ScaleCloudSign
+import ScaleCloudRenew
 import WidgetKit
 import SwiftUI
 import CoreLocation
