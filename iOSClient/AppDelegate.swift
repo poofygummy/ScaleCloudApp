@@ -59,6 +59,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         }
 
+        // Start minimuxer using the pairing file iloader placed in our Documents folder.
+        // This must run at every boot so the install step of re-signing can work on-device.
+        let docsPath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let pairingFileURL = docsPath.appendingPathComponent("ALTPairingFile.mobiledevicepairing")
+        if FileManager.default.fileExists(atPath: pairingFileURL.path),
+           let pairingFileContents = try? String(contentsOf: pairingFileURL, encoding: .utf8) {
+            do {
+                try minimuxerStartWithLogger(pairingFileContents, docsPath.path, true)
+                nkLog(debug: "[Signing] minimuxer started")
+            } catch {
+                nkLog(debug: "[Signing] minimuxer failed to start: \(error)")
+            }
+        } else {
+            nkLog(debug: "[Signing] No pairing file found, minimuxer not started")
+        }
+
         let versionNextcloudiOS = String(format: NCBrandOptions.shared.textCopyrightNextcloudiOS, utility.getVersionBuild())
 
         NCAppVersionManager.shared.checkAndUpdateInstallState()
