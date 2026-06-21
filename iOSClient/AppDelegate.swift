@@ -118,6 +118,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         // Register signing background tasks
         registerSigningBackgroundTasks()
+        
+        // Install 2FA presenter so AuthenticationOperation can show a code-entry
+        // screen whenever Apple requires two-factor authentication
+        TwoFactorPresenter.install()
 
         if NCBrandOptions.shared.enforce_passcode_lock {
             NCPreferences().requestPasscodeAtStart = true
