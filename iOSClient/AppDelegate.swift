@@ -49,6 +49,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // Initialize operation coordinator early
         _ = AppOperationCoordinator.shared
 
+        // Start the signing database. prepareDatabase() runs inside start() and syncs
+        // the IPA source URL from UserDefaults into the StoreApp's AppVersion record.
+        DatabaseManager.shared.start { error in
+            if let error = error {
+                nkLog(debug: "[Signing] DatabaseManager failed to start: \(error)")
+            } else {
+                nkLog(debug: "[Signing] DatabaseManager started")
+            }
+        }
+
         let versionNextcloudiOS = String(format: NCBrandOptions.shared.textCopyrightNextcloudiOS, utility.getVersionBuild())
 
         NCAppVersionManager.shared.checkAndUpdateInstallState()
@@ -134,30 +144,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         if coordinator.isRefreshNeeded() && coordinator.canStartRefresh() {
             nkLog(debug: "[Signing] Foreground fallback: < 4 days to expiry, starting refresh")
             coordinator.attemptTransition(to: .refreshing)
-            
-            // Execute signing operation in foreground
-            // TODO: Get actual installed apps from ScaleCloudApp context
-            // For now, use placeholder - this will be filled in Phase 6/7
-            let installedApps: [InstalledApp] = []
-            
-            guard !installedApps.isEmpty else {
-                nkLog(debug: "[Signing] No apps to refresh")
-                coordinator.attemptTransition(to: .idle)
-                return
-            }
-            
-            let operation = BackgroundRefreshAppsOperation(installedApps: installedApps)
-            operation.refreshCompletionHandler = { [weak self] success, expiryDate in
-                if success, let expiryDate = expiryDate {
-                    coordinator.setCertificateExpiry(expiryDate)
-                    nkLog(debug: "[Signing] Updated certificate expiry: \(expiryDate)")
-                }
-                coordinator.attemptTransition(to: .idle)
-                // Reschedule daily check
-                self?.scheduleDailyRefreshCheck()
-            }
-            
-            operation.start()
+            executeSigningOperation()
         }
     }
     

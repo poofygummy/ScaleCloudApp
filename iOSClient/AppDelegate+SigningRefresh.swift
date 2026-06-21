@@ -92,44 +92,42 @@ extension AppDelegate {
         executeSigningOperation(bgTask: task)
     }
     
-    /// Execute the actual signing operation
-    private func executeSigningOperation(bgTask: BGTask? = nil) {
+    /// Execute the actual signing operation.
+    /// Fetches installed apps from the signing database (CoreData via DatabaseManager),
+    /// then hands them to BackgroundRefreshAppsOperation — exactly as SideStore does.
+    func executeSigningOperation(bgTask: BGTask? = nil) {
         nkLog(debug: "[Signing] Executing signing operation")
-        
-        // TODO: Get actual installed apps from ScaleCloudApp context
-        // For now, use placeholder - this will be filled in Phase 6/7
-        let installedApps: [InstalledApp] = []
-        
-        guard !installedApps.isEmpty else {
-            nkLog(debug: "[Signing] No apps to refresh")
-            AppOperationCoordinator.shared.attemptTransition(to: .idle)
-            bgTask?.setTaskCompleted(success: true)
-            scheduleDailyRefreshCheck()
-            return
-        }
-        
-        let operation = BackgroundRefreshAppsOperation(installedApps: installedApps)
-        operation.refreshCompletionHandler = { [weak self] success, expiryDate in
-            guard let self = self else { return }
-            
-            let coordinator = AppOperationCoordinator.shared
-            
-            if success, let expiryDate = expiryDate {
-                // Update certificate expiry
-                coordinator.setCertificateExpiry(expiryDate)
-                nkLog(debug: "[Signing] Updated certificate expiry: \(expiryDate)")
+
+        DatabaseManager.shared.persistentContainer.performBackgroundTask { context in
+            let installedApps = InstalledApp.fetchAppsForBackgroundRefresh(in: context)
+
+            guard !installedApps.isEmpty else {
+                nkLog(debug: "[Signing] No apps in signing database to refresh")
+                AppOperationCoordinator.shared.attemptTransition(to: .idle)
+                bgTask?.setTaskCompleted(success: true)
+                self.scheduleDailyRefreshCheck()
+                return
             }
-            
-            // Transition back to idle
-            coordinator.attemptTransition(to: .idle)
-            
-            // Complete background task if provided
-            bgTask?.setTaskCompleted(success: success)
-            
-            // Reschedule daily check
-            self.scheduleDailyRefreshCheck()
+
+            nkLog(debug: "[Signing] Refreshing \(installedApps.count) app(s)")
+
+            let operation = BackgroundRefreshAppsOperation(installedApps: installedApps)
+            operation.refreshCompletionHandler = { [weak self] success, expiryDate in
+                guard let self = self else { return }
+
+                let coordinator = AppOperationCoordinator.shared
+
+                if success, let expiryDate = expiryDate {
+                    coordinator.setCertificateExpiry(expiryDate)
+                    nkLog(debug: "[Signing] Updated certificate expiry: \(expiryDate)")
+                }
+
+                coordinator.attemptTransition(to: .idle)
+                bgTask?.setTaskCompleted(success: success)
+                self.scheduleDailyRefreshCheck()
+            }
+
+            operation.start()
         }
-        
-        operation.start()
     }
 }
