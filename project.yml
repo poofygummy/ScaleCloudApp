@@ -26,13 +26,15 @@ targets:
     type: application
     platform: iOS
     deploymentTarget: "14.0"
-    # NOTE: For the lightweight yml path, point at the real transplanted sources
-    # used in this ScaleCloud tree (iOSClient/ contains the bulk of the client,
-    # Brand/ contains the ScaleCloud customizations, plists, assets, etc.).
-    # The authoritative description is the adapted upstream pbxproj.
+    bundleIdPrefix: com.scalecloud
+    info:
+      path: Brand/iOSClient.plist
     sources:
       - path: iOSClient
       - path: Brand
+    settings:
+      base:
+        FRAMEWORK_SEARCH_PATHS: "$(inherited) $(BUILT_PRODUCTS_DIR) $(PROJECT_DIR)/../ScaleCloudKit/prebuilt $(PROJECT_DIR)/../ScaleCloudGo/prebuilt $(PROJECT_DIR)/../ScaleCloudSign/prebuilt $(PROJECT_DIR)/../ScaleCloudRenew/prebuilt"
     dependencies:
       - framework: ../ScaleCloudKit/prebuilt/ScaleCloudKit.framework
         embed: true
