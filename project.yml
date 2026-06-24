@@ -46,3 +46,102 @@ targets:
         embed: true
       - framework: ../ScaleCloudRenew/prebuilt/ScaleCloudRenew.xcframework
         embed: true
+      - package: Alamofire
+      - package: KeychainAccess
+      - package: LucidBanner
+      - package: DropDown
+      - package: EasyTipView
+      - package: Gzip
+      - package: LRUCache
+      - package: Mantis
+      - package: MarkdownKit
+      - package: OpenSSL
+      - package: Parchment
+      - package: PopupView
+      - package: QRCodeReader
+      - package: Queuer
+      - package: RealmSwift
+      - package: Swifter
+      - package: SwiftRichString
+      - package: TagListView
+      - package: TLPhotoPicker
+      - package: VLCKitSPM
+      - package: FirebaseCrashlytics
+      - package: FirebaseDatabase
+      - package: NIO
+      - package: NIOSSL
+      - package: Collections
+
+packages:
+  Alamofire:
+    url: https://github.com/Alamofire/Alamofire.git
+    from: 5.10.2
+  KeychainAccess:
+    url: https://github.com/kishikawakatsuki/KeychainAccess
+    from: 4.0.0
+  LucidBanner:
+    url: https://github.com/marinofaggiana/LucidBanner
+    exactVersion: 0.7.1
+  DropDown:
+    url: https://github.com/AssistoLab/DropDown
+    branch: master
+  EasyTipView:
+    url: https://github.com/marinofaggiana/EasyTipView
+    branch: master
+  GzipSwift:
+    url: https://github.com/1024jp/GzipSwift
+    exactVersion: 6.0.0
+  LRUCache:
+    url: https://github.com/nicklockwood/LRUCache
+    from: 1.0.7
+  Mantis:
+    url: https://github.com/marinofaggiana/Mantis
+    exactVersion: 1.0.0
+  MarkdownKit:
+    url: https://github.com/bmoliveira/MarkdownKit
+    from: 1.7.1
+  OpenSSL:
+    url: https://github.com/krzyzanowskim/OpenSSL
+    from: 3.6.0
+  Parchment:
+    url: https://github.com/rechsteiner/Parchment
+    exactVersion: 3.3.0
+  PopupView:
+    url: https://github.com/exyte/PopupView.git
+    from: 2.9.1
+  QRCodeReader:
+    url: https://github.com/yannickl/QRCodeReader.swift
+    from: 10.1.1
+  Queuer:
+    url: https://github.com/FabrizioBrancati/Queuer
+    from: 2.0.0
+  realm-swift:
+    url: https://github.com/realm/realm-swift
+    exactVersion: 20.0.4
+  swifter:
+    url: https://github.com/httpswift/swifter.git
+    branch: stable
+  SwiftRichString:
+    url: https://github.com/malcommac/SwiftRichString
+    from: 3.7.2
+  TagListView:
+    url: https://github.com/ElaWorkshop/TagListView
+    from: 1.0.0
+  TLPhotoPicker:
+    url: https://github.com/tilltue/TLPhotoPicker
+    from: 2.0.0
+  vlckit-spm:
+    url: https://github.com/tylerjonesio/vlckit-spm
+    from: 3.5.1
+  firebase-ios-sdk:
+    url: https://github.com/firebase/firebase-ios-sdk
+    from: 12.0.0
+  swift-nio:
+    url: https://github.com/apple/swift-nio.git
+    from: 2.65.0
+  swift-nio-ssl:
+    url: https://github.com/apple/swift-nio-ssl
+    from: 2.26.0
+  swift-collections:
+    url: https://github.com/apple/swift-collections.git
+    exactVersion: 1.1.4
