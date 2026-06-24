@@ -86,70 +86,70 @@ packages:
     url: https://github.com/Alamofire/Alamofire.git
     from: 5.10.2
   KeychainAccess:
-    url: https://github.com/kishikawakatsuki/KeychainAccess
+    url: https://github.com/kishikawakatsuki/KeychainAccess.git
     from: 4.0.0
   LucidBanner:
-    url: https://github.com/marinofaggiana/LucidBanner
+    url: https://github.com/marinofaggiana/LucidBanner.git
     exactVersion: 0.7.1
   DropDown:
-    url: https://github.com/AssistoLab/DropDown
+    url: https://github.com/AssistoLab/DropDown.git
     branch: master
   EasyTipView:
-    url: https://github.com/marinofaggiana/EasyTipView
+    url: https://github.com/marinofaggiana/EasyTipView.git
     branch: master
   GzipSwift:
     url: https://github.com/1024jp/GzipSwift
     exactVersion: 6.0.0
   LRUCache:
-    url: https://github.com/nicklockwood/LRUCache
+    url: https://github.com/nicklockwood/LRUCache.git
     from: 1.0.7
   Mantis:
-    url: https://github.com/marinofaggiana/Mantis
+    url: https://github.com/marinofaggiana/Mantis.git
     exactVersion: 1.0.0
   MarkdownKit:
-    url: https://github.com/bmoliveira/MarkdownKit
+    url: https://github.com/bmoliveira/MarkdownKit.git
     from: 1.7.1
   OpenSSL:
-    url: https://github.com/krzyzanowskim/OpenSSL
+    url: https://github.com/krzyzanowskim/OpenSSL.git
     from: 3.6.0
   Parchment:
-    url: https://github.com/rechsteiner/Parchment
+    url: https://github.com/rechsteiner/Parchment.git
     exactVersion: 3.3.0
   PopupView:
     url: https://github.com/exyte/PopupView.git
     from: 2.9.1
   QRCodeReader:
-    url: https://github.com/yannickl/QRCodeReader.swift
+    url: https://github.com/yannickl/QRCodeReader.swift.git
     from: 10.1.1
   Queuer:
-    url: https://github.com/FabrizioBrancati/Queuer
+    url: https://github.com/FabrizioBrancati/Queuer.git
     from: 2.0.0
   realm-swift:
-    url: https://github.com/realm/realm-swift
+    url: https://github.com/realm/realm-swift.git
     exactVersion: 20.0.4
   swifter:
     url: https://github.com/httpswift/swifter.git
     branch: stable
   SwiftRichString:
-    url: https://github.com/malcommac/SwiftRichString
+    url: https://github.com/malcommac/SwiftRichString.git
     from: 3.7.2
   TagListView:
-    url: https://github.com/ElaWorkshop/TagListView
+    url: https://github.com/ElaWorkshop/TagListView.git
     from: 1.0.0
   TLPhotoPicker:
-    url: https://github.com/tilltue/TLPhotoPicker
+    url: https://github.com/tilltue/TLPhotoPicker.git
     from: 2.0.0
   vlckit-spm:
-    url: https://github.com/tylerjonesio/vlckit-spm
+    url: https://github.com/tylerjonesio/vlckit-spm.git
     from: 3.5.1
   firebase-ios-sdk:
-    url: https://github.com/firebase/firebase-ios-sdk
+    url: https://github.com/firebase/firebase-ios-sdk.git
     from: 12.0.0
   swift-nio:
     url: https://github.com/apple/swift-nio.git
     from: 2.65.0
   swift-nio-ssl:
-    url: https://github.com/apple/swift-nio-ssl
+    url: https://github.com/apple/swift-nio-ssl.git
     from: 2.26.0
   swift-collections:
     url: https://github.com/apple/swift-collections.git
