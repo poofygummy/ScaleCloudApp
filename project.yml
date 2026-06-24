@@ -34,7 +34,9 @@ targets:
       - path: iOSClient
       - path: Brand
     dependencies:
-      - target: ScaleCloudKit
-projectReferences:
-  ScaleCloudKit:
-    path: ../ScaleCloudKit/ScaleCloudKit.xcodeproj
+      - framework: ../ScaleCloudKit/prebuilt/ScaleCloudKit.framework
+        embed: true
+      - framework: ../ScaleCloudSign/prebuilt/ScaleCloudSign.framework
+        embed: true
+      - framework: ../ScaleCloudRenew/prebuilt/ScaleCloudRenew.xcframework
+        embed: true
