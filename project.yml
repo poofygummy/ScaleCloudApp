@@ -51,7 +51,8 @@ targets:
       - package: LucidBanner
       - package: DropDown
       - package: EasyTipView
-      - package: Gzip
+      - package: GzipSwift
+        product: Gzip
       - package: LRUCache
       - package: Mantis
       - package: MarkdownKit
@@ -60,17 +61,25 @@ targets:
       - package: PopupView
       - package: QRCodeReader
       - package: Queuer
-      - package: RealmSwift
-      - package: Swifter
+      - package: realm-swift
+        product: RealmSwift
+      - package: swifter
+        product: Swifter
       - package: SwiftRichString
       - package: TagListView
       - package: TLPhotoPicker
-      - package: VLCKitSPM
-      - package: FirebaseCrashlytics
-      - package: FirebaseDatabase
-      - package: NIO
-      - package: NIOSSL
-      - package: Collections
+      - package: vlckit-spm
+        product: VLCKitSPM
+      - package: firebase-ios-sdk
+        product: FirebaseCrashlytics
+      - package: firebase-ios-sdk
+        product: FirebaseDatabase
+      - package: swift-nio
+        product: NIO
+      - package: swift-nio-ssl
+        product: NIOSSL
+      - package: swift-collections
+        product: Collections
 
 packages:
   Alamofire:
