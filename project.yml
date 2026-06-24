@@ -36,6 +36,9 @@ targets:
     settings:
       base:
         FRAMEWORK_SEARCH_PATHS: "$(inherited) $(BUILT_PRODUCTS_DIR) $(PROJECT_DIR)/../ScaleCloudKit/prebuilt $(PROJECT_DIR)/../ScaleCloudGo/prebuilt $(PROJECT_DIR)/../ScaleCloudSign/prebuilt $(PROJECT_DIR)/../ScaleCloudRenew/prebuilt"
+        CODE_SIGNING_ALLOWED: NO
+        CODE_SIGN_IDENTITY: ""
+        CODE_SIGNING_REQUIRED: NO
     dependencies:
       - framework: ../ScaleCloudKit/prebuilt/ScaleCloudKit.framework
         embed: true
