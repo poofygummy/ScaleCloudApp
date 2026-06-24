@@ -5334,7 +5334,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_ENTITLEMENTS = "$(SRCROOT)/Brand/Notification_Service_Extension.entitlements";
 				DEAD_CODE_STRIPPING = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					EXTENSION,
@@ -5359,7 +5359,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_ENTITLEMENTS = "$(SRCROOT)/Brand/Notification_Service_Extension.entitlements";
 				DEAD_CODE_STRIPPING = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					EXTENSION,
@@ -5620,7 +5620,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_ENTITLEMENTS = "$(SRCROOT)/Brand/File_Provider_Extension_UI.entitlements";
 				DEAD_CODE_STRIPPING = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					EXTENSION,
@@ -5648,7 +5648,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_ENTITLEMENTS = "$(SRCROOT)/Brand/File_Provider_Extension_UI.entitlements";
 				DEAD_CODE_STRIPPING = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					EXTENSION,
@@ -5676,7 +5676,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_ENTITLEMENTS = "$(SRCROOT)/Brand/Share.entitlements";
 				DEAD_CODE_STRIPPING = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					EXTENSION,
@@ -5701,7 +5701,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_ENTITLEMENTS = "$(SRCROOT)/Brand/Share.entitlements";
 				DEAD_CODE_STRIPPING = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					EXTENSION,
@@ -5731,7 +5731,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CODE_SIGN_ENTITLEMENTS = "$(SRCROOT)/Brand/Widget.entitlements";
 				DEAD_CODE_STRIPPING = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					EXTENSION,
@@ -5766,7 +5766,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CODE_SIGN_ENTITLEMENTS = "$(SRCROOT)/Brand/Widget.entitlements";
 				DEAD_CODE_STRIPPING = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					EXTENSION,
@@ -5797,7 +5797,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_ENTITLEMENTS = "$(SRCROOT)/Brand/File_Provider_Extension.entitlements";
 				DEAD_CODE_STRIPPING = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					EXTENSION,
@@ -5821,7 +5821,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_ENTITLEMENTS = "$(SRCROOT)/Brand/File_Provider_Extension.entitlements";
 				DEAD_CODE_STRIPPING = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					EXTENSION,
@@ -5857,7 +5857,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/iOSClient/Nextcloud-Bridging-Header.h";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt";
 				_EXPERIMENTAL_SWIFT_EXPLICIT_MODULES = NO;
 			};
 			name = Debug;
@@ -5880,7 +5880,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/iOSClient/Nextcloud-Bridging-Header.h";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt";
 				_EXPERIMENTAL_SWIFT_EXPLICIT_MODULES = NO;
 			};
 			name = Release;
@@ -5901,7 +5901,7 @@
 				CODE_SIGN_ENTITLEMENTS = "$(SRCROOT)/Brand/Action_Assistant.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt";
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -5944,7 +5944,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt";
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
@@ -5980,7 +5980,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = "$(SRCROOT)/Brand//WidgetDashboardIntentHandler.entitlements";
 				DEAD_CODE_STRIPPING = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					EXTENSION,
@@ -6019,7 +6019,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = "$(SRCROOT)/Brand//WidgetDashboardIntentHandler.entitlements";
 				DEAD_CODE_STRIPPING = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt";
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
