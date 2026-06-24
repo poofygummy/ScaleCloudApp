@@ -18,7 +18,7 @@ extension NCTrash {
             return
         }
 
-        let resultsListingTrash = await ScaleCloudKit.shared.listingTrashAsync(filename: filename, showHiddenFiles: false, account: session.account) { task in
+        let resultsListingTrash = await SCKClient.shared.listingTrashAsync(filename: filename, showHiddenFiles: false, account: session.account) { task in
             Task {
                 await NCNetworking.shared.networkingTasks.track(identifier: "NCTrash", task: task)
                 await self.collectionView.reloadData()
@@ -39,7 +39,7 @@ extension NCTrash {
         let serverUrlFileNameSource = result.filePath + result.fileName
         let serverUrlFileNameDestination = session.urlBase + "/remote.php/dav/trashbin/" + session.userId + "/restore/" + result.fileName
 
-        let resultsMoveFileOrFolder = await ScaleCloudKit.shared.moveFileOrFolderAsync(serverUrlFileNameSource: serverUrlFileNameSource, serverUrlFileNameDestination: serverUrlFileNameDestination, overwrite: true, account: self.session.account) { task in
+        let resultsMoveFileOrFolder = await SCKClient.shared.moveFileOrFolderAsync(serverUrlFileNameSource: serverUrlFileNameSource, serverUrlFileNameDestination: serverUrlFileNameDestination, overwrite: true, account: self.session.account) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: self.session.account,
                                                                                             path: serverUrlFileNameSource,
@@ -58,7 +58,7 @@ extension NCTrash {
 
     func emptyTrash() async {
         let serverUrlFileName = session.urlBase + "/remote.php/dav/trashbin/" + session.userId + "/trash"
-        let results = await ScaleCloudKit.shared.deleteFileOrFolderAsync(serverUrlFileName: serverUrlFileName, account: session.account) { task in
+        let results = await SCKClient.shared.deleteFileOrFolderAsync(serverUrlFileName: serverUrlFileName, account: session.account) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: self.session.account,
                                                                                             path: serverUrlFileName,
@@ -80,7 +80,7 @@ extension NCTrash {
                 continue
             }
             let serverUrlFileName = result.filePath + result.fileName
-            let results = await ScaleCloudKit.shared.deleteFileOrFolderAsync(serverUrlFileName: serverUrlFileName, account: session.account) { task in
+            let results = await SCKClient.shared.deleteFileOrFolderAsync(serverUrlFileName: serverUrlFileName, account: session.account) { task in
                 Task {
                     let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: self.session.account,
                                                                                                 path: serverUrlFileName,
@@ -113,7 +113,7 @@ class NCOperationDownloadThumbnailTrash: ConcurrentOperation, @unchecked Sendabl
     override func start() {
         guard !isCancelled else { return self.finish() }
 
-        ScaleCloudKit.shared.downloadTrashPreview(fileId: fileId, account: session.account) { task in
+        SCKClient.shared.downloadTrashPreview(fileId: fileId, account: session.account) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: self.session.account,
                                                                                             path: self.fileId,

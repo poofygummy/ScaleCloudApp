@@ -151,7 +151,7 @@ struct NCManageE2EEView: View {
             }
             .contentShape(Rectangle())
             .onTapGesture {
-                ScaleCloudKit.shared.deleteE2EECertificate(account: model.session.account) { task in
+                SCKClient.shared.deleteE2EECertificate(account: model.session.account) { task in
                     Task {
                         let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: model.session.account,
                                                                                                     name: "deleteE2EECertificate")
@@ -187,7 +187,7 @@ struct NCManageE2EEView: View {
             }
             .contentShape(Rectangle())
             .onTapGesture {
-                ScaleCloudKit.shared.deleteE2EEPrivateKey(account: model.session.account) { task in
+                SCKClient.shared.deleteE2EEPrivateKey(account: model.session.account) { task in
                     Task {
                         let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: model.session.account,
                                                                                                     name: "deleteE2EEPrivateKey")

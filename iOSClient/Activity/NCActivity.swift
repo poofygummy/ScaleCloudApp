@@ -75,7 +75,7 @@ class NCActivity: UIViewController, NCSharePagingContent {
         commentView = Bundle.main.loadNibNamed("NCActivityCommentView", owner: self, options: nil)?.first as? NCActivityCommentView
         commentView?.setup(account: metadata.account) { newComment in
             guard let newComment = newComment, !newComment.isEmpty, let metadata = self.metadata else { return }
-            ScaleCloudKit.shared.putComments(fileId: metadata.fileId, message: newComment, account: metadata.account) { task in
+            SCKClient.shared.putComments(fileId: metadata.fileId, message: newComment, account: metadata.account) { task in
                 Task {
                     let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: metadata.account,
                                                                                                 path: metadata.fileId,
@@ -419,7 +419,7 @@ extension NCActivity {
         guard showComments, let metadata = metadata else { return }
         disptachGroup?.enter()
 
-        ScaleCloudKit.shared.getComments(fileId: metadata.fileId, account: metadata.account) { task in
+        SCKClient.shared.getComments(fileId: metadata.fileId, account: metadata.account) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: metadata.account,
                                                                                             path: metadata.fileId,
@@ -461,7 +461,7 @@ extension NCActivity {
 
         disptachGroup.enter()
 
-        ScaleCloudKit.shared.getActivity(since: 0,
+        SCKClient.shared.getActivity(since: 0,
                                         limit: 1,
                                         objectId: nil,
                                         objectType: objectType,
@@ -493,7 +493,7 @@ extension NCActivity {
         var resultActivityId = 0
 
         disptachGroup.enter()
-        ScaleCloudKit.shared.getActivity(since: idActivity,
+        SCKClient.shared.getActivity(since: idActivity,
                                         limit: min(limit, 200),
                                         objectId: metadata?.fileId,
                                         objectType: objectType,

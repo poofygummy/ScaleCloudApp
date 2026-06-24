@@ -55,7 +55,7 @@ class NCContextMenuProfile: NSObject {
     // MARK: - Private Async Loading
 
     private func loadProfileMenu() async -> [UIMenuElement] {
-        let results = await ScaleCloudKit.shared.getHovercardAsync(
+        let results = await SCKClient.shared.getHovercardAsync(
             for: userId,
             account: session.account
         ) { task in

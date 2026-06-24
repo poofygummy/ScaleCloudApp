@@ -83,7 +83,7 @@ class NCFavorite: NCCollectionViewCommon {
         startGUIGetServerData()
 
         let showHiddenFiles = NCPreferences().getShowHiddenFiles(account: session.account)
-        let resultsListingFavorites = await ScaleCloudKit.shared.listingFavoritesAsync(showHiddenFiles: showHiddenFiles,
+        let resultsListingFavorites = await SCKClient.shared.listingFavoritesAsync(showHiddenFiles: showHiddenFiles,
                                                                                       account: session.account) { task in
             Task {
                 await NCNetworking.shared.networkingTasks.track(identifier: "NCFavorite", task: task)

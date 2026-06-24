@@ -15,7 +15,7 @@ extension NCMedia {
                           options: SCKRequestOptions = SCKRequestOptions(),
                           taskHandler: @escaping (_ task: URLSessionTask) -> Void = { _ in }
     ) async -> (account: String, files: [SCKFile]?, error: SCKError) {
-        guard let nkSession = ScaleCloudKit.shared.nkCommonInstance.nksessions.session(forAccount: account) else {
+        guard let nkSession = SCKClient.shared.nkCommonInstance.nksessions.session(forAccount: account) else {
             return (account, nil, .urlError)
         }
         let capabilities = await SCKCapabilities.shared.getCapabilities(for: account)
@@ -50,7 +50,7 @@ extension NCMedia {
             return (account, files, .invalidData)
         }
 
-        let results = await ScaleCloudKit.shared.searchAsync(serverUrl: nkSession.urlBase, httpBody: httpBody, showHiddenFiles: false, includeHiddenFiles: [], account: account, options: options, taskHandler: taskHandler)
+        let results = await SCKClient.shared.searchAsync(serverUrl: nkSession.urlBase, httpBody: httpBody, showHiddenFiles: false, includeHiddenFiles: [], account: account, options: options, taskHandler: taskHandler)
 
         return(results.account, results.files, results.error)
     }

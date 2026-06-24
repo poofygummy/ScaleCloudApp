@@ -25,7 +25,7 @@ final class NCConfigServer: NSObject, UIActionSheetDelegate, URLSessionDelegate 
         let defaultSessionConfiguration = URLSessionConfiguration.default
         let defaultSession = URLSession(configuration: defaultSessionConfiguration, delegate: self, delegateQueue: .main)
         var urlRequest = URLRequest(url: url)
-        if let headers = ScaleCloudKit.shared.nkCommonInstance.getStandardHeaders(account: account) {
+        if let headers = SCKClient.shared.nkCommonInstance.getStandardHeaders(account: account) {
             urlRequest.headers = headers
         }
 

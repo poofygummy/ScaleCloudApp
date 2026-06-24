@@ -39,7 +39,7 @@ class NCPushNotification {
             return
         }
 
-        let responsePN = await ScaleCloudKit.shared.subscribingPushNotificationAsync(serverUrl: urlBase,
+        let responsePN = await SCKClient.shared.subscribingPushNotificationAsync(serverUrl: urlBase,
                                                                                     pushTokenHash: pushTokenHash,
                                                                                     devicePublicKey: devicePublicKey,
                                                                                     proxyServerUrl: proxyServerUrl, account: account) { task in
@@ -63,7 +63,7 @@ class NCPushNotification {
         let userAgent = String(format: "%@  (Strict VoIP)", NCBrandOptions.shared.getUserAgent())
         let options = SCKRequestOptions(customUserAgent: userAgent)
 
-        let responsePushProxy = await ScaleCloudKit.shared.subscribingPushProxyAsync(proxyServerUrl: proxyServerUrl,
+        let responsePushProxy = await SCKClient.shared.subscribingPushProxyAsync(proxyServerUrl: proxyServerUrl,
                                                                                     pushToken: preferences.deviceTokenPushNotification,
                                                                                     deviceIdentifier: deviceIdentifier,
                                                                                     signature: signature,
@@ -96,7 +96,7 @@ class NCPushNotification {
             return
         }
 
-        let responsePN = await ScaleCloudKit.shared.unsubscribingPushNotificationAsync(serverUrl: urlBase,
+        let responsePN = await SCKClient.shared.unsubscribingPushNotificationAsync(serverUrl: urlBase,
                                                                                       account: account) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
@@ -109,7 +109,7 @@ class NCPushNotification {
         let userAgent = String(format: "%@  (Strict VoIP)", NCBrandOptions.shared.getUserAgent())
         let options = SCKRequestOptions(customUserAgent: userAgent)
         let proxyServerUrl = NCBrandOptions.shared.pushNotificationServerProxy
-        let responseProxy = await ScaleCloudKit.shared.unsubscribingPushProxyAsync(proxyServerUrl: proxyServerUrl,
+        let responseProxy = await SCKClient.shared.unsubscribingPushProxyAsync(proxyServerUrl: proxyServerUrl,
                                                                                   deviceIdentifier: deviceIdentifier,
                                                                                   signature: signature,
                                                                                   publicKey: subscribingPublicKey,

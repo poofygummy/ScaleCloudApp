@@ -102,7 +102,7 @@ class NCGroupfolders: NCCollectionViewCommon {
         let homeServerUrl = utilityFileSystem.getHomeServer(session: session)
         let showHiddenFiles = NCPreferences().getShowHiddenFiles(account: session.account)
 
-        let resultsGroupfolders = await ScaleCloudKit.shared.getGroupfoldersAsync(account: session.account) { task in
+        let resultsGroupfolders = await SCKClient.shared.getGroupfoldersAsync(account: session.account) { task in
             Task {
                 await NCNetworking.shared.networkingTasks.track(identifier: "NCGroupfolders", task: task)
             }
@@ -120,7 +120,7 @@ class NCGroupfolders: NCCollectionViewCommon {
         for groupfolder in groupfolders {
             let mountPoint = groupfolder.mountPoint.hasPrefix("/") ? groupfolder.mountPoint : "/" + groupfolder.mountPoint
             let serverUrlFileName = homeServerUrl + mountPoint
-            let resultsReadFile = await ScaleCloudKit.shared.readFileOrFolderAsync(serverUrlFileName: serverUrlFileName,
+            let resultsReadFile = await SCKClient.shared.readFileOrFolderAsync(serverUrlFileName: serverUrlFileName,
                                                                                   depth: "0", showHiddenFiles: showHiddenFiles,
                                                                                   account: session.account) { task in
                 Task {

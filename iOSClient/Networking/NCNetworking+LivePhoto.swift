@@ -19,7 +19,7 @@ extension NCNetworking {
         for result in results {
             // VIDEO PART
             //
-            let resultLivePhotoVideo = await ScaleCloudKit.shared.setLivephotoAsync(
+            let resultLivePhotoVideo = await SCKClient.shared.setLivephotoAsync(
                 serverUrlfileNamePath: result.serverUrlFileNameVideo,
                 livePhotoFile: result.fileIdImage,
                 account: account) { task in
@@ -48,7 +48,7 @@ extension NCNetworking {
 
             // IMAGE PART
             //
-            let resultLivePhotoImage = await ScaleCloudKit.shared.setLivephotoAsync(
+            let resultLivePhotoImage = await SCKClient.shared.setLivephotoAsync(
                 serverUrlfileNamePath: result.serverUrlFileNameImage,
                 livePhotoFile: result.fileIdVideo,
                 account: account) { task in

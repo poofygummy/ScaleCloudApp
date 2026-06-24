@@ -33,7 +33,7 @@ class NotificationService: UNNotificationServiceExtension {
         self.request = request
         bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
 
-        ScaleCloudKit.configureLogger(logLevel: .verbose)
+        SCKClient.configureLogger(logLevel: .verbose)
 
         if let bestAttemptContent = bestAttemptContent {
             bestAttemptContent.title = ""

@@ -35,7 +35,7 @@ class NCNetworkingE2EEMarkFolder: NSObject {
         }
 #endif
 
-        let resultsReadFileOrFolder = await ScaleCloudKit.shared.readFileOrFolderAsync(serverUrlFileName: serverUrlFileName, depth: "0", account: account) { task in
+        let resultsReadFileOrFolder = await SCKClient.shared.readFileOrFolderAsync(serverUrlFileName: serverUrlFileName, depth: "0", account: account) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
                                                                                             path: serverUrlFileName,
@@ -49,7 +49,7 @@ class NCNetworkingE2EEMarkFolder: NSObject {
             return error
         }
         let capabilities = await SCKCapabilities.shared.getCapabilities(for: account)
-        let resultsMarkE2EEFolder = await ScaleCloudKit.shared.markE2EEFolderAsync(fileId: file.fileId, delete: false, account: account, options: NCNetworkingE2EE().getOptions(account: account, capabilities: capabilities)) { task in
+        let resultsMarkE2EEFolder = await SCKClient.shared.markE2EEFolderAsync(fileId: file.fileId, delete: false, account: account, options: NCNetworkingE2EE().getOptions(account: account, capabilities: capabilities)) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
                                                                                             path: file.fileId,

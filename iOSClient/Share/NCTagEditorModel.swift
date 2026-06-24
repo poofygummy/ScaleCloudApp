@@ -99,7 +99,7 @@ import ScaleCloudKit
         isSaving = true
         defer { isSaving = false }
 
-        let createResult = await ScaleCloudKit.shared.createTag(name: candidate, account: metadata.account)
+        let createResult = await SCKClient.shared.createTag(name: candidate, account: metadata.account)
         guard createResult.error == .success else {
             await showErrorBanner(windowScene: windowScene, text: "_create_tag_error_", errorCode: createResult.error.errorCode)
             return nil
@@ -148,7 +148,7 @@ import ScaleCloudKit
         let tagsToRemove = initialAssignedTagIDs.subtracting(selectedTagIDs)
 
         for tagID in tagsToAdd.sorted() {
-            let addResult = await ScaleCloudKit.shared.addTagToFile(tagId: tagID, fileId: metadata.fileId, account: metadata.account)
+            let addResult = await SCKClient.shared.addTagToFile(tagId: tagID, fileId: metadata.fileId, account: metadata.account)
             if addResult.error != .success {
                 await showErrorBanner(windowScene: windowScene, error: addResult.error)
                 return nil
@@ -156,7 +156,7 @@ import ScaleCloudKit
         }
 
         for tagID in tagsToRemove.sorted() {
-            let removeResult = await ScaleCloudKit.shared.removeTagFromFile(tagId: tagID, fileId: metadata.fileId, account: metadata.account)
+            let removeResult = await SCKClient.shared.removeTagFromFile(tagId: tagID, fileId: metadata.fileId, account: metadata.account)
             if removeResult.error != .success {
                 await showErrorBanner(windowScene: windowScene, error: removeResult.error)
                 return nil
@@ -196,7 +196,7 @@ import ScaleCloudKit
             isLoading = false
         }
 
-        let result = await ScaleCloudKit.shared.getTags(account: metadata.account)
+        let result = await SCKClient.shared.getTags(account: metadata.account)
         guard result.error == .success, let receivedTags = result.tags else {
             await showErrorBanner(windowScene: windowScene, error: result.error)
             return false
@@ -227,7 +227,7 @@ import ScaleCloudKit
         isUpdatingTagColor = true
         defer { isUpdatingTagColor = false }
 
-        let result = await ScaleCloudKit.shared.updateTagColor(tagId: tagID, color: colorHex, account: metadata.account)
+        let result = await SCKClient.shared.updateTagColor(tagId: tagID, color: colorHex, account: metadata.account)
         guard result.error == .success else {
             await showErrorBanner(windowScene: windowScene, error: result.error)
             return

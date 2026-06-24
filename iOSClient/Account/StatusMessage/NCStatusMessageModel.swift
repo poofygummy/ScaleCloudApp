@@ -41,7 +41,7 @@ import ScaleCloudKit
 
     func getStatus(account: String) {
         Task {
-            let result = await ScaleCloudKit.shared.getUserStatusAsync(account: account) { task in
+            let result = await SCKClient.shared.getUserStatusAsync(account: account) { task in
                 Task {
                     let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account, name: "getUserStatus")
                     await NCNetworking.shared.networkingTasks.track(identifier: identifier, task: task)
@@ -58,7 +58,7 @@ import ScaleCloudKit
 
     func clearStatus(account: String) {
         Task {
-            let result = await ScaleCloudKit.shared.clearMessageAsync(account: account) { task in
+            let result = await SCKClient.shared.clearMessageAsync(account: account) { task in
                 Task {
                     let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account, name: "clearMessage")
                     await NCNetworking.shared.networkingTasks.track(identifier: identifier, task: task)
@@ -73,7 +73,7 @@ import ScaleCloudKit
 
     func getPredefinedStatusTexts(account: String) {
         Task {
-            let result = await ScaleCloudKit.shared.getUserStatusPredefinedStatusesAsync(account: account) { task in
+            let result = await SCKClient.shared.getUserStatusPredefinedStatusesAsync(account: account) { task in
                 Task {
                     let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account, name: "getUserStatusPredefinedStatuses")
                     await NCNetworking.shared.networkingTasks.track(identifier: identifier, task: task)
@@ -90,7 +90,7 @@ import ScaleCloudKit
 
     func submitStatus(account: String) {
         Task {
-            let result = await ScaleCloudKit.shared.setCustomMessageUserDefinedAsync(statusIcon: emojiText, message: statusText, clearAt: getClearAt(clearAfterString), account: account) { task in
+            let result = await SCKClient.shared.setCustomMessageUserDefinedAsync(statusIcon: emojiText, message: statusText, clearAt: getClearAt(clearAfterString), account: account) { task in
                 Task {
                     let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account, name: "setCustomMessageUserDefined")
                     await NCNetworking.shared.networkingTasks.track(identifier: identifier, task: task)
@@ -105,7 +105,7 @@ import ScaleCloudKit
 
     func setAccountUserStatus(account: String) {
         Task {
-            let result = await ScaleCloudKit.shared.getUserStatusAsync(account: account) { task in
+            let result = await SCKClient.shared.getUserStatusAsync(account: account) { task in
                 Task {
                     let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
                                                                                                 name: "getUserStatus")

@@ -47,7 +47,7 @@ extension NCManageDatabase {
 
         await core.performRealmWriteAsync { realm in
             var directoryServerUrl = NCUtilityFileSystem().createServerUrl(serverUrl: metadata.serverUrl, fileName: metadata.fileName)
-            if metadata.fileName == ScaleCloudKit.shared.nkCommonInstance.rootFileName {
+            if metadata.fileName == SCKClient.shared.nkCommonInstance.rootFileName {
                 directoryServerUrl = metadata.serverUrl
             }
 

@@ -730,7 +730,7 @@ extension NCLivePhoto {
             if metadata1.livePhotoFile.isEmpty, !metadata2.fileName.isEmpty {
                 let serverUrlfileNamePath = metadata1.urlBase + metadata1.path + metadata1.fileName
 
-                _ = await ScaleCloudKit.shared.setLivephotoAsync(
+                _ = await SCKClient.shared.setLivephotoAsync(
                     serverUrlfileNamePath: serverUrlfileNamePath,
                     livePhotoFile: metadata2.fileName,
                     account: metadata1.account
@@ -749,7 +749,7 @@ extension NCLivePhoto {
             if metadata2.livePhotoFile.isEmpty, !metadata1.fileName.isEmpty {
                 let serverUrlfileNamePath = metadata2.urlBase + metadata2.path + metadata2.fileName
 
-                _ = await ScaleCloudKit.shared.setLivephotoAsync(
+                _ = await SCKClient.shared.setLivephotoAsync(
                     serverUrlfileNamePath: serverUrlfileNamePath,
                     livePhotoFile: metadata1.fileName,
                     account: metadata2.account

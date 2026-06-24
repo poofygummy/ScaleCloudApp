@@ -85,8 +85,8 @@ func getDashboardDataEntry(configuration: DashboardIntent?, isPreview: Bool, dis
     guard let activeTableAccount else {
         return (DashboardDataEntry(date: Date(), datas: datasPlaceholder, dashboard: nil, buttons: nil, isPlaceholder: true, isEmpty: false, titleImage: UIImage(systemName: "circle.fill") ?? UIImage(), title: "Dashboard", footerImage: "xmark.icloud", footerText: NSLocalizedString("_no_active_account_", comment: ""), account: ""))
     }
-    ScaleCloudKit.shared.setup(groupIdentifier: NCBrandOptions.shared.capabilitiesGroup, delegate: NCNetworking.shared)
-    ScaleCloudKit.shared.appendSession(account: activeTableAccount.account,
+    SCKClient.shared.setup(groupIdentifier: NCBrandOptions.shared.capabilitiesGroup, delegate: NCNetworking.shared)
+    SCKClient.shared.appendSession(account: activeTableAccount.account,
                                       urlBase: activeTableAccount.urlBase,
                                       user: activeTableAccount.user,
                                       userId: activeTableAccount.userId,
@@ -99,7 +99,7 @@ func getDashboardDataEntry(configuration: DashboardIntent?, isPreview: Bool, dis
 
     // LOG
     let versionNextcloudiOS = String(format: NCBrandOptions.shared.textCopyrightNextcloudiOS, utility.getVersionBuild())
-    ScaleCloudKit.configureLogger(logLevel: (NCBrandOptions.shared.disable_log ? .disabled : NCPreferences().log))
+    SCKClient.configureLogger(logLevel: (NCBrandOptions.shared.disable_log ? .disabled : NCPreferences().log))
     nkLog(debug: "Start \(NCBrandOptions.shared.brand) dashboard widget session " + versionNextcloudiOS)
 
     // Widget
@@ -117,8 +117,8 @@ func getDashboardDataEntry(configuration: DashboardIntent?, isPreview: Bool, dis
             titleImage = image.withTintColor(NCBrandColor.shared.iconImageColor, renderingMode: .alwaysOriginal)
         }
     }
-    let options = SCKRequestOptions(timeout: 90, queue: ScaleCloudKit.shared.nkCommonInstance.backgroundQueue)
-    let resultsDashboardWidget = await ScaleCloudKit.shared.getDashboardWidgetsApplicationAsync(widgetApplicationId, account: activeTableAccount.account, options: options)
+    let options = SCKRequestOptions(timeout: 90, queue: SCKClient.shared.nkCommonInstance.backgroundQueue)
+    let resultsDashboardWidget = await SCKClient.shared.getDashboardWidgetsApplicationAsync(widgetApplicationId, account: activeTableAccount.account, options: options)
 
     var datas = [DashboardData]()
     var numberItems = 0
@@ -165,7 +165,7 @@ func getDashboardDataEntry(configuration: DashboardIntent?, isPreview: Bool, dis
                             imageColor = UIColor(hex: colorString)
                             iconImage = UIImage(systemName: "circle.fill") ?? UIImage()
                         } else {
-                            let results = await ScaleCloudKit.shared.downloadPreviewAsync(url: url, account: activeTableAccount.account)
+                            let results = await SCKClient.shared.downloadPreviewAsync(url: url, account: activeTableAccount.account)
                             if results.error == .success,
                                let data = results.responseData?.data {
                                 if let image = UIImage(data: data) {

@@ -48,7 +48,7 @@ class NCContextMenuComment: NSObject {
             alert.addAction(UIAlertAction(title: NSLocalizedString("_ok_", comment: ""), style: .default) { _ in
                 guard let message = alert.textFields?.first?.text, !message.isEmpty else { return }
 
-                ScaleCloudKit.shared.updateComments(
+                SCKClient.shared.updateComments(
                     fileId: self.metadata.fileId,
                     messageId: self.tableComments.messageId,
                     message: message,
@@ -83,7 +83,7 @@ class NCContextMenuComment: NSObject {
             image: utility.loadImage(named: "trash", colors: [.red]),
             attributes: .destructive
         ) { _ in
-            ScaleCloudKit.shared.deleteComments(
+            SCKClient.shared.deleteComments(
                 fileId: self.metadata.fileId,
                 messageId: self.tableComments.messageId,
                 account: self.metadata.account

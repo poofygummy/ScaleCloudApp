@@ -168,7 +168,7 @@ class NCShare: UIViewController, NCSharePagingContent {
             let etag = self.database.getTableAvatar(fileName: fileName)?.etag
             let fileNameLocalPath = utilityFileSystem.createServerUrl(serverUrl: utilityFileSystem.directoryUserData, fileName: fileName)
 
-            ScaleCloudKit.shared.downloadAvatar(
+            SCKClient.shared.downloadAvatar(
                 user: metadata.ownerId,
                 fileNameLocalPath: fileNameLocalPath,
                 sizeImage: NCGlobal.shared.avatarSize,

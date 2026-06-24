@@ -45,18 +45,18 @@ class NCNetworking: @unchecked Sendable, NextcloudKitDelegate {
         var serverUrl: String
     }
 
-    let sessionDownload = ScaleCloudKit.shared.nkCommonInstance.identifierSessionDownload
-    let sessionDownloadBackground = ScaleCloudKit.shared.nkCommonInstance.identifierSessionDownloadBackground
-    let sessionDownloadBackgroundExt = ScaleCloudKit.shared.nkCommonInstance.identifierSessionDownloadBackgroundExt
+    let sessionDownload = SCKClient.shared.nkCommonInstance.identifierSessionDownload
+    let sessionDownloadBackground = SCKClient.shared.nkCommonInstance.identifierSessionDownloadBackground
+    let sessionDownloadBackgroundExt = SCKClient.shared.nkCommonInstance.identifierSessionDownloadBackgroundExt
 
-    let sessionUpload = ScaleCloudKit.shared.nkCommonInstance.identifierSessionUpload
-    let sessionUploadBackground = ScaleCloudKit.shared.nkCommonInstance.identifierSessionUploadBackground
-    let sessionUploadBackgroundWWan = ScaleCloudKit.shared.nkCommonInstance.identifierSessionUploadBackgroundWWan
-    let sessionUploadBackgroundExt = ScaleCloudKit.shared.nkCommonInstance.identifierSessionUploadBackgroundExt
+    let sessionUpload = SCKClient.shared.nkCommonInstance.identifierSessionUpload
+    let sessionUploadBackground = SCKClient.shared.nkCommonInstance.identifierSessionUploadBackground
+    let sessionUploadBackgroundWWan = SCKClient.shared.nkCommonInstance.identifierSessionUploadBackgroundWWan
+    let sessionUploadBackgroundExt = SCKClient.shared.nkCommonInstance.identifierSessionUploadBackgroundExt
 
     let utilityFileSystem = NCUtilityFileSystem()
     let global = NCGlobal.shared
-    let backgroundSession = SCKBackground(nkCommonInstance: ScaleCloudKit.shared.nkCommonInstance)
+    let backgroundSession = SCKBackground(nkCommonInstance: SCKClient.shared.nkCommonInstance)
 
     var lastReachability: Bool = true
     var networkReachability: SCKTypeReachability?

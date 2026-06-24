@@ -133,7 +133,7 @@ extension NCMedia {
             max(self.collectionView.visibleCells.count * 3, 300)
         }
 
-        let options = SCKRequestOptions(timeout: 180, taskDescription: self.global.taskDescriptionRetrievesProperties, queue: ScaleCloudKit.shared.nkCommonInstance.backgroundQueue)
+        let options = SCKRequestOptions(timeout: 180, taskDescription: self.global.taskDescriptionRetrievesProperties, queue: SCKClient.shared.nkCommonInstance.backgroundQueue)
 
         let result = await searchMediaAsync(path: tblAccount.mediaPath,
                                             lessDate: lessDate,

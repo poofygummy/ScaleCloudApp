@@ -159,7 +159,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Set up networking session for all configured accounts
         for tblAccount in NCManageDatabase.shared.getAllTableAccount() {
             // Append account to ScaleCloudKit shared session
-            ScaleCloudKit.shared.appendSession(account: tblAccount.account,
+            SCKClient.shared.appendSession(account: tblAccount.account,
                                               urlBase: tblAccount.urlBase,
                                               user: tblAccount.user,
                                               userId: tblAccount.userId,
@@ -233,7 +233,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidBecomeActive(_ scene: UIScene) {
         hidePrivacyProtectionWindow()
 
-        if !ScaleCloudKit.shared.isNetworkReachable(),
+        if !SCKClient.shared.isNetworkReachable(),
            let windowScenee = SceneManager.shared.getWindow(scene: scene)?.windowScene {
             Task {
                 await showWarningBanner(windowScene: windowScenee,
@@ -531,13 +531,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                         return
                     }
 
-                    let results = await ScaleCloudKit.shared.getFileFromFileIdAsync(link: linkScheme,
+                    let results = await SCKClient.shared.getFileFromFileIdAsync(link: linkScheme,
                                                                                    account: tblAccount.account)
                     if results.error == .success, let file = results.file {
                         let metadata = await NCManageDatabaseCreateMetadata().convertFileToMetadataAsync(file)
                         await NCManageDatabase.shared.addMetadataAsync(metadata)
                         if metadata.hasPreview {
-                            let results = await ScaleCloudKit.shared.downloadPreviewAsync(fileId: metadata.fileId, etag: metadata.etag, account: metadata.account)
+                            let results = await SCKClient.shared.downloadPreviewAsync(fileId: metadata.fileId, etag: metadata.etag, account: metadata.account)
                             if results.error == .success,
                                let data = results.responseData?.data {
                                 NCUtility().createImageFileFrom(data: data, metadata: metadata)

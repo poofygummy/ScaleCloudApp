@@ -117,7 +117,7 @@ extension NCCollectionViewCommon: UICollectionViewDelegate {
                 if let vc = await NCViewer().getViewerController(metadata: metadata, image: image, delegate: self) {
                     self.navigationController?.pushViewController(vc, animated: true)
                 }
-            } else if ScaleCloudKit.shared.isNetworkReachable() {
+            } else if SCKClient.shared.isNetworkReachable() {
                 guard let  metadata = await database.setMetadataSessionInWaitDownloadAsync(ocId: metadata.ocId,
                                                                                            session: self.networking.sessionDownload,
                                                                                            selector: global.selectorLoadFileView,

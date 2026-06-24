@@ -176,7 +176,7 @@ class NCMainNavigationController: UINavigationController, UINavigationController
                 if capabilities.notification.count == 0 {
                     self.controller?.availableNotifications = false
                 } else {
-                    _ = await ScaleCloudKit.shared.getNotificationsAsync(account: account) { task in
+                    _ = await SCKClient.shared.getNotificationsAsync(account: account) { task in
                         Task {
                             let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(
                                 account: account,

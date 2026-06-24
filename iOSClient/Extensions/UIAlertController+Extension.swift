@@ -59,7 +59,7 @@ extension UIAlertController {
                     }
 #endif
                     let serverUrlFileName = NCUtilityFileSystem().createServerUrl(serverUrl: serverUrl, fileName: fileNameFolder)
-                    let createFolderResults = await ScaleCloudKit.shared.createFolderAsync(serverUrlFileName: serverUrlFileName, account: session.account) { task in
+                    let createFolderResults = await SCKClient.shared.createFolderAsync(serverUrlFileName: serverUrlFileName, account: session.account) { task in
                         Task {
                             let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(
                                 account: session.account,

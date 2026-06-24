@@ -9,7 +9,7 @@ class NCRichWorkspaceCommon: NSObject {
     let utilityFileSystem = NCUtilityFileSystem()
 
     func createViewerNextcloudText(serverUrl: String, viewController: UIViewController, controller: NCMainTabBarController?, session: NCSession.Session) {
-        if !ScaleCloudKit.shared.isNetworkReachable() {
+        if !SCKClient.shared.isNetworkReachable() {
             Task {
                 let windowScene = await SceneManager.shared.getWindowScene(controller: controller)
                 await showErrorBanner(windowScene: windowScene, text: "_go_online_", errorCode: NCGlobal.shared.errorOfflineNotAllowed)
@@ -25,7 +25,7 @@ class NCRichWorkspaceCommon: NSObject {
         NCActivityIndicator.shared.start(backgroundView: viewController.view)
 
         let fileNamePath = utilityFileSystem.getRelativeFilePath(NCGlobal.shared.fileNameRichWorkspace, serverUrl: serverUrl, session: session)
-        ScaleCloudKit.shared.textCreateFile(fileNamePath: fileNamePath, editorId: textCreators.editor, creatorId: textCreators.identifier, templateId: "", account: session.account) { task in
+        SCKClient.shared.textCreateFile(fileNamePath: fileNamePath, editorId: textCreators.editor, creatorId: textCreators.identifier, templateId: "", account: session.account) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: session.account,
                                                                                             path: fileNamePath,
@@ -51,7 +51,7 @@ class NCRichWorkspaceCommon: NSObject {
     }
 
     func openViewerNextcloudText(serverUrl: String, viewController: UIViewController, controller: NCMainTabBarController?, session: NCSession.Session) {
-        if !ScaleCloudKit.shared.isNetworkReachable() {
+        if !SCKClient.shared.isNetworkReachable() {
             Task {
                 let windowScene = await SceneManager.shared.getWindowScene(controller: controller)
                 await showErrorBanner(windowScene: windowScene, text: "_go_online_", errorCode: NCGlobal.shared.errorOfflineNotAllowed)
@@ -68,7 +68,7 @@ class NCRichWorkspaceCommon: NSObject {
                 NCActivityIndicator.shared.start(backgroundView: viewController.view)
 
                 let fileNamePath = utilityFileSystem.getRelativeFilePath(metadata.fileName, serverUrl: metadata.serverUrl, session: session)
-                ScaleCloudKit.shared.textOpenFile(fileNamePath: fileNamePath, editor: "text", account: metadata.account) { task in
+                SCKClient.shared.textOpenFile(fileNamePath: fileNamePath, editor: "text", account: metadata.account) { task in
                     Task {
                         let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: metadata.account,
                                                                                                     path: fileNamePath,

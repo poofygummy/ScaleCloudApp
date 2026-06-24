@@ -209,12 +209,12 @@ class FileProviderEnumerator: NSObject, NSFileProviderEnumerator {
                                        paginateToken: self.paginateToken,
                                        paginateOffset: paginateOffset,
                                        paginateCount: paginateCount,
-                                       queue: ScaleCloudKit.shared.nkCommonInstance.backgroundQueue
+                                       queue: SCKClient.shared.nkCommonInstance.backgroundQueue
         )
 
         // Read folder metadata
         //
-        let resultsRead = await ScaleCloudKit.shared.readFileOrFolderAsync(
+        let resultsRead = await SCKClient.shared.readFileOrFolderAsync(
             serverUrlFileName: serverUrl,
             depth: "1",
             showHiddenFiles: showHiddenFiles,

@@ -54,8 +54,8 @@ extension NCShareExtension: NCAccountRequestDelegate {
                 return
             }
 
-            ScaleCloudKit.shared.setup(groupIdentifier: NCBrandOptions.shared.capabilitiesGroup, delegate: NCNetworking.shared)
-            ScaleCloudKit.shared.appendSession(account: tblAccount.account,
+            SCKClient.shared.setup(groupIdentifier: NCBrandOptions.shared.capabilitiesGroup, delegate: NCNetworking.shared)
+            SCKClient.shared.appendSession(account: tblAccount.account,
                                               urlBase: tblAccount.urlBase,
                                               user: tblAccount.user,
                                               userId: tblAccount.userId,

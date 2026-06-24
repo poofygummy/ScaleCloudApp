@@ -197,7 +197,7 @@ class NCSearchUserDropDownCell: DropDownCell {
             let etag = NCManageDatabase.shared.getTableAvatar(fileName: fileName)?.etag
             let fileNameLocalPath = utilityFileSystem.createServerUrl(serverUrl: utilityFileSystem.directoryUserData, fileName: fileName)
 
-            ScaleCloudKit.shared.downloadAvatar(
+            SCKClient.shared.downloadAvatar(
                 user: sharee.shareWith,
                 fileNameLocalPath: fileNameLocalPath,
                 sizeImage: NCGlobal.shared.avatarSize,

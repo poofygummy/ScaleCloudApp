@@ -19,14 +19,14 @@ import ScaleCloudKit
 
     func loadAllSessions() {
         Task {
-            let result = await ScaleCloudKit.shared.getAssistantChatConversations(account: ncSession.account)
+            let result = await SCKClient.shared.getAssistantChatConversations(account: ncSession.account)
             conversations = result.sessions ?? []
         }
     }
 
     func createNewConversation(title: String? = nil) async -> AssistantConversation? {
         let timestamp = Int(Date().timeIntervalSince1970)
-        let result = await ScaleCloudKit.shared.createAssistantChatConversation(title: title, timestamp: timestamp, account: ncSession.account)
+        let result = await SCKClient.shared.createAssistantChatConversation(title: title, timestamp: timestamp, account: ncSession.account)
         if result.error == .success, let newConversation = result.conversation?.conversation {
             conversations.insert(newConversation, at: 0)
             return newConversation

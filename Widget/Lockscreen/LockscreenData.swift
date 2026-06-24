@@ -47,8 +47,8 @@ func getLockscreenDataEntry(configuration: AccountIntent?, isPreview: Bool, fami
     // NETWORKING
     let password = NCPreferences().getPassword(account: activeTableAccount.account)
 
-    ScaleCloudKit.shared.setup(groupIdentifier: NCBrandOptions.shared.capabilitiesGroup, delegate: NCNetworking.shared)
-    ScaleCloudKit.shared.appendSession(account: activeTableAccount.account,
+    SCKClient.shared.setup(groupIdentifier: NCBrandOptions.shared.capabilitiesGroup, delegate: NCNetworking.shared)
+    SCKClient.shared.appendSession(account: activeTableAccount.account,
                                       urlBase: activeTableAccount.urlBase,
                                       user: activeTableAccount.user,
                                       userId: activeTableAccount.userId,
@@ -59,10 +59,10 @@ func getLockscreenDataEntry(configuration: AccountIntent?, isPreview: Bool, fami
                                       httpMaximumConnectionsPerHostInUpload: NCBrandOptions.shared.httpMaximumConnectionsPerHostInUpload,
                                       groupIdentifier: NCBrandOptions.shared.capabilitiesGroup)
 
-    let options = SCKRequestOptions(timeout: 90, queue: ScaleCloudKit.shared.nkCommonInstance.backgroundQueue)
+    let options = SCKRequestOptions(timeout: 90, queue: SCKClient.shared.nkCommonInstance.backgroundQueue)
 
     if family == .accessoryCircular {
-        ScaleCloudKit.shared.getUserMetadata(account: activeTableAccount.account, userId: activeTableAccount.userId, options: options) { _, userProfile, _, error in
+        SCKClient.shared.getUserMetadata(account: activeTableAccount.account, userId: activeTableAccount.userId, options: options) { _, userProfile, _, error in
             if error == .success, let userProfile = userProfile {
                 if userProfile.quotaRelative > 0 {
                     quotaRelative = Float(userProfile.quotaRelative) / 100
@@ -86,7 +86,7 @@ func getLockscreenDataEntry(configuration: AccountIntent?, isPreview: Bool, fami
             }
         }
     } else if family == .accessoryRectangular {
-        ScaleCloudKit.shared.getDashboardWidgetsApplication("activity", account: activeTableAccount.account, options: options) { _, results, _, error in
+        SCKClient.shared.getDashboardWidgetsApplication("activity", account: activeTableAccount.account, options: options) { _, results, _, error in
             var activity: String = NSLocalizedString("_no_data_available_", comment: "")
             var link = URL(string: "https://")!
             if error == .success, let result = results?.first {

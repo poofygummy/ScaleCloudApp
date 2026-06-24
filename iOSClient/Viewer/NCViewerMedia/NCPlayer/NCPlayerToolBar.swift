@@ -354,7 +354,7 @@ extension NCPlayerToolBar: NCSelectDelegate {
                     }
                 }
 
-                ScaleCloudKit.shared.download(serverUrlFileName: metadata.serverUrlFileName, fileNameLocalPath: fileNameLocalPath, account: metadata.account, requestHandler: { request in
+                SCKClient.shared.download(serverUrlFileName: metadata.serverUrlFileName, fileNameLocalPath: fileNameLocalPath, account: metadata.account, requestHandler: { request in
                     downloadRequest = request
                 }, taskHandler: { task in
                     Task {

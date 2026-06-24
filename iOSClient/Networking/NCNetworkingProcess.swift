@@ -37,9 +37,9 @@ actor NCNetworkingProcess {
     private let minInterval: TimeInterval = 2.5
     private let offlineInterval: TimeInterval = 10
 
-    private let sessionForUpload = [ScaleCloudKit.shared.nkCommonInstance.identifierSessionUpload,
-                                    ScaleCloudKit.shared.nkCommonInstance.identifierSessionUploadBackground,
-                                    ScaleCloudKit.shared.nkCommonInstance.identifierSessionUploadBackgroundWWan]
+    private let sessionForUpload = [SCKClient.shared.nkCommonInstance.identifierSessionUpload,
+                                    SCKClient.shared.nkCommonInstance.identifierSessionUploadBackground,
+                                    SCKClient.shared.nkCommonInstance.identifierSessionUploadBackgroundWWan]
 
     private init() {
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: NCGlobal.shared.notificationCenterPlayerIsPlaying), object: nil, queue: nil) { [weak self] _ in

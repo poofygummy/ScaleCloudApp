@@ -56,7 +56,7 @@ final class FileProviderExtension: NSFileProviderExtension {
     override func item(for identifier: NSFileProviderItemIdentifier) throws -> NSFileProviderItem {
         if identifier == .rootContainer, let session = FileProviderData.shared.session {
             let metadata = NCManageDatabaseCreateMetadata().createMetadataDirectory(
-                fileName: ScaleCloudKit.shared.nkCommonInstance.rootFileName,
+                fileName: SCKClient.shared.nkCommonInstance.rootFileName,
                 ocId: NSFileProviderItemIdentifier.rootContainer.rawValue,
                 serverUrl: NCUtilityFileSystem().getHomeServer(session: session),
                 session: session)
@@ -117,7 +117,7 @@ final class FileProviderExtension: NSFileProviderExtension {
         Task {
             autoreleasepool {
                 Task {
-                    let backgroundSession = SCKBackground(nkCommonInstance: ScaleCloudKit.shared.nkCommonInstance)
+                    let backgroundSession = SCKBackground(nkCommonInstance: SCKClient.shared.nkCommonInstance)
                     let pathComponents = url.pathComponents
                     let utilityFileSystem = NCUtilityFileSystem()
                     let itemIdentifier = NSFileProviderItemIdentifier(pathComponents[pathComponents.count - 2])
@@ -186,7 +186,7 @@ final class FileProviderExtension: NSFileProviderExtension {
         Task {
             autoreleasepool {
                 Task {
-                    let backgroundSession = SCKBackground(nkCommonInstance: ScaleCloudKit.shared.nkCommonInstance)
+                    let backgroundSession = SCKBackground(nkCommonInstance: SCKClient.shared.nkCommonInstance)
                     let pathComponents = url.pathComponents
                     assert(pathComponents.count > 2)
                     let itemIdentifier = NSFileProviderItemIdentifier(pathComponents[pathComponents.count - 2])
@@ -252,7 +252,7 @@ final class FileProviderExtension: NSFileProviderExtension {
             }
 
             if metadata.session == NCNetworking.shared.sessionDownload,
-               let session = ScaleCloudKit.shared.nkCommonInstance.nksessions.session(forAccount: metadata.session)?.sessionData.session {
+               let session = SCKClient.shared.nkCommonInstance.nksessions.session(forAccount: metadata.session)?.sessionData.session {
                 let tasks: [URLSessionTask] = await withCheckedContinuation { continuation in
                     session.getAllTasks { tasks in
                         continuation.resume(returning: tasks)
@@ -337,7 +337,7 @@ final class FileProviderExtension: NSFileProviderExtension {
                                                                                               fileName: fileName,
                                                                                               userId: session.userId,
                                                                                               urlBase: session.urlBase)
-                    let nkBackground = SCKBackground(nkCommonInstance: ScaleCloudKit.shared.nkCommonInstance)
+                    let nkBackground = SCKBackground(nkCommonInstance: SCKClient.shared.nkCommonInstance)
 
                     let (task, error) = await nkBackground.uploadAsync(serverUrlFileName: serverUrlFileName,
                                                                       fileNameLocalPath: fileNameLocalPath,

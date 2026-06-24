@@ -8,13 +8,13 @@ import ScaleCloudKit
 
 extension NCNetworking {
     func noServerErrorAccount(_ account: String) -> Bool {
-        guard let groupDefaults = UserDefaults(suiteName: ScaleCloudKit.shared.nkCommonInstance.groupIdentifier)
+        guard let groupDefaults = UserDefaults(suiteName: SCKClient.shared.nkCommonInstance.groupIdentifier)
         else {
             return true
         }
-        let unavailableArray = groupDefaults.array(forKey: ScaleCloudKit.shared.nkCommonInstance.groupDefaultsUnavailable) as? [String] ?? []
-        let unauthorizedArray = groupDefaults.array(forKey: ScaleCloudKit.shared.nkCommonInstance.groupDefaultsUnauthorized) as? [String] ?? []
-        let tosArray = groupDefaults.array(forKey: ScaleCloudKit.shared.nkCommonInstance.groupDefaultsToS) as? [String] ?? []
+        let unavailableArray = groupDefaults.array(forKey: SCKClient.shared.nkCommonInstance.groupDefaultsUnavailable) as? [String] ?? []
+        let unauthorizedArray = groupDefaults.array(forKey: SCKClient.shared.nkCommonInstance.groupDefaultsUnauthorized) as? [String] ?? []
+        let tosArray = groupDefaults.array(forKey: SCKClient.shared.nkCommonInstance.groupDefaultsToS) as? [String] ?? []
 
         if unavailableArray.contains(account) || unauthorizedArray.contains(account) || tosArray.contains(account) {
             return false
@@ -24,39 +24,39 @@ extension NCNetworking {
     }
 
     func removeServerErrorAccount(_ account: String) {
-        guard let groupDefaults = UserDefaults(suiteName: ScaleCloudKit.shared.nkCommonInstance.groupIdentifier)
+        guard let groupDefaults = UserDefaults(suiteName: SCKClient.shared.nkCommonInstance.groupIdentifier)
         else {
             return
         }
-        var unauthorizedArray = groupDefaults.array(forKey: ScaleCloudKit.shared.nkCommonInstance.groupDefaultsUnauthorized) as? [String] ?? []
-        var unavailableArray = groupDefaults.array(forKey: ScaleCloudKit.shared.nkCommonInstance.groupDefaultsUnavailable) as? [String] ?? []
-        var tosArray = groupDefaults.array(forKey: ScaleCloudKit.shared.nkCommonInstance.groupDefaultsToS) as? [String] ?? []
+        var unauthorizedArray = groupDefaults.array(forKey: SCKClient.shared.nkCommonInstance.groupDefaultsUnauthorized) as? [String] ?? []
+        var unavailableArray = groupDefaults.array(forKey: SCKClient.shared.nkCommonInstance.groupDefaultsUnavailable) as? [String] ?? []
+        var tosArray = groupDefaults.array(forKey: SCKClient.shared.nkCommonInstance.groupDefaultsToS) as? [String] ?? []
 
         unauthorizedArray.removeAll { $0 == account }
-        groupDefaults.set(unauthorizedArray, forKey: ScaleCloudKit.shared.nkCommonInstance.groupDefaultsUnauthorized)
+        groupDefaults.set(unauthorizedArray, forKey: SCKClient.shared.nkCommonInstance.groupDefaultsUnauthorized)
 
         unavailableArray.removeAll { $0 == account }
-        groupDefaults.set(unavailableArray, forKey: ScaleCloudKit.shared.nkCommonInstance.groupDefaultsUnavailable)
+        groupDefaults.set(unavailableArray, forKey: SCKClient.shared.nkCommonInstance.groupDefaultsUnavailable)
 
         tosArray.removeAll { $0 == account }
-        groupDefaults.set(tosArray, forKey: ScaleCloudKit.shared.nkCommonInstance.groupDefaultsToS)
+        groupDefaults.set(tosArray, forKey: SCKClient.shared.nkCommonInstance.groupDefaultsToS)
 
         groupDefaults.synchronize()
     }
 
     func checkServerError(account: String, controller: NCMainTabBarController?) async {
-        guard let groupDefaults = UserDefaults(suiteName: ScaleCloudKit.shared.nkCommonInstance.groupIdentifier)
+        guard let groupDefaults = UserDefaults(suiteName: SCKClient.shared.nkCommonInstance.groupIdentifier)
         else {
             return
         }
-        var unavailableArray = groupDefaults.array(forKey: ScaleCloudKit.shared.nkCommonInstance.groupDefaultsUnavailable) as? [String] ?? []
-        let unauthorizedArray = groupDefaults.array(forKey: ScaleCloudKit.shared.nkCommonInstance.groupDefaultsUnauthorized) as? [String] ?? []
-        let tosArray = groupDefaults.array(forKey: ScaleCloudKit.shared.nkCommonInstance.groupDefaultsToS) as? [String] ?? []
+        var unavailableArray = groupDefaults.array(forKey: SCKClient.shared.nkCommonInstance.groupDefaultsUnavailable) as? [String] ?? []
+        let unauthorizedArray = groupDefaults.array(forKey: SCKClient.shared.nkCommonInstance.groupDefaultsUnauthorized) as? [String] ?? []
+        let tosArray = groupDefaults.array(forKey: SCKClient.shared.nkCommonInstance.groupDefaultsToS) as? [String] ?? []
 
         // Unavailable
         if unavailableArray.contains(account) {
             let serverUrl = NCSession.shared.getSession(account: account).urlBase
-            let resultsServerStatus = await ScaleCloudKit.shared.getServerStatusAsync(serverUrl: serverUrl) { task in
+            let resultsServerStatus = await SCKClient.shared.getServerStatusAsync(serverUrl: serverUrl) { task in
                 Task {
                     let identifier = serverUrl + "_getServerStatus"
                     await NCNetworking.shared.networkingTasks.track(identifier: identifier, task: task)
@@ -65,9 +65,9 @@ extension NCNetworking {
             switch resultsServerStatus.result {
             case .success(let serverInfo):
                 unavailableArray.removeAll { $0 == account }
-                groupDefaults.set(unavailableArray, forKey: ScaleCloudKit.shared.nkCommonInstance.groupDefaultsUnavailable)
+                groupDefaults.set(unavailableArray, forKey: SCKClient.shared.nkCommonInstance.groupDefaultsUnavailable)
                 unavailableArray.removeAll { $0 == account }
-                groupDefaults.set(unavailableArray, forKey: ScaleCloudKit.shared.nkCommonInstance.groupDefaultsUnavailable)
+                groupDefaults.set(unavailableArray, forKey: SCKClient.shared.nkCommonInstance.groupDefaultsUnavailable)
 
                 if serverInfo.maintenance {
                     Task {

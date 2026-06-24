@@ -206,7 +206,7 @@ class NCViewerRichDocument: UIViewController, WKNavigationDelegate, WKScriptMess
                         } else {
                             // TYPE PRINT - DOWNLOAD
                             NCActivityIndicator.shared.start(backgroundView: view)
-                            ScaleCloudKit.shared.download(serverUrlFileName: url, fileNameLocalPath: fileNameLocalPath, account: self.metadata.account, requestHandler: { _ in
+                            SCKClient.shared.download(serverUrlFileName: url, fileNameLocalPath: fileNameLocalPath, account: self.metadata.account, requestHandler: { _ in
                             }, taskHandler: { task in
                                 Task {
                                     let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: self.metadata.account,
@@ -309,7 +309,7 @@ class NCViewerRichDocument: UIViewController, WKNavigationDelegate, WKScriptMess
         if let serverUrl, let metadata {
             let path = utilityFileSystem.getRelativeFilePath(metadata.fileName, serverUrl: serverUrl, session: session)
 
-            ScaleCloudKit.shared.createAssetRichdocuments(path: path, account: metadata.account) { task in
+            SCKClient.shared.createAssetRichdocuments(path: path, account: metadata.account) { task in
                 Task {
                     let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: metadata.account,
                                                                                                 path: path,
@@ -333,7 +333,7 @@ class NCViewerRichDocument: UIViewController, WKNavigationDelegate, WKScriptMess
     func select(_ metadata: tableMetadata!, serverUrl: String!) {
         let path = utilityFileSystem.getRelativeFilePath(metadata!.fileName, serverUrl: serverUrl!, session: session)
 
-        ScaleCloudKit.shared.createAssetRichdocuments(path: path, account: metadata.account) { task in
+        SCKClient.shared.createAssetRichdocuments(path: path, account: metadata.account) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: metadata.account,
                                                                                             path: path,

@@ -19,10 +19,10 @@ extension FileProviderExtension {
             let serverUrlFileName = utilityFileSystem.createServerUrl(serverUrl: tableDirectory.serverUrl, fileName: fileNameFolder)
             let showHiddenFiles = NCPreferences().getShowHiddenFiles(account: account)
 
-            let resultsCreateFolder = await ScaleCloudKit.shared.createFolderAsync(serverUrlFileName: serverUrlFileName, account: account)
+            let resultsCreateFolder = await SCKClient.shared.createFolderAsync(serverUrlFileName: serverUrlFileName, account: account)
 
             if resultsCreateFolder.error == .success {
-                let resultsReadFile = await ScaleCloudKit.shared.readFileOrFolderAsync(serverUrlFileName: serverUrlFileName, depth: "0", showHiddenFiles: showHiddenFiles, account: account)
+                let resultsReadFile = await SCKClient.shared.readFileOrFolderAsync(serverUrlFileName: serverUrlFileName, depth: "0", showHiddenFiles: showHiddenFiles, account: account)
 
                 if resultsReadFile.error == .success, let file = resultsReadFile.files?.first {
                     let metadata = await NCManageDatabaseCreateMetadata().convertFileToMetadataAsync(file)
@@ -64,7 +64,7 @@ extension FileProviderExtension {
             let fileName = metadata.fileName
             let account = metadata.account
 
-            let resultsDelete = await ScaleCloudKit.shared.deleteFileOrFolderAsync(serverUrlFileName: serverUrlFileName, account: account)
+            let resultsDelete = await SCKClient.shared.deleteFileOrFolderAsync(serverUrlFileName: serverUrlFileName, account: account)
 
             if resultsDelete.error == .success {
                 let fileNamePath = utilityFileSystem.getDirectoryProviderStorageOcId(itemIdentifier.rawValue, userId: metadata.userId, urlBase: metadata.urlBase)
@@ -118,7 +118,7 @@ extension FileProviderExtension {
                 fileNameTo = utilityFileSystem.createServerUrl(serverUrl: serverUrlTo, fileName: newName)
             }
 
-            let resultsMove = await ScaleCloudKit.shared.moveFileOrFolderAsync(serverUrlFileNameSource: fileNameFrom, serverUrlFileNameDestination: fileNameTo, overwrite: true, account: metadataFrom.account)
+            let resultsMove = await SCKClient.shared.moveFileOrFolderAsync(serverUrlFileNameSource: fileNameFrom, serverUrlFileNameDestination: fileNameTo, overwrite: true, account: metadataFrom.account)
 
             if resultsMove.error == .success {
                 if metadataFrom.directory {
@@ -157,7 +157,7 @@ extension FileProviderExtension {
             let fileNamePathTo = utilityFileSystem.createServerUrl(serverUrl: metadata.serverUrl, fileName: itemName)
             let ocId = metadata.ocId
 
-            let resultsMove = await ScaleCloudKit.shared.moveFileOrFolderAsync(serverUrlFileNameSource: fileNamePathFrom, serverUrlFileNameDestination: fileNamePathTo, overwrite: false, account: metadata.account)
+            let resultsMove = await SCKClient.shared.moveFileOrFolderAsync(serverUrlFileNameSource: fileNamePathFrom, serverUrlFileNameDestination: fileNamePathTo, overwrite: false, account: metadata.account)
 
             if resultsMove.error == .success {
                 await NCManageDatabase.shared.renameMetadata(fileNameNew: itemName, ocId: ocId)
@@ -208,7 +208,7 @@ extension FileProviderExtension {
 
             if (favorite == true && !metadata.favorite) || (!favorite && metadata.favorite) {
                 let fileNamePath = NCUtilityFileSystem().getRelativeFilePath(metadata.fileName, serverUrl: metadata.serverUrl, urlBase: metadata.urlBase, userId: metadata.userId)
-                let resultsFavorite = await  ScaleCloudKit.shared.setFavoriteAsync(fileName: fileNamePath, favorite: favorite, account: metadata.account)
+                let resultsFavorite = await  SCKClient.shared.setFavoriteAsync(fileName: fileNamePath, favorite: favorite, account: metadata.account)
 
                 if resultsFavorite.error == .success {
                     guard let metadata = await NCManageDatabase.shared.getMetadataFromOcIdAsync(ocId) else {

@@ -451,7 +451,7 @@ class NCLogin: UIViewController, UITextFieldDelegate, NCLoginQRCodeDelegate {
         loginButton.isEnabled = false
         loginButton.hideButtonAndShowSpinner()
 
-        ScaleCloudKit.shared.getServerStatus(serverUrl: url) { [self] _, serverInfoResult in
+        SCKClient.shared.getServerStatus(serverUrl: url) { [self] _, serverInfoResult in
             switch serverInfoResult {
             case .success:
                 if let host = URL(string: url)?.host {
@@ -467,7 +467,7 @@ class NCLogin: UIViewController, UITextFieldDelegate, NCLoginQRCodeDelegate {
                 }
 
                 let loginOptions = SCKRequestOptions(customUserAgent: userAgent)
-                ScaleCloudKit.shared.getLoginFlowV2(serverUrl: url, options: loginOptions) { [self] token, endpoint, login, _, error in
+                SCKClient.shared.getLoginFlowV2(serverUrl: url, options: loginOptions) { [self] token, endpoint, login, _, error in
                     // Login Flow V2
                     if error == .success, let token, let endpoint, let login {
                         nkLog(debug: "Successfully received login flow information.")
@@ -546,7 +546,7 @@ class NCLogin: UIViewController, UITextFieldDelegate, NCLoginQRCodeDelegate {
             let server = parametersArray[2].replacingOccurrences(of: "server:", with: "")
 
             if value.hasPrefix(protocolLoginOneTime) {
-                let results = await ScaleCloudKit.shared.getAppPasswordOnetimeAsync(url: server, user: user, onetimeToken: password)
+                let results = await SCKClient.shared.getAppPasswordOnetimeAsync(url: server, user: user, onetimeToken: password)
                 if results.error == .success, let token = results.token {
                     await createAccount(urlBase: server, user: user, password: token)
                 } else {
@@ -561,7 +561,7 @@ class NCLogin: UIViewController, UITextFieldDelegate, NCLoginQRCodeDelegate {
     }
 
     private func getAppPassword(urlBase: String, user: String, password: String) async {
-        let results = await ScaleCloudKit.shared.getAppPasswordAsync(url: urlBase, user: user, password: password)
+        let results = await SCKClient.shared.getAppPasswordAsync(url: urlBase, user: user, password: password)
 
         if results.error == .success, let password = results.token {
             await self.createAccount(urlBase: urlBase, user: user, password: password)

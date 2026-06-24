@@ -197,7 +197,7 @@ class NCOperationDownloadThumbnailActivity: ConcurrentOperation, @unchecked Send
 
     override func start() {
         guard !isCancelled else { return self.finish() }
-        ScaleCloudKit.shared.downloadPreview(fileId: String(fileId), etag: etag, account: account) { task in
+        SCKClient.shared.downloadPreview(fileId: String(fileId), etag: etag, account: account) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: self.account,
                                                                                             path: String(self.fileId),

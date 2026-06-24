@@ -49,7 +49,7 @@ class NCNetworkingE2EE: NSObject {
         switch capabilities.e2EEApiVersion {
         case let v where v.hasPrefix("1."):
             let options = SCKRequestOptions(version: e2EEApiVersion1)
-            let results = await ScaleCloudKit.shared.getE2EEMetadataAsync(fileId: fileId, e2eToken: e2eToken, account: account, options: options) { task in
+            let results = await SCKClient.shared.getE2EEMetadataAsync(fileId: fileId, e2eToken: e2eToken, account: account, options: options) { task in
                 Task {
                     let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
                                                                                                 path: fileId,
@@ -60,7 +60,7 @@ class NCNetworkingE2EE: NSObject {
             return (results.account, self.e2EEApiVersion1, results.e2eMetadata, results.signature, results.responseData, results.error)
         case let v where v.hasPrefix("2."):
             var options = SCKRequestOptions(version: e2EEApiVersion2)
-            let results = await ScaleCloudKit.shared.getE2EEMetadataAsync(fileId: fileId, e2eToken: e2eToken, account: account, options: options) { task in
+            let results = await SCKClient.shared.getE2EEMetadataAsync(fileId: fileId, e2eToken: e2eToken, account: account, options: options) { task in
                 Task {
                     let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
                                                                                                 path: fileId,
@@ -72,7 +72,7 @@ class NCNetworkingE2EE: NSObject {
                 return (results.account, self.e2EEApiVersion2, results.e2eMetadata, results.signature, results.responseData, results.error)
             } else {
                 options = SCKRequestOptions(version: self.e2EEApiVersion1)
-                let results = await ScaleCloudKit.shared.getE2EEMetadataAsync(fileId: fileId, e2eToken: e2eToken, account: account, options: options) { task in
+                let results = await SCKClient.shared.getE2EEMetadataAsync(fileId: fileId, e2eToken: e2eToken, account: account, options: options) { task in
                     Task {
                         let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
                                                                                                     path: fileId,
@@ -84,7 +84,7 @@ class NCNetworkingE2EE: NSObject {
                     return (results.account, self.e2EEApiVersion2, results.e2eMetadata, results.signature, results.responseData, results.error)
                 } else {
                     options = SCKRequestOptions(version: self.e2EEApiVersion1)
-                    let results = await ScaleCloudKit.shared.getE2EEMetadataAsync(fileId: fileId, e2eToken: e2eToken, account: account, options: options) { task in
+                    let results = await SCKClient.shared.getE2EEMetadataAsync(fileId: fileId, e2eToken: e2eToken, account: account, options: options) { task in
                         Task {
                             let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
                                                                                                         path: fileId,
@@ -118,7 +118,7 @@ class NCNetworkingE2EE: NSObject {
         }
 
         if let addUserId {
-            let results = await ScaleCloudKit.shared.getE2EECertificateAsync(user: addUserId, account: session.account, options: NCNetworkingE2EE().getOptions(account: account, capabilities: capabilities)) {task in
+            let results = await SCKClient.shared.getE2EECertificateAsync(user: addUserId, account: session.account, options: NCNetworkingE2EE().getOptions(account: account, capabilities: capabilities)) {task in
                 Task {
                     let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
                                                                                                 path: addUserId,
@@ -195,7 +195,7 @@ class NCNetworkingE2EE: NSObject {
         }
         let capabilities = await SCKCapabilities.shared.getCapabilities(for: session.account)
 
-        let putE2EEMetadataResults = await ScaleCloudKit.shared.putE2EEMetadataAsync(fileId: fileId, e2eToken: e2eToken, e2eMetadata: e2eMetadata, signature: resultsEncodeMetadata.signature, method: method, account: session.account, options: NCNetworkingE2EE().getOptions(account: session.account, capabilities: capabilities)) { task in
+        let putE2EEMetadataResults = await SCKClient.shared.putE2EEMetadataAsync(fileId: fileId, e2eToken: e2eToken, e2eMetadata: e2eMetadata, signature: resultsEncodeMetadata.signature, method: method, account: session.account, options: NCNetworkingE2EE().getOptions(account: session.account, capabilities: capabilities)) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: session.account,
                                                                                             path: fileId,
@@ -256,7 +256,7 @@ class NCNetworkingE2EE: NSObject {
             e2eCounter = "\(counter)"
         }
 
-        let resultsLockE2EEFolder = await ScaleCloudKit.shared.lockE2EEFolderAsync(fileId: directory.fileId, e2eToken: e2eToken, e2eCounter: e2eCounter, method: "POST", account: account, options: NCNetworkingE2EE().getOptions(account: account, capabilities: capabilities)) { task in
+        let resultsLockE2EEFolder = await SCKClient.shared.lockE2EEFolderAsync(fileId: directory.fileId, e2eToken: e2eToken, e2eCounter: e2eCounter, method: "POST", account: account, options: NCNetworkingE2EE().getOptions(account: account, capabilities: capabilities)) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
                                                                                             path: directory.fileId,
@@ -276,7 +276,7 @@ class NCNetworkingE2EE: NSObject {
             return
         }
         let capabilities = await SCKCapabilities.shared.getCapabilities(for: account)
-        let resultsLockE2EEFolder = await ScaleCloudKit.shared.lockE2EEFolderAsync(fileId: tableLock.fileId, e2eToken: tableLock.e2eToken, e2eCounter: nil, method: "DELETE", account: account, options: NCNetworkingE2EE().getOptions(account: account, capabilities: capabilities)) { task in
+        let resultsLockE2EEFolder = await SCKClient.shared.lockE2EEFolderAsync(fileId: tableLock.fileId, e2eToken: tableLock.e2eToken, e2eCounter: nil, method: "DELETE", account: account, options: NCNetworkingE2EE().getOptions(account: account, capabilities: capabilities)) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
                                                                                             path: tableLock.fileId,
@@ -296,7 +296,7 @@ class NCNetworkingE2EE: NSObject {
         let capabilities = await SCKCapabilities.shared.getCapabilities(for: account)
         let results = await self.database.getE2EAllTokenLockAsync(account: account)
         for result in results {
-            let resultsLockE2EEFolder = await ScaleCloudKit.shared.lockE2EEFolderAsync(fileId: result.fileId, e2eToken: result.e2eToken, e2eCounter: nil, method: "DELETE", account: account, options: NCNetworkingE2EE().getOptions(account: account, capabilities: capabilities)) { task in
+            let resultsLockE2EEFolder = await SCKClient.shared.lockE2EEFolderAsync(fileId: result.fileId, e2eToken: result.e2eToken, e2eCounter: nil, method: "DELETE", account: account, options: NCNetworkingE2EE().getOptions(account: account, capabilities: capabilities)) { task in
                 Task {
                     let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
                                                                                                 path: result.fileId,

@@ -67,7 +67,7 @@ class NCEndToEndSetup {
     ///   - `SCKError` if certificate is missing or invalid
     ///   - Server errors propagated from ScaleCloudKit
     private func getPublicKey() async throws {
-        let results = await ScaleCloudKit.shared.getE2EECertificateAsync(account: session.account)
+        let results = await SCKClient.shared.getE2EECertificateAsync(account: session.account)
 
         switch results.error.errorCode {
         case .zero:
@@ -86,7 +86,7 @@ class NCEndToEndSetup {
             }
 
             // Get certificate from server
-            let results = await ScaleCloudKit.shared.signE2EECertificateAsync(certificate: csr, account: self.session.account)
+            let results = await SCKClient.shared.signE2EECertificateAsync(certificate: csr, account: self.session.account)
             guard results.error == .success,
                   let certificate = results.certificate
             else {
@@ -134,7 +134,7 @@ class NCEndToEndSetup {
     ///   - `NSUserCancelledError` if user cancels input
     ///   - Server errors propagated from ScaleCloudKit
     private func getPrivateKey() async throws {
-        let results = await ScaleCloudKit.shared.getE2EEPrivateKeyAsync(account: self.session.account)
+        let results = await SCKClient.shared.getE2EEPrivateKeyAsync(account: self.session.account)
 
         switch results.error.errorCode {
         case .zero:
@@ -161,7 +161,7 @@ class NCEndToEndSetup {
             NCPreferences().setEndToEndPrivateKey(account: session.account, privateKey: privateKey)
             NCPreferences().setEndToEndPassphrase(account: session.account, passphrase: passphrase)
 
-            let results = await ScaleCloudKit.shared.getE2EEPublicKeyAsync(account: self.session.account)
+            let results = await SCKClient.shared.getE2EEPublicKeyAsync(account: self.session.account)
             guard results.error == .success,
                   let publicKey = results.publicKey
             else {
@@ -227,7 +227,7 @@ class NCEndToEndSetup {
 
         // Store cipher on server
 
-        let storeResults = await ScaleCloudKit.shared.storeE2EEPrivateKeyAsync(
+        let storeResults = await SCKClient.shared.storeE2EEPrivateKeyAsync(
             privateKey: privateKeyCipher,
             account: session.account
         )
@@ -250,7 +250,7 @@ class NCEndToEndSetup {
 
             // Fetch server public key
 
-            let publicKeyResults = await ScaleCloudKit.shared.getE2EEPublicKeyAsync(account: session.account)
+            let publicKeyResults = await SCKClient.shared.getE2EEPublicKeyAsync(account: session.account)
 
             guard publicKeyResults.error == .success,
                   let publicKey = publicKeyResults.publicKey

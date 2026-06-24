@@ -90,22 +90,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
         // Setup Networking
         //
-        ScaleCloudKit.shared.setup(groupIdentifier: NCBrandOptions.shared.capabilitiesGroup,
+        SCKClient.shared.setup(groupIdentifier: NCBrandOptions.shared.capabilitiesGroup,
                                   delegate: NCNetworking.shared)
         NCNetworking.shared.setupTransferDelegate()
 
-        ScaleCloudKit.configureLogger(logLevel: (NCBrandOptions.shared.disable_log ? .disabled : NCPreferences().log))
+        SCKClient.configureLogger(logLevel: (NCBrandOptions.shared.disable_log ? .disabled : NCPreferences().log))
 
         #if DEBUG
 //      For the tags look NCGlobal LOG TAG
 
 //      var black: [String] = []
 //      black.append("NETWORKING TASKS")
-//      ScaleCloudKit.configureLoggerBlacklist(blacklist: black)
+//      SCKClient.configureLoggerBlacklist(blacklist: black)
 
 //      var white: [String] = []
 //      white.append("SYNC METADATA")
-//      ScaleCloudKit.configureLoggerWhitelist(whitelist: white)
+//      SCKClient.configureLoggerWhitelist(whitelist: white)
         #endif
 
         nkLog(start: "Start session with level \(NCPreferences().log) " + versionNextcloudiOS)

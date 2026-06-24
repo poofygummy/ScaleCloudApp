@@ -346,7 +346,7 @@ class NCViewerMedia: UIViewController {
             self.image = image
             self.imageVideoContainer.image = self.image
         } else {
-            ScaleCloudKit.shared.downloadPreview(fileId: metadata.fileId,
+            SCKClient.shared.downloadPreview(fileId: metadata.fileId,
                                                 etag: metadata.etag,
                                                 account: metadata.account,
                                                 options: SCKRequestOptions(queue: .main)) { task in

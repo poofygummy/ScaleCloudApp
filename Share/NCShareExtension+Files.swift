@@ -12,7 +12,7 @@ extension NCShareExtension {
     func reloadData() async {
         let session = NCShareExtensionData.shared.getSession()
         let layoutForView = NCManageDatabase.shared.getLayoutForView(account: session.account, key: keyLayout, serverUrl: serverUrl)
-        let predicate = NSPredicate(format: "account == %@ AND serverUrl == %@ AND fileName != %@ AND directory == true", session.account, serverUrl, ScaleCloudKit.shared.nkCommonInstance.rootFileName)
+        let predicate = NSPredicate(format: "account == %@ AND serverUrl == %@ AND fileName != %@ AND directory == true", session.account, serverUrl, SCKClient.shared.nkCommonInstance.rootFileName)
         let metadatas = await NCManageDatabase.shared.getMetadatasAsync(predicate: predicate,
                                                                         withLayout: layoutForView,
                                                                         withAccount: session.account)

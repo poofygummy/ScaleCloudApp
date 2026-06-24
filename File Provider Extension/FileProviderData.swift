@@ -42,7 +42,7 @@ class FileProviderData: NSObject {
         let tblAccounts = NCManageDatabase.shared.getAllTableAccount()
         var matchAccount: tableAccount?
 
-        ScaleCloudKit.configureLogger(logLevel: (NCBrandOptions.shared.disable_log ? .disabled : NCPreferences().log))
+        SCKClient.configureLogger(logLevel: (NCBrandOptions.shared.disable_log ? .disabled : NCPreferences().log))
 
         if let domain {
             self.domain = domain
@@ -69,8 +69,8 @@ class FileProviderData: NSObject {
         nkLog(start: "Start File Provider session " + version + " (File Provider Extension) with account: \(matchAccount.account)")
 
         // ScaleCloudKit Session
-        ScaleCloudKit.shared.setup(groupIdentifier: NCBrandOptions.shared.capabilitiesGroup, delegate: NCNetworking.shared)
-        ScaleCloudKit.shared.appendSession(account: matchAccount.account,
+        SCKClient.shared.setup(groupIdentifier: NCBrandOptions.shared.capabilitiesGroup, delegate: NCNetworking.shared)
+        SCKClient.shared.appendSession(account: matchAccount.account,
                                           urlBase: matchAccount.urlBase,
                                           user: matchAccount.user,
                                           userId: matchAccount.userId,
@@ -89,7 +89,7 @@ class FileProviderData: NSObject {
         if let isPaginated {
             return isPaginated
         } else if serverUrl == NCUtilityFileSystem().getHomeServer(session: session),
-                  let capabilities = await ScaleCloudKit.shared.getCapabilitiesAsync(account: session.account).capabilities,
+                  let capabilities = await SCKClient.shared.getCapabilitiesAsync(account: session.account).capabilities,
                   NCBrandOptions.shared.isServerVersion(capabilities, greaterOrEqualTo: 32, 0, 2) {
             isPaginated = true
             return true

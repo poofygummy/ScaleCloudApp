@@ -80,10 +80,10 @@ class NCAssistantModel {
 
         Task {
             if useV2 {
-                let result = await ScaleCloudKit.shared.textProcessingGetTasksV2(taskType: task.type ?? "", account: session.account)
+                let result = await SCKClient.shared.textProcessingGetTasksV2(taskType: task.type ?? "", account: session.account)
                 handle(task: task, error: result.error)
             } else {
-                ScaleCloudKit.shared.textProcessingGetTask(taskId: Int(task.id), account: session.account) { _, task, _, error in
+                SCKClient.shared.textProcessingGetTask(taskId: Int(task.id), account: session.account) { _, task, _, error in
                     guard let task else { return }
                     let taskV2 = SCKTextProcessingTask.toV2(tasks: [task]).tasks.first
                     handle(task: taskV2, error: error)
@@ -109,10 +109,10 @@ class NCAssistantModel {
         Task {
             if useV2 {
                 guard let selectedType else { return }
-                let result = await ScaleCloudKit.shared.textProcessingScheduleV2(input: input, taskType: selectedType, account: session.account)
+                let result = await SCKClient.shared.textProcessingScheduleV2(input: input, taskType: selectedType, account: session.account)
                 handle(task: result.task, error: result.error)
             } else {
-                ScaleCloudKit.shared.textProcessingSchedule(input: input, typeId: selectedType?.id ?? "", identifier: "assistant", account: session.account) { _, task, _, error in
+                SCKClient.shared.textProcessingSchedule(input: input, typeId: selectedType?.id ?? "", identifier: "assistant", account: session.account) { _, task, _, error in
                     guard let task, let taskV2 = SCKTextProcessingTask.toV2(tasks: [task]).tasks.first else { return }
                     handle(task: taskV2, error: error)
                 }
@@ -139,10 +139,10 @@ class NCAssistantModel {
 
         Task {
             if useV2 {
-                let result = await ScaleCloudKit.shared.textProcessingDeleteTaskV2(taskId: task.id, account: session.account)
+                let result = await SCKClient.shared.textProcessingDeleteTaskV2(taskId: task.id, account: session.account)
                 handle(task: task, error: result.error)
             } else {
-                ScaleCloudKit.shared.textProcessingDeleteTask(taskId: Int(task.id), account: session.account) { _, _, _, error in
+                SCKClient.shared.textProcessingDeleteTask(taskId: Int(task.id), account: session.account) { _, _, _, error in
                     handle(task: task, error: error)
                 }
             }
@@ -171,10 +171,10 @@ class NCAssistantModel {
 
         Task {
             if useV2 {
-                let result = await ScaleCloudKit.shared.textProcessingGetTypesV2(account: session.account)
+                let result = await SCKClient.shared.textProcessingGetTypesV2(account: session.account)
                 handle(types: result.types, error: result.error)
             } else {
-                ScaleCloudKit.shared.textProcessingGetTypes(account: session.account) { _, types, _, error in
+                SCKClient.shared.textProcessingGetTypes(account: session.account) { _, types, _, error in
                     guard let types else { return }
                     let typesV2 = SCKTextProcessingTaskType.toV2(type: types).types
 
@@ -208,11 +208,11 @@ class NCAssistantModel {
 
         Task {
             if useV2 {
-                let result = await ScaleCloudKit.shared.textProcessingGetTasksV2(taskType: type?.id ?? "", account: session.account)
+                let result = await SCKClient.shared.textProcessingGetTasksV2(taskType: type?.id ?? "", account: session.account)
                 guard let tasks = result.tasks?.tasks.filter({ $0.appId == "assistant" }) else { return }
                 handle(tasks: tasks, error: result.error)
             } else {
-                ScaleCloudKit.shared.textProcessingTaskList(appId: appId, account: session.account) { _, tasks, _, error in
+                SCKClient.shared.textProcessingTaskList(appId: appId, account: session.account) { _, tasks, _, error in
                     guard let tasks else { return }
                     handle(tasks: SCKTextProcessingTask.toV2(tasks: tasks).tasks, error: error)
                 }

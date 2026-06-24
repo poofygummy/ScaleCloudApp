@@ -381,7 +381,7 @@ class NCMetadataForSection: NSObject {
         for metadata in metadatasSorted {
 
             // skipped the root file
-            if metadata.fileName == ScaleCloudKit.shared.nkCommonInstance.rootFileName {
+            if metadata.fileName == SCKClient.shared.nkCommonInstance.rootFileName {
                 continue
             }
 

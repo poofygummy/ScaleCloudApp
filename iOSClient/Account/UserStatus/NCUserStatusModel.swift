@@ -43,7 +43,7 @@ import ScaleCloudKit
 
     func getStatus(account: String) {
         Task {
-            let result = await ScaleCloudKit.shared.getUserStatusAsync(account: account) { task in
+            let result = await SCKClient.shared.getUserStatusAsync(account: account) { task in
                 Task {
                     let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: self.account, name: "getUserStatus")
                     await NCNetworking.shared.networkingTasks.track(identifier: identifier, task: task)
@@ -60,7 +60,7 @@ import ScaleCloudKit
 
     func setStatus(account: String) {
         Task {
-            let result = await ScaleCloudKit.shared.setUserStatusAsync(status: selectedStatus ?? "", account: account) { task in
+            let result = await SCKClient.shared.setUserStatusAsync(status: selectedStatus ?? "", account: account) { task in
                 Task {
                     let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: self.account, name: "setUserStatus")
                     await NCNetworking.shared.networkingTasks.track(identifier: identifier, task: task)
@@ -76,7 +76,7 @@ import ScaleCloudKit
 
     func setAccountUserStatus(account: String) {
         Task {
-            let result = await ScaleCloudKit.shared.getUserStatusAsync(account: account) { task in
+            let result = await SCKClient.shared.getUserStatusAsync(account: account) { task in
                 Task {
                     let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: self.account, name: "getUserStatus")
                     await NCNetworking.shared.networkingTasks.track(identifier: identifier, task: task)

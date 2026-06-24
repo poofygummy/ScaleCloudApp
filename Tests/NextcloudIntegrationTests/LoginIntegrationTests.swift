@@ -30,7 +30,7 @@ final class LoginIntegrationTests: XCTestCase {
         let serverUrl = "\(baseUrl)/remote.php/dav/files/\(userId)"
         let serverUrlFileName = "\(serverUrl)/\(folderName)"
 
-        ScaleCloudKit.shared.setup(account: account, user: user, userId: userId, password: password, urlBase: baseUrl)
+        SCKClient.shared.setup(account: account, user: user, userId: userId, password: password, urlBase: baseUrl)
 
         // Test creating folder
         NCNetworking.shared.createFolder(fileName: folderName, serverUrl: serverUrl, account: account, urlBase: baseUrl, userId: userId, withPush: true) { error in

@@ -225,7 +225,7 @@ extension NCNetworking: NCTransferDelegate {
             }
         }
 
-        let resultsFile = await ScaleCloudKit.shared.getFileFromFileIdAsync(fileId: fileId, account: account) { task in
+        let resultsFile = await SCKClient.shared.getFileFromFileIdAsync(fileId: fileId, account: account) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(
                     account: account,
@@ -261,7 +261,7 @@ extension NCNetworking: NCTransferDelegate {
             return
         }
 
-        let download = await ScaleCloudKit.shared.downloadAsync(
+        let download = await SCKClient.shared.downloadAsync(
             serverUrlFileName: metadata.serverUrlFileName,
             fileNameLocalPath: fileNameLocalPath,
             account: account) { _ in

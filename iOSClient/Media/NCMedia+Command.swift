@@ -137,7 +137,7 @@ extension NCMedia: NCMediaSelectTabBarDelegate {
             return
         }
 
-        let resultsDeleteFileOrFolder = await ScaleCloudKit.shared.deleteFileOrFolderAsync(serverUrlFileName: metadata.serverUrlFileName, account: metadata.account) { task in
+        let resultsDeleteFileOrFolder = await SCKClient.shared.deleteFileOrFolderAsync(serverUrlFileName: metadata.serverUrlFileName, account: metadata.account) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: metadata.account,
                                                                                             path: metadata.serverUrlFileName,

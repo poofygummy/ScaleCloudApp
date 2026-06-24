@@ -85,7 +85,7 @@ class NCNetworkingE2EECreateFolder: NSObject {
 
         // CREATE FOLDER
         //
-        let resultsCreateFolder = await ScaleCloudKit.shared.createFolderAsync(serverUrlFileName: serverUrlFileName, account: session.account, options: SCKRequestOptions(customHeader: ["e2e-token": e2eToken])) { task in
+        let resultsCreateFolder = await SCKClient.shared.createFolderAsync(serverUrlFileName: serverUrlFileName, account: session.account, options: SCKRequestOptions(customHeader: ["e2e-token": e2eToken])) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: session.account,
                                                                                             path: serverUrlFileName,
@@ -101,7 +101,7 @@ class NCNetworkingE2EECreateFolder: NSObject {
 
         // SET FOLDER AS E2EE
         //
-        let resultsMarkE2EEFolder = await ScaleCloudKit.shared.markE2EEFolderAsync(fileId: fileId, delete: false, account: session.account, options: NCNetworkingE2EE().getOptions(account: session.account, capabilities: capabilities)) { task in
+        let resultsMarkE2EEFolder = await SCKClient.shared.markE2EEFolderAsync(fileId: fileId, delete: false, account: session.account, options: NCNetworkingE2EE().getOptions(account: session.account, capabilities: capabilities)) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: session.account,
                                                                                             path: fileId,
@@ -121,7 +121,7 @@ class NCNetworkingE2EECreateFolder: NSObject {
 
         // WRITE DB (DIRECTORY - METADATA)
         //
-        let resultsReadFileOrFolder = await ScaleCloudKit.shared.readFileOrFolderAsync(serverUrlFileName: serverUrlFileName, depth: "0", account: session.account) { task in
+        let resultsReadFileOrFolder = await SCKClient.shared.readFileOrFolderAsync(serverUrlFileName: serverUrlFileName, depth: "0", account: session.account) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(
                     account: session.account,

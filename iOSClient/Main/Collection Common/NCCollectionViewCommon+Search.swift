@@ -47,7 +47,7 @@ extension NCCollectionViewCommon {
         let showHiddenFiles = NCPreferences().getShowHiddenFiles(account: session.account)
         let urlBase = NCSession.shared.getSession(account: session.account).urlBase
 
-        let results = await ScaleCloudKit.shared.searchLiteralAsync(
+        let results = await SCKClient.shared.searchLiteralAsync(
             serverUrl: urlBase,
             depth: "infinity",
             literal: text,
@@ -110,7 +110,7 @@ extension NCCollectionViewCommon {
         self.collectionView.reloadData()
 
         // ---> Get providers
-        let results = await ScaleCloudKit.shared.unifiedSearchProviders(account: session.account, handle: searchOperationHandle) { _ in
+        let results = await SCKClient.shared.unifiedSearchProviders(account: session.account, handle: searchOperationHandle) { _ in
             // example filter
             // ["calendar", "files", "fulltextsearch"].contains(provider.id)
             return true
@@ -139,7 +139,7 @@ extension NCCollectionViewCommon {
 
         // ---> Get metadatas for providers
         for provider in providers {
-            let results = await ScaleCloudKit.shared.unifiedSearch(
+            let results = await SCKClient.shared.unifiedSearch(
                 providerId: provider.id,
                 term: text,
                 limit: 5,
@@ -198,7 +198,7 @@ extension NCCollectionViewCommon {
         metadataForSection.unifiedSearchInProgress = true
         self.collectionView.reloadData()
 
-        let results = await ScaleCloudKit.shared.unifiedSearch(
+        let results = await SCKClient.shared.unifiedSearch(
             providerId: lastSearchResult.id,
             term: searchResultStore,
             limit: 5,

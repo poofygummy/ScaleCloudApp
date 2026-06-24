@@ -23,7 +23,7 @@ class NCAccount: NSObject {
         // Remove Account Server in Error
         NCNetworking.shared.removeServerErrorAccount(account)
 
-        ScaleCloudKit.shared.appendSession(account: account,
+        SCKClient.shared.appendSession(account: account,
                                           urlBase: urlBase,
                                           user: user,
                                           userId: user,
@@ -33,7 +33,7 @@ class NCAccount: NSObject {
                                           httpMaximumConnectionsPerHostInDownload: NCBrandOptions.shared.httpMaximumConnectionsPerHostInDownload,
                                           httpMaximumConnectionsPerHostInUpload: NCBrandOptions.shared.httpMaximumConnectionsPerHostInUpload,
                                           groupIdentifier: NCBrandOptions.shared.capabilitiesGroup)
-        let resultsGetUserProfile = await ScaleCloudKit.shared.getUserProfileAsync(account: account) { task in
+        let resultsGetUserProfile = await SCKClient.shared.getUserProfileAsync(account: account) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
                                                                                             name: "getUserProfile")
@@ -41,7 +41,7 @@ class NCAccount: NSObject {
             }
         }
         guard resultsGetUserProfile.error == .success, let userProfile = resultsGetUserProfile.userProfile else {
-            ScaleCloudKit.shared.nkCommonInstance.nksessions.remove(account: account)
+            SCKClient.shared.nkCommonInstance.nksessions.remove(account: account)
             let alertController = UIAlertController(title: NSLocalizedString("_error_", comment: ""), message: resultsGetUserProfile.error.errorDescription, preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: NSLocalizedString("_ok_", comment: ""), style: .default, handler: { _ in }))
             viewController.present(alertController, animated: true)
@@ -52,7 +52,7 @@ class NCAccount: NSObject {
         // Login log debug
         nkLog(debug: "Got user profile, creating new account \(account) with user \(user) and userId \(userProfile.userId)")
 
-        ScaleCloudKit.shared.updateSession(account: account, userId: userProfile.userId)
+        SCKClient.shared.updateSession(account: account, userId: userProfile.userId)
         NCSession.shared.appendSession(account: account, urlBase: urlBase, user: user, userId: userProfile.userId)
         await self.database.addAccountAsync(account, urlBase: urlBase, user: user, userId: userProfile.userId, password: password)
 
@@ -152,7 +152,7 @@ class NCAccount: NSObject {
             await database.clearTableAsync(tableAutoUploadTransfer.self, account: account)
         }
         // Remove session in ScaleCloudKit
-        ScaleCloudKit.shared.nkCommonInstance.nksessions.remove(account: account)
+        SCKClient.shared.nkCommonInstance.nksessions.remove(account: account)
         // Remove session
         NCSession.shared.removeSession(account: account)
         // Remove capabilities
@@ -196,7 +196,7 @@ class NCAccount: NSObject {
         let windowScene = SceneManager.shared.getWindowScene(controller: controller)
         await showErrorBanner(windowScene: windowScene, text: String(format: NSLocalizedString("_account_unauthorized_", comment: ""), account), errorCode: NCGlobal.shared.errorUnauthorized401)
 
-        let resultsWipe = await ScaleCloudKit.shared.getRemoteWipeStatusAsync(serverUrl: tblAccount.urlBase, token: token, account: account) { task in
+        let resultsWipe = await SCKClient.shared.getRemoteWipeStatusAsync(serverUrl: tblAccount.urlBase, token: token, account: account) { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: account,
                                                                                             path: tblAccount.urlBase,
@@ -208,7 +208,7 @@ class NCAccount: NSObject {
         // REMOVE ACCOUNT
         await NCAccount().deleteAccount(account, wipe: resultsWipe.wipe)
         if resultsWipe.wipe {
-            let resultsSetWipe = await ScaleCloudKit.shared.setRemoteWipeCompletitionAsync(serverUrl: tblAccount.urlBase, token: token, account: tblAccount.account) { task in
+            let resultsSetWipe = await SCKClient.shared.setRemoteWipeCompletitionAsync(serverUrl: tblAccount.urlBase, token: token, account: tblAccount.account) { task in
                 Task {
                     let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: tblAccount.account,
                                                                                                 path: tblAccount.urlBase,

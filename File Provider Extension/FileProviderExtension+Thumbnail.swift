@@ -25,7 +25,7 @@ extension FileProviderExtension {
                 continue
             }
 
-            ScaleCloudKit.shared.downloadPreview(fileId: metadata.fileId,
+            SCKClient.shared.downloadPreview(fileId: metadata.fileId,
                                                 width: Int(NCGlobal.shared.size512.width),
                                                 height: Int(NCGlobal.shared.size512.height),
                                                 etag: metadata.etag,

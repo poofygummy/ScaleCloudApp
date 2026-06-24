@@ -64,7 +64,7 @@ extension NCManageDatabase {
     /// This function reads the cached `capabilities` and `editors` JSON `Data`
     /// from the local Realm `tableCapabilities` object associated with the specified account.
     ///
-    /// - If `capabilities` is found, it is applied using `ScaleCloudKit.shared.setCapabilitiesAsync`.
+    /// - If `capabilities` is found, it is applied using `SCKClient.shared.setCapabilitiesAsync`.
     /// - If `editors` is found, the data is decoded via `SCKEditorDetailsConverter` into
     ///   `[SCKEditorDetailsEditor]` and `[SCKEditorDetailsCreator]`, then injected into the shared `SCKCapabilities` object.
     ///
@@ -82,7 +82,7 @@ extension NCManageDatabase {
 
         do {
             if let data = results?.capabilities {
-                capabilities = try await ScaleCloudKit.shared.setCapabilitiesAsync(account: account, data: data)
+                capabilities = try await SCKClient.shared.setCapabilitiesAsync(account: account, data: data)
             }
             if let data = results?.editors {
                 let (editors, creators) = try SCKEditorDetailsConverter.from(data: data)

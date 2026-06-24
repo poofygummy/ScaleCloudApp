@@ -27,8 +27,8 @@ extension NCNetworking {
               size: Int64,
               response: AFDataResponse<Data>?,
               error: SCKError) {
-        let options = SCKRequestOptions(customHeader: customHeaders, queue: ScaleCloudKit.shared.nkCommonInstance.backgroundQueue)
-        let results = await ScaleCloudKit.shared.uploadAsync(serverUrlFileName: serverUrlFileName,
+        let options = SCKRequestOptions(customHeader: customHeaders, queue: SCKClient.shared.nkCommonInstance.backgroundQueue)
+        let results = await SCKClient.shared.uploadAsync(serverUrlFileName: serverUrlFileName,
                                                             fileNameLocalPath: fileNameLocalPath,
                                                             dateCreationFile: creationDate,
                                                             dateModificationFile: dateModificationFile,
@@ -72,12 +72,12 @@ extension NCNetworking {
         if networkReachability == SCKTypeReachability.reachableEthernetOrWiFi {
             chunkSize = self.global.chunkSizeMBEthernetOrWiFi
         }
-        let options = SCKRequestOptions(customHeader: customHeaders, queue: ScaleCloudKit.shared.nkCommonInstance.backgroundQueue)
+        let options = SCKRequestOptions(customHeader: customHeaders, queue: SCKClient.shared.nkCommonInstance.backgroundQueue)
         var backupError = SCKError()
         var backupFile: SCKFile?
 
         do {
-            let (_, file) = try await ScaleCloudKit.shared.uploadChunkAsync(
+            let (_, file) = try await SCKClient.shared.uploadChunkAsync(
                 directory: directory,
                 fileName: metadata.fileName,
                 date: metadata.date as Date,
@@ -283,7 +283,7 @@ extension NCNetworking {
     // MARK: - UPLOAD ERROR
 
     func uploadError(withMetadata metadata: tableMetadata, error: SCKError) async {
-        await ScaleCloudKit.shared.nkCommonInstance.appendServerErrorAccount(metadata.account, errorCode: error.errorCode)
+        await SCKClient.shared.nkCommonInstance.appendServerErrorAccount(metadata.account, errorCode: error.errorCode)
 
         nkLog(error: "Upload file: " + metadata.serverUrlFileName + ", result: error \(error.errorCode)")
 
@@ -398,7 +398,7 @@ extension NCNetworking {
     @MainActor
     func termsOfService(metadata: tableMetadata) async {
         let options = SCKRequestOptions(checkInterceptor: false, queue: .main)
-        let results = await ScaleCloudKit.shared.getTermsOfServiceAsync(account: metadata.account, options: options, taskHandler: { task in
+        let results = await SCKClient.shared.getTermsOfServiceAsync(account: metadata.account, options: options, taskHandler: { task in
             Task {
                 let identifier = await NCNetworking.shared.networkingTasks.createIdentifier(account: metadata.account,
                                                                                             name: "getTermsOfService")
