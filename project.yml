@@ -18,6 +18,8 @@
 # prebuilt (or generated project) is available via the project reference.
 
 name: ScaleCloudApp
+options:
+  bundleIdPrefix: com.scalecloud
 settings:
   base:
     IPHONEOS_DEPLOYMENT_TARGET: "14.0"
@@ -26,7 +28,6 @@ targets:
     type: application
     platform: iOS
     deploymentTarget: "14.0"
-    bundleIdPrefix: com.scalecloud
     info:
       path: Brand/iOSClient.plist
     sources:
