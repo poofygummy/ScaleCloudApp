@@ -5868,6 +5868,7 @@
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/iOSClient/Nextcloud-Bridging-Header.h";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt";
+				OTHER_SWIFT_FLAGS = "$(inherited) -Xcc -fmodule-map-file=$(SRCROOT)/../ScaleCloudSign/Dependencies/corecrypto/include/module.modulemap -Xcc -fmodule-map-file=$(SRCROOT)/../ScaleCloudSign/ScaleCloudSign/include/module.modulemap -Xcc -I$(SRCROOT)/../ScaleCloudSign/Dependencies/corecrypto/include -Xcc -I$(SRCROOT)/../ScaleCloudSign/ScaleCloudSign/include";
 				_EXPERIMENTAL_SWIFT_EXPLICIT_MODULES = NO;
 			};
 			name = Debug;
@@ -5891,6 +5892,7 @@
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/iOSClient/Nextcloud-Bridging-Header.h";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt";
+				OTHER_SWIFT_FLAGS = "$(inherited) -Xcc -fmodule-map-file=$(SRCROOT)/../ScaleCloudSign/Dependencies/corecrypto/include/module.modulemap -Xcc -fmodule-map-file=$(SRCROOT)/../ScaleCloudSign/ScaleCloudSign/include/module.modulemap -Xcc -I$(SRCROOT)/../ScaleCloudSign/Dependencies/corecrypto/include -Xcc -I$(SRCROOT)/../ScaleCloudSign/ScaleCloudSign/include";
 				_EXPERIMENTAL_SWIFT_EXPLICIT_MODULES = NO;
 			};
 			name = Release;
