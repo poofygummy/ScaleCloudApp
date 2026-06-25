@@ -86,7 +86,7 @@ packages:
     url: https://github.com/Alamofire/Alamofire.git
     from: 5.10.2
   KeychainAccess:
-    url: https://github.com/kishikawakatsuki/KeychainAccess.git
+    url: https://github.com/kishikawakatsuki/KeychainAccess
     from: 4.0.0
   LucidBanner:
     url: https://github.com/marinofaggiana/LucidBanner.git
