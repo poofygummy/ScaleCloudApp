@@ -3759,6 +3759,11 @@
 				F3374AF52D78B01B002A38F9 /* HashTreeCollections */,
 				F3374AF72D78B01B002A38F9 /* HeapModule */,
 				F70557B62ED44E2700135623 /* LucidBanner */,
+				SC0001AA2F000006000AAAAA /* Nuke */,
+				SC0001AA2F000007000AAAAA /* SemanticVersion */,
+				SC0001AA2F000008000AAAAA /* Starscream */,
+				SC0001AA2F000009000AAAAA /* Alamofire */,
+				SC0001AA2F00000A000AAAAA /* ZIPFoundation */,
 			);
 			productName = "Crypto Cloud";
 			productReference = F7CE8AFA1DC1F8D8009CAE48 /* Nextcloud.app */;
@@ -3960,6 +3965,11 @@
 				F7D4BF4E2CA2ECCB00A5E746 /* XCRemoteSwiftPackageReference "vlckit-spm" */,
 				F3374AEE2D78B01B002A38F9 /* XCRemoteSwiftPackageReference "swift-collections" */,
 				F70557B52ED44E2700135623 /* XCRemoteSwiftPackageReference "LucidBanner" */,
+				SC0001AA2F000001000AAAAA /* XCRemoteSwiftPackageReference "Nuke" */,
+				SC0001AA2F000002000AAAAA /* XCRemoteSwiftPackageReference "SemanticVersion" */,
+				SC0001AA2F000003000AAAAA /* XCRemoteSwiftPackageReference "Starscream" */,
+				SC0001AA2F000004000AAAAA /* XCRemoteSwiftPackageReference "Alamofire" */,
+				SC0001AA2F000005000AAAAA /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
 			);
 			productRefGroup = F7F67B9F1A24D27800EE80DA;
 			projectDirPath = "";
@@ -6486,6 +6496,46 @@
 				version = 6.0.0;
 			};
 		};
+		SC0001AA2F000001000AAAAA /* XCRemoteSwiftPackageReference "Nuke" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kean/Nuke";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
+		SC0001AA2F000002000AAAAA /* XCRemoteSwiftPackageReference "SemanticVersion" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftPackageIndex/SemanticVersion";
+			requirement = {
+				kind = exactVersion;
+				version = 0.3.8;
+			};
+		};
+		SC0001AA2F000003000AAAAA /* XCRemoteSwiftPackageReference "Starscream" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/daltoniam/Starscream";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
+		SC0001AA2F000004000AAAAA /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.6.0;
+			};
+		};
+		SC0001AA2F000005000AAAAA /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/weichsel/ZIPFoundation";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -6908,6 +6958,31 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F7F623B32A5EF4D30022D3D4 /* XCRemoteSwiftPackageReference "GzipSwift" */;
 			productName = Gzip;
+		};
+		SC0001AA2F000006000AAAAA /* Nuke */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = SC0001AA2F000001000AAAAA /* XCRemoteSwiftPackageReference "Nuke" */;
+			productName = Nuke;
+		};
+		SC0001AA2F000007000AAAAA /* SemanticVersion */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = SC0001AA2F000002000AAAAA /* XCRemoteSwiftPackageReference "SemanticVersion" */;
+			productName = SemanticVersion;
+		};
+		SC0001AA2F000008000AAAAA /* Starscream */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = SC0001AA2F000003000AAAAA /* XCRemoteSwiftPackageReference "Starscream" */;
+			productName = Starscream;
+		};
+		SC0001AA2F000009000AAAAA /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = SC0001AA2F000004000AAAAA /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		SC0001AA2F00000A000AAAAA /* ZIPFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = SC0001AA2F000005000AAAAA /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
+			productName = ZIPFoundation;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
