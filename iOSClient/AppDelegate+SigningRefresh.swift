@@ -4,7 +4,6 @@
 import UIKit
 import BackgroundTasks
 import ScaleCloudRenew
-import AltStoreCore
 
 extension AppDelegate {
     
