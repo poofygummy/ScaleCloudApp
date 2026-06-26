@@ -3,6 +3,7 @@
 
 import Foundation
 import Security
+import ScaleCloudKit
 
 /// App-wide operation state to prevent sync/signing collisions
 enum AppOperationState: String, Codable {

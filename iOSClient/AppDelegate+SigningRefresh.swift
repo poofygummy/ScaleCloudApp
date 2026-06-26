@@ -3,6 +3,7 @@
 
 import UIKit
 import BackgroundTasks
+import ScaleCloudKit
 import ScaleCloudRenew
 
 extension AppDelegate {
