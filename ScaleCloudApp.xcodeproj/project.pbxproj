@@ -3683,6 +3683,9 @@
 				F710FC83277B7D3500AA9FBF /* RealmSwift */,
 				F760DE0A2AE66ED80027D78A /* KeychainAccess */,
 				F712217D2F51AF9500ACEB08 /* LucidBanner */,
+				SC00FPE000000001000AAAAA /* Alamofire */,
+				SC00FPE000000002000AAAAA /* SwiftyJSON */,
+				SC00FPE000000003000AAAAA /* SwiftyXMLParser */,
 			);
 			productName = "File Provider Extension";
 			productReference = F771E3D020E2392D00AFB62D /* File Provider Extension.appex */;
@@ -3945,7 +3948,25 @@
 				SC0001AA2F000001000AAAAA /* XCRemoteSwiftPackageReference "Nuke" */,
 				SC0001AA2F000003000AAAAA /* XCRemoteSwiftPackageReference "Starscream" */,
 				SC0001AA2F000004000AAAAA /* XCRemoteSwiftPackageReference "Alamofire" */,
-				SC0001AA2F000005000AAAAA /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
+				SC00FPE000000004000AAAAA /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = "5.0.2";
+			};
+		};
+		SC00FPE000000005000AAAAA /* XCRemoteSwiftPackageReference "SwiftyXMLParser" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/yahoojapan/SwiftyXMLParser.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = "5.6.0";
+			};
+		};
+		SC0001AA2F000005000AAAAA /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
+				SC00FPE000000004000AAAAA /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
+				SC00FPE000000005000AAAAA /* XCRemoteSwiftPackageReference "SwiftyXMLParser" */,
 			);
 			productRefGroup = F7F67B9F1A24D27800EE80DA;
 			projectDirPath = "";
@@ -6897,6 +6918,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = SC0001AA2F000005000AAAAA /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
 			productName = ZIPFoundation;
+		};
+		SC00FPE000000001000AAAAA /* Alamofire (FPE) */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = SC0001AA2F000004000AAAAA /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		SC00FPE000000002000AAAAA /* SwiftyJSON */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = SC00FPE000000004000AAAAA /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
+			productName = SwiftyJSON;
+		};
+		SC00FPE000000003000AAAAA /* SwiftyXMLParser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = SC00FPE000000005000AAAAA /* XCRemoteSwiftPackageReference "SwiftyXMLParser" */;
+			productName = SwiftyXMLParser;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
