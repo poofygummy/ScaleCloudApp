@@ -47,7 +47,7 @@ struct NCAutoUploadView: View {
         }
         .sheet(isPresented: $showUploadAllPhotosWarning) {
             ConfirmAutoUploadSheet(model: model, isPresented: $showUploadAllPhotosWarning)
-            .presentationDetents([.medium, .large])
+            .modifier(AdaptivePresentationDetents())
         }
     }
 

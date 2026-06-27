@@ -28,23 +28,36 @@ struct TransfersView: View {
     }
 
     var body: some View {
-        NavigationStack {
-            contentView
-                .navigationTitle(NSLocalizedString("_transfers_", comment: ""))
-                .toolbar {
-                    ToolbarItem(placement: .cancellationAction) {
-                        Button("_close_") {
-                            if let onClose {
-                                onClose()
+        Group {
+            if #available(iOS 16, *) {
+                NavigationStack {
+                    contentView
+                        .navigationTitle(NSLocalizedString("_transfers_", comment: ""))
+                        .toolbar {
+                            ToolbarItem(placement: .cancellationAction) {
+                                Button("_close_") {
+                                    if let onClose { onClose() }
+                                }
                             }
                         }
-                    }
                 }
+                .onDisappear { model.detach() }
+                .presentationDetents([.medium, .large])
+            } else {
+                NavigationView {
+                    contentView
+                        .navigationTitle(NSLocalizedString("_transfers_", comment: ""))
+                        .toolbar {
+                            ToolbarItem(placement: .cancellationAction) {
+                                Button("_close_") {
+                                    if let onClose { onClose() }
+                                }
+                            }
+                        }
+                }
+                .onDisappear { model.detach() }
+            }
         }
-        .onDisappear {
-            model.detach()
-        }
-        .presentationDetents([.medium, .large])
     }
 
     @ViewBuilder
@@ -116,7 +129,7 @@ struct EmptyTransfersView: View {
                 Image(systemName: flash ? "checkmark.circle" : "arrow.left.arrow.right.circle")
                     .font(.icon(48))
                     .foregroundStyle(flash ? .green : .secondary)
-                    .symbolEffect(.bounce, value: flash)
+                    .modifier(BounceSymbolEffect(value: flash))
             }
 
             if flash {
@@ -240,6 +253,17 @@ struct TransfersView_Previews: PreviewProvider {
             tableMetadata(ocId: "4", fileName: "filename 4", size: 7230000, status: NCGlobal.shared.metadataStatusUploadError, sessionError: "Disk full Disk full Disk full Disk full Disk full Disk full Disk full Disk full", errorCode: 1)]
         return TransfersView(previewMetadatas: metadatas)
             .previewDisplayName("Transfers – Preview Items")
+    }
+}
+
+private struct BounceSymbolEffect: ViewModifier {
+    let value: Bool
+    func body(content: Content) -> some View {
+        if #available(iOS 17, *) {
+            content.symbolEffect(.bounce, value: value)
+        } else {
+            content
+        }
     }
 }
 

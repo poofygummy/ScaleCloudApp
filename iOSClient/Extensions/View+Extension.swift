@@ -97,6 +97,26 @@ extension View {
     }
 }
 
+struct AdaptivePresentationDetents: ViewModifier {
+    func body(content: Content) -> some View {
+        if #available(iOS 16, *) {
+            content.presentationDetents([.medium, .large])
+        } else {
+            content
+        }
+    }
+}
+
+struct AdaptiveScrollDismissesKeyboard: ViewModifier {
+    func body(content: Content) -> some View {
+        if #available(iOS 16, *) {
+            content.scrollDismissesKeyboard(.interactively)
+        } else {
+            content
+        }
+    }
+}
+
 struct ViewFirstAppearModifier: ViewModifier {
     @State private var didAppearBefore = false
     private let action: () -> Void

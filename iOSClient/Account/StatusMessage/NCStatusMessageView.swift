@@ -86,7 +86,7 @@ struct NCStatusMessageView: View {
             }
             .padding(24)
         }
-        .scrollDismissesKeyboard(.interactively)
+        .modifier(AdaptiveScrollDismissesKeyboard())
         .onTapGesture {
             isTextFieldFocused = false
         }

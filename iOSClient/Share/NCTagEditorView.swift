@@ -19,100 +19,111 @@ struct NCTagEditorView: View {
     }
 
     var body: some View {
+        Group {
+        if #available(iOS 16, *) {
         NavigationStack {
-            List {
-                if let createCandidateName = model.createCandidateName {
-                    Section {
-                        Button {
-                            addTagAndExitSearch()
-                        } label: {
-                            Label(
-                                String(format: NSLocalizedString("_share_tags_create_", comment: ""), createCandidateName),
-                                systemImage: "plus.circle.fill"
-                            )
+            listContent
+                .navigationTitle(NSLocalizedString("_tags_", comment: ""))
+                .searchable(
+                    text: $model.searchText,
+                    isPresented: $isSearchPresented,
+                    prompt: Text(NSLocalizedString("_search_or_create_tags", comment: ""))
+                )
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button(NSLocalizedString("_cancel_", comment: "")) { dismiss() }
+                    }
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button(NSLocalizedString("_done_", comment: "")) {
+                            Task { @MainActor in
+                                guard let selectedTags = await model.saveChanges() else { return }
+                                onApplied(selectedTags)
+                                dismiss()
+                            }
                         }
                         .disabled(model.isSaving || model.isLoading || model.isUpdatingTagColor)
                     }
                 }
-
-                Section {
-                    if model.filteredTags.isEmpty, model.createCandidateName == nil, !model.isLoading {
-                        Text(NSLocalizedString("_share_tags_no_results_", comment: ""))
-                            .foregroundStyle(.secondary)
-                    } else {
-                        ForEach(model.filteredTags, id: \.id) { tag in
-                            Button {
-                                model.toggleSelection(for: tag)
-                            } label: {
-                                HStack {
-                                    Circle()
-                                        .fill(color(for: tag))
-                                        .frame(width: 10, height: 10)
-
-                                    Text(tag.name)
-                                        .foregroundStyle(.primary)
-
-                                    Spacer()
-
-                                    if model.isSelected(tag) {
-                                        Image(systemName: "checkmark")
-                                            .foregroundStyle(Color(NCBrandColor.shared.getElement(account: model.account)))
-                                    }
+        }
+        .task {
+            await model.loadTags()
+        }
+        } else {
+            NavigationView {
+                listContent
+                    .searchable(text: $model.searchText, prompt: Text(NSLocalizedString("_search_or_create_tags", comment: "")))
+                    .toolbar {
+                        ToolbarItem(placement: .cancellationAction) {
+                            Button(NSLocalizedString("_cancel_", comment: "")) { dismiss() }
+                        }
+                        ToolbarItem(placement: .confirmationAction) {
+                            Button(NSLocalizedString("_done_", comment: "")) {
+                                Task { @MainActor in
+                                    guard let selectedTags = await model.saveChanges() else { return }
+                                    onApplied(selectedTags)
+                                    dismiss()
                                 }
                             }
-                            .contextMenu {
-                                Button {
-                                    model.openTagColorPicker(for: tag)
-                                } label: {
-                                    Label(NSLocalizedString("_change_color_", comment: ""), systemImage: "paintpalette")
-                                }
-                            }
-                            .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                                Button {
-                                    model.openTagColorPicker(for: tag)
-                                } label: {
-                                    Label(NSLocalizedString("_change_color_", comment: ""), systemImage: "paintpalette")
-                                }
-                                .tint(.blue)
-                            }
+                            .disabled(model.isSaving || model.isLoading || model.isUpdatingTagColor)
                         }
                     }
-                }
+                    .navigationTitle(NSLocalizedString("_tags_", comment: ""))
             }
-            .listStyle(.plain)
-            .navigationTitle(NSLocalizedString("_tags_", comment: ""))
-            .searchable(
-                text: $model.searchText,
-                isPresented: $isSearchPresented,
-                prompt: Text(NSLocalizedString("_search_or_create_tags", comment: ""))
-            )
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(NSLocalizedString("_cancel_", comment: "")) {
-                        dismiss()
-                    }
-                }
-                ToolbarItem(placement: .confirmationAction) {
-                    Button(NSLocalizedString("_done_", comment: "")) {
-                        Task { @MainActor in
-                            guard let selectedTags = await model.saveChanges() else {
-                                return
-                            }
-                            onApplied(selectedTags)
-                            dismiss()
-                        }
+            .task { await model.loadTags() }
+        }
+        }
+    }
+
+    @ViewBuilder
+    private var listContent: some View {
+        List {
+            if let createCandidateName = model.createCandidateName {
+                Section {
+                    Button { addTagAndExitSearch() } label: {
+                        Label(
+                            String(format: NSLocalizedString("_share_tags_create_", comment: ""), createCandidateName),
+                            systemImage: "plus.circle.fill"
+                        )
                     }
                     .disabled(model.isSaving || model.isLoading || model.isUpdatingTagColor)
                 }
             }
-            .overlay {
-                if model.isLoading || model.isSaving || model.isUpdatingTagColor {
-                    ProgressView()
+            Section {
+                if model.filteredTags.isEmpty, model.createCandidateName == nil, !model.isLoading {
+                    Text(NSLocalizedString("_share_tags_no_results_", comment: "")).foregroundStyle(.secondary)
+                } else {
+                    ForEach(model.filteredTags, id: \.id) { tag in
+                        Button { model.toggleSelection(for: tag) } label: {
+                            HStack {
+                                Circle().fill(color(for: tag)).frame(width: 10, height: 10)
+                                Text(tag.name).foregroundStyle(.primary)
+                                Spacer()
+                                if model.isSelected(tag) {
+                                    Image(systemName: "checkmark")
+                                        .foregroundStyle(Color(NCBrandColor.shared.getElement(account: model.account)))
+                                }
+                            }
+                        }
+                        .contextMenu {
+                            Button { model.openTagColorPicker(for: tag) } label: {
+                                Label(NSLocalizedString("_change_color_", comment: ""), systemImage: "paintpalette")
+                            }
+                        }
+                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                            Button { model.openTagColorPicker(for: tag) } label: {
+                                Label(NSLocalizedString("_change_color_", comment: ""), systemImage: "paintpalette")
+                            }
+                            .tint(.blue)
+                        }
+                    }
                 }
             }
         }
-        .task {
-            await model.loadTags()
+        .listStyle(.plain)
+        .overlay {
+            if model.isLoading || model.isSaving || model.isUpdatingTagColor {
+                ProgressView()
+            }
         }
     }
 
