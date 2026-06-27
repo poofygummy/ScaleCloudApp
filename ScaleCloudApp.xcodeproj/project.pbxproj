@@ -6318,10 +6318,10 @@
 		};
 		F70557B52ED44E2700135623 /* XCRemoteSwiftPackageReference "LucidBanner" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/marinofaggiana/LucidBanner";
+			repositoryURL = "https://github.com/poofygummy/ScaleCloudBanner";
 			requirement = {
-				kind = exactVersion;
-				version = 0.7.1;
+				kind = branch;
+				branch = main;
 			};
 		};
 		F70B86732642CE3B00ED5349 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
