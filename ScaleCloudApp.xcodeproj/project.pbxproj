@@ -6314,8 +6314,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/exyte/PopupView.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.9.1;
+				kind = exactVersion;
+				version = 4.2.2;
 			};
 		};
 		F70557B52ED44E2700135623 /* XCRemoteSwiftPackageReference "LucidBanner" */ = {
