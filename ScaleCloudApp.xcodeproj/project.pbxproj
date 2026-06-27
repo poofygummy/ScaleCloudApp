@@ -3741,7 +3741,6 @@
 				F3374AF72D78B01B002A38F9 /* HeapModule */,
 				F70557B62ED44E2700135623 /* LucidBanner */,
 				SC0001AA2F000006000AAAAA /* Nuke */,
-				SC0001AA2F000007000AAAAA /* SemanticVersion */,
 				SC0001AA2F000008000AAAAA /* Starscream */,
 				SC0001AA2F000009000AAAAA /* Alamofire */,
 				SC0001AA2F00000A000AAAAA /* ZIPFoundation */,
@@ -3944,7 +3943,6 @@
 				F3374AEE2D78B01B002A38F9 /* XCRemoteSwiftPackageReference "swift-collections" */,
 				F70557B52ED44E2700135623 /* XCRemoteSwiftPackageReference "LucidBanner" */,
 				SC0001AA2F000001000AAAAA /* XCRemoteSwiftPackageReference "Nuke" */,
-				SC0001AA2F000002000AAAAA /* XCRemoteSwiftPackageReference "SemanticVersion" */,
 				SC0001AA2F000003000AAAAA /* XCRemoteSwiftPackageReference "Starscream" */,
 				SC0001AA2F000004000AAAAA /* XCRemoteSwiftPackageReference "Alamofire" */,
 				SC0001AA2F000005000AAAAA /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
@@ -6478,14 +6476,6 @@
 				minimumVersion = 10.0.0;
 			};
 		};
-		SC0001AA2F000002000AAAAA /* XCRemoteSwiftPackageReference "SemanticVersion" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SwiftPackageIndex/SemanticVersion";
-			requirement = {
-				kind = exactVersion;
-				version = 0.3.8;
-			};
-		};
 		SC0001AA2F000003000AAAAA /* XCRemoteSwiftPackageReference "Starscream" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/daltoniam/Starscream";
@@ -6892,11 +6882,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = SC0001AA2F000001000AAAAA /* XCRemoteSwiftPackageReference "Nuke" */;
 			productName = Nuke;
-		};
-		SC0001AA2F000007000AAAAA /* SemanticVersion */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = SC0001AA2F000002000AAAAA /* XCRemoteSwiftPackageReference "SemanticVersion" */;
-			productName = SemanticVersion;
 		};
 		SC0001AA2F000008000AAAAA /* Starscream */ = {
 			isa = XCSwiftPackageProductDependency;
