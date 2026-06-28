@@ -7,6 +7,7 @@ import WidgetKit
 import Intents
 import SwiftUI
 
+@available(iOS 16, *)
 struct LockscreenWidgetProvider: IntentTimelineProvider {
     typealias Entry = LockscreenData
     typealias Intent = AccountIntent

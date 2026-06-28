@@ -17,6 +17,7 @@ struct LockscreenData: TimelineEntry {
     let error: Bool
 }
 
+@available(iOS 16, *)
 func getLockscreenDataEntry(configuration: AccountIntent?, isPreview: Bool, family: WidgetFamily, completion: @escaping (_ entry: LockscreenData) -> Void) {
     let utilityFileSystem = NCUtilityFileSystem()
     var activeTableAccount: tableAccount?

@@ -5,6 +5,7 @@
 import SwiftUI
 import WidgetKit
 
+@available(iOS 16, *)
 struct LockscreenWidgetView: View {
     let entry: LockscreenData
     @Environment(\.widgetFamily) private var family
@@ -70,6 +71,7 @@ struct LockscreenWidgetView: View {
     }
 }
 
+@available(iOS 16, *)
 struct LockscreenWidgetView_Previews: PreviewProvider {
     static var previews: some View {
         let entry = LockscreenData(date: Date(), isPlaceholder: false, activity: "Alba Mayoral changed Marketing / Regional Marketing / Agenda Meetings / Q4 2022 / OCTOBER / 13.11 Afrah Kahlid.md", link: URL(string: "https://")!, quotaRelative: 0.5, quotaUsed: "999 GB", quotaTotal: "999 GB", error: false)

@@ -13,7 +13,9 @@ struct NextcloudWidgetBundle: WidgetBundle {
         DashboardWidget()
         FilesWidget()
         ToolbarWidget()
-        LockscreenWidget()
+        if #available(iOS 16, *) {
+            LockscreenWidget()
+        }
     }
 }
 
@@ -65,6 +67,7 @@ struct ToolbarWidget: Widget {
     }
 }
 
+@available(iOS 16, *)
 struct LockscreenWidget: Widget {
     let kind: String = "LockscreenWidget"
 
@@ -83,13 +86,12 @@ struct LockscreenWidget: Widget {
 
 extension View {
     func widgetBackground(_ backgroundView: some View) -> some View {
-#if !targetEnvironment(simulator)
-        return containerBackground(for: .widget) {
-            backgroundView
+        if #available(iOS 17, *) {
+            return AnyView(containerBackground(for: .widget) {
+                backgroundView
+            })
+        } else {
+            return AnyView(background(backgroundView))
         }
-#else
-        return background(backgroundView)
-#endif
-
     }
 }
