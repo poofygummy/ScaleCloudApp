@@ -3525,6 +3525,9 @@
 			name = NextcloudUnitTests;
 			packageProductDependencies = (
 				F3F0419A2B9F7E6700D5155F /* RealmSwift */,
+				SC00UT000000001000AAAAA /* Alamofire */,
+				SC00UT000000002000AAAAA /* SwiftyJSON */,
+				SC00UT000000003000AAAAA /* SwiftyXMLParser */,
 			);
 			productName = NextcloudTests;
 			productReference = AF8ED1F92757821000B8DBC4 /* NextcloudUnitTests.xctest */;
@@ -3563,6 +3566,9 @@
 				F37208C32BAB63F0006B5430 /* Gzip */,
 				F37208C52BAB63F0006B5430 /* LRUCache */,
 				F37208C72BAB63F1006B5430 /* KeychainAccess */,
+				SC00UUIT0000001000AAAAA /* Alamofire */,
+				SC00UUIT0000002000AAAAA /* SwiftyJSON */,
+				SC00UUIT0000003000AAAAA /* SwiftyXMLParser */,
 			);
 			productName = NextcloudUITests;
 			productReference = C0046CDA2A17B98400D87C9D /* NextcloudUITests.xctest */;
@@ -3586,6 +3592,9 @@
 			packageProductDependencies = (
 				F3391B072B4C52C5001C0C4B /* FirebaseDatabase */,
 				F3F0419C2B9F7E6E00D5155F /* RealmSwift */,
+				SC00IT000000001000AAAAA /* Alamofire */,
+				SC00IT000000002000AAAAA /* SwiftyJSON */,
+				SC00IT000000003000AAAAA /* SwiftyXMLParser */,
 			);
 			productName = NextcloudIntegrationTests;
 			productReference = C04E2F202A17BB4D001BAD85 /* NextcloudIntegrationTests.xctest */;
@@ -3778,6 +3787,9 @@
 			);
 			name = "Action Assistant";
 			packageProductDependencies = (
+				SC00AA000000001000AAAAA /* Alamofire */,
+				SC00AA000000002000AAAAA /* SwiftyJSON */,
+				SC00AA000000003000AAAAA /* SwiftyXMLParser */,
 			);
 			productName = "Action Assistant";
 			productReference = F7C55C7A2FB5AEF7004A974F /* Action Assistant.appex */;
@@ -7020,6 +7032,66 @@
 			productName = SwiftyJSON;
 		};
 		SC00WDI00000003000AAAAA /* SwiftyXMLParser (WDI) */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = SC00FPE000000005000AAAAA /* XCRemoteSwiftPackageReference "SwiftyXMLParser" */;
+			productName = SwiftyXMLParser;
+		};
+		SC00AA000000001000AAAAA /* Alamofire (AA) */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = SC0001AA2F000004000AAAAA /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		SC00AA000000002000AAAAA /* SwiftyJSON (AA) */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = SC00FPE000000004000AAAAA /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
+			productName = SwiftyJSON;
+		};
+		SC00AA000000003000AAAAA /* SwiftyXMLParser (AA) */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = SC00FPE000000005000AAAAA /* XCRemoteSwiftPackageReference "SwiftyXMLParser" */;
+			productName = SwiftyXMLParser;
+		};
+		SC00UT000000001000AAAAA /* Alamofire (UT) */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = SC0001AA2F000004000AAAAA /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		SC00UT000000002000AAAAA /* SwiftyJSON (UT) */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = SC00FPE000000004000AAAAA /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
+			productName = SwiftyJSON;
+		};
+		SC00UT000000003000AAAAA /* SwiftyXMLParser (UT) */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = SC00FPE000000005000AAAAA /* XCRemoteSwiftPackageReference "SwiftyXMLParser" */;
+			productName = SwiftyXMLParser;
+		};
+		SC00UUIT000000001000AAAAA /* Alamofire (UUIT) */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = SC0001AA2F000004000AAAAA /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		SC00UUIT000000002000AAAAA /* SwiftyJSON (UUIT) */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = SC00FPE000000004000AAAAA /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
+			productName = SwiftyJSON;
+		};
+		SC00UUIT000000003000AAAAA /* SwiftyXMLParser (UUIT) */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = SC00FPE000000005000AAAAA /* XCRemoteSwiftPackageReference "SwiftyXMLParser" */;
+			productName = SwiftyXMLParser;
+		};
+		SC00IT000000001000AAAAA /* Alamofire (IT) */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = SC0001AA2F000004000AAAAA /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		SC00IT000000002000AAAAA /* SwiftyJSON (IT) */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = SC00FPE000000004000AAAAA /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
+			productName = SwiftyJSON;
+		};
+		SC00IT000000003000AAAAA /* SwiftyXMLParser (IT) */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = SC00FPE000000005000AAAAA /* XCRemoteSwiftPackageReference "SwiftyXMLParser" */;
 			productName = SwiftyXMLParser;
