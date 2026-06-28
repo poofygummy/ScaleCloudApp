@@ -13,7 +13,7 @@ struct NextcloudWidgetBundle: WidgetBundle {
         DashboardWidget()
         FilesWidget()
         ToolbarWidget()
-        if #available(iOS 16, *) {
+        if #available(iOS 16.1, *) {
             LockscreenWidget()
         }
     }
@@ -67,7 +67,7 @@ struct ToolbarWidget: Widget {
     }
 }
 
-@available(iOS 16, *)
+@available(iOS 16.1, *)
 struct LockscreenWidget: Widget {
     let kind: String = "LockscreenWidget"
 

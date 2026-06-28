@@ -5,7 +5,7 @@
 import SwiftUI
 import WidgetKit
 
-@available(iOS 16, *)
+@available(iOS 16.1, *)
 struct LockscreenWidgetView: View {
     let entry: LockscreenData
     @Environment(\.widgetFamily) private var family
@@ -23,7 +23,7 @@ struct LockscreenWidgetView: View {
                     }
                 )
                 .gaugeStyle(.accessoryCircularCapacity)
-                .containerBackground(.clear, for: .widget)
+                .widgetBackground(Color.clear)
             } else {
                 Gauge(
                     value: entry.quotaRelative,
@@ -37,7 +37,7 @@ struct LockscreenWidgetView: View {
                 )
                 .gaugeStyle(.accessoryCircular)
                 .redacted(reason: entry.isPlaceholder ? .placeholder : [])
-                .containerBackground(.clear, for: .widget)
+                .widgetBackground(Color.clear)
             }
         case .accessoryRectangular:
             VStack(alignment: .leading, spacing: 1) {
@@ -64,14 +64,14 @@ struct LockscreenWidgetView: View {
             }
             .widgetURL(entry.link)
             .redacted(reason: entry.isPlaceholder ? .placeholder : [])
-            .containerBackground(.clear, for: .widget)
+            .widgetBackground(Color.clear)
         default:
             Text("Not implemented")
         }
     }
 }
 
-@available(iOS 16, *)
+@available(iOS 16.1, *)
 struct LockscreenWidgetView_Previews: PreviewProvider {
     static var previews: some View {
         let entry = LockscreenData(date: Date(), isPlaceholder: false, activity: "Alba Mayoral changed Marketing / Regional Marketing / Agenda Meetings / Q4 2022 / OCTOBER / 13.11 Afrah Kahlid.md", link: URL(string: "https://")!, quotaRelative: 0.5, quotaUsed: "999 GB", quotaTotal: "999 GB", error: false)

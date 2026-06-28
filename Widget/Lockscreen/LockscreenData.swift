@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: Nextcloud GmbH
+                        // SPDX-FileCopyrightText: Nextcloud GmbH
 // SPDX-FileCopyrightText: 2022 Marino Faggiana
 // SPDX-License-Identifier: GPL-3.0-or-later
 
@@ -17,7 +17,8 @@ struct LockscreenData: TimelineEntry {
     let error: Bool
 }
 
-@available(iOS 16, *)
+
+@available(iOS 16.1, *)
 func getLockscreenDataEntry(configuration: AccountIntent?, isPreview: Bool, family: WidgetFamily, completion: @escaping (_ entry: LockscreenData) -> Void) {
     let utilityFileSystem = NCUtilityFileSystem()
     var activeTableAccount: tableAccount?
