@@ -35,8 +35,7 @@ struct FilesWidgetView: View {
             ZStack(alignment: .topLeading) {
                 HStack {
                     Text(entry.tile)
-                        .font(.system(size: 12))
-                        .adaptiveFontWeight(.bold)
+                        .font(.system(size: 12, weight: .bold))
                         .multilineTextAlignment(.center)
                         .textCase(.uppercase)
                         .lineLimit(1)

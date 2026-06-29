@@ -34,8 +34,7 @@ struct DashboardWidgetView: View {
                         .frame(width: 20, height: 20)
 
                     Text(entry.title)
-                        .font(.system(size: 15))
-                        .adaptiveFontWeight(.bold)
+                        .font(.system(size: 15, weight: .bold))
                         .multilineTextAlignment(.center)
                         .textCase(.uppercase)
                         .lineLimit(1)
@@ -86,8 +85,7 @@ struct DashboardWidgetView: View {
                                         VStack(alignment: .leading, spacing: 2) {
 
                                             Text(element.title)
-                                                .font(.system(size: 12))
-                                                .adaptiveFontWeight(.regular)
+                                                .font(.system(size: 12, weight: .regular))
 
                                             Text(element.subTitle)
                                                 .font(.system(size: CGFloat(10)))
