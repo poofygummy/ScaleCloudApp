@@ -6,6 +6,7 @@ import Foundation
 import UIKit
 import ScaleCloudKit
 
+@available(iOS 17, *)
 @MainActor
 @Observable final class NCTagEditorModel {
     var searchText: String = ""

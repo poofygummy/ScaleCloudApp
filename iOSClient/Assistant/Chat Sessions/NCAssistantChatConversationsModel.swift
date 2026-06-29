@@ -5,6 +5,7 @@
 import Foundation
 import ScaleCloudKit
 
+@available(iOS 17, *)
 @Observable class NCAssistantChatConversationsModel {
     var conversations: [AssistantConversation] = []
     var isLoading: Bool = false

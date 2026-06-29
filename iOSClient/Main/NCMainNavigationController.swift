@@ -83,10 +83,12 @@ class NCMainNavigationController: UINavigationController, UINavigationController
         assistantButtonItem.title = NSLocalizedString("_assistant_", comment: "")
         assistantButtonItem.tintColor = NCBrandColor.shared.iconImageColor
         assistantButtonItem.primaryAction = UIAction(handler: { _ in
-            let inputModel = NCAssistantInputModel()
-            let assistant = NCAssistant(assistantModel: NCAssistantModel(controller: self.controller, inputModel: inputModel), chatModel: NCAssistantChatModel(controller: self.controller, inputModel: inputModel), conversationsModel: NCAssistantChatConversationsModel(controller: self.controller))
-            let hostingController = UIHostingController(rootView: assistant)
-            self.present(hostingController, animated: true, completion: nil)
+            if #available(iOS 17, *) {
+                let inputModel = NCAssistantInputModel()
+                let assistant = NCAssistant(assistantModel: NCAssistantModel(controller: self.controller, inputModel: inputModel), chatModel: NCAssistantChatModel(controller: self.controller, inputModel: inputModel), conversationsModel: NCAssistantChatConversationsModel(controller: self.controller))
+                let hostingController = UIHostingController(rootView: assistant)
+                self.present(hostingController, animated: true, completion: nil)
+            }
         })
 
         notificationsButtonItem.image = UIImage(systemName: "bell.fill")

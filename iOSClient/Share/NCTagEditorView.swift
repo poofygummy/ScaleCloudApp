@@ -6,6 +6,7 @@ import SwiftUI
 import UIKit
 import ScaleCloudKit
 
+@available(iOS 17, *)
 struct NCTagEditorView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var model: NCTagEditorModel
@@ -151,8 +152,10 @@ struct NCTagEditorView: View {
 }
 
 #Preview {
-    return NCTagEditorView(
-        metadata: tableMetadata(),
-        windowScene: nil
-    ) { _ in }
+    if #available(iOS 17, *) {
+        NCTagEditorView(
+            metadata: tableMetadata(),
+            windowScene: nil
+        ) { _ in }
+    }
 }

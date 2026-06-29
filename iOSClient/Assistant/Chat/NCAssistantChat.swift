@@ -5,6 +5,7 @@
 import SwiftUI
 import ScaleCloudKit
 
+@available(iOS 17, *)
 struct NCAssistantChat: View {
     @Environment(NCAssistantChatModel.self) var chatModel
     @Binding var conversationsModel: NCAssistantChatConversationsModel
@@ -87,6 +88,7 @@ struct NCAssistantChat: View {
 
 // MARK: - Message Bubble View
 
+@available(iOS 17, *)
 struct MessageBubbleView: View {
     let message: AssistantChatMessage
     let account: String
@@ -130,6 +132,7 @@ struct MessageBubbleView: View {
 
 // MARK: - Thinking Bubble View
 
+@available(iOS 17, *)
 struct ThinkingBubbleView: View {
     @State private var scale1: CGFloat = 1.0
     @State private var scale2: CGFloat = 1.0
@@ -177,6 +180,7 @@ struct ThinkingBubbleView: View {
 
 // MARK: - Empty Chat View
 
+@available(iOS 17, *)
 struct EmptyChatView: View {
     @Environment(NCAssistantChatModel.self) var chatModel
 
@@ -207,17 +211,21 @@ struct EmptyChatView: View {
 // MARK: - Preview
 
 #Preview {
-    NavigationStack {
-        NCAssistantChat(conversationsModel: .constant(NCAssistantChatConversationsModel(controller: nil)))
-            .environment(NCAssistantChatModel(controller: nil, inputModel: NCAssistantInputModel()))
-            .environment(NCAssistantModel(controller: nil, inputModel: NCAssistantInputModel()))
+    if #available(iOS 17, *) {
+        NavigationStack {
+            NCAssistantChat(conversationsModel: .constant(NCAssistantChatConversationsModel(controller: nil)))
+                .environment(NCAssistantChatModel(controller: nil, inputModel: NCAssistantInputModel()))
+                .environment(NCAssistantModel(controller: nil, inputModel: NCAssistantInputModel()))
+        }
     }
 }
 
 #Preview("With Messages") {
-    NavigationStack {
-        NCAssistantChat(conversationsModel: .constant(NCAssistantChatConversationsModel(controller: nil)))
-            .environment(NCAssistantChatModel(controller: nil, inputModel: NCAssistantInputModel()))
-            .environment(NCAssistantModel(controller: nil, inputModel: NCAssistantInputModel()))
+    if #available(iOS 17, *) {
+        NavigationStack {
+            NCAssistantChat(conversationsModel: .constant(NCAssistantChatConversationsModel(controller: nil)))
+                .environment(NCAssistantChatModel(controller: nil, inputModel: NCAssistantInputModel()))
+                .environment(NCAssistantModel(controller: nil, inputModel: NCAssistantInputModel()))
+        }
     }
 }

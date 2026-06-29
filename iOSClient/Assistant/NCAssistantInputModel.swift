@@ -7,6 +7,7 @@ import UIKit
 import ScaleCloudKit
 import SwiftUI
 
+@available(iOS 17, *)
 @Observable
 final class NCAssistantInputModel {
     var text: String = ""

@@ -4,6 +4,7 @@
 
 import SwiftUI
 
+@available(iOS 17, *)
 struct NCUserStatusView: View {
     let account: String
 
@@ -64,7 +65,9 @@ struct NCUserStatusView: View {
 }
 
 #Preview {
-    NavigationStack {
-        NCUserStatusView(account: "demo@example.com", controller: nil)
+    if #available(iOS 17, *) {
+        NavigationStack {
+            NCUserStatusView(account: "demo@example.com", controller: nil)
+        }
     }
 }

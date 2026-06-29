@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+@available(iOS 17, *)
 struct NCAssistantCreateNewTask: View {
     @Environment(NCAssistantModel.self) var model
     @State var text = ""
@@ -60,13 +61,12 @@ struct NCAssistantCreateNewTask: View {
 }
 
 #Preview {
-    let model = NCAssistantModel(controller: nil, inputModel: NCAssistantInputModel())
-
-    NCAssistantCreateNewTask()
-        .environment(model)
-        .onAppear {
-            model.loadDummyData()
-        }
+    if #available(iOS 17, *) {
+        let model = NCAssistantModel(controller: nil, inputModel: NCAssistantInputModel())
+        NCAssistantCreateNewTask()
+            .environment(model)
+            .onAppear { model.loadDummyData() }
+    }
 }
 
 private extension View {

@@ -6,6 +6,7 @@ import Foundation
 import SwiftUI
 import ScaleCloudKit
 
+@available(iOS 17, *)
 struct NCAssistantChatConversations: View {
     var conversationsModel: NCAssistantChatConversationsModel
     var selectedConversation: AssistantConversation?
@@ -49,5 +50,7 @@ struct NCAssistantChatConversations: View {
 }
 
 #Preview {
-    NCAssistantChatConversations(conversationsModel: NCAssistantChatConversationsModel(controller: nil), selectedConversation: nil, onConversationSelected: { _ in })
+    if #available(iOS 17, *) {
+        NCAssistantChatConversations(conversationsModel: NCAssistantChatConversationsModel(controller: nil), selectedConversation: nil, onConversationSelected: { _ in })
+    }
 }

@@ -430,10 +430,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             Task { @MainActor in
                 let capabilities = await SCKCapabilities.shared.getCapabilities(for: controller.account)
                 if capabilities.assistantEnabled {
-                    let inputModel = NCAssistantInputModel(initialText: text)
-                    let assistant = NCAssistant(assistantModel: NCAssistantModel(controller: controller, inputModel: inputModel), chatModel: NCAssistantChatModel(controller: controller, inputModel: inputModel), conversationsModel: NCAssistantChatConversationsModel(controller: controller))
-                    let hostingController = UIHostingController(rootView: assistant)
-                    controller.present(hostingController, animated: true, completion: nil)
+                    if #available(iOS 17, *) {
+                        let inputModel = NCAssistantInputModel(initialText: text)
+                        let assistant = NCAssistant(assistantModel: NCAssistantModel(controller: controller, inputModel: inputModel), chatModel: NCAssistantChatModel(controller: controller, inputModel: inputModel), conversationsModel: NCAssistantChatConversationsModel(controller: controller))
+                        let hostingController = UIHostingController(rootView: assistant)
+                        controller.present(hostingController, animated: true, completion: nil)
+                    }
                 }
             }
 

@@ -4,6 +4,7 @@
 
 import SwiftUI
 
+@available(iOS 17, *)
 struct NCAssistantEmptyView: View {
     @Environment(NCAssistantModel.self) var assistantModel
     let titleKey, subtitleKey: String
@@ -31,5 +32,7 @@ struct NCAssistantEmptyView: View {
 }
 
 #Preview {
-    NCAssistantEmptyView(titleKey: "_no_tasks_", subtitleKey: "_create_task_subtitle_")
+    if #available(iOS 17, *) {
+        NCAssistantEmptyView(titleKey: "_no_tasks_", subtitleKey: "_create_task_subtitle_")
+    }
 }

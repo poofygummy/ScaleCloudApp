@@ -6,6 +6,7 @@ import SwiftUI
 import ScaleCloudKit
 import PopupView
 
+@available(iOS 17, *)
 struct NCAssistant: View {
     @State var assistantModel: NCAssistantModel
     @State var chatModel: NCAssistantChatModel
@@ -89,17 +90,17 @@ struct NCAssistant: View {
 }
 
 #Preview {
-    @Previewable @State var chatModel = NCAssistantChatModel(controller: nil, inputModel: NCAssistantInputModel())
-
-    let model = NCAssistantModel(controller: nil, inputModel: NCAssistantInputModel())
-    let conversationsModel = NCAssistantChatConversationsModel(controller: nil)
-
-    NCAssistant(assistantModel: model, chatModel: chatModel, conversationsModel: conversationsModel)
-    .onAppear {
-        model.loadDummyData()
+    if #available(iOS 17, *) {
+        let inputModel = NCAssistantInputModel()
+        let model = NCAssistantModel(controller: nil, inputModel: inputModel)
+        let chatModel = NCAssistantChatModel(controller: nil, inputModel: inputModel)
+        let conversationsModel = NCAssistantChatConversationsModel(controller: nil)
+        NCAssistant(assistantModel: model, chatModel: chatModel, conversationsModel: conversationsModel)
+            .onAppear { model.loadDummyData() }
     }
 }
 
+@available(iOS 17, *)
 struct TaskList: View {
     @Environment(NCAssistantModel.self) var assistantModel
     @State var presentEditTask = false
@@ -194,6 +195,7 @@ struct TaskList: View {
     }
 }
 
+@available(iOS 17, *)
 struct TypeButton: View {
     @Environment(NCAssistantModel.self) var model
 
@@ -230,6 +232,7 @@ struct TypeButton: View {
     }
 }
 
+@available(iOS 17, *)
 struct TaskItem: View {
     @Environment(NCAssistantModel.self) var model
     @Binding var showDeleteConfirmation: Bool
@@ -277,6 +280,7 @@ struct TaskItem: View {
     }
 }
 
+@available(iOS 17, *)
 struct NavigationSubtitleModifier: ViewModifier {
     let subtitle: String?
 
@@ -289,6 +293,7 @@ struct NavigationSubtitleModifier: ViewModifier {
     }
 }
 
+@available(iOS 17, *)
 struct TypeList: View {
     @Environment(NCAssistantModel.self) var model
 

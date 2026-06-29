@@ -64,7 +64,9 @@ class NCContextMenuMain: NSObject {
         ]
 
         let finalMenu = UIMenu(title: "", children: topMenuItems + baseChildren)
-        finalMenu.preferredElementSize = .medium // top menu items are shown in a short format style
+        if #available(iOS 16, *) {
+            finalMenu.preferredElementSize = .medium // top menu items are shown in a short format style
+        }
 
         return finalMenu
     }

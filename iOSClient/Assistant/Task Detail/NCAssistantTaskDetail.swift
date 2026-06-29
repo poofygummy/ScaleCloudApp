@@ -9,6 +9,7 @@
 import SwiftUI
 import ScaleCloudKit
 
+@available(iOS 17, *)
 struct NCAssistantTaskDetail: View {
     @Environment(NCAssistantModel.self) var assistantModel
     let task: AssistantTask
@@ -35,15 +36,15 @@ struct NCAssistantTaskDetail: View {
 }
 
 #Preview {
-    let assistantModel = NCAssistantModel(controller: nil, inputModel: NCAssistantInputModel())
-
-    NCAssistantTaskDetail(task: assistantModel.selectedTask!)
-        .environment(assistantModel)
-        .onAppear {
-            assistantModel.loadDummyData()
-        }
+    if #available(iOS 17, *) {
+        let assistantModel = NCAssistantModel(controller: nil, inputModel: NCAssistantInputModel())
+        NCAssistantTaskDetail(task: assistantModel.selectedTask!)
+            .environment(assistantModel)
+            .onAppear { assistantModel.loadDummyData() }
+    }
 }
 
+@available(iOS 17, *)
 struct InputOutputScrollView: View {
     @Environment(NCAssistantModel.self) var model
     let task: AssistantTask
@@ -82,6 +83,7 @@ struct InputOutputScrollView: View {
     }
 }
 
+@available(iOS 17, *)
 struct BottomDetailsBar: View {
     @Environment(NCAssistantModel.self) var assistantModel
     let task: AssistantTask
