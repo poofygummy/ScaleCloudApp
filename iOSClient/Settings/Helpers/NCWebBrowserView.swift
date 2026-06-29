@@ -37,7 +37,7 @@ struct NCBrowserWebView: View {
                             .resizable()
                             .scaledToFit()
                             .cappedFont(.body, maxDynamicType: .accessibility2)
-                            .fontWeight(.light)
+                            .adaptiveFontWeight(.light)
                             .frame(width: 14, height: 14)
                             .foregroundColor(Color(NCBrandColor.shared.iconImageColor))
                     }

@@ -125,7 +125,7 @@ struct NCAutoUploadView: View {
                         .font(.body)
                         .tint(Color(NCBrandColor.shared.getElement(account: model.session.account)))
                         .opacity(model.autoUploadStart ? 0.15 : 1)
-                        .onChange(of: model.autoUploadImage) { _, newValue in
+                        .onChange(of: model.autoUploadImage) { newValue in
                             if !newValue { model.autoUploadVideo = true }
                             model.handleAutoUploadImageChange(newValue: newValue)
                         }
@@ -135,7 +135,7 @@ struct NCAutoUploadView: View {
                             .font(.body)
                             .tint(Color(NCBrandColor.shared.getElement(account: model.session.account)))
                             .opacity(model.autoUploadStart ? 0.15 : 1)
-                            .onChange(of: model.autoUploadWWAnPhoto) { _, newValue in
+                            .onChange(of: model.autoUploadWWAnPhoto) { newValue in
                                 model.handleAutoUploadWWAnPhotoChange(newValue: newValue)
                             }
                     }
@@ -147,7 +147,7 @@ struct NCAutoUploadView: View {
                         .font(.body)
                         .tint(Color(NCBrandColor.shared.getElement(account: model.session.account)))
                         .opacity(model.autoUploadStart ? 0.15 : 1)
-                        .onChange(of: model.autoUploadVideo) { _, newValue in
+                        .onChange(of: model.autoUploadVideo) { newValue in
                             if !newValue { model.autoUploadImage = true }
                             model.handleAutoUploadVideoChange(newValue: newValue)
                         }
@@ -157,7 +157,7 @@ struct NCAutoUploadView: View {
                             .font(.body)
                             .tint(Color(NCBrandColor.shared.getElement(account: model.session.account)))
                             .opacity(model.autoUploadStart ? 0.15 : 1)
-                            .onChange(of: model.autoUploadWWAnVideo) { _, newValue in
+                            .onChange(of: model.autoUploadWWAnVideo) { newValue in
                                 model.handleAutoUploadWWAnVideoChange(newValue: newValue)
                             }
                     }
@@ -169,7 +169,7 @@ struct NCAutoUploadView: View {
                         .font(.body)
                         .tint(Color(NCBrandColor.shared.getElement(account: model.session.account)))
                         .opacity(model.autoUploadStart ? 0.15 : 1)
-                        .onChange(of: model.autoUploadCreateSubfolder) { _, newValue in
+                        .onChange(of: model.autoUploadCreateSubfolder) { newValue in
                             model.handleAutoUploadCreateSubfolderChange(newValue: newValue)
                         }
 
@@ -183,7 +183,7 @@ struct NCAutoUploadView: View {
                                 .font(.body)
                         }
                         .opacity(model.autoUploadStart ? 0.15 : 1)
-                        .onChange(of: model.autoUploadSubfolderGranularity) { _, newValue in
+                        .onChange(of: model.autoUploadSubfolderGranularity) { newValue in
                             model.handleAutoUploadSubfolderGranularityChange(newValue: newValue)
                         }
                     }
@@ -198,7 +198,7 @@ struct NCAutoUploadView: View {
                         .font(.body)
                         .tint(Color(NCBrandColor.shared.getElement(account: model.session.account)))
                         .opacity(model.autoUploadStart ? 0.15 : 1)
-                        .onChange(of: model.permissionGranted) { _, newValue in
+                        .onChange(of: model.permissionGranted) { newValue in
                             model.handleLocationChange(newValue: newValue)
                         }
                 }, footer: {
@@ -226,7 +226,7 @@ struct NCAutoUploadView: View {
             }
             .cappedFont(.body, maxDynamicType: .accessibility2)
             .tint(Color(NCBrandColor.shared.getElement(account: model.session.account)))
-            .onChange(of: model.autoUploadStart) { _, newValue in
+            .onChange(of: model.autoUploadStart) { newValue in
                     albumModel.populateSelectedAlbums()
                     model.handleAutoUploadChange(newValue: newValue, assetCollections: albumModel.selectedAlbums)
             }

@@ -25,7 +25,7 @@ struct NCDisplayView: View {
                             Image(systemName: colorScheme == .light ? "checkmark.circle.fill" : "circle")
                                 .foregroundColor(Color(NCBrandColor.shared.getElement(account: model.session.account)))
                                 .imageScale(.medium)
-                                .fontWeight(.light)
+                                .adaptiveFontWeight(.light)
                                 .frame(width: 50, height: 50)
                         }
                         .onTapGesture {
@@ -43,7 +43,7 @@ struct NCDisplayView: View {
                             Image(systemName: colorScheme == .dark ? "checkmark.circle.fill" : "circle")
                                 .foregroundColor(Color(NCBrandColor.shared.getElement(account: model.session.account)))
                                 .imageScale(.medium)
-                                .fontWeight(.light)
+                                .adaptiveFontWeight(.light)
                                 .frame(width: 50, height: 50)
                         }
                         .onTapGesture {

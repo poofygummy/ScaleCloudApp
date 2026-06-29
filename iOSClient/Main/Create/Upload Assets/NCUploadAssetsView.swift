@@ -122,7 +122,7 @@ struct NCUploadAssetsView: View {
                                                     .cappedFont(.body, maxDynamicType: .accessibility2)
                                             }
                                     }
-                                    .onChange(of: renameFileName) { _, newValue in
+                                    .onChange(of: renameFileName) { newValue in
                                         if let error = FileNameValidator.checkFileName(newValue, account: model.controller?.account, capabilities: model.capabilities) {
                                             renameError = error.errorDescription
                                         } else {

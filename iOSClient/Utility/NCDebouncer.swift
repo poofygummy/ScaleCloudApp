@@ -5,7 +5,7 @@
 import Foundation
 
 public actor NCDebouncer {
-    private let delay: Duration
+    private let delay: TimeInterval
     private let maxEventCount: Int
     private var eventCount: Int = 0
     private var pendingTask: Task<Void, Never>?
@@ -14,7 +14,7 @@ public actor NCDebouncer {
 
     // MARK: - Init
 
-    public init(delay: Duration = .seconds(2), maxEventCount: Int) {
+    public init(delay: TimeInterval = 2, maxEventCount: Int) {
         self.delay = delay
         self.maxEventCount = maxEventCount
     }
@@ -87,7 +87,7 @@ public actor NCDebouncer {
 
         pendingTask = Task { [weak self] in
             guard let self else { return }
-            try? await Task.sleep(for: self.delay)
+            try? await Task.sleep(nanoseconds: UInt64(self.delay * 1_000_000_000))
             await self.commit()
         }
     }

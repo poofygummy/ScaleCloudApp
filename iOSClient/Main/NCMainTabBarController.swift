@@ -170,7 +170,7 @@ class NCMainTabBarController: UITabBarController {
     @MainActor
     private func timerCheck() async {
         while !Task.isCancelled {
-            try? await Task.sleep(for: .seconds(3))
+            try? await Task.sleep(nanoseconds: 3_000_000_000)
 
             guard isViewLoaded, view.window != nil else {
                 continue

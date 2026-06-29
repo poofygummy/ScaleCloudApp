@@ -101,7 +101,7 @@ struct UploadBannerView: View {
                              .foregroundStyle(.green)
                              .symbolEffect(.drawOn, isActive: trigger)
                              .task {
-                                 try? await Task.sleep(for: .seconds(0.1))
+                                 try? await Task.sleep(nanoseconds: 100_000_000)
                                  trigger = false
                              }
                      } else {
@@ -153,7 +153,7 @@ struct UploadBannerView: View {
                             if showTitle, let title = state.payload.title {
                                 Text(title)
                                     .cappedFont(.headline, maxDynamicType: .accessibility2)
-                                    .fontWeight(.semibold)
+                                    .adaptiveFontWeight(.semibold)
                                     .multilineTextAlignment(.leading)
                                     .truncationMode(.tail)
                                     .minimumScaleFactor(0.9)

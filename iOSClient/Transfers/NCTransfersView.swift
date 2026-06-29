@@ -109,7 +109,7 @@ struct TransfersSummaryHeader: View {
                 .foregroundStyle(.secondary)
             Text("\(value)")
                 .font(.caption)
-                .fontWeight(.semibold)
+                .adaptiveFontWeight(.semibold)
         }
         .padding(.horizontal, 10)
         .padding(.vertical, 6)

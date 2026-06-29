@@ -105,7 +105,7 @@ struct HudBannerViewIndeterminate: View {
                 if let title = state.payload.title, !title.isEmpty {
                     Text(title)
                         .cappedFont(.headline, maxDynamicType: .accessibility2)
-                        .fontWeight(.semibold)
+                        .adaptiveFontWeight(.semibold)
                         .foregroundStyle(textColor)
                         .multilineTextAlignment(.center)
                 }
@@ -185,7 +185,7 @@ struct HudBannerViewIndeterminate: View {
         .onAppear {
             startSpinning()
         }
-        .onChange(of: state.payload.stage) { _, newStage in
+        .onChange(of: state.payload.stage) { newStage in
             if newStage == .success || newStage == .error {
                 stopSpinning()
             }

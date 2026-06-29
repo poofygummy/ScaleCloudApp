@@ -14,7 +14,7 @@ struct NCFileNameView: View {
                 Toggle(NSLocalizedString("_maintain_original_filename_", comment: ""), isOn: $model.maintainFilenameOriginal)
                     .font(.body)
                     .tint(Color(NCBrandColor.shared.getElement(account: model.session.account)))
-                    .onChange(of: model.maintainFilenameOriginal) { _, newValue in
+                    .onChange(of: model.maintainFilenameOriginal) { newValue in
                         model.toggleMaintainFilenameOriginal(newValue: newValue)
                         model.getFileName()
                     }
@@ -23,7 +23,7 @@ struct NCFileNameView: View {
                     Toggle(NSLocalizedString("_add_filenametype_", comment: ""), isOn: $model.addFileNameType)
                         .font(.body)
                         .tint(Color(NCBrandColor.shared.getElement(account: model.session.account)))
-                        .onChange(of: model.addFileNameType) { _, newValue in
+                        .onChange(of: model.addFileNameType) { newValue in
                             model.toggleAddFilenameType(newValue: newValue)
                             model.getFileName()
                         }
@@ -49,7 +49,7 @@ struct NCFileNameView: View {
                 HStack {
                     Text(NSLocalizedString("_filename_", comment: ""))
                         .font(.body)
-                        .fontWeight(.medium)
+                        .adaptiveFontWeight(.medium)
                     Spacer()
                     TextField(NSLocalizedString("_filename_header_", comment: ""), text: $model.changedName)
                         .onChange(of: model.changedName) {

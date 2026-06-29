@@ -110,7 +110,7 @@ struct NCAccountSettingsView: View {
                     .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                     .frame(height: model.getTableViewHeight())
                     .animation(.easeIn(duration: 0.3), value: animation)
-                    .onChange(of: model.indexActiveAccount) { _, index in
+                    .onChange(of: model.indexActiveAccount) { index in
                         animation.toggle()
                         model.setAccount(account: model.tblAccounts[index].account)
                     }
@@ -124,7 +124,7 @@ struct NCAccountSettingsView: View {
                             TextField(NSLocalizedString("_alias_placeholder_", comment: ""), text: $model.alias)
                                 .cappedFont(.body, maxDynamicType: .accessibility2)
                                 .multilineTextAlignment(.trailing)
-                                .onChange(of: model.alias) { _, newValue in
+                                .onChange(of: model.alias) { newValue in
                                     model.setAlias(newValue)
                                 }
                         }

@@ -97,6 +97,18 @@ extension View {
     }
 }
 
+extension View {
+    /// Back-deploys `.fontWeight(_:)` which is iOS 16+ as a standalone modifier.
+    /// On iOS 15, this is a no-op (the enclosing `.font()` call sets the weight).
+    func adaptiveFontWeight(_ weight: Font.Weight) -> some View {
+        if #available(iOS 16, *) {
+            return AnyView(self.fontWeight(weight))
+        } else {
+            return AnyView(self)
+        }
+    }
+}
+
 struct AdaptivePresentationDetents: ViewModifier {
     func body(content: Content) -> some View {
         if #available(iOS 16, *) {

@@ -77,7 +77,7 @@ struct NCStatusMessageView: View {
                         model.submitStatus(account: account)
                         dismiss()
                     }
-                    .fontWeight(.semibold)
+                    .adaptiveFontWeight(.semibold)
                     .buttonStyle(.borderedProminent)
                     .controlSize(.large)
                     .disabled(model.emojiText.isEmpty && model.statusText.isEmpty)

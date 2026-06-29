@@ -267,7 +267,7 @@ class NCLoginProvider: NSObject, ASWebAuthenticationPresentationContextProviding
                 try Task.checkCancellation()
 
                 grantValues = await poll(token: token, endpoint: endpoint, options: options)
-                try await Task.sleep(for: .seconds(1))
+                try await Task.sleep(nanoseconds: 1_000_000_000)
             } while grantValues == nil
 
             guard let grantValues else {

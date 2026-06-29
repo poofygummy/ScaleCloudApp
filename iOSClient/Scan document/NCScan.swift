@@ -74,8 +74,10 @@ class NCScan: UIViewController, NCScanCellCellDelegate {
         view.addInteraction(interaction)
         self.editMenuInteraction = interaction
 
-        traitRegistration = registerForTraitChanges([UITraitUserInterfaceStyle.self]) { (self: Self, _) in
-            self.updateIcons()
+        if #available(iOS 17, *) {
+            traitRegistration = registerForTraitChanges([UITraitUserInterfaceStyle.self]) { (self: Self, _) in
+                self.updateIcons()
+            }
         }
 
         collectionViewSource.dragInteractionEnabled = true
@@ -136,6 +138,12 @@ class NCScan: UIViewController, NCScanCellCellDelegate {
     }
 
     // MARK: -
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        guard traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) else { return }
+        updateIcons()
+    }
 
     private func updateIcons() {
         add.setImage(utility.loadImage(named: "plus", colors: [NCBrandColor.shared.iconImageColor]), for: .normal)

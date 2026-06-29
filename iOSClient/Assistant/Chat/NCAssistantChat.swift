@@ -67,14 +67,14 @@ struct NCAssistantChat: View {
                 }
                 .padding(.vertical)
             }
-            .onChange(of: chatModel.messages.count) { _, _ in
+            .onChange(of: chatModel.messages.count) { _ in
                 withAnimation {
                     if let lastMessage = chatModel.messages.last {
                         proxy.scrollTo(lastMessage.id, anchor: .bottom)
                     }
                 }
             }
-            .onChange(of: chatModel.isThinking) { _, isThinking in
+            .onChange(of: chatModel.isThinking) { isThinking in
                 if isThinking {
                     withAnimation {
                         proxy.scrollTo("thinking", anchor: .bottom)
@@ -192,7 +192,7 @@ struct EmptyChatView: View {
 
             Text(NSLocalizedString("_start_conversation_", comment: ""))
                 .cappedFont(.body, maxDynamicType: .accessibility2)
-                .fontWeight(.bold)
+                .adaptiveFontWeight(.bold)
                 .padding(.bottom, 5)
 
             Text(NSLocalizedString("_ask_assistant_anything_", comment: ""))

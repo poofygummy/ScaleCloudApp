@@ -36,7 +36,7 @@ struct FilesWidgetView: View {
                 HStack {
                     Text(entry.tile)
                         .font(.system(size: 12))
-                        .fontWeight(.bold)
+                        .adaptiveFontWeight(.bold)
                         .multilineTextAlignment(.center)
                         .textCase(.uppercase)
                         .lineLimit(1)

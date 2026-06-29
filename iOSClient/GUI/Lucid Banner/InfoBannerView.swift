@@ -80,7 +80,7 @@ struct InfoBannerView: View {
                         if showTitle, let title = state.payload.title {
                             Text(title)
                                 .cappedFont(.headline, maxDynamicType: .accessibility2)
-                                .fontWeight(.semibold)
+                                .adaptiveFontWeight(.semibold)
                                 .multilineTextAlignment(.leading)
                                 .truncationMode(.tail)
                                 .foregroundStyle(state.payload.textColor)

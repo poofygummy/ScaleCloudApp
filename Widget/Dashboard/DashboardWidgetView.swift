@@ -35,7 +35,7 @@ struct DashboardWidgetView: View {
 
                     Text(entry.title)
                         .font(.system(size: 15))
-                        .fontWeight(.bold)
+                        .adaptiveFontWeight(.bold)
                         .multilineTextAlignment(.center)
                         .textCase(.uppercase)
                         .lineLimit(1)
@@ -87,7 +87,7 @@ struct DashboardWidgetView: View {
 
                                             Text(element.title)
                                                 .font(.system(size: 12))
-                                                .fontWeight(.regular)
+                                                .adaptiveFontWeight(.regular)
 
                                             Text(element.subTitle)
                                                 .font(.system(size: CGFloat(10)))

@@ -243,7 +243,7 @@ class NCCollectionViewCommon: UIViewController, NCAccountSettingsModelDelegate, 
                 self.refreshControl.endRefreshing()
 
                 // Wait 1.5 seconds before resetting the button alpha
-                try? await Task.sleep(for: .seconds(1.5))
+                try? await Task.sleep(nanoseconds: 1_500_000_000)
                 self.mainNavigationController?.menuPlus?.resetPlusButtonAlpha()
             }
         }
@@ -265,9 +265,11 @@ class NCCollectionViewCommon: UIViewController, NCAccountSettingsModelDelegate, 
         let dropInteraction = UIDropInteraction(delegate: self)
         self.navigationController?.navigationItem.leftBarButtonItems?.first?.customView?.addInteraction(dropInteraction)
 
-        registerForTraitChanges([UITraitUserInterfaceStyle.self]) { [weak self] (view: NCCollectionViewCommon, _) in
-            guard let self else { return }
-            sectionFirstHeader?.setRichWorkspaceColor(style: view.traitCollection.userInterfaceStyle)
+        if #available(iOS 17, *) {
+            registerForTraitChanges([UITraitUserInterfaceStyle.self]) { [weak self] (view: NCCollectionViewCommon, _) in
+                guard let self else { return }
+                sectionFirstHeader?.setRichWorkspaceColor(style: view.traitCollection.userInterfaceStyle)
+            }
         }
 
         NotificationCenter.default.addObserver(forName: NSNotification.Name(rawValue: self.global.notificationCenterChangeTheming), object: nil, queue: .main) { _ in
@@ -306,6 +308,12 @@ class NCCollectionViewCommon: UIViewController, NCAccountSettingsModelDelegate, 
                 }
             }
         }
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        guard traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) else { return }
+        sectionFirstHeader?.setRichWorkspaceColor(style: traitCollection.userInterfaceStyle)
     }
 
     override func viewWillAppear(_ animated: Bool) {

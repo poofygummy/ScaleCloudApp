@@ -86,7 +86,7 @@ extension NCNetworking {
         } else if unauthorizedArray.contains(account) {
             nkLog(error: "Unauthorized for \(account)")
 
-            try? await Task.sleep(for: .seconds(0.5))
+            try? await Task.sleep(nanoseconds: 500_000_000)
             await NCAccount().checkRemoteUser(account: account, controller: controller)
         /// ToS
         } else if tosArray.contains(account) {

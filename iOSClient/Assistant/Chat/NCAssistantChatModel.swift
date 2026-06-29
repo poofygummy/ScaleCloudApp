@@ -56,7 +56,7 @@ class NCAssistantChatModel {
             while !Task.isCancelled {
 
                 await loadLastMessage()
-                try? await Task.sleep(for: .seconds(interval))
+                try? await Task.sleep(nanoseconds: UInt64(interval * 1_000_000_000))
             }
         }
     }

@@ -42,7 +42,7 @@ func showErrorBanner(windowScene: UIWindowScene?,
                                                   safeAreaInsets: window.safeAreaInsets,
                                                   idiom: window.traitCollection.userInterfaceIdiom)
 
-    try? await Task.sleep(for: .seconds(0.5))
+    try? await Task.sleep(nanoseconds: 500_000_000)
 
     let payload = LucidBannerPayload(
         title: NSLocalizedString(title, comment: ""),
@@ -92,7 +92,7 @@ struct ErrorBannerView: View {
                         if showTitle, let title = state.payload.title {
                             Text(title)
                                 .cappedFont(.headline, maxDynamicType: .accessibility2)
-                                .fontWeight(.semibold)
+                                .adaptiveFontWeight(.semibold)
                                 .multilineTextAlignment(.leading)
                                 .truncationMode(.tail)
                                 .foregroundStyle(state.payload.textColor)

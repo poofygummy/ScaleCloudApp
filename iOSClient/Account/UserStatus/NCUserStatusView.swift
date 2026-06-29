@@ -47,7 +47,7 @@ struct NCUserStatusView: View {
                     model.selectedStatus = (model.selectedStatus == item.name) ? nil : item.name
                     model.setStatus(account: account)
                 }
-                .onChange(of: model.canDismiss) { _, newValue in
+                .onChange(of: model.canDismiss) { newValue in
                     if newValue { dismiss() }
                 }
             }

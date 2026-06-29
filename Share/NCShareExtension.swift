@@ -93,11 +93,13 @@ class NCShareExtension: UIViewController {
 
         NCBrandColor.shared.createUserColors()
 
-        registerForTraitChanges([UITraitUserInterfaceStyle.self]) { (self: Self, _) in
-            guard !self.maintenanceMode else {
-                return
+        if #available(iOS 17, *) {
+            registerForTraitChanges([UITraitUserInterfaceStyle.self]) { (self: Self, _) in
+                guard !self.maintenanceMode else {
+                    return
+                }
+                self.updateAppearance()
             }
-            self.updateAppearance()
         }
 
         NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: nil) { _ in
@@ -186,6 +188,13 @@ class NCShareExtension: UIViewController {
         coordinator.animate(alongsideTransition: nil) { _ in
             self.collectionView?.collectionViewLayout.invalidateLayout()
         }
+    }
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        guard !maintenanceMode,
+              traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection) else { return }
+        updateAppearance()
     }
 
     private func updateAppearance() {
@@ -428,7 +437,7 @@ extension NCShareExtension {
         }
 
         Task { @MainActor in
-            try? await Task.sleep(for: .seconds(2))
+            try? await Task.sleep(nanoseconds: 2_000_000_000)
             banner?.dismiss()
             extensionContext?.completeRequest(returningItems: extensionContext?.inputItems, completionHandler: nil)
         }

@@ -115,7 +115,7 @@ class NCSettingsAdvancedModel: ObservableObject, ViewOnAppearHandling {
             // Cancel all networking tasks
             NCNetworking.shared.cancelAllTask()
 
-            try? await Task.sleep(for: .seconds(1))
+            try? await Task.sleep(nanoseconds: 1_000_000_000)
 
             NCNetworking.shared.removeServerErrorAccount(self.session.account)
             NCManageDatabase.shared.clearDBCache()

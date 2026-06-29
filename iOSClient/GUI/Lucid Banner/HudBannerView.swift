@@ -117,7 +117,7 @@ struct HudBannerView: View {
                 if let title = state.payload.title, !title.isEmpty {
                     Text(title)
                         .cappedFont(.headline, maxDynamicType: .accessibility2)
-                        .fontWeight(.semibold)
+                        .adaptiveFontWeight(.semibold)
                         .foregroundStyle(textColor)
                         .multilineTextAlignment(.center)
                 }
@@ -191,7 +191,7 @@ struct HudBannerView: View {
         .onAppear {
             displayedProgress = clampedProgress
         }
-        .onChange(of: state.payload.progress) { _, newValue in
+        .onChange(of: state.payload.progress) { newValue in
             guard let newValue else {
                 withTransaction(Transaction(animation: nil)) {
                     displayedProgress = 0
@@ -218,7 +218,7 @@ struct HudBannerView: View {
                 }
             }
         }
-        .onChange(of: state.payload.stage) { _, newStage in
+        .onChange(of: state.payload.stage) { newStage in
             if let newStage {
                 if newStage == .success || newStage == .error {
                     withAnimation(.easeInOut(duration: 0.20)) {
@@ -296,11 +296,11 @@ private struct HudBannerPreviewWrapper: View {
         HudBannerView(state: state)
             .task {
                 for i in 0...100 {
-                    try? await Task.sleep(for: .milliseconds(45))
+                    try? await Task.sleep(nanoseconds: 45_000_000)
                     state.payload.progress = Double(i) / 100
                 }
 
-                try? await Task.sleep(for: .seconds(0.4))
+                try? await Task.sleep(nanoseconds: 400_000_000)
                 state.payload.stage = .success
             }
     }

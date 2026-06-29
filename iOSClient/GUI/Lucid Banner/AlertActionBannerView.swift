@@ -68,7 +68,7 @@ struct AlertActionBannerView: View {
                 if let title = state.payload.title, !title.isEmpty {
                     Text(title)
                         .cappedFont(.headline, maxDynamicType: .accessibility2)
-                        .fontWeight(.semibold)
+                        .adaptiveFontWeight(.semibold)
                         .foregroundStyle(state.payload.textColor)
                         .multilineTextAlignment(.center)
                 }

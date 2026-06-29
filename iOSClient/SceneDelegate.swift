@@ -304,7 +304,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     return true
                 }
                 group.addTask {
-                    try? await Task.sleep(for: .seconds(25))
+                    try? await Task.sleep(nanoseconds: 25_000_000_000)
                     return false
                 }
                 return await group.next() ?? false
@@ -411,7 +411,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 if (account == tblAccount.account) || (url.contains(host) && user == tblAccount.userId) {
                     await NCAccount().changeAccount(tblAccount.account, userProfile: nil, controller: controller)
                     // wait switch account
-                    try? await Task.sleep(for: .seconds(1))
+                    try? await Task.sleep(nanoseconds: 1_000_000_000)
                     return tblAccount
                 }
             }
@@ -615,15 +615,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
 
         Task {
-            try? await Task.sleep(for: .seconds(1))
+            try? await Task.sleep(nanoseconds: 1_000_000_000)
 
             let num = await NCAutoUpload.shared.initAutoUpload()
             nkLog(start: "Auto upload with \(num) photo")
 
-            try? await Task.sleep(for: .seconds(1.5))
+            try? await Task.sleep(nanoseconds: 1_500_000_000)
             await NCService().startRequestServicesServer(account: account, controller: controller)
 
-            try? await Task.sleep(for: .seconds(2))
+            try? await Task.sleep(nanoseconds: 2_000_000_000)
             await NCNetworking.shared.verifyZombie()
         }
 

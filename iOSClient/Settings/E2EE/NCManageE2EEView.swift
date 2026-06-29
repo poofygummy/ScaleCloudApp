@@ -23,7 +23,7 @@ struct NCManageE2EEView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .cappedFont(.body, maxDynamicType: .accessibility2)
-                                .fontWeight(.light)
+                                .adaptiveFontWeight(.light)
                                 .frame(width: 25, height: 25)
                                 .foregroundColor(.green)
                         }
@@ -38,7 +38,7 @@ struct NCManageE2EEView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .cappedFont(.body, maxDynamicType: .accessibility2)
-                                .fontWeight(.light)
+                                .adaptiveFontWeight(.light)
                                 .frame(width: 25, height: 25)
                                 .foregroundColor(Color(NCBrandColor.shared.iconImageColor))
                         }
@@ -63,7 +63,7 @@ struct NCManageE2EEView: View {
                                 .resizable()
                                 .scaledToFit()
                                 .cappedFont(.body, maxDynamicType: .accessibility2)
-                                .fontWeight(.light)
+                                .adaptiveFontWeight(.light)
                                 .frame(width: 25, height: 15)
                                 .foregroundColor(Color(NCBrandColor.shared.iconImageColor))
                         }
@@ -96,7 +96,7 @@ struct NCManageE2EEView: View {
                                     .resizable()
                                     .scaledToFit()
                                     .cappedFont(.body, maxDynamicType: .accessibility2)
-                                    .fontWeight(.light)
+                                    .adaptiveFontWeight(.light)
                                     .frame(width: 25, height: 25)
                                     .foregroundColor(.green)
                             }
@@ -123,7 +123,7 @@ struct NCManageE2EEView: View {
         .navigationBarTitleDisplayMode(.inline)
         .background(Color(UIColor.systemGroupedBackground))
         .defaultViewModifier(model)
-        .onChange(of: model.navigateBack) { _, newValue in
+        .onChange(of: model.navigateBack) { newValue in
             if newValue {
                 presentationMode.wrappedValue.dismiss()
             }
@@ -143,7 +143,7 @@ struct NCManageE2EEView: View {
                         .resizable()
                         .scaledToFit()
                         .cappedFont(.body, maxDynamicType: .accessibility2)
-                        .fontWeight(.light)
+                        .adaptiveFontWeight(.light)
                         .frame(width: 25, height: 25)
                         .foregroundColor(Color(NCBrandColor.shared.textColor2))
                 }
@@ -179,7 +179,7 @@ struct NCManageE2EEView: View {
                         .resizable()
                         .scaledToFit()
                         .cappedFont(.body, maxDynamicType: .accessibility2)
-                        .fontWeight(.light)
+                        .adaptiveFontWeight(.light)
                         .frame(width: 25, height: 25)
                         .foregroundColor(Color(NCBrandColor.shared.textColor2))
                 }
