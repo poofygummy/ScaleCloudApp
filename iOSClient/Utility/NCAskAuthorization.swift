@@ -11,7 +11,23 @@ class NCAskAuthorization: NSObject {
 
     func askAuthorizationAudioRecord(controller: UIViewController?, completion: @escaping (_ hasPermission: Bool) -> Void) {
         DispatchQueue.main.async {
-            switch AVAudioApplication.shared.recordPermission {
+            let permission: AVAudioSession.RecordPermission
+            if #available(iOS 17.0, *) {
+                switch AVAudioApplication.shared.recordPermission {
+                case .granted:
+                    permission = .granted
+                case .denied:
+                    permission = .denied
+                case .undetermined:
+                    permission = .undetermined
+                default:
+                    permission = .undetermined
+                }
+            } else {
+                permission = AVAudioSession.sharedInstance().recordPermission
+            }
+
+            switch permission {
             case .granted:
                 completion(true)
             case .denied:
@@ -31,11 +47,13 @@ class NCAskAuthorization: NSObject {
                 }
 
             case .undetermined:
-                AVAudioApplication.requestRecordPermission { granted in
-                    if granted {
-                        completion(true)
-                    } else {
-                        completion(false)
+                if #available(iOS 17.0, *) {
+                    AVAudioApplication.requestRecordPermission { granted in
+                        completion(granted)
+                    }
+                } else {
+                    AVAudioSession.sharedInstance().requestRecordPermission { granted in
+                        completion(granted)
                     }
                 }
             default:

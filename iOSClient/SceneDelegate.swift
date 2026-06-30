@@ -406,7 +406,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let tblAccounts = await NCManageDatabase.shared.getAllTableAccountAsync()
 
             for tblAccount in tblAccounts {
-                let host = URL(string: tblAccount.urlBase)?.host() ?? ""
+                let host = URL(string: tblAccount.urlBase)?.host ?? ""
 
                 if (account == tblAccount.account) || (url.contains(host) && user == tblAccount.userId) {
                     await NCAccount().changeAccount(tblAccount.account, userProfile: nil, controller: controller)

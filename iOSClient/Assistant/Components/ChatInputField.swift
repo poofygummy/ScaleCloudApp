@@ -90,20 +90,24 @@ struct ChatInputField: View {
 }
 
 #Preview {
-    @Previewable @State var text = ""
-    @Previewable @State var initialText = "Text received from outside"
+    struct PreviewWrapper: View {
+        @State var text = ""
+        @State var initialText = "Text received from outside"
+        var body: some View {
+            VStack(spacing: 16) {
+                ChatInputField(
+                    text: $text,
+                    initialText: $initialText,
+                    isLoading: .constant(false)
+                )
 
-    VStack(spacing: 16) {
-        ChatInputField(
-            text: $text,
-            initialText: $initialText,
-            isLoading: .constant(false)
-        )
-
-        ChatInputField(
-            text: .constant("Loading state"),
-            initialText: .constant(""),
-            isLoading: .constant(true)
-        )
+                ChatInputField(
+                    text: .constant("Loading state"),
+                    initialText: .constant(""),
+                    isLoading: .constant(true)
+                )
+            }
+        }
     }
+    return PreviewWrapper()
 }
