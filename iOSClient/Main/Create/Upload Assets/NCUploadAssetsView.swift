@@ -143,7 +143,7 @@ struct NCUploadAssetsView: View {
                                     .cappedFont(.body, maxDynamicType: .accessibility2)
                             })
                             .cappedFont(.body, maxDynamicType: .accessibility2)
-                            .onChange(of: model.useAutoUploadFolder) {
+                            .onChange(of: model.useAutoUploadFolder) { _ in
                                 model.updateUseAutoUploadFolder()
                             }
                             .toggleStyle(SwitchToggleStyle(tint: Color(NCBrandColor.shared.getElement(account: model.session.account))))
@@ -154,7 +154,7 @@ struct NCUploadAssetsView: View {
                                         .cappedFont(.body, maxDynamicType: .accessibility2)
                                 })
                                 .cappedFont(.body, maxDynamicType: .accessibility2)
-                                .onChange(of: model.useAutoUploadSubFolder) {
+                                .onChange(of: model.useAutoUploadSubFolder) { _ in
                                     model.updateUseAutoUploadSubFolder()
                                 }
                                 .toggleStyle(SwitchToggleStyle(tint: Color(NCBrandColor.shared.getElement(account: model.session.account))))

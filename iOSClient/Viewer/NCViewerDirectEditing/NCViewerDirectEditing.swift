@@ -49,11 +49,15 @@ class NCViewerDirectEditing: UIViewController, WKNavigationDelegate, WKScriptMes
             items.append(moreButton)
         }
 
-        let group = UIBarButtonItemGroup(
-            barButtonItems: items,
-            representativeItem: nil
-        )
-        navigationItem.trailingItemGroups = [group]
+        if #available(iOS 16, *) {
+            let group = UIBarButtonItemGroup(
+                barButtonItems: items,
+                representativeItem: nil
+            )
+            navigationItem.trailingItemGroups = [group]
+        } else {
+            navigationItem.rightBarButtonItems = items
+        }
         navigationItem.leftBarButtonItems = nil
 
         // Prevent back navigation gesture of iOS/iPadOS >= 26 as that will interfere with the possibility to mark text in onlyoffice

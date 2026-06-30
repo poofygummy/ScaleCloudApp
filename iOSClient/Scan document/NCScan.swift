@@ -52,8 +52,8 @@ class NCScan: UIViewController, NCScanCellCellDelegate {
     internal let database = NCManageDatabase.shared
     internal var filter: NCGlobal.TypeFilterScanDocument = NCPreferences().typeFilterScanDocument
 
-    private var editMenuInteraction: UIEditMenuInteraction?
-    private var traitRegistration: UITraitChangeRegistration?
+    private var editMenuInteraction: Any?  // UIEditMenuInteraction iOS 16+
+    private var traitRegistration: Any?    // UITraitChangeRegistration iOS 17+
 
     @MainActor
     internal var session: NCSession.Session {
@@ -70,9 +70,11 @@ class NCScan: UIViewController, NCScanCellCellDelegate {
         view.backgroundColor = .secondarySystemGroupedBackground
         navigationItem.title = NSLocalizedString("_scanned_images_", comment: "")
 
-        let interaction = UIEditMenuInteraction(delegate: self)
-        view.addInteraction(interaction)
-        self.editMenuInteraction = interaction
+        if #available(iOS 16, *) {
+            let interaction = UIEditMenuInteraction(delegate: self)
+            view.addInteraction(interaction)
+            self.editMenuInteraction = interaction
+        }
 
         if #available(iOS 17, *) {
             traitRegistration = registerForTraitChanges([UITraitUserInterfaceStyle.self]) { (self: Self, _) in
@@ -305,12 +307,13 @@ class NCScan: UIViewController, NCScanCellCellDelegate {
         }
 
         let sourcePoint = recognizer.location(in: recognizerView)
-        let configuration = UIEditMenuConfiguration(
-            identifier: nil,
-            sourcePoint: sourcePoint
-        )
-
-        editMenuInteraction?.presentEditMenu(with: configuration)
+        if #available(iOS 16, *) {
+            let configuration = UIEditMenuConfiguration(
+                identifier: nil,
+                sourcePoint: sourcePoint
+            )
+            (editMenuInteraction as? UIEditMenuInteraction)?.presentEditMenu(with: configuration)
+        }
         dismissTip()
     }
 
@@ -393,6 +396,7 @@ extension NCScan: NCViewerQuickLookDelegate {
     }
 }
 
+@available(iOS 16, *)
 extension NCScan: UIEditMenuInteractionDelegate {
     func editMenuInteraction(
         _ interaction: UIEditMenuInteraction,

@@ -368,15 +368,17 @@ struct UploadScanDocumentView: View {
                             isPresentedSelect = true
                         }
                         .complexModifier { view in
-                            view.alignmentGuide(.listRowSeparatorLeading) { _ in
-                                return 0
+                            if #available(iOS 16, *) {
+                                view.alignmentGuide(.listRowSeparatorLeading) { _ in 0 }
+                            } else {
+                                view
                             }
                         }
                         HStack {
                             Text(NSLocalizedString("_filename_", comment: ""))
                             TextField(NSLocalizedString("_enter_filename_", comment: ""), text: $fileName)
                                 .multilineTextAlignment(.trailing)
-                                .onChange(of: fileName) {
+                                .onChange(of: fileName) { _ in
                                     if let fileNameError = FileNameValidator.checkFileName(fileName, account: self.model.controller?.account, capabilities: capabilities) {
                                         footer = fileNameError.errorDescription
                                     } else {

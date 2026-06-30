@@ -52,7 +52,7 @@ struct NCFileNameView: View {
                         .adaptiveFontWeight(.medium)
                     Spacer()
                     TextField(NSLocalizedString("_filename_header_", comment: ""), text: $model.changedName)
-                        .onChange(of: model.changedName) {
+                        .onChange(of: model.changedName) { _ in
                             model.submitChangedName()
                             model.getFileName()
                         }

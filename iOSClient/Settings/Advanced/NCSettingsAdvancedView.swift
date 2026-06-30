@@ -34,7 +34,7 @@ struct NCSettingsAdvancedView: View {
                 Toggle(NSLocalizedString("_format_compatibility_", comment: ""), isOn: $model.mostCompatible)
                     .font(.body)
                     .tint(Color(NCBrandColor.shared.getElement(account: model.session.account)))
-                    .onChange(of: model.mostCompatible) {
+                    .onChange(of: model.mostCompatible) { _ in
                         model.updateMostCompatible()
                     }
             }, footer: {
@@ -46,7 +46,7 @@ struct NCSettingsAdvancedView: View {
                 Toggle(NSLocalizedString("_upload_mov_livephoto_", comment: ""), isOn: $model.livePhoto)
                     .font(.body)
                     .tint(Color(NCBrandColor.shared.getElement(account: model.session.account)))
-                    .onChange(of: model.livePhoto) {
+                    .onChange(of: model.livePhoto) { _ in
                         model.updateLivePhoto()
                     }
             }, footer: {
@@ -59,7 +59,7 @@ struct NCSettingsAdvancedView: View {
                 Toggle(NSLocalizedString("_remove_photo_CameraRoll_", comment: ""), isOn: $model.removeFromCameraRoll)
                     .font(.body)
                     .tint(Color(NCBrandColor.shared.getElement(account: model.session.account)))
-                    .onChange(of: model.removeFromCameraRoll) {
+                    .onChange(of: model.removeFromCameraRoll) { _ in
                         model.updateRemoveFromCameraRoll()
                 }
             }, footer: {
@@ -72,7 +72,7 @@ struct NCSettingsAdvancedView: View {
                     Toggle(NSLocalizedString("_disable_files_app_", comment: ""), isOn: $model.appIntegration)
                         .font(.body)
                         .tint(Color(NCBrandColor.shared.getElement(account: model.session.account)))
-                        .onChange(of: model.appIntegration) {
+                        .onChange(of: model.appIntegration) { _ in
                             model.updateAppIntegration()
                     }
                 }, footer: {
@@ -86,7 +86,7 @@ struct NCSettingsAdvancedView: View {
                     Toggle(NSLocalizedString("_crashservice_title_", comment: ""), isOn: $model.crashReporter)
                         .font(.body)
                         .tint(Color(NCBrandColor.shared.getElement(account: model.session.account)))
-                        .onChange(of: model.crashReporter) {
+                        .onChange(of: model.crashReporter) { _ in
                             model.updateCrashReporter()
                             showCrashReporter.toggle()
                     }
@@ -131,7 +131,7 @@ struct NCSettingsAdvancedView: View {
                         }
                     }
                     .cappedFont(.body, maxDynamicType: .accessibility2)
-                    .onChange(of: model.selectedLogLevel) {
+                    .onChange(of: model.selectedLogLevel) { _ in
                         model.updateSelectedLogLevel()
                     }
                     // Clear Log File
@@ -190,7 +190,7 @@ struct NCSettingsAdvancedView: View {
                 }
                 .cappedFont(.body, maxDynamicType: .accessibility2)
                 .pickerStyle(.automatic)
-                .onChange(of: model.selectedInterval) {
+                .onChange(of: model.selectedInterval) { _ in
                     model.updateSelectedInterval()
                 }
                 Button(action: {
