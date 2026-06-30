@@ -77,6 +77,8 @@ class NCService: NSObject {
             }
         case .failure:
             return false
+        @unknown default:
+            return false
         }
 
         let resultUserProfile = await SCKClient.shared.getUserMetadataAsync(account: account, userId: userId, options: SCKRequestOptions(queue: SCKClient.shared.nkCommonInstance.backgroundQueue)) { task in

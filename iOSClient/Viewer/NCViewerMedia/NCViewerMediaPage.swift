@@ -129,7 +129,11 @@ class NCViewerMediaPage: UIViewController {
             barButtonItems: items,
             representativeItem: nil
         )
-        navigationItem.trailingItemGroups = [group]
+        if #available(iOS 16.0, *) {
+            navigationItem.trailingItemGroups = [group]
+        } else {
+            navigationItem.rightBarButtonItems = items
+        }
 
         for view in self.pageViewController.view.subviews {
             if let scrollView = view as? UIScrollView {
@@ -437,7 +441,11 @@ extension NCViewerMediaPage: UIPageViewControllerDelegate, UIPageViewControllerD
             barButtonItems: items,
             representativeItem: nil
         )
-        navigationItem.trailingItemGroups = [group]
+        if #available(iOS 16.0, *) {
+            navigationItem.trailingItemGroups = [group]
+        } else {
+            navigationItem.rightBarButtonItems = items
+        }
 
         if nextViewController.detailView.isShown {
             changeScreenMode(mode: .normal)

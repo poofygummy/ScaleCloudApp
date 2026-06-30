@@ -8,6 +8,7 @@ import ScaleCloudKit
 import RealmSwift
 import LucidBanner
 
+@available(iOS 16.0, *)
 extension NCCollectionViewCommon: UIEditMenuInteractionDelegate {
     func editMenuInteraction(_ interaction: UIEditMenuInteraction, menuFor configuration: UIEditMenuConfiguration, suggestedActions: [UIMenuElement]) -> UIMenu? {
         var actions: [UIMenuElement] = []

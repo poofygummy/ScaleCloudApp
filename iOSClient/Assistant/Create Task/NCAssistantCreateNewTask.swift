@@ -70,7 +70,12 @@ struct NCAssistantCreateNewTask: View {
 }
 
 private extension View {
+    @ViewBuilder
     func transparentScrolling() -> some View {
-        return scrollContentBackground(.hidden)
+        if #available(iOS 16.0, *) {
+            scrollContentBackground(.hidden)
+        } else {
+            self
+        }
     }
 }

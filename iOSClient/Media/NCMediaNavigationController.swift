@@ -23,7 +23,11 @@ class NCMediaNavigationController: NCMainNavigationController {
                 barButtonItems: [cancel],
                 representativeItem: nil
             )
-            media.navigationItem.trailingItemGroups = [group]
+            if #available(iOS 16.0, *) {
+                media.navigationItem.trailingItemGroups = [group]
+            } else {
+                media.navigationItem.rightBarButtonItems = group.barButtonItems
+            }
             media.tabBarSelect.show()
         } else {
             media.tabBarSelect.hide()
@@ -55,7 +59,11 @@ class NCMediaNavigationController: NCMainNavigationController {
             representativeItem: nil
         )
 
-        topViewController?.navigationItem.trailingItemGroups = [group]
+        if #available(iOS 16.0, *) {
+            topViewController?.navigationItem.trailingItemGroups = [group]
+        } else {
+            topViewController?.navigationItem.rightBarButtonItems = group.barButtonItems
+        }
     }
 
     override func createOptionMenu() async -> UIMenu? {

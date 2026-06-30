@@ -58,7 +58,12 @@ class NCCollectionViewCommon: UIViewController, NCAccountSettingsModelDelegate, 
     // Edit Menu
     //
     internal let dragDropMenuIdentifier = "dragdrop"
-    internal var editMenuInteraction: UIEditMenuInteraction?
+    @available(iOS 16.0, *)
+    internal var editMenuInteraction: UIEditMenuInteraction? {
+        get { _editMenuInteraction as? UIEditMenuInteraction }
+        set { _editMenuInteraction = newValue }
+    }
+    internal var _editMenuInteraction: AnyObject?
     internal var currentMenuObjectId: String?
     internal var currentMenuPoint: CGPoint = .zero
 
@@ -208,12 +213,16 @@ class NCCollectionViewCommon: UIViewController, NCAccountSettingsModelDelegate, 
 
             navigationItem.searchController = searchController
             navigationItem.hidesSearchBarWhenScrolling = false
-            navigationItem.preferredSearchBarPlacement = .inline
+            if #available(iOS 16.0, *) {
+                navigationItem.preferredSearchBarPlacement = .inline
+            }
         }
 
-        let interaction = UIEditMenuInteraction(delegate: self)
-        collectionView.addInteraction(interaction)
-        self.editMenuInteraction = interaction
+        if #available(iOS 16.0, *) {
+            let interaction = UIEditMenuInteraction(delegate: self)
+            collectionView.addInteraction(interaction)
+            self.editMenuInteraction = interaction
+        }
 
         // Cell
         collectionView.register(UINib(nibName: "NCListCell", bundle: nil), forCellWithReuseIdentifier: "listCell")
@@ -305,6 +314,8 @@ class NCCollectionViewCommon: UIViewController, NCAccountSettingsModelDelegate, 
                     print("Operation cancelled")
                 case .didClear:
                     print("Handle cleared")
+                @unknown default:
+                    break
                 }
             }
         }
