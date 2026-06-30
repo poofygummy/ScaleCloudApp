@@ -104,7 +104,9 @@ extension NCCollectionViewCommon: UICollectionViewDropDelegate {
                 }
             } else {
                 DragDropHover.shared.sourceMetadatas = metadatas
-                openDragDropMenuItems(location: coordinator.session.location(in: collectionView))
+                if #available(iOS 16.0, *) {
+                    openDragDropMenuItems(location: coordinator.session.location(in: collectionView))
+                }
             }
         }
     }

@@ -611,7 +611,9 @@ class NCCollectionViewCommon: UIViewController, NCAccountSettingsModelDelegate, 
     // MARK: - TAP EVENT
 
     @objc func longPressCollecationView(_ gestureRecognizer: UILongPressGestureRecognizer) {
-        openMenuItems(with: nil, gestureRecognizer: gestureRecognizer)
+        if #available(iOS 16.0, *) {
+            openMenuItems(with: nil, gestureRecognizer: gestureRecognizer)
+        }
     }
 
     func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {

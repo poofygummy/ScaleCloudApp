@@ -91,6 +91,7 @@ struct ChatInputField: View {
 }
 
 #Preview {
+    @available(iOS 16.0, *)
     struct PreviewWrapper: View {
         @State var text = ""
         @State var initialText = "Text received from outside"
