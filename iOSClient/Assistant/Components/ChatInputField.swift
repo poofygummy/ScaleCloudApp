@@ -4,6 +4,7 @@
 
 import SwiftUI
 
+@available(iOS 16.0, *)
 struct ChatInputField: View {
     @FocusState private var isInputFocused: Bool
     @State private var hasAppliedInitialText = false

@@ -71,7 +71,13 @@ actor NCNetworkingProcess {
 
             Task {
                 let count = await self.inWaitingDownloadUploadCount()
-                try? await UNUserNotificationCenter.current().setBadgeCount(count)
+                if #available(iOS 16.0, *) {
+                    try? await UNUserNotificationCenter.current().setBadgeCount(count)
+                } else {
+                    await MainActor.run {
+                        UIApplication.shared.applicationIconBadgeNumber = count
+                    }
+                }
 
                 await self.stopTimer()
                 await self.cancelCurrentTaskOnBackground()
