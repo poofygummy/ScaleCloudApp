@@ -268,10 +268,17 @@ class NCShare: UIViewController, NCSharePagingContent {
         alertController.addAction(cancelAction)
 
         // iPad popover support
-        if let popover = alertController.popoverPresentationController,
-           let sourceView = sender as? UIView {
-            let barItem = UIBarButtonItem(customView: sourceView)
-            popover.sourceItem = barItem
+        if let popover = alertController.popoverPresentationController {
+            if #available(iOS 16.0, *), let sourceView = sender as? UIView {
+                popover.sourceItem = UIBarButtonItem(customView: sourceView)
+            } else if let sourceView = sender as? UIView {
+                popover.sourceView = sourceView
+                popover.sourceRect = sourceView.bounds
+            } else {
+                popover.sourceView = self.view
+                popover.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+                popover.permittedArrowDirections = []
+            }
         }
 
         present(alertController, animated: true)

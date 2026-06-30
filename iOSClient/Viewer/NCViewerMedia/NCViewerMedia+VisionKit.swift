@@ -8,6 +8,13 @@ import VisionKit
 
 extension NCViewerMedia {
     func analyzeCurrentImage() {
+        if #available(iOS 16.0, *) {
+            analyzeCurrentImageVisionKit()
+        }
+    }
+
+    @available(iOS 16.0, *)
+    private func analyzeCurrentImageVisionKit() {
         if let image = image {
             let interaction = ImageAnalysisInteraction()
             let analyzer = ImageAnalyzer()

@@ -251,7 +251,11 @@ class NCMainNavigationController: UINavigationController, UINavigationController
                 representativeItem: nil
             )
 
-            collectionViewCommon.navigationItem.trailingItemGroups = [group]
+            if #available(iOS 16.0, *) {
+                collectionViewCommon.navigationItem.trailingItemGroups = [group]
+            } else {
+                collectionViewCommon.navigationItem.rightBarButtonItems = group.barButtonItems
+            }
             return
         }
 
@@ -273,7 +277,11 @@ class NCMainNavigationController: UINavigationController, UINavigationController
                 representativeItem: nil
             )
 
-            trashViewController.navigationItem.trailingItemGroups = [group]
+            if #available(iOS 16.0, *) {
+                trashViewController.navigationItem.trailingItemGroups = [group]
+            } else {
+                trashViewController.navigationItem.rightBarButtonItems = group.barButtonItems
+            }
             return
         }
 
@@ -329,7 +337,12 @@ class NCMainNavigationController: UINavigationController, UINavigationController
         // Read current items from trailingItemGroups
         // ---------------------------------------------------------
 
-        let currentItems: [UIBarButtonItem] = topViewController.navigationItem.trailingItemGroups.flatMap { $0.barButtonItems }
+        let currentItems: [UIBarButtonItem]
+        if #available(iOS 16.0, *) {
+            currentItems = topViewController.navigationItem.trailingItemGroups.flatMap { $0.barButtonItems }
+        } else {
+            currentItems = topViewController.navigationItem.rightBarButtonItems ?? []
+        }
 
         let currentTags = currentItems.map { $0.tag }
         let desiredTags = desiredItems.map { $0.tag }
@@ -344,7 +357,11 @@ class NCMainNavigationController: UINavigationController, UINavigationController
             representativeItem: nil
         )
 
-        topViewController.navigationItem.trailingItemGroups = [group]
+        if #available(iOS 16.0, *) {
+            topViewController.navigationItem.trailingItemGroups = [group]
+        } else {
+            topViewController.navigationItem.rightBarButtonItems = group.barButtonItems
+        }
     }
 
     func createOptionMenu() async -> UIMenu? { return nil }
@@ -353,9 +370,15 @@ class NCMainNavigationController: UINavigationController, UINavigationController
         guard let topViewController else {
             return
         }
-        let hasOptionButton = topViewController.navigationItem.trailingItemGroups
-            .flatMap { $0.barButtonItems }
-            .contains(where: { $0.tag == optionButtonTag })
+        let hasOptionButton: Bool
+        if #available(iOS 16.0, *) {
+            hasOptionButton = topViewController.navigationItem.trailingItemGroups
+                .flatMap { $0.barButtonItems }
+                .contains(where: { $0.tag == optionButtonTag })
+        } else {
+            hasOptionButton = (topViewController.navigationItem.rightBarButtonItems ?? [])
+                .contains(where: { $0.tag == optionButtonTag })
+        }
 
         guard hasOptionButton else {
             return
@@ -364,9 +387,15 @@ class NCMainNavigationController: UINavigationController, UINavigationController
         optionButtonItem.menu = await createOptionMenu()
 
         // Force refresh of the bar button group if the menu instance changed.
-        let currentGroups = topViewController.navigationItem.trailingItemGroups
-        if !currentGroups.isEmpty {
-            topViewController.navigationItem.trailingItemGroups = currentGroups
+        if #available(iOS 16.0, *) {
+            let currentGroups = topViewController.navigationItem.trailingItemGroups
+            if !currentGroups.isEmpty {
+                topViewController.navigationItem.trailingItemGroups = currentGroups
+            }
+        } else {
+            // Force refresh by reassigning
+            let current = topViewController.navigationItem.rightBarButtonItems
+            topViewController.navigationItem.rightBarButtonItems = current
         }
     }
 

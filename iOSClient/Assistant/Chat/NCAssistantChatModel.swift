@@ -170,6 +170,7 @@ class NCAssistantChatModel {
     }
 }
 
+@available(iOS 17, *)
 extension NCAssistantChatModel {
     static var example = NCAssistantChatModel(controller: nil, messages: [
         AssistantChatMessage(

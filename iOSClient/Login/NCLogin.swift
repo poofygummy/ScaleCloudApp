@@ -508,6 +508,8 @@ class NCLogin: UIViewController, UITextFieldDelegate, NCLoginQRCodeDelegate {
                     alertController.addAction(UIAlertAction(title: NSLocalizedString("_ok_", comment: ""), style: .default, handler: { _ in }))
                     self.present(alertController, animated: true, completion: { })
                 }
+            @unknown default:
+                break
             }
         }
     }

@@ -81,6 +81,8 @@ extension NCNetworking {
                 }
             case .failure:
                 break
+            @unknown default:
+                break
             }
         // Unauthorized
         } else if unauthorizedArray.contains(account) {
