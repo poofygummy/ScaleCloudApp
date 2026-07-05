@@ -46,9 +46,36 @@ final class NCManageDatabase: @unchecked Sendable {
 
     // MARK: -
 
+    /// Deletes all Realm database files at the given URL.
+    /// Safe to call even if files don't exist.
+    private func deleteRealmFiles(at realmURL: URL) {
+        let filesToDelete = [
+            realmURL,
+            realmURL.appendingPathExtension("lock"),
+            realmURL.appendingPathExtension("note"),
+            realmURL.appendingPathExtension("management")
+        ]
+        for file in filesToDelete {
+            try? FileManager.default.removeItem(at: file)
+        }
+        nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .warning, message: "Realm files deleted at: \(realmURL.path)")
+    }
+
     func openRealm() {
         let dirGroup = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: NCBrandOptions.shared.capabilitiesGroup)
         let databaseFileUrl = dirGroup?.appendingPathComponent(NCGlobal.shared.appDatabaseNextcloud + "/" + databaseName)
+
+        // If an existing DB has a schema version newer than ours, Realm will fatal-assert
+        // rather than throw a recoverable error. Delete it proactively so we start clean.
+        if let realmURL = databaseFileUrl,
+           FileManager.default.fileExists(atPath: realmURL.path),
+           let onDiskVersion = try? schemaVersionAtURL(realmURL),
+           onDiskVersion > databaseSchemaVersion {
+            nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .warning,
+                  message: "On-disk schema v\(onDiskVersion) > app schema v\(databaseSchemaVersion) — wiping DB")
+            deleteRealmFiles(at: realmURL)
+        }
+
         let configuration = Realm.Configuration(fileURL: databaseFileUrl,
                                                 schemaVersion: databaseSchemaVersion,
                                                 migrationBlock: { migration, oldSchemaVersion in
@@ -64,20 +91,8 @@ final class NCManageDatabase: @unchecked Sendable {
         } catch let error {
             nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .error, message: "Realm open failed: \(error)")
             if let realmURL = databaseFileUrl {
-                let filesToDelete = [
-                    realmURL,
-                    realmURL.appendingPathExtension("lock"),
-                    realmURL.appendingPathExtension("note"),
-                    realmURL.appendingPathExtension("management")
-                ]
-
-                for file in filesToDelete {
-                    do {
-                        try FileManager.default.removeItem(at: file)
-                    } catch { }
-                }
+                deleteRealmFiles(at: realmURL)
             }
-
             do {
                 let realm = try Realm()
                 if let url = realm.configuration.fileURL {
