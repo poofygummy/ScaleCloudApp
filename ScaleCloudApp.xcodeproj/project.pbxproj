@@ -946,6 +946,7 @@
 		F7FFFCA22FB300600015441E /* NCAssistantSharedTextStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FFFC9D2FB300440015441E /* NCAssistantSharedTextStore.swift */; };
 		F7FFFCA42FB3088E0015441E /* NCShareExtension+Assistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FFFCA32FB3088D0015441E /* NCShareExtension+Assistant.swift */; };
 		B2C3D4E5F6A7B8C9D0E1F2A3 /* ScaleCloudKit in Frameworks */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6A7B8C9D0E1F2 /* ScaleCloudKit.framework */; };
+		B2C3D4E5F6A7B8C9D0E1F2A4 /* ScaleCloudKit in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6A7B8C9D0E1F2 /* ScaleCloudKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6A5BA6BB6AC84BCCAC9AC16E /* ScaleCloudGo.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 961D2E68CAEB458BB91C7C82 /* ScaleCloudGo.xcframework */; };
 		A5F71992835F48AE85F14C2E /* ScaleCloudGo.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 961D2E68CAEB458BB91C7C82 /* ScaleCloudGo.xcframework */; };
 		6AAADBBDDB674A8BB2FA6C94 /* ScaleCloudGo.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 961D2E68CAEB458BB91C7C82 /* ScaleCloudGo.xcframework */; };
@@ -1141,6 +1142,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				F7A509262C26D95D00326106 /* RealmSwift in Embed Frameworks */,
+				B2C3D4E5F6A7B8C9D0E1F2A4 /* ScaleCloudKit in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
