@@ -66,14 +66,23 @@ final class NCManageDatabase: @unchecked Sendable {
         let databaseFileUrl = dirGroup?.appendingPathComponent(NCGlobal.shared.appDatabaseNextcloud + "/" + databaseName)
 
         // If an existing DB has a schema version newer than ours, Realm will fatal-assert
-        // rather than throw a recoverable error. Delete it proactively so we start clean.
+        // (preconditionFailure — uncatchable) rather than throw. Delete proactively.
+        // Also delete if the file is unreadable/corrupt (schemaVersionAtURL throws).
         if let realmURL = databaseFileUrl,
-           FileManager.default.fileExists(atPath: realmURL.path),
-           let onDiskVersion = try? schemaVersionAtURL(realmURL),
-           onDiskVersion > databaseSchemaVersion {
-            nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .warning,
-                  message: "On-disk schema v\(onDiskVersion) > app schema v\(databaseSchemaVersion) — wiping DB")
-            deleteRealmFiles(at: realmURL)
+           FileManager.default.fileExists(atPath: realmURL.path) {
+            do {
+                let onDiskVersion = try schemaVersionAtURL(realmURL)
+                if onDiskVersion > databaseSchemaVersion {
+                    nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .warning,
+                          message: "On-disk schema v\(onDiskVersion) > app schema v\(databaseSchemaVersion) — wiping DB")
+                    deleteRealmFiles(at: realmURL)
+                }
+            } catch {
+                // File is corrupt or not a valid Realm — delete it before Realm crashes
+                nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .warning,
+                      message: "schemaVersionAtURL failed (\(error)) — wiping DB")
+                deleteRealmFiles(at: realmURL)
+            }
         }
 
         let configuration = Realm.Configuration(fileURL: databaseFileUrl,
@@ -90,6 +99,7 @@ final class NCManageDatabase: @unchecked Sendable {
             }
         } catch let error {
             nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .error, message: "Realm open failed: \(error)")
+            // Delete all Realm files and retry once with a fresh DB.
             if let realmURL = databaseFileUrl {
                 deleteRealmFiles(at: realmURL)
             }
@@ -440,6 +450,31 @@ final class NCManageDatabase: @unchecked Sendable {
         }
         let url = dirGroup.appendingPathComponent(NCGlobal.shared.appDatabaseNextcloud + "/" + databaseName)
         let fileManager = FileManager.default
+
+        // If the DB has a schema version newer than ours, Realm will fatal-assert
+        // (uncatchable preconditionFailure) when we try to open it. Delete it so
+        // openRealm() can start fresh after maintenance completes.
+        // Same guard for a corrupt/unreadable file.
+        if fileManager.fileExists(atPath: url.path) {
+            do {
+                let onDiskVersion = try schemaVersionAtURL(url)
+                if onDiskVersion > databaseSchemaVersion {
+                    nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .warning,
+                          message: "compactRealm: on-disk schema v\(onDiskVersion) > app schema v\(databaseSchemaVersion) — skipping compaction, wiping DB")
+                    deleteRealmFiles(at: url)
+                    return
+                }
+            } catch {
+                nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .warning,
+                      message: "compactRealm: schemaVersionAtURL failed (\(error)) — skipping compaction, wiping DB")
+                deleteRealmFiles(at: url)
+                return
+            }
+        } else {
+            // No DB file yet — nothing to compact.
+            return
+        }
+
         let compactedURL = url.deletingLastPathComponent()
             .appendingPathComponent(url.lastPathComponent + ".compact.realm")
         let backupURL = url.appendingPathExtension("bak")
