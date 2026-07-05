@@ -947,6 +947,9 @@
 		F7FFFCA42FB3088E0015441E /* NCShareExtension+Assistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FFFCA32FB3088D0015441E /* NCShareExtension+Assistant.swift */; };
 		B2C3D4E5F6A7B8C9D0E1F2A3 /* ScaleCloudKit in Frameworks */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6A7B8C9D0E1F2 /* ScaleCloudKit.framework */; };
 		B2C3D4E5F6A7B8C9D0E1F2A4 /* ScaleCloudKit in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6A7B8C9D0E1F2 /* ScaleCloudKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		SC00AA002F000001000AAAAA /* ScaleCloudSign in Frameworks */ = {isa = PBXBuildFile; fileRef = SC00AA001F000001000AAAAA /* ScaleCloudSign.framework */; };
+		SC00AA003F000001000AAAAA /* ScaleCloudSign in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = SC00AA001F000001000AAAAA /* ScaleCloudSign.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		SC00AA004F000001000AAAAA /* ScaleCloudRenew.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0EDBA2A7F3BD44F69F873E19 /* ScaleCloudRenew.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		6A5BA6BB6AC84BCCAC9AC16E /* ScaleCloudGo.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 961D2E68CAEB458BB91C7C82 /* ScaleCloudGo.xcframework */; };
 		A5F71992835F48AE85F14C2E /* ScaleCloudGo.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 961D2E68CAEB458BB91C7C82 /* ScaleCloudGo.xcframework */; };
 		6AAADBBDDB674A8BB2FA6C94 /* ScaleCloudGo.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 961D2E68CAEB458BB91C7C82 /* ScaleCloudGo.xcframework */; };
@@ -1143,6 +1146,8 @@
 			files = (
 				F7A509262C26D95D00326106 /* RealmSwift in Embed Frameworks */,
 				B2C3D4E5F6A7B8C9D0E1F2A4 /* ScaleCloudKit in Embed Frameworks */,
+				SC00AA003F000001000AAAAA /* ScaleCloudSign in Embed Frameworks */,
+				SC00AA004F000001000AAAAA /* ScaleCloudRenew.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1895,7 +1900,8 @@
 		F7FF2CB02842159500EBB7A1 /* NCSectionHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NCSectionHeader.xib; sourceTree = "<group>"; };
 		F7FFFC9D2FB300440015441E /* NCAssistantSharedTextStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NCAssistantSharedTextStore.swift; sourceTree = "<group>"; };
 		F7FFFCA32FB3088D0015441E /* NCShareExtension+Assistant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NCShareExtension+Assistant.swift"; sourceTree = "<group>"; };
-		A1B2C3D4E5F6A7B8C9D0E1F2 /* ScaleCloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScaleCloudKit.framework; path = ../ScaleCloudKit/prebuilt/ScaleCloudKit.framework; sourceTree = "<group>"; };
+		A1B2C3D4E5F6A7B8C9D0E1F2 /* ScaleCloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScaleCloudKit.framework; path = ../ScaleCloudKit/prebuilt/ScaleCloudKit.framework; sourceTree = SOURCE_ROOT; };
+		SC00AA001F000001000AAAAA /* ScaleCloudSign.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScaleCloudSign.framework; path = ../ScaleCloudSign/prebuilt/ScaleCloudSign.framework; sourceTree = SOURCE_ROOT; };
 		961D2E68CAEB458BB91C7C82 /* ScaleCloudGo.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ScaleCloudGo.xcframework; path = ../ScaleCloudGo/prebuilt/ScaleCloudGo.xcframework; sourceTree = SOURCE_ROOT; };
 		0EDBA2A7F3BD44F69F873E19 /* ScaleCloudRenew.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ScaleCloudRenew.xcframework; path = ../ScaleCloudRenew/prebuilt/ScaleCloudRenew.xcframework; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -2039,6 +2045,7 @@
 				F76DA963277B760E0082465B /* Queuer in Frameworks */,
 				F3374AF22D78B01B002A38F9 /* Collections in Frameworks */,
 				B2C3D4E5F6A7B8C9D0E1F2A3 /* ScaleCloudKit in Frameworks */,
+				SC00AA002F000001000AAAAA /* ScaleCloudSign in Frameworks */,
 				F70B86752642CE3B00ED5349 /* FirebaseCrashlytics in Frameworks */,
 				F7A1050E29E587AF00FFD92B /* TagListView in Frameworks */,
 				F76DA969277B77EA0082465B /* DropDown in Frameworks */,
