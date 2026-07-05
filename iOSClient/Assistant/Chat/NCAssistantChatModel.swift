@@ -4,7 +4,6 @@
 
 import ScaleCloudKit
 
-@available(iOS 17, *)
 @MainActor
 @Observable
 class NCAssistantChatModel {
@@ -170,7 +169,6 @@ class NCAssistantChatModel {
     }
 }
 
-@available(iOS 17, *)
 extension NCAssistantChatModel {
     static var example = NCAssistantChatModel(controller: nil, messages: [
         AssistantChatMessage(

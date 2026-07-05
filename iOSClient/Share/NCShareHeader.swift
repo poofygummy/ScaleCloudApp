@@ -83,7 +83,6 @@ class NCShareHeader: UIView {
     }
 
     func presentTagEditor(from sourceViewController: UIViewController, onApplied: (([SCKTag]) -> Void)? = nil) {
-        guard #available(iOS 17, *) else { return }
         let editor = NCTagEditorView(
             metadata: metadata.detachedCopy(),
             windowScene: sourceViewController.view.window?.windowScene,

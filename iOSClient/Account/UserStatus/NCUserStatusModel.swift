@@ -4,7 +4,6 @@
 
 import ScaleCloudKit
 
-@available(iOS 17, *)
 @MainActor
 @Observable class NCUserStatusModel {
     struct UserStatus: Hashable {

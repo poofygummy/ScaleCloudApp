@@ -6,7 +6,6 @@ import SwiftUI
 import UIKit
 import ScaleCloudKit
 
-@available(iOS 17, *)
 struct NCTagEditorView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var model: NCTagEditorModel

@@ -136,32 +136,28 @@ struct NCAccountSettingsView: View {
                     //
                     // User Status
                     if capabilities.userStatusEnabled {
-                        if #available(iOS 17, *) {
-                            if let account = model.tblAccount?.account {
-                                NavigationLink(destination: NCUserStatusView(account: account, controller: model.controller)) {
-                                    HStack {
-                                        Image(systemName: "moon")
-                                            .font(.icon())
-                                            .foregroundStyle(Color(NCBrandColor.shared.iconImageColor))
-                                            .frame(width: 26)
-                                        Text(NSLocalizedString("_set_user_status_", comment: ""))
-                                            .cappedFont(.body, maxDynamicType: .accessibility2)
-                                            .foregroundStyle(Color(NCBrandColor.shared.textColor))
-                                    }
+                        if let account = model.tblAccount?.account {
+                            NavigationLink(destination: NCUserStatusView(account: account, controller: model.controller)) {
+                                HStack {
+                                    Image(systemName: "moon")
+                                        .font(.icon())
+                                        .foregroundStyle(Color(NCBrandColor.shared.iconImageColor))
+                                        .frame(width: 26)
+                                    Text(NSLocalizedString("_set_user_status_", comment: ""))
+                                        .cappedFont(.body, maxDynamicType: .accessibility2)
+                                        .foregroundStyle(Color(NCBrandColor.shared.textColor))
                                 }
                             }
 
-                            if let account = model.tblAccount?.account {
-                                NavigationLink(destination: NCStatusMessageView(account: account, controller: model.controller)) {
-                                    HStack {
-                                        Image(systemName: "message")
-                                            .font(.icon())
-                                            .foregroundStyle(Color(NCBrandColor.shared.iconImageColor))
-                                            .frame(width: 26)
-                                        Text(NSLocalizedString("_set_user_status_message_", comment: ""))
-                                            .cappedFont(.body, maxDynamicType: .accessibility2)
-                                            .foregroundStyle(Color(NCBrandColor.shared.textColor))
-                                    }
+                            NavigationLink(destination: NCStatusMessageView(account: account, controller: model.controller)) {
+                                HStack {
+                                    Image(systemName: "message")
+                                        .font(.icon())
+                                        .foregroundStyle(Color(NCBrandColor.shared.iconImageColor))
+                                        .frame(width: 26)
+                                    Text(NSLocalizedString("_set_user_status_message_", comment: ""))
+                                        .cappedFont(.body, maxDynamicType: .accessibility2)
+                                        .foregroundStyle(Color(NCBrandColor.shared.textColor))
                                 }
                             }
                         }

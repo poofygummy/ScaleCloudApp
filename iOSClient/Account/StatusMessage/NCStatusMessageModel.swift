@@ -5,7 +5,6 @@
 import SwiftUI
 import ScaleCloudKit
 
-@available(iOS 17, *)
 @MainActor
 @Observable class NCStatusMessageModel {
     enum ClearAfter: String, CaseIterable, Identifiable {

@@ -4,7 +4,6 @@
 
 import SwiftUI
 
-@available(iOS 17, *)
 struct NCUserStatusView: View {
     let account: String
 

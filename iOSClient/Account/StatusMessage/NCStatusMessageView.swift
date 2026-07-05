@@ -6,7 +6,6 @@ import SwiftUI
 import UIKit
 import ScaleCloudKit
 
-@available(iOS 17, *)
 struct NCStatusMessageView: View {
     let account: String
     let controller: NCMainTabBarController?
@@ -103,7 +102,6 @@ struct NCStatusMessageView: View {
     }
 }
 
-@available(iOS 17, *)
 private struct StatusPresetRow: View {
     @Binding var model: NCStatusMessageModel
     let preset: SCKUserStatus
