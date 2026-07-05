@@ -62,35 +62,43 @@ final class NCManageDatabase: @unchecked Sendable {
     }
 
     func openRealm() {
+        nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .start, message: "openRealm: start, appSchema=\(databaseSchemaVersion)")
+
         let dirGroup = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: NCBrandOptions.shared.capabilitiesGroup)
         let databaseFileUrl = dirGroup?.appendingPathComponent(NCGlobal.shared.appDatabaseNextcloud + "/" + databaseName)
 
-        // If an existing DB has a schema version newer than ours, Realm will fatal-assert
-        // (preconditionFailure — uncatchable) rather than throw. Delete proactively.
-        // Also delete if the file is unreadable/corrupt (schemaVersionAtURL throws).
-        if let realmURL = databaseFileUrl,
-           FileManager.default.fileExists(atPath: realmURL.path) {
+        guard let realmURL = databaseFileUrl else {
+            nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .error, message: "openRealm: app group container URL is nil — cannot open Realm")
+            return
+        }
+        nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .start, message: "openRealm: path=\(realmURL.path)")
+
+        // Any schema mismatch (higher OR lower than expected), corruption, or unreadable file:
+        // wipe the DB proactively. Realm fires an uncatchable preconditionFailure on mismatch,
+        // so we must delete before calling Realm.init. Data loss is acceptable — fresh install.
+        if FileManager.default.fileExists(atPath: realmURL.path) {
             do {
                 let onDiskVersion = try schemaVersionAtURL(realmURL)
-                if onDiskVersion > databaseSchemaVersion {
+                nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .start, message: "openRealm: on-disk schema v\(onDiskVersion)")
+                if onDiskVersion != databaseSchemaVersion {
                     nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .warning,
-                          message: "On-disk schema v\(onDiskVersion) > app schema v\(databaseSchemaVersion) — wiping DB")
+                          message: "openRealm: schema mismatch (disk=\(onDiskVersion) app=\(databaseSchemaVersion)) — wiping DB")
                     deleteRealmFiles(at: realmURL)
                 }
             } catch {
-                // File is corrupt or not a valid Realm — delete it before Realm crashes
                 nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .warning,
-                      message: "schemaVersionAtURL failed (\(error)) — wiping DB")
+                      message: "openRealm: schemaVersionAtURL failed (\(error)) — wiping DB")
                 deleteRealmFiles(at: realmURL)
             }
+        } else {
+            nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .start, message: "openRealm: no existing DB file, will create fresh")
         }
 
-        let configuration = Realm.Configuration(fileURL: databaseFileUrl,
-                                                schemaVersion: databaseSchemaVersion,
-                                                migrationBlock: { migration, oldSchemaVersion in
-            self.core.migrationSchema(migration, oldSchemaVersion)
-        })
+        // No migration block needed: any old DB was wiped above.
+        let configuration = Realm.Configuration(fileURL: realmURL,
+                                                schemaVersion: databaseSchemaVersion)
         Realm.Configuration.defaultConfiguration = configuration
+        nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .start, message: "openRealm: calling Realm(configuration:)")
 
         do {
             let realm = try Realm(configuration: configuration)
@@ -98,31 +106,43 @@ final class NCManageDatabase: @unchecked Sendable {
                 nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .start, message: "Realm is located at: \(url.path)", consoleOnly: true)
             }
         } catch let error {
-            nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .error, message: "Realm open failed: \(error)")
-            // Delete all Realm files and retry once with a fresh DB.
-            if let realmURL = databaseFileUrl {
-                deleteRealmFiles(at: realmURL)
-            }
+            nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .error, message: "openRealm: Realm(configuration:) threw: \(error) — wiping and retrying")
+            deleteRealmFiles(at: realmURL)
             do {
                 let realm = try Realm()
                 if let url = realm.configuration.fileURL {
                     nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .start, message: "Realm is located at: \(url.path)", consoleOnly: true)
                 }
             } catch {
-                nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .error, message: "Realm error: \(error)")
+                nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .error, message: "openRealm: retry also failed: \(error)")
             }
         }
+        nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .start, message: "openRealm: done")
     }
 
     @discardableResult
     func openRealmBackground() -> Bool {
         let dirGroup = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: NCBrandOptions.shared.capabilitiesGroup)
-        let databaseFileUrl = dirGroup?.appendingPathComponent(NCGlobal.shared.appDatabaseNextcloud + "/" + databaseName)
-        let configuration = Realm.Configuration(fileURL: databaseFileUrl,
-                                                schemaVersion: databaseSchemaVersion,
-                                                migrationBlock: { migration, oldSchemaVersion in
-            self.core.migrationSchema(migration, oldSchemaVersion)
-        })
+        guard let realmURL = dirGroup?.appendingPathComponent(NCGlobal.shared.appDatabaseNextcloud + "/" + databaseName) else {
+            nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .error, message: "openRealmBackground: app group container URL is nil")
+            return false
+        }
+
+        // Wipe on any schema mismatch or corruption, same policy as openRealm().
+        if FileManager.default.fileExists(atPath: realmURL.path) {
+            if let onDiskVersion = try? schemaVersionAtURL(realmURL), onDiskVersion != databaseSchemaVersion {
+                nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .warning,
+                      message: "openRealmBackground: schema mismatch (disk=\(onDiskVersion) app=\(databaseSchemaVersion)) — wiping DB")
+                deleteRealmFiles(at: realmURL)
+            } else if (try? schemaVersionAtURL(realmURL)) == nil {
+                nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .warning,
+                      message: "openRealmBackground: schemaVersionAtURL failed — wiping DB")
+                deleteRealmFiles(at: realmURL)
+            }
+        }
+
+        let configuration = Realm.Configuration(fileURL: realmURL,
+                                                schemaVersion: databaseSchemaVersion)
         Realm.Configuration.defaultConfiguration = configuration
 
         do {
@@ -132,7 +152,7 @@ final class NCManageDatabase: @unchecked Sendable {
             }
             return true
         } catch {
-            nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .error, message: "Realm error: \(error)")
+            nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .error, message: "openRealmBackground: Realm error: \(error)")
             return false
         }
     }
@@ -142,6 +162,23 @@ final class NCManageDatabase: @unchecked Sendable {
             return
         }
         let databaseFileUrl = dirGroup.appendingPathComponent(NCGlobal.shared.appDatabaseNextcloud + "/" + databaseName)
+
+        // Wipe on any schema mismatch or corruption, same policy as openRealm().
+        if FileManager.default.fileExists(atPath: databaseFileUrl.path) {
+            do {
+                let onDiskVersion = try schemaVersionAtURL(databaseFileUrl)
+                if onDiskVersion != databaseSchemaVersion {
+                    nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .warning,
+                          message: "openRealmAppex: schema mismatch (disk=\(onDiskVersion) app=\(databaseSchemaVersion)) — wiping DB")
+                    deleteRealmFiles(at: databaseFileUrl)
+                }
+            } catch {
+                nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .warning,
+                      message: "openRealmAppex: schemaVersionAtURL failed (\(error)) — wiping DB")
+                deleteRealmFiles(at: databaseFileUrl)
+            }
+        }
+
         let objectTypes = [
             NCKeyValue.self, tableMetadata.self, tableMetadataTag.self, tableLocalFile.self,
             tableDirectory.self, tableTag.self, tableAccount.self,
@@ -153,18 +190,10 @@ final class NCManageDatabase: @unchecked Sendable {
         ]
 
         do {
-            // Migration configuration
-            let migrationCfg = Realm.Configuration(fileURL: databaseFileUrl,
-                                                   schemaVersion: databaseSchemaVersion,
-                                                   migrationBlock: { migration, oldSchemaVersion in
-                self.core.migrationSchema(migration, oldSchemaVersion)
-            })
-            try autoreleasepool {
-                _ = try Realm(configuration: migrationCfg)
-            }
-
-            // Runtime and default configuration
-            let runtimeCfg = Realm.Configuration(fileURL: databaseFileUrl, schemaVersion: databaseSchemaVersion, objectTypes: objectTypes)
+            // No migration block needed: any old DB was wiped above.
+            let runtimeCfg = Realm.Configuration(fileURL: databaseFileUrl,
+                                                 schemaVersion: databaseSchemaVersion,
+                                                 objectTypes: objectTypes)
             Realm.Configuration.defaultConfiguration = runtimeCfg
 
             let realm = try Realm(configuration: runtimeCfg)
@@ -172,7 +201,7 @@ final class NCManageDatabase: @unchecked Sendable {
                 nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .start, message: "Realm is located at: \(url.path)", consoleOnly: true)
             }
         } catch let error {
-            nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .error, message: "Realm error: \(error)")
+            nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .error, message: "openRealmAppex: Realm error: \(error)")
             isSuspendingDatabaseOperation = true
         }
     }
@@ -443,35 +472,36 @@ final class NCManageDatabase: @unchecked Sendable {
     /// Compacts the Realm database by writing a compacted copy and replacing the original.
     /// Must be called when no Realm instances are open.
     func compactRealm() throws {
-        nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .start, message: "Start Compact Realm")
+        nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .start, message: "compactRealm: start, appSchema=\(databaseSchemaVersion)")
 
         guard let dirGroup = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: NCBrandOptions.shared.capabilitiesGroup) else {
-            throw NSError(domain: "RealmMaintenance", code: 1, userInfo: [NSLocalizedDescriptionKey: "App Group container URL not found"])
+            nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .error, message: "compactRealm: app group container URL is nil — skipping")
+            return
         }
         let url = dirGroup.appendingPathComponent(NCGlobal.shared.appDatabaseNextcloud + "/" + databaseName)
         let fileManager = FileManager.default
+        nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .start, message: "compactRealm: path=\(url.path)")
 
-        // If the DB has a schema version newer than ours, Realm will fatal-assert
-        // (uncatchable preconditionFailure) when we try to open it. Delete it so
-        // openRealm() can start fresh after maintenance completes.
-        // Same guard for a corrupt/unreadable file.
+        // Any schema mismatch or corruption: wipe and skip compaction.
+        // openRealm() will create a fresh DB after maintenance completes.
         if fileManager.fileExists(atPath: url.path) {
             do {
                 let onDiskVersion = try schemaVersionAtURL(url)
-                if onDiskVersion > databaseSchemaVersion {
+                nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .start, message: "compactRealm: on-disk schema v\(onDiskVersion)")
+                if onDiskVersion != databaseSchemaVersion {
                     nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .warning,
-                          message: "compactRealm: on-disk schema v\(onDiskVersion) > app schema v\(databaseSchemaVersion) — skipping compaction, wiping DB")
+                          message: "compactRealm: schema mismatch (disk=\(onDiskVersion) app=\(databaseSchemaVersion)) — wiping DB, skipping compaction")
                     deleteRealmFiles(at: url)
                     return
                 }
             } catch {
                 nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .warning,
-                      message: "compactRealm: schemaVersionAtURL failed (\(error)) — skipping compaction, wiping DB")
+                      message: "compactRealm: schemaVersionAtURL failed (\(error)) — wiping DB, skipping compaction")
                 deleteRealmFiles(at: url)
                 return
             }
         } else {
-            // No DB file yet — nothing to compact.
+            nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .start, message: "compactRealm: no DB file, nothing to compact")
             return
         }
 
@@ -479,17 +509,15 @@ final class NCManageDatabase: @unchecked Sendable {
             .appendingPathComponent(url.lastPathComponent + ".compact.realm")
         let backupURL = url.appendingPathExtension("bak")
 
+        nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .start, message: "compactRealm: opening Realm for compaction")
         // Write a compacted copy inside an autoreleasepool to ensure file handles are closed
         try autoreleasepool {
+            // No migration block needed: schema matches exactly.
             let configuration = Realm.Configuration(fileURL: url,
-                                                    schemaVersion: databaseSchemaVersion,
-                                                    migrationBlock: { migration, oldSchemaVersion in
-                self.core.migrationSchema(migration, oldSchemaVersion)
-            })
+                                                    schemaVersion: databaseSchemaVersion)
             Realm.Configuration.defaultConfiguration = configuration
-
-            // Writes a compacted copy of the Realm to the given destination
             let realm = try Realm(configuration: configuration)
+            nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .start, message: "compactRealm: writing compacted copy")
             try realm.writeCopy(toFile: compactedURL)
         }
 
@@ -502,6 +530,7 @@ final class NCManageDatabase: @unchecked Sendable {
         }
         try fileManager.moveItem(at: compactedURL, to: url)
         try? fileManager.removeItem(at: backupURL)
+        nkLog(tag: NCGlobal.shared.logTagDatabase, emoji: .start, message: "compactRealm: done")
     }
 
     // MARK: -
