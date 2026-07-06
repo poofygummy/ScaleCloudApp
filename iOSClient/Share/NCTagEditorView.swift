@@ -22,13 +22,40 @@ struct NCTagEditorView: View {
     var body: some View {
         WithPerceptionTracking {
         Group {
-        if #available(iOS 16, *) {
+        if #available(iOS 17, *) {
         NavigationStack {
             listContent
                 .navigationTitle(NSLocalizedString("_tags_", comment: ""))
                 .searchable(
                     text: $model.searchText,
                     isPresented: $isSearchPresented,
+                    prompt: Text(NSLocalizedString("_search_or_create_tags", comment: ""))
+                )
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button(NSLocalizedString("_cancel_", comment: "")) { dismiss() }
+                    }
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button(NSLocalizedString("_done_", comment: "")) {
+                            Task { @MainActor in
+                                guard let selectedTags = await model.saveChanges() else { return }
+                                onApplied(selectedTags)
+                                dismiss()
+                            }
+                        }
+                        .disabled(model.isSaving || model.isLoading || model.isUpdatingTagColor)
+                    }
+                }
+        }
+        .task {
+            await model.loadTags()
+        }
+        } else if #available(iOS 16, *) {
+        NavigationStack {
+            listContent
+                .navigationTitle(NSLocalizedString("_tags_", comment: ""))
+                .searchable(
+                    text: $model.searchText,
                     prompt: Text(NSLocalizedString("_search_or_create_tags", comment: ""))
                 )
                 .toolbar {

@@ -25,11 +25,13 @@ struct NCAssistantChat: View {
 
         }
         .safeAreaInset(edge: .bottom) {
-            ChatInputField(text: $chatModel.text, initialText: $chatModel.inputText, isLoading: $chatModel.isSending, isDisabled: $chatModel.isSendingDisabled) { input in
-                if chatModel.selectedConversation != nil {
-                    chatModel.sendMessage(input: input)
-                } else {
-                    chatModel.startNewConversationViaMessage(input: input, sessionsModel: conversationsModel)
+            if #available(iOS 16, *) {
+                ChatInputField(text: $chatModel.text, initialText: $chatModel.inputText, isLoading: $chatModel.isSending, isDisabled: $chatModel.isSendingDisabled) { input in
+                    if chatModel.selectedConversation != nil {
+                        chatModel.sendMessage(input: input)
+                    } else {
+                        chatModel.startNewConversationViaMessage(input: input, sessionsModel: conversationsModel)
+                    }
                 }
             }
         }

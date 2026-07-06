@@ -186,8 +186,10 @@ struct TaskList: View {
             }
         }
         .safeAreaInset(edge: .bottom) {
-            ChatInputField(text: $assistantModel.text, initialText: $assistantModel.inputText, isLoading: $assistantModel.isLoading) { input in
-                assistantModel.scheduleTask(input: input)
+            if #available(iOS 16, *) {
+                ChatInputField(text: $assistantModel.text, initialText: $assistantModel.inputText, isLoading: $assistantModel.isLoading) { input in
+                    assistantModel.scheduleTask(input: input)
+                }
             }
         }
 
