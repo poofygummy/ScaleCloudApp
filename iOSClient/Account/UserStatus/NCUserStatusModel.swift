@@ -3,16 +3,19 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import ScaleCloudKit
+import Perception
 
 @MainActor
-@Observable class NCUserStatusModel {
+
+@Perceptible class NCUserStatusModel {
     struct UserStatus: Hashable {
         let name: String
         let titleKey: String
         var descriptionKey: String = ""
     }
 
-    @ObservationIgnored var userStatuses: [UserStatus] = [
+
+    @PerceptionIgnored var userStatuses: [UserStatus] = [
         .init(name: "online", titleKey: "_online_"),
         .init(name: "away", titleKey: "_away_"),
         .init(name: "dnd", titleKey: "_dnd_", descriptionKey: "_dnd_description_"),
@@ -22,9 +25,12 @@ import ScaleCloudKit
     var selectedStatus: String?
     var canDismiss = false
 
-    @ObservationIgnored let account: String
-    @ObservationIgnored let controller: NCMainTabBarController?
-    @ObservationIgnored var windowScene: UIWindowScene? {
+
+
+
+    @PerceptionIgnored let account: String
+    @PerceptionIgnored let controller: NCMainTabBarController?
+    @PerceptionIgnored var windowScene: UIWindowScene? {
         SceneManager.shared.getWindowScene(controller: controller)
     }
 

@@ -5,6 +5,7 @@
 import SwiftUI
 import UIKit
 import ScaleCloudKit
+import Perception
 
 struct NCTagEditorView: View {
     @Environment(\.dismiss) private var dismiss
@@ -19,6 +20,7 @@ struct NCTagEditorView: View {
     }
 
     var body: some View {
+        WithPerceptionTracking {
         Group {
         if #available(iOS 16, *) {
         NavigationStack {
@@ -71,7 +73,7 @@ struct NCTagEditorView: View {
             }
             .task { await model.loadTags() }
         }
-        }
+        } // WithPerceptionTracking
     }
 
     @ViewBuilder

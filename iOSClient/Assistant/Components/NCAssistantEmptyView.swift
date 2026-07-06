@@ -3,13 +3,14 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import SwiftUI
+import Perception
 
-@available(iOS 17, *)
 struct NCAssistantEmptyView: View {
     @Environment(NCAssistantModel.self) var assistantModel
     let titleKey, subtitleKey: String
 
     var body: some View {
+        WithPerceptionTracking {
         VStack {
             Image(systemName: "sparkles")
                 .renderingMode(.template)
@@ -28,6 +29,7 @@ struct NCAssistantEmptyView: View {
                 .font(.footnote)
                 .foregroundStyle(.secondary)
         }
+        } // WithPerceptionTracking
     }
 }
 

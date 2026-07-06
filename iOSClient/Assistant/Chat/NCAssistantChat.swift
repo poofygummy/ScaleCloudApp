@@ -4,14 +4,15 @@
 
 import SwiftUI
 import ScaleCloudKit
+import Perception
 
-@available(iOS 17, *)
 struct NCAssistantChat: View {
     @Environment(NCAssistantChatModel.self) var chatModel
     @Binding var conversationsModel: NCAssistantChatConversationsModel
 
     var body: some View {
-        @Bindable var chatModel = chatModel
+        WithPerceptionTracking {
+        @Perception.Bindable var chatModel = chatModel
 
         if chatModel.messages.isEmpty {
             NCAssistantEmptyView(titleKey: "_no_tasks_", subtitleKey: "_no_chat_subtitle_")
@@ -34,6 +35,7 @@ struct NCAssistantChat: View {
         }
         .navigationTitle(NSLocalizedString("_assistant_chat_", comment: ""))
         .navigationBarTitleDisplayMode(.inline)
+        } // WithPerceptionTracking
     }
 
     private var messageListView: some View {
@@ -88,12 +90,12 @@ struct NCAssistantChat: View {
 
 // MARK: - Message Bubble View
 
-@available(iOS 17, *)
 struct MessageBubbleView: View {
     let message: AssistantChatMessage
     let account: String
 
     var body: some View {
+        WithPerceptionTracking {
         HStack {
             if message.isFromHuman {
                 Spacer(minLength: 50)
@@ -119,6 +121,7 @@ struct MessageBubbleView: View {
                 Spacer(minLength: 50)
             }
         }
+        } // WithPerceptionTracking
     }
 
     private var bubbleBackground: Color {
@@ -132,7 +135,6 @@ struct MessageBubbleView: View {
 
 // MARK: - Thinking Bubble View
 
-@available(iOS 17, *)
 struct ThinkingBubbleView: View {
     @State private var scale1: CGFloat = 1.0
     @State private var scale2: CGFloat = 1.0
@@ -180,11 +182,11 @@ struct ThinkingBubbleView: View {
 
 // MARK: - Empty Chat View
 
-@available(iOS 17, *)
 struct EmptyChatView: View {
     @Environment(NCAssistantChatModel.self) var chatModel
 
     var body: some View {
+        WithPerceptionTracking {
         VStack(spacing: 16) {
             Image(systemName: "bubble.left.and.bubble.right")
                 .renderingMode(.template)
@@ -205,6 +207,7 @@ struct EmptyChatView: View {
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 32)
         }
+        } // WithPerceptionTracking
     }
 }
 

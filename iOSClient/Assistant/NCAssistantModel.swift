@@ -6,8 +6,9 @@ import Foundation
 import UIKit
 import ScaleCloudKit
 import SwiftUI
+import Perception
 
-@Observable
+@Perceptible
 class NCAssistantModel {
     var types: [TaskTypeData] = []
     var filteredTasks: [AssistantTask] = []
@@ -29,13 +30,13 @@ class NCAssistantModel {
     var isRefreshing: Bool = false
     var scrollTypeListToTop: Bool = false
 
-    @ObservationIgnored let controller: NCMainTabBarController?
-    @ObservationIgnored let inputModel: NCAssistantInputModel
-    @ObservationIgnored private var tasks: [AssistantTask] = []
-    @ObservationIgnored private let session: NCSession.Session
-    @ObservationIgnored private let useV2: Bool
-    @ObservationIgnored private let chatTypeId = "core:text2text:chat"
-    @ObservationIgnored var isSelectedTypeChat: Bool { selectedType?.id == chatTypeId }
+    @PerceptionIgnored let controller: NCMainTabBarController?
+    @PerceptionIgnored let inputModel: NCAssistantInputModel
+    @PerceptionIgnored private var tasks: [AssistantTask] = []
+    @PerceptionIgnored private let session: NCSession.Session
+    @PerceptionIgnored private let useV2: Bool
+    @PerceptionIgnored private let chatTypeId = "core:text2text:chat"
+    @PerceptionIgnored var isSelectedTypeChat: Bool { selectedType?.id == chatTypeId }
 
     init(controller: NCMainTabBarController?, inputModel: NCAssistantInputModel) {
         self.controller = controller

@@ -5,6 +5,7 @@
 import SwiftUI
 import UIKit
 import ScaleCloudKit
+import Perception
 
 struct NCStatusMessageView: View {
     let account: String
@@ -21,6 +22,7 @@ struct NCStatusMessageView: View {
     }
 
     var body: some View {
+        WithPerceptionTracking {
         ScrollView {
             VStack(spacing: 24) {
                 HStack(spacing: 12) {
@@ -99,6 +101,7 @@ struct NCStatusMessageView: View {
         .onDisappear {
             model.setAccountUserStatus(account: account)
         }
+        } // WithPerceptionTracking
     }
 }
 
@@ -107,6 +110,7 @@ private struct StatusPresetRow: View {
     let preset: SCKUserStatus
 
     var body: some View {
+        WithPerceptionTracking {
         let cleatAtText = model.getPredefinedClearStatusString(clearAt: preset.clearAt, clearAtTime: preset.clearAtTime, clearAtType: preset.clearAtType)
 
         Button(action: {
@@ -130,6 +134,7 @@ private struct StatusPresetRow: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+        } // WithPerceptionTracking
     }
 }
 

@@ -3,6 +3,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import SwiftUI
+import Perception
 
 struct NCUserStatusView: View {
     let account: String
@@ -16,6 +17,7 @@ struct NCUserStatusView: View {
     }
 
     var body: some View {
+        WithPerceptionTracking {
         List {
             ForEach(model.userStatuses, id: \.self) { item in
                 HStack {
@@ -60,6 +62,7 @@ struct NCUserStatusView: View {
         .onDisappear {
             model.setAccountUserStatus(account: account)
         }
+        } // WithPerceptionTracking
     }
 }
 

@@ -8,13 +8,14 @@
 
 import SwiftUI
 import ScaleCloudKit
+import Perception
 
-@available(iOS 17, *)
 struct NCAssistantTaskDetail: View {
     @Environment(NCAssistantModel.self) var assistantModel
     let task: AssistantTask
 
     var body: some View {
+        WithPerceptionTracking {
         ZStack(alignment: .bottom) {
             InputOutputScrollView(task: task)
 
@@ -32,6 +33,7 @@ struct NCAssistantTaskDetail: View {
         .onAppear {
             assistantModel.selectTask(task)
         }
+        } // WithPerceptionTracking
     }
 }
 
@@ -44,12 +46,12 @@ struct NCAssistantTaskDetail: View {
     }
 }
 
-@available(iOS 17, *)
 struct InputOutputScrollView: View {
     @Environment(NCAssistantModel.self) var model
     let task: AssistantTask
 
     var body: some View {
+        WithPerceptionTracking {
         ScrollView {
             VStack(alignment: .leading) {
                 Text(NSLocalizedString("_input_", comment: ""))
@@ -80,15 +82,16 @@ struct InputOutputScrollView: View {
             .padding(.bottom, 80)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        } // WithPerceptionTracking
     }
 }
 
-@available(iOS 17, *)
 struct BottomDetailsBar: View {
     @Environment(NCAssistantModel.self) var assistantModel
     let task: AssistantTask
 
     var body: some View {
+        WithPerceptionTracking {
         VStack(spacing: 0) {
             Divider()
 
@@ -100,5 +103,6 @@ struct BottomDetailsBar: View {
                     .frame(alignment: .bottom)
             }
         }
+        } // WithPerceptionTracking
     }
 }

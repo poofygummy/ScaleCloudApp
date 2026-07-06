@@ -3,9 +3,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 
 import ScaleCloudKit
+import Perception
 
 @MainActor
-@Observable
+@Perceptible
 class NCAssistantChatModel {
     var messages: [AssistantChatMessage] = []
     var isSending: Bool = false
@@ -32,10 +33,10 @@ class NCAssistantChatModel {
     private let ncSession: NCSession.Session
     private var pollingTask: Task<Void, Never>?
 
-    @ObservationIgnored var controller: NCMainTabBarController?
-    @ObservationIgnored let inputModel: NCAssistantInputModel
-    @ObservationIgnored private var chatMessageTaskId: Int?
-    @ObservationIgnored var windowScene: UIWindowScene? {
+    @PerceptionIgnored var controller: NCMainTabBarController?
+    @PerceptionIgnored let inputModel: NCAssistantInputModel
+    @PerceptionIgnored private var chatMessageTaskId: Int?
+    @PerceptionIgnored var windowScene: UIWindowScene? {
         SceneManager.shared.getWindowScene(controller: controller)
     }
 

@@ -5,8 +5,8 @@
 import Foundation
 import SwiftUI
 import ScaleCloudKit
+import Perception
 
-@available(iOS 17, *)
 struct NCAssistantChatConversations: View {
     var conversationsModel: NCAssistantChatConversationsModel
     var selectedConversation: AssistantConversation?
@@ -15,6 +15,7 @@ struct NCAssistantChatConversations: View {
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
+        WithPerceptionTracking {
         Group {
             List(conversationsModel.conversations, id: \.id) { conversation in
                 Button {
@@ -46,6 +47,7 @@ struct NCAssistantChatConversations: View {
                 }
             }
         }
+        } // WithPerceptionTracking
     }
 }
 

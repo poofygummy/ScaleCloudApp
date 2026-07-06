@@ -4,8 +4,9 @@
 
 import Foundation
 import ScaleCloudKit
+import Perception
 
-@Observable class NCAssistantChatConversationsModel {
+@Perceptible class NCAssistantChatConversationsModel {
     var conversations: [AssistantConversation] = []
     var isLoading: Bool = false
     var hasError: Bool = false

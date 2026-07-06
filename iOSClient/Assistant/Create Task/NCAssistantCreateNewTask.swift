@@ -7,8 +7,8 @@
 //
 
 import SwiftUI
+import Perception
 
-@available(iOS 17, *)
 struct NCAssistantCreateNewTask: View {
     @Environment(NCAssistantModel.self) var model
     @State var text = ""
@@ -17,6 +17,7 @@ struct NCAssistantCreateNewTask: View {
     var editMode = false
 
     var body: some View {
+        WithPerceptionTracking {
         VStack {
             Text(model.selectedType?.description ?? "")
                 .cappedFont(.body, maxDynamicType: .accessibility2)
@@ -57,6 +58,7 @@ struct NCAssistantCreateNewTask: View {
         .onAppear {
             inFocus = true
         }
+        } // WithPerceptionTracking
     }
 }
 

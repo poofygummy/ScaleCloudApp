@@ -6,8 +6,9 @@ import Foundation
 import UIKit
 import ScaleCloudKit
 import SwiftUI
+import Perception
 
-@Observable
+@Perceptible
 final class NCAssistantInputModel {
     var text: String = ""
     var initialText: String

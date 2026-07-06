@@ -5,9 +5,10 @@
 import Foundation
 import UIKit
 import ScaleCloudKit
+import Perception
 
 @MainActor
-@Observable final class NCTagEditorModel {
+@Perceptible final class NCTagEditorModel {
     var searchText: String = ""
     private(set) var tags: [SCKTag] = []
     private(set) var selectedTagIDs: Set<String> = []

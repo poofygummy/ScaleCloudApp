@@ -4,9 +4,11 @@
 
 import SwiftUI
 import ScaleCloudKit
+import Perception
 
 @MainActor
-@Observable class NCStatusMessageModel {
+
+@Perceptible class NCStatusMessageModel {
     enum ClearAfter: String, CaseIterable, Identifiable {
         case dontClear = "_dont_clear_"
         case thirtyMinutes = "_30_minutes_"

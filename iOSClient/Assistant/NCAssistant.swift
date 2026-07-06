@@ -5,8 +5,8 @@
 import SwiftUI
 import ScaleCloudKit
 import PopupView
+import Perception
 
-@available(iOS 17, *)
 struct NCAssistant: View {
     @State var assistantModel: NCAssistantModel
     @State var chatModel: NCAssistantChatModel
@@ -15,6 +15,7 @@ struct NCAssistant: View {
     @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
+        WithPerceptionTracking {
         NavigationView {
             ZStack {
                 if assistantModel.types.isEmpty, !assistantModel.isLoading {
@@ -86,6 +87,7 @@ struct NCAssistant: View {
         .onDisappear {
             chatModel.stopPolling()
         }
+        } // WithPerceptionTracking
     }
 }
 
@@ -100,7 +102,6 @@ struct NCAssistant: View {
     }
 }
 
-@available(iOS 17, *)
 struct TaskList: View {
     @Environment(NCAssistantModel.self) var assistantModel
     @State var presentEditTask = false
@@ -110,7 +111,8 @@ struct TaskList: View {
     @State var taskToDelete: AssistantTask?
 
     var body: some View {
-        @Bindable var assistantModel = assistantModel
+        WithPerceptionTracking {
+        @Perception.Bindable var assistantModel = assistantModel
 
         List(assistantModel.filteredTasks, id: \.id) { task in
             TaskItem(showDeleteConfirmation: $showDeleteConfirmation, taskToDelete: $taskToDelete, task: task)
@@ -192,10 +194,10 @@ struct TaskList: View {
         if assistantModel.filteredTasks.isEmpty, !assistantModel.isLoading {
             NCAssistantEmptyView(titleKey: "_no_tasks_", subtitleKey: "_create_task_subtitle_")
         }
+        } // WithPerceptionTracking
     }
 }
 
-@available(iOS 17, *)
 struct TypeButton: View {
     @Environment(NCAssistantModel.self) var model
 
@@ -203,6 +205,7 @@ struct TypeButton: View {
     var scrollProxy: ScrollViewProxy
 
     var body: some View {
+        WithPerceptionTracking {
         Button {
             model.selectTaskType(taskType)
 
@@ -229,10 +232,10 @@ struct TypeButton: View {
                 .stroke(.tertiary.opacity(0.2), lineWidth: 1)
         )
         .id(taskType?.id)
+        } // WithPerceptionTracking
     }
 }
 
-@available(iOS 17, *)
 struct TaskItem: View {
     @Environment(NCAssistantModel.self) var model
     @Binding var showDeleteConfirmation: Bool
@@ -240,6 +243,7 @@ struct TaskItem: View {
     var task: AssistantTask
 
     var body: some View {
+        WithPerceptionTracking {
         NavigationLink(destination: NCAssistantTaskDetail(task: task)) {
             VStack(alignment: .leading, spacing: 8) {
                 Text(task.input?.input ?? "")
@@ -277,10 +281,10 @@ struct TaskItem: View {
                 .tint(.red)
             }
         }
+        } // WithPerceptionTracking
     }
 }
 
-@available(iOS 17, *)
 struct NavigationSubtitleModifier: ViewModifier {
     let subtitle: String?
 
@@ -293,11 +297,11 @@ struct NavigationSubtitleModifier: ViewModifier {
     }
 }
 
-@available(iOS 17, *)
 struct TypeList: View {
     @Environment(NCAssistantModel.self) var model
 
     var body: some View {
+        WithPerceptionTracking {
         ScrollViewReader { scrollProxy in
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
@@ -309,11 +313,12 @@ struct TypeList: View {
                 .frame(height: 50)
             }
             .background(.ultraThinMaterial)
-            .onChange(of: model.scrollTypeListToTop) {
+            .onChange(of: model.scrollTypeListToTop) { _ in
                 withAnimation(.easeInOut(duration: 0.7)) {
                     scrollProxy.scrollTo(model.types.first?.id, anchor: .center)
                 }
             }
         }
+        } // WithPerceptionTracking
     }
 }
