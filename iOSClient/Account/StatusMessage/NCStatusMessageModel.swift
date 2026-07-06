@@ -21,7 +21,7 @@ import Perception
         var id: String { rawValue }
     }
 
-    let controller: NCMainTabBarController?
+    @PerceptionIgnored let controller: NCMainTabBarController?
     var predefinedStatuses: [SCKUserStatus] = []
     var emojiText: String = ""
     var statusText: String = ""

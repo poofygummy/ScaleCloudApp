@@ -39,8 +39,10 @@ struct NCAssistantChat: View {
     }
 
     private var messageListView: some View {
+        WithPerceptionTracking {
         ScrollViewReader { proxy in
             ScrollView {
+                WithPerceptionTracking {
                 LazyVStack(alignment: .leading, spacing: 12) {
                     ForEach(chatModel.messages) { message in
                         MessageBubbleView(message: message, account: chatModel.controller?.account ?? "")
@@ -69,6 +71,7 @@ struct NCAssistantChat: View {
                     }
                 }
                 .padding(.vertical)
+                } // WithPerceptionTracking (LazyVStack)
             }
             .onChange(of: chatModel.messages.count) { _ in
                 withAnimation {
@@ -85,6 +88,7 @@ struct NCAssistantChat: View {
                 }
             }
         }
+        } // WithPerceptionTracking (messageListView)
     }
 }
 

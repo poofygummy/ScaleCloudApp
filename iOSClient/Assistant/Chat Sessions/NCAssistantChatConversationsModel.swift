@@ -11,7 +11,7 @@ import Perception
     var isLoading: Bool = false
     var hasError: Bool = false
 
-    private let ncSession: NCSession.Session
+    @PerceptionIgnored private let ncSession: NCSession.Session
 
     init(controller: NCMainTabBarController?) {
         self.ncSession = NCSession.shared.getSession(controller: controller)
