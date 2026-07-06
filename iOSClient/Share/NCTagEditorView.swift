@@ -73,8 +73,9 @@ struct NCTagEditorView: View {
             }
             .task { await model.loadTags() }
         }
+        } // Group
         } // WithPerceptionTracking
-    }
+    } // body
 
     @ViewBuilder
     private var listContent: some View {
