@@ -30,8 +30,8 @@ final class NCAssistantChatModel {
 
     var currentSession: AssistantSession?
 
-    @PerceptionIgnored private let ncSession: NCSession.Session
-    @PerceptionIgnored private var pollingTask: Task<Void, Never>?
+    private let ncSession: NCSession.Session
+    private var pollingTask: Task<Void, Never>?
 
     @PerceptionIgnored var controller: NCMainTabBarController?
     @PerceptionIgnored let inputModel: NCAssistantInputModel

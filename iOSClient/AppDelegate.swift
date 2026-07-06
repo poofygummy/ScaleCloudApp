@@ -14,6 +14,7 @@ import Queuer
 import EasyTipView
 import SwiftUI
 import RealmSwift
+import Perception
 
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     var backgroundSessionCompletionHandler: (() -> Void)?
@@ -33,6 +34,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     var pushSubscriptionTask: Task<Void, Never>?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        // Prewarm Swift type metadata for all @Perceptible models before Realm's
+        // +[RLMSchema sharedSchema] calls objc_copyClassList. On iOS 15, the
+        // singleton metadata completion function for these types hits a null
+        // weak-linked Observation symbol if run lazily during class enumeration.
+        // Touching .self here forces the completion function to run now, safely.
+        prewarmPerceptibleMetadata()
+
         if isUiTestingEnabled {
             Task {
                 await NCAccount().deleteAllAccounts()
@@ -350,6 +358,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         return false
     }
+}
+
+// MARK: - Perception metadata prewarm
+
+/// Forces Swift singleton metadata initialization for every @Perceptible model
+/// class before Realm enumerates all ObjC-visible classes at first DB open.
+private func prewarmPerceptibleMetadata() {
+    _ = NCAssistantChatConversationsModel.self
+    _ = NCAssistantChatModel.self
+    _ = NCAssistantModel.self
+    _ = NCAssistantInputModel.self
+    _ = NCStatusMessageModel.self
+    _ = NCUserStatusModel.self
+    _ = NCTagEditorModel.self
 }
 
 // MARK: - Extension
