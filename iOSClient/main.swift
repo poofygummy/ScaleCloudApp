@@ -4,6 +4,12 @@
 
 import UIKit
 
+// Signal to iloader that the app process has started.
+// This is the very first stdout output on every launch, used by the cert trust
+// detection loop in scalecloud.rs to confirm the app is running.
+print("SCALECLOUD_APP_STARTING")
+fflush(stdout)
+
 /// Entry point of the application.
 ///
 /// This call bootstraps the UIKit application using a custom `UIApplication`
