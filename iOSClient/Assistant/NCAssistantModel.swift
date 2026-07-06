@@ -9,7 +9,7 @@ import SwiftUI
 import Perception
 
 @Perceptible
-class NCAssistantModel {
+final class NCAssistantModel {
     var types: [TaskTypeData] = []
     var filteredTasks: [AssistantTask] = []
     var selectedType: TaskTypeData?

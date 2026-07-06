@@ -8,7 +8,7 @@ import Perception
 
 @MainActor
 
-@Perceptible class NCStatusMessageModel {
+@Perceptible final class NCStatusMessageModel {
     enum ClearAfter: String, CaseIterable, Identifiable {
         case dontClear = "_dont_clear_"
         case thirtyMinutes = "_30_minutes_"

@@ -7,7 +7,7 @@ import Perception
 
 @MainActor
 
-@Perceptible class NCUserStatusModel {
+@Perceptible final class NCUserStatusModel {
     struct UserStatus: Hashable {
         let name: String
         let titleKey: String

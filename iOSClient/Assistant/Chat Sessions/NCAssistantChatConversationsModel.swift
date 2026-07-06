@@ -6,7 +6,7 @@ import Foundation
 import ScaleCloudKit
 import Perception
 
-@Perceptible class NCAssistantChatConversationsModel {
+@Perceptible final class NCAssistantChatConversationsModel {
     var conversations: [AssistantConversation] = []
     var isLoading: Bool = false
     var hasError: Bool = false

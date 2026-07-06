@@ -7,7 +7,7 @@ import Perception
 
 @MainActor
 @Perceptible
-class NCAssistantChatModel {
+final class NCAssistantChatModel {
     var messages: [AssistantChatMessage] = []
     var isSending: Bool = false
     var isThinking: Bool = false
@@ -30,8 +30,8 @@ class NCAssistantChatModel {
 
     var currentSession: AssistantSession?
 
-    private let ncSession: NCSession.Session
-    private var pollingTask: Task<Void, Never>?
+    @PerceptionIgnored private let ncSession: NCSession.Session
+    @PerceptionIgnored private var pollingTask: Task<Void, Never>?
 
     @PerceptionIgnored var controller: NCMainTabBarController?
     @PerceptionIgnored let inputModel: NCAssistantInputModel
