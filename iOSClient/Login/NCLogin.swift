@@ -504,7 +504,12 @@ class NCLogin: UIViewController, UITextFieldDelegate, NCLoginQRCodeDelegate {
                     }))
                     self.present(alertController, animated: true)
                 } else {
-                    let alertController = UIAlertController(title: NSLocalizedString("_connection_error_", comment: ""), message: error.errorDescription, preferredStyle: .alert)
+                    // ScaleCloud: append tsnet diagnostic logs so we can see what's failing
+                    let goLogs = SCKSession.getTsnetLogs()
+                    let diagMessage = goLogs.isEmpty
+                        ? error.errorDescription
+                        : "\(error.errorDescription ?? "")\n\n[tsnet]\n\(goLogs)"
+                    let alertController = UIAlertController(title: NSLocalizedString("_connection_error_", comment: ""), message: diagMessage, preferredStyle: .alert)
                     alertController.addAction(UIAlertAction(title: NSLocalizedString("_ok_", comment: ""), style: .default, handler: { _ in }))
                     self.present(alertController, animated: true, completion: { })
                 }
@@ -568,6 +573,9 @@ class NCLogin: UIViewController, UITextFieldDelegate, NCLoginQRCodeDelegate {
         if results.error == .success, let password = results.token {
             await self.createAccount(urlBase: urlBase, user: user, password: password)
         } else {
+            // ScaleCloud: log tsnet diagnostics to console on failure
+            let goLogs = SCKSession.getTsnetLogs()
+            if !goLogs.isEmpty { nkLog(error: "ScaleCloud tsnet logs:\n\(goLogs)") }
             let windowScene = SceneManager.shared.getWindowScene(controller: self.controller)
             await showErrorBanner(windowScene: windowScene, text: results.error.errorDescription, errorCode: results.error.errorCode)
             dismiss(animated: true, completion: nil)
