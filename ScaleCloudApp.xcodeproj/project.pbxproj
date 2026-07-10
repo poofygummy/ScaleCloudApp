@@ -212,7 +212,6 @@
 		F70898672EDDB39B00EF85BD /* NCNetworking+TransferDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70898662EDDB39300EF85BD /* NCNetworking+TransferDelegate.swift */; };
 		F70898692EDDB51700EF85BD /* NCSelectOpen+SelectDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70898682EDDB51200EF85BD /* NCSelectOpen+SelectDelegate.swift */; };
 		F70968A424212C4E00ED60E5 /* NCLivePhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70968A324212C4E00ED60E5 /* NCLivePhoto.swift */; };
-		SC00PRC000000001000AAAAA /* Perception in Frameworks */ = {isa = PBXBuildFile; productRef = SC00PRC000000002000AAAAA /* Perception */; };
 		F70B86752642CE3B00ED5349 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = F70B86742642CE3B00ED5349 /* FirebaseCrashlytics */; };
 		F70BFC7420E0FA7D00C67599 /* NCUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70BFC7320E0FA7C00C67599 /* NCUtility.swift */; };
 		F70BFC7520E0FA7D00C67599 /* NCUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70BFC7320E0FA7C00C67599 /* NCUtility.swift */; };
@@ -948,6 +947,22 @@
 		F7FFFCA42FB3088E0015441E /* NCShareExtension+Assistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FFFCA32FB3088D0015441E /* NCShareExtension+Assistant.swift */; };
 		B2C3D4E5F6A7B8C9D0E1F2A3 /* ScaleCloudKit in Frameworks */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6A7B8C9D0E1F2 /* ScaleCloudKit.framework */; };
 		B2C3D4E5F6A7B8C9D0E1F2A4 /* ScaleCloudKit in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6A7B8C9D0E1F2 /* ScaleCloudKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		SCDEP001B000001000AAAAA /* Alamofire.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = SCDEP001F000001000AAAAA /* Alamofire.xcframework */; };
+		SCDEP001E000001000AAAAA /* Alamofire.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = SCDEP001F000001000AAAAA /* Alamofire.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		SCDEP001B000002000AAAAA /* KeychainAccess.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = SCDEP001F000002000AAAAA /* KeychainAccess.xcframework */; };
+		SCDEP001E000002000AAAAA /* KeychainAccess.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = SCDEP001F000002000AAAAA /* KeychainAccess.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		SCDEP001B000003000AAAAA /* Nuke.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = SCDEP001F000003000AAAAA /* Nuke.xcframework */; };
+		SCDEP001E000003000AAAAA /* Nuke.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = SCDEP001F000003000AAAAA /* Nuke.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		SCDEP001B000004000AAAAA /* SemanticVersion.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = SCDEP001F000004000AAAAA /* SemanticVersion.xcframework */; };
+		SCDEP001E000004000AAAAA /* SemanticVersion.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = SCDEP001F000004000AAAAA /* SemanticVersion.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		SCDEP001B000005000AAAAA /* Starscream.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = SCDEP001F000005000AAAAA /* Starscream.xcframework */; };
+		SCDEP001E000005000AAAAA /* Starscream.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = SCDEP001F000005000AAAAA /* Starscream.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		SCDEP001B000006000AAAAA /* SwiftyJSON.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = SCDEP001F000006000AAAAA /* SwiftyJSON.xcframework */; };
+		SCDEP001E000006000AAAAA /* SwiftyJSON.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = SCDEP001F000006000AAAAA /* SwiftyJSON.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		SCDEP001B000007000AAAAA /* SwiftyXMLParser.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = SCDEP001F000007000AAAAA /* SwiftyXMLParser.xcframework */; };
+		SCDEP001E000007000AAAAA /* SwiftyXMLParser.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = SCDEP001F000007000AAAAA /* SwiftyXMLParser.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		SCDEP001B000008000AAAAA /* ZIPFoundation.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = SCDEP001F000008000AAAAA /* ZIPFoundation.xcframework */; };
+		SCDEP001E000008000AAAAA /* ZIPFoundation.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = SCDEP001F000008000AAAAA /* ZIPFoundation.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		SC00AA002F000001000AAAAA /* ScaleCloudSign in Frameworks */ = {isa = PBXBuildFile; fileRef = SC00AA001F000001000AAAAA /* ScaleCloudSign.framework */; };
 		SC00AA003F000001000AAAAA /* ScaleCloudSign in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = SC00AA001F000001000AAAAA /* ScaleCloudSign.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		SC00AA004F000001000AAAAA /* ScaleCloudRenew.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0EDBA2A7F3BD44F69F873E19 /* ScaleCloudRenew.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -1149,6 +1164,14 @@
 				B2C3D4E5F6A7B8C9D0E1F2A4 /* ScaleCloudKit in Embed Frameworks */,
 				SC00AA003F000001000AAAAA /* ScaleCloudSign in Embed Frameworks */,
 				SC00AA004F000001000AAAAA /* ScaleCloudRenew.xcframework in Embed Frameworks */,
+				SCDEP001E000001000AAAAA /* Alamofire.xcframework in Embed Frameworks */,
+				SCDEP001E000002000AAAAA /* KeychainAccess.xcframework in Embed Frameworks */,
+				SCDEP001E000003000AAAAA /* Nuke.xcframework in Embed Frameworks */,
+				SCDEP001E000004000AAAAA /* SemanticVersion.xcframework in Embed Frameworks */,
+				SCDEP001E000005000AAAAA /* Starscream.xcframework in Embed Frameworks */,
+				SCDEP001E000006000AAAAA /* SwiftyJSON.xcframework in Embed Frameworks */,
+				SCDEP001E000007000AAAAA /* SwiftyXMLParser.xcframework in Embed Frameworks */,
+				SCDEP001E000008000AAAAA /* ZIPFoundation.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1905,6 +1928,14 @@
 		SC00AA001F000001000AAAAA /* ScaleCloudSign.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScaleCloudSign.framework; path = ../ScaleCloudSign/prebuilt/ScaleCloudSign.framework; sourceTree = SOURCE_ROOT; };
 		961D2E68CAEB458BB91C7C82 /* ScaleCloudGo.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ScaleCloudGo.xcframework; path = ../ScaleCloudGo/prebuilt/ScaleCloudGo.xcframework; sourceTree = SOURCE_ROOT; };
 		0EDBA2A7F3BD44F69F873E19 /* ScaleCloudRenew.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ScaleCloudRenew.xcframework; path = ../ScaleCloudRenew/prebuilt/ScaleCloudRenew.xcframework; sourceTree = SOURCE_ROOT; };
+		SCDEP001F000001000AAAAA /* Alamofire.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Alamofire.xcframework; path = ../ScaleCloudDeps/prebuilt/Alamofire.xcframework; sourceTree = SOURCE_ROOT; };
+		SCDEP001F000002000AAAAA /* KeychainAccess.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = KeychainAccess.xcframework; path = ../ScaleCloudDeps/prebuilt/KeychainAccess.xcframework; sourceTree = SOURCE_ROOT; };
+		SCDEP001F000003000AAAAA /* Nuke.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Nuke.xcframework; path = ../ScaleCloudDeps/prebuilt/Nuke.xcframework; sourceTree = SOURCE_ROOT; };
+		SCDEP001F000004000AAAAA /* SemanticVersion.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SemanticVersion.xcframework; path = ../ScaleCloudDeps/prebuilt/SemanticVersion.xcframework; sourceTree = SOURCE_ROOT; };
+		SCDEP001F000005000AAAAA /* Starscream.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Starscream.xcframework; path = ../ScaleCloudDeps/prebuilt/Starscream.xcframework; sourceTree = SOURCE_ROOT; };
+		SCDEP001F000006000AAAAA /* SwiftyJSON.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SwiftyJSON.xcframework; path = ../ScaleCloudDeps/prebuilt/SwiftyJSON.xcframework; sourceTree = SOURCE_ROOT; };
+		SCDEP001F000007000AAAAA /* SwiftyXMLParser.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SwiftyXMLParser.xcframework; path = ../ScaleCloudDeps/prebuilt/SwiftyXMLParser.xcframework; sourceTree = SOURCE_ROOT; };
+		SCDEP001F000008000AAAAA /* ZIPFoundation.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = ZIPFoundation.xcframework; path = ../ScaleCloudDeps/prebuilt/ZIPFoundation.xcframework; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -2053,9 +2084,17 @@
 				F7F623B52A5EF4D30022D3D4 /* Gzip in Frameworks */,
 				F72DA9B425F53E4E00B87DB1 /* SwiftRichString in Frameworks */,
 				F76B649E2ADFFDEC00014640 /* LRUCache in Frameworks */,
-				SC00PRC000000001000AAAAA /* Perception in Frameworks */,
 				585D611C9D5B47A09DA41CB2 /* ScaleCloudGo.xcframework in Frameworks */,
-				292D7BEE3E7B47E09C8D3D61 /* ScaleCloudRenew.xcframework in Frameworks */,);
+				292D7BEE3E7B47E09C8D3D61 /* ScaleCloudRenew.xcframework in Frameworks */,
+				SCDEP001B000001000AAAAA /* Alamofire.xcframework in Frameworks */,
+				SCDEP001B000002000AAAAA /* KeychainAccess.xcframework in Frameworks */,
+				SCDEP001B000003000AAAAA /* Nuke.xcframework in Frameworks */,
+				SCDEP001B000004000AAAAA /* SemanticVersion.xcframework in Frameworks */,
+				SCDEP001B000005000AAAAA /* Starscream.xcframework in Frameworks */,
+				SCDEP001B000006000AAAAA /* SwiftyJSON.xcframework in Frameworks */,
+				SCDEP001B000007000AAAAA /* SwiftyXMLParser.xcframework in Frameworks */,
+				SCDEP001B000008000AAAAA /* ZIPFoundation.xcframework in Frameworks */,
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F7C55C772FB5AEF7004A974F /* Frameworks */ = {
@@ -3373,8 +3412,6 @@
 				F702F2CC25EE5B4F008F8E80 /* AppDelegate.swift */,
 				F7110ADF2F9773210095AA5C /* AppDelegate+AppRefresh.swift */,
 				F7110AE32F9774130095AA5C /* AppDelegate+AppProcessing.swift */,
-				SC001A002F00000001000001 /* AppDelegate+SigningRefresh.swift */,
-				SC001A022F00000001000002 /* AppOperationCoordinator.swift */,
 				F7CAFE1A2F16AA8600DB35A5 /* main.swift */,
 				F794E13E2BBC0F70003693D7 /* SceneDelegate.swift */,
 				F7CF067A2E0FF38F0063AD04 /* NCAppStateManager.swift */,
@@ -3511,9 +3548,6 @@
 				F760DE0E2AE66EE60027D78A /* KeychainAccess */,
 				F33EE6EC2BF4C03800CA1A51 /* NIOSSL */,
 				F7F1FBAF2E27D3A800C79E20 /* Queuer */,
-				SC00NSE00000001000AAAAA /* Alamofire */,
-				SC00NSE00000002000AAAAA /* SwiftyJSON */,
-				SC00NSE00000003000AAAAA /* SwiftyXMLParser */,
 			);
 			productName = "Notification Service Extension";
 			productReference = 2C33C47F23E2C475005F963B /* Notification Service Extension.appex */;
@@ -3536,9 +3570,6 @@
 			name = NextcloudUnitTests;
 			packageProductDependencies = (
 				F3F0419A2B9F7E6700D5155F /* RealmSwift */,
-				SC00UT000000001000AAAAA /* Alamofire */,
-				SC00UT000000002000AAAAA /* SwiftyJSON */,
-				SC00UT000000003000AAAAA /* SwiftyXMLParser */,
 			);
 			productName = NextcloudTests;
 			productReference = AF8ED1F92757821000B8DBC4 /* NextcloudUnitTests.xctest */;
@@ -3577,9 +3608,6 @@
 				F37208C32BAB63F0006B5430 /* Gzip */,
 				F37208C52BAB63F0006B5430 /* LRUCache */,
 				F37208C72BAB63F1006B5430 /* KeychainAccess */,
-				SC00UUIT0000001000AAAAA /* Alamofire */,
-				SC00UUIT0000002000AAAAA /* SwiftyJSON */,
-				SC00UUIT0000003000AAAAA /* SwiftyXMLParser */,
 			);
 			productName = NextcloudUITests;
 			productReference = C0046CDA2A17B98400D87C9D /* NextcloudUITests.xctest */;
@@ -3603,9 +3631,6 @@
 			packageProductDependencies = (
 				F3391B072B4C52C5001C0C4B /* FirebaseDatabase */,
 				F3F0419C2B9F7E6E00D5155F /* RealmSwift */,
-				SC00IT000000001000AAAAA /* Alamofire */,
-				SC00IT000000002000AAAAA /* SwiftyJSON */,
-				SC00IT000000003000AAAAA /* SwiftyXMLParser */,
 			);
 			productName = NextcloudIntegrationTests;
 			productReference = C04E2F202A17BB4D001BAD85 /* NextcloudIntegrationTests.xctest */;
@@ -3629,9 +3654,6 @@
 				F7490E7129882BB4009DCE94 /* RealmSwift */,
 				F760DE0C2AE66EDF0027D78A /* KeychainAccess */,
 				F712217F2F51AF9F00ACEB08 /* LucidBanner */,
-				SC00FPEUI00000001000AAAA /* Alamofire */,
-				SC00FPEUI00000002000AAAA /* SwiftyJSON */,
-				SC00FPEUI00000003000AAAA /* SwiftyXMLParser */,
 			);
 			productName = "File Provider Extension UI";
 			productReference = F70716E32987F81500E72C1D /* File Provider Extension UI.appex */;
@@ -3662,9 +3684,6 @@
 				F74C863C2AEFBFD9009A1D4A /* LRUCache */,
 				F33EE6E62BF4C02600CA1A51 /* NIOSSL */,
 				F70557B82ED44E4700135623 /* LucidBanner */,
-				SC00SHR00000001000AAAAA /* Alamofire */,
-				SC00SHR00000002000AAAAA /* SwiftyJSON */,
-				SC00SHR00000003000AAAAA /* SwiftyXMLParser */,
 			);
 			productName = "Share Ext";
 			productReference = F7CE8AFB1DC1F8D8009CAE48 /* Share.appex */;
@@ -3689,9 +3708,6 @@
 				F760DE042AE66EBE0027D78A /* KeychainAccess */,
 				F7160A7C2BE931DE0034DCB3 /* RealmSwift */,
 				F33EE6E22BF4C00700CA1A51 /* NIOSSL */,
-				SC00WGT00000001000AAAAA /* Alamofire */,
-				SC00WGT00000002000AAAAA /* SwiftyJSON */,
-				SC00WGT00000003000AAAAA /* SwiftyXMLParser */,
 			);
 			productName = DashboardWidgetExtension;
 			productReference = F7346E1028B0EF5B006CE2D2 /* Widget.appex */;
@@ -3715,9 +3731,6 @@
 				F710FC83277B7D3500AA9FBF /* RealmSwift */,
 				F760DE0A2AE66ED80027D78A /* KeychainAccess */,
 				F712217D2F51AF9500ACEB08 /* LucidBanner */,
-				SC00FPE000000001000AAAAA /* Alamofire */,
-				SC00FPE000000002000AAAAA /* SwiftyJSON */,
-				SC00FPE000000003000AAAAA /* SwiftyXMLParser */,
 			);
 			productName = "File Provider Extension";
 			productReference = F771E3D020E2392D00AFB62D /* File Provider Extension.appex */;
@@ -3775,11 +3788,6 @@
 				F3374AF52D78B01B002A38F9 /* HashTreeCollections */,
 				F3374AF72D78B01B002A38F9 /* HeapModule */,
 				F70557B62ED44E2700135623 /* LucidBanner */,
-				SC0001AA2F000006000AAAAA /* Nuke */,
-				SC0001AA2F000008000AAAAA /* Starscream */,
-				SC0001AA2F000009000AAAAA /* Alamofire */,
-				SC0001AA2F00000A000AAAAA /* ZIPFoundation */,
-				SC00PRC000000002000AAAAA /* Perception */,
 			);
 			productName = "Crypto Cloud";
 			productReference = F7CE8AFA1DC1F8D8009CAE48 /* Nextcloud.app */;
@@ -3799,9 +3807,6 @@
 			);
 			name = "Action Assistant";
 			packageProductDependencies = (
-				SC00AA000000001000AAAAA /* Alamofire */,
-				SC00AA000000002000AAAAA /* SwiftyJSON */,
-				SC00AA000000003000AAAAA /* SwiftyXMLParser */,
 			);
 			productName = "Action Assistant";
 			productReference = F7C55C7A2FB5AEF7004A974F /* Action Assistant.appex */;
@@ -3826,9 +3831,6 @@
 				F760DE062AE66EC70027D78A /* KeychainAccess */,
 				F33EE6E42BF4C02000CA1A51 /* NIOSSL */,
 				F7F1FBA72E27D13700C79E20 /* Queuer */,
-				SC00WDI00000001000AAAAA /* Alamofire */,
-				SC00WDI00000002000AAAAA /* SwiftyJSON */,
-				SC00WDI00000003000AAAAA /* SwiftyXMLParser */,
 			);
 			productName = WidgetDashboardIntentHandler;
 			productReference = F7C9739028F17131002C43E2 /* WidgetDashboardIntentHandler.appex */;
@@ -3984,13 +3986,6 @@
 				F7D4BF4E2CA2ECCB00A5E746 /* XCRemoteSwiftPackageReference "vlckit-spm" */,
 				F3374AEE2D78B01B002A38F9 /* XCRemoteSwiftPackageReference "swift-collections" */,
 				F70557B52ED44E2700135623 /* XCRemoteSwiftPackageReference "LucidBanner" */,
-				SC0001AA2F000001000AAAAA /* XCRemoteSwiftPackageReference "Nuke" */,
-				SC0001AA2F000003000AAAAA /* XCRemoteSwiftPackageReference "Starscream" */,
-				SC0001AA2F000004000AAAAA /* XCRemoteSwiftPackageReference "Alamofire" */,
-				SC0001AA2F000005000AAAAA /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
-				SC00FPE000000004000AAAAA /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
-				SC00FPE000000005000AAAAA /* XCRemoteSwiftPackageReference "SwiftyXMLParser" */,
-				SC00PRC000000003000AAAAA /* XCRemoteSwiftPackageReference "swift-perception" */,
 			);
 			productRefGroup = F7F67B9F1A24D27800EE80DA;
 			projectDirPath = "";
@@ -4716,8 +4711,6 @@
 				F741C2242B6B9FD600E849BB /* NCMediaSelectTabBar.swift in Sources */,
 				F7BF9D822934CA21009EE9A6 /* NCManageDatabase+LayoutForView.swift in Sources */,
 				F7110AE02F9773230095AA5C /* AppDelegate+AppRefresh.swift in Sources */,
-				SC001A012F00000001000001 /* AppDelegate+SigningRefresh.swift in Sources */,
-				SC001A032F00000001000002 /* AppOperationCoordinator.swift in Sources */,
 				AA8D31662D411FA100FE2775 /* NCShareDateCell.swift in Sources */,
 				F3F442EE2DDE292D00FD701F /* NCMetadataPermissions.swift in Sources */,
 				F3374A812D64AB9F002A38F9 /* StatusInfo.swift in Sources */,
@@ -5367,7 +5360,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_ENTITLEMENTS = "$(SRCROOT)/Brand/Notification_Service_Extension.entitlements";
 				DEAD_CODE_STRIPPING = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt $(SRCROOT)/../ScaleCloudDeps/prebuilt";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					EXTENSION,
@@ -5392,7 +5385,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_ENTITLEMENTS = "$(SRCROOT)/Brand/Notification_Service_Extension.entitlements";
 				DEAD_CODE_STRIPPING = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt $(SRCROOT)/../ScaleCloudDeps/prebuilt";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					EXTENSION,
@@ -5653,7 +5646,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_ENTITLEMENTS = "$(SRCROOT)/Brand/File_Provider_Extension_UI.entitlements";
 				DEAD_CODE_STRIPPING = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt $(SRCROOT)/../ScaleCloudDeps/prebuilt";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					EXTENSION,
@@ -5681,7 +5674,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_ENTITLEMENTS = "$(SRCROOT)/Brand/File_Provider_Extension_UI.entitlements";
 				DEAD_CODE_STRIPPING = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt $(SRCROOT)/../ScaleCloudDeps/prebuilt";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					EXTENSION,
@@ -5709,7 +5702,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_ENTITLEMENTS = "$(SRCROOT)/Brand/Share.entitlements";
 				DEAD_CODE_STRIPPING = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt $(SRCROOT)/../ScaleCloudDeps/prebuilt";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					EXTENSION,
@@ -5734,7 +5727,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_ENTITLEMENTS = "$(SRCROOT)/Brand/Share.entitlements";
 				DEAD_CODE_STRIPPING = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt $(SRCROOT)/../ScaleCloudDeps/prebuilt";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					EXTENSION,
@@ -5764,7 +5757,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CODE_SIGN_ENTITLEMENTS = "$(SRCROOT)/Brand/Widget.entitlements";
 				DEAD_CODE_STRIPPING = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt $(SRCROOT)/../ScaleCloudDeps/prebuilt";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					EXTENSION,
@@ -5799,7 +5792,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CODE_SIGN_ENTITLEMENTS = "$(SRCROOT)/Brand/Widget.entitlements";
 				DEAD_CODE_STRIPPING = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt $(SRCROOT)/../ScaleCloudDeps/prebuilt";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					EXTENSION,
@@ -5830,7 +5823,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_ENTITLEMENTS = "$(SRCROOT)/Brand/File_Provider_Extension.entitlements";
 				DEAD_CODE_STRIPPING = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt $(SRCROOT)/../ScaleCloudDeps/prebuilt";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					EXTENSION,
@@ -5854,7 +5847,7 @@
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_ENTITLEMENTS = "$(SRCROOT)/Brand/File_Provider_Extension.entitlements";
 				DEAD_CODE_STRIPPING = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt $(SRCROOT)/../ScaleCloudDeps/prebuilt";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					EXTENSION,
@@ -5890,7 +5883,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/iOSClient/Nextcloud-Bridging-Header.h";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt $(SRCROOT)/../ScaleCloudDeps/prebuilt";
 				OTHER_SWIFT_FLAGS = "$(inherited) -Xcc -fmodule-map-file=$(SRCROOT)/../ScaleCloudSign/Dependencies/corecrypto/include/module.modulemap -Xcc -fmodule-map-file=$(SRCROOT)/../ScaleCloudSign/ScaleCloudSign/include/module.modulemap -Xcc -I$(SRCROOT)/../ScaleCloudSign/Dependencies/corecrypto/include -Xcc -I$(SRCROOT)/../ScaleCloudSign/ScaleCloudSign/include";
 				_EXPERIMENTAL_SWIFT_EXPLICIT_MODULES = NO;
 			};
@@ -5914,7 +5907,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/iOSClient/Nextcloud-Bridging-Header.h";
-				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt $(SRCROOT)/../ScaleCloudDeps/prebuilt";
 				OTHER_SWIFT_FLAGS = "$(inherited) -Xcc -fmodule-map-file=$(SRCROOT)/../ScaleCloudSign/Dependencies/corecrypto/include/module.modulemap -Xcc -fmodule-map-file=$(SRCROOT)/../ScaleCloudSign/ScaleCloudSign/include/module.modulemap -Xcc -I$(SRCROOT)/../ScaleCloudSign/Dependencies/corecrypto/include -Xcc -I$(SRCROOT)/../ScaleCloudSign/ScaleCloudSign/include";
 				_EXPERIMENTAL_SWIFT_EXPLICIT_MODULES = NO;
 			};
@@ -5936,7 +5929,7 @@
 				CODE_SIGN_ENTITLEMENTS = "$(SRCROOT)/Brand/Action_Assistant.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt $(SRCROOT)/../ScaleCloudDeps/prebuilt";
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -5979,7 +5972,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt $(SRCROOT)/../ScaleCloudDeps/prebuilt";
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
@@ -6015,7 +6008,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = "$(SRCROOT)/Brand//WidgetDashboardIntentHandler.entitlements";
 				DEAD_CODE_STRIPPING = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt $(SRCROOT)/../ScaleCloudDeps/prebuilt";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					EXTENSION,
@@ -6054,7 +6047,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CODE_SIGN_ENTITLEMENTS = "$(SRCROOT)/Brand//WidgetDashboardIntentHandler.entitlements";
 				DEAD_CODE_STRIPPING = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited) $(SRCROOT)/../ScaleCloudKit/prebuilt $(SRCROOT)/../ScaleCloudGo/prebuilt $(SRCROOT)/../ScaleCloudSign/prebuilt $(SRCROOT)/../ScaleCloudRenew/prebuilt $(SRCROOT)/../ScaleCloudDeps/prebuilt";
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
@@ -6513,62 +6506,6 @@
 				version = 6.0.0;
 			};
 		};
-		SC0001AA2F000001000AAAAA /* XCRemoteSwiftPackageReference "Nuke" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/kean/Nuke";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 10.0.0;
-			};
-		};
-		SC0001AA2F000003000AAAAA /* XCRemoteSwiftPackageReference "Starscream" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/daltoniam/Starscream";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.0.0;
-			};
-		};
-		SC0001AA2F000004000AAAAA /* XCRemoteSwiftPackageReference "Alamofire" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Alamofire/Alamofire";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.6.0;
-			};
-		};
-		SC00FPE000000004000AAAAA /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = "5.0.2";
-			};
-		};
-		SC00FPE000000005000AAAAA /* XCRemoteSwiftPackageReference "SwiftyXMLParser" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/yahoojapan/SwiftyXMLParser.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = "5.6.0";
-			};
-		};
-		SC00PRC000000003000AAAAA /* XCRemoteSwiftPackageReference "swift-perception" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pointfreeco/swift-perception";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.3.5;
-			};
-		};
-		SC0001AA2F000005000AAAAA /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/weichsel/ZIPFoundation";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.9.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -6946,181 +6883,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F7F623B32A5EF4D30022D3D4 /* XCRemoteSwiftPackageReference "GzipSwift" */;
 			productName = Gzip;
-		};
-		SC0001AA2F000006000AAAAA /* Nuke */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = SC0001AA2F000001000AAAAA /* XCRemoteSwiftPackageReference "Nuke" */;
-			productName = Nuke;
-		};
-		SC0001AA2F000008000AAAAA /* Starscream */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = SC0001AA2F000003000AAAAA /* XCRemoteSwiftPackageReference "Starscream" */;
-			productName = Starscream;
-		};
-		SC0001AA2F000009000AAAAA /* Alamofire */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = SC0001AA2F000004000AAAAA /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = Alamofire;
-		};
-		SC00PRC000000002000AAAAA /* Perception */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = SC00PRC000000003000AAAAA /* XCRemoteSwiftPackageReference "swift-perception" */;
-			productName = Perception;
-		};
-		SC0001AA2F00000A000AAAAA /* ZIPFoundation */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = SC0001AA2F000005000AAAAA /* XCRemoteSwiftPackageReference "ZIPFoundation" */;
-			productName = ZIPFoundation;
-		};
-		SC00FPE000000001000AAAAA /* Alamofire (FPE) */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = SC0001AA2F000004000AAAAA /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = Alamofire;
-		};
-		SC00FPE000000002000AAAAA /* SwiftyJSON */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = SC00FPE000000004000AAAAA /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
-			productName = SwiftyJSON;
-		};
-		SC00FPE000000003000AAAAA /* SwiftyXMLParser */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = SC00FPE000000005000AAAAA /* XCRemoteSwiftPackageReference "SwiftyXMLParser" */;
-			productName = SwiftyXMLParser;
-		};
-		SC00FPEUI00000001000AAAA /* Alamofire (FPEUI) */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = SC0001AA2F000004000AAAAA /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = Alamofire;
-		};
-		SC00FPEUI00000002000AAAA /* SwiftyJSON (FPEUI) */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = SC00FPE000000004000AAAAA /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
-			productName = SwiftyJSON;
-		};
-		SC00FPEUI00000003000AAAA /* SwiftyXMLParser (FPEUI) */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = SC00FPE000000005000AAAAA /* XCRemoteSwiftPackageReference "SwiftyXMLParser" */;
-			productName = SwiftyXMLParser;
-		};
-		SC00NSE00000001000AAAAA /* Alamofire (NSE) */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = SC0001AA2F000004000AAAAA /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = Alamofire;
-		};
-		SC00NSE00000002000AAAAA /* SwiftyJSON (NSE) */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = SC00FPE000000004000AAAAA /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
-			productName = SwiftyJSON;
-		};
-		SC00NSE00000003000AAAAA /* SwiftyXMLParser (NSE) */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = SC00FPE000000005000AAAAA /* XCRemoteSwiftPackageReference "SwiftyXMLParser" */;
-			productName = SwiftyXMLParser;
-		};
-		SC00SHR00000001000AAAAA /* Alamofire (SHR) */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = SC0001AA2F000004000AAAAA /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = Alamofire;
-		};
-		SC00SHR00000002000AAAAA /* SwiftyJSON (SHR) */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = SC00FPE000000004000AAAAA /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
-			productName = SwiftyJSON;
-		};
-		SC00SHR00000003000AAAAA /* SwiftyXMLParser (SHR) */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = SC00FPE000000005000AAAAA /* XCRemoteSwiftPackageReference "SwiftyXMLParser" */;
-			productName = SwiftyXMLParser;
-		};
-		SC00WGT00000001000AAAAA /* Alamofire (WGT) */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = SC0001AA2F000004000AAAAA /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = Alamofire;
-		};
-		SC00WGT00000002000AAAAA /* SwiftyJSON (WGT) */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = SC00FPE000000004000AAAAA /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
-			productName = SwiftyJSON;
-		};
-		SC00WGT00000003000AAAAA /* SwiftyXMLParser (WGT) */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = SC00FPE000000005000AAAAA /* XCRemoteSwiftPackageReference "SwiftyXMLParser" */;
-			productName = SwiftyXMLParser;
-		};
-		SC00WDI00000001000AAAAA /* Alamofire (WDI) */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = SC0001AA2F000004000AAAAA /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = Alamofire;
-		};
-		SC00WDI00000002000AAAAA /* SwiftyJSON (WDI) */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = SC00FPE000000004000AAAAA /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
-			productName = SwiftyJSON;
-		};
-		SC00WDI00000003000AAAAA /* SwiftyXMLParser (WDI) */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = SC00FPE000000005000AAAAA /* XCRemoteSwiftPackageReference "SwiftyXMLParser" */;
-			productName = SwiftyXMLParser;
-		};
-		SC00AA000000001000AAAAA /* Alamofire (AA) */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = SC0001AA2F000004000AAAAA /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = Alamofire;
-		};
-		SC00AA000000002000AAAAA /* SwiftyJSON (AA) */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = SC00FPE000000004000AAAAA /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
-			productName = SwiftyJSON;
-		};
-		SC00AA000000003000AAAAA /* SwiftyXMLParser (AA) */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = SC00FPE000000005000AAAAA /* XCRemoteSwiftPackageReference "SwiftyXMLParser" */;
-			productName = SwiftyXMLParser;
-		};
-		SC00UT000000001000AAAAA /* Alamofire (UT) */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = SC0001AA2F000004000AAAAA /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = Alamofire;
-		};
-		SC00UT000000002000AAAAA /* SwiftyJSON (UT) */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = SC00FPE000000004000AAAAA /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
-			productName = SwiftyJSON;
-		};
-		SC00UT000000003000AAAAA /* SwiftyXMLParser (UT) */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = SC00FPE000000005000AAAAA /* XCRemoteSwiftPackageReference "SwiftyXMLParser" */;
-			productName = SwiftyXMLParser;
-		};
-		SC00UUIT000000001000AAAAA /* Alamofire (UUIT) */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = SC0001AA2F000004000AAAAA /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = Alamofire;
-		};
-		SC00UUIT000000002000AAAAA /* SwiftyJSON (UUIT) */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = SC00FPE000000004000AAAAA /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
-			productName = SwiftyJSON;
-		};
-		SC00UUIT000000003000AAAAA /* SwiftyXMLParser (UUIT) */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = SC00FPE000000005000AAAAA /* XCRemoteSwiftPackageReference "SwiftyXMLParser" */;
-			productName = SwiftyXMLParser;
-		};
-		SC00IT000000001000AAAAA /* Alamofire (IT) */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = SC0001AA2F000004000AAAAA /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = Alamofire;
-		};
-		SC00IT000000002000AAAAA /* SwiftyJSON (IT) */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = SC00FPE000000004000AAAAA /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
-			productName = SwiftyJSON;
-		};
-		SC00IT000000003000AAAAA /* SwiftyXMLParser (IT) */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = SC00FPE000000005000AAAAA /* XCRemoteSwiftPackageReference "SwiftyXMLParser" */;
-			productName = SwiftyXMLParser;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
