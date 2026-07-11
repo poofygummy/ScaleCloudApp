@@ -199,6 +199,7 @@
 		F704B5E72430C06700632F5F /* NCCreateFormUploadConflictCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F704B5E62430C06700632F5F /* NCCreateFormUploadConflictCell.xib */; };
 		F704B5E92430C0B800632F5F /* NCCreateFormUploadConflictCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F704B5E82430C0B800632F5F /* NCCreateFormUploadConflictCell.swift */; };
 		F70557B72ED44E2700135623 /* LucidBanner in Frameworks */ = {isa = PBXBuildFile; productRef = F70557B62ED44E2700135623 /* LucidBanner */; };
+		SC00PRC000000001000AAAAA /* Perception in Frameworks */ = {isa = PBXBuildFile; productRef = SC00PRC000000002000AAAAA /* Perception */; };
 		F70557B92ED44E4700135623 /* LucidBanner in Frameworks */ = {isa = PBXBuildFile; productRef = F70557B82ED44E4700135623 /* LucidBanner */; };
 		F70557BD2ED44F1800135623 /* UploadBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70557BB2ED44F1800135623 /* UploadBannerView.swift */; };
 		F70557BF2ED44F1800135623 /* UploadBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F70557BB2ED44F1800135623 /* UploadBannerView.swift */; };
@@ -2072,6 +2073,7 @@
 				F77333882927A72100466E35 /* OpenSSL in Frameworks */,
 				F753BA93281FD8020015BFB6 /* EasyTipView in Frameworks */,
 				F70557B72ED44E2700135623 /* LucidBanner in Frameworks */,
+				SC00PRC000000001000AAAAA /* Perception in Frameworks */,
 				F3374AF42D78B01B002A38F9 /* DequeModule in Frameworks */,
 				F7160A822BE933390034DCB3 /* RealmSwift in Frameworks */,
 				F76DA963277B760E0082465B /* Queuer in Frameworks */,
@@ -3788,6 +3790,7 @@
 				F3374AF52D78B01B002A38F9 /* HashTreeCollections */,
 				F3374AF72D78B01B002A38F9 /* HeapModule */,
 				F70557B62ED44E2700135623 /* LucidBanner */,
+				SC00PRC000000002000AAAAA /* Perception */,
 			);
 			productName = "Crypto Cloud";
 			productReference = F7CE8AFA1DC1F8D8009CAE48 /* Nextcloud.app */;
@@ -3986,6 +3989,7 @@
 				F7D4BF4E2CA2ECCB00A5E746 /* XCRemoteSwiftPackageReference "vlckit-spm" */,
 				F3374AEE2D78B01B002A38F9 /* XCRemoteSwiftPackageReference "swift-collections" */,
 				F70557B52ED44E2700135623 /* XCRemoteSwiftPackageReference "LucidBanner" */,
+				SC00PRC000000003000AAAAA /* XCRemoteSwiftPackageReference "swift-perception" */,
 			);
 			productRefGroup = F7F67B9F1A24D27800EE80DA;
 			projectDirPath = "";
@@ -6354,6 +6358,14 @@
 				version = 4.2.2;
 			};
 		};
+		SC00PRC000000003000AAAAA /* XCRemoteSwiftPackageReference "swift-perception" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-perception";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.5;
+			};
+		};
 		F70557B52ED44E2700135623 /* XCRemoteSwiftPackageReference "LucidBanner" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/poofygummy/ScaleCloudBanner";
@@ -6673,6 +6685,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F70557B52ED44E2700135623 /* XCRemoteSwiftPackageReference "LucidBanner" */;
 			productName = LucidBanner;
+		};
+		SC00PRC000000002000AAAAA /* Perception */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = SC00PRC000000003000AAAAA /* XCRemoteSwiftPackageReference "swift-perception" */;
+			productName = Perception;
 		};
 		F70557B82ED44E4700135623 /* LucidBanner */ = {
 			isa = XCSwiftPackageProductDependency;
