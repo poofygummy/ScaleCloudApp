@@ -3412,6 +3412,8 @@
 			children = (
 				AA517BB42D66149900F8D37C /* .tx */,
 				F702F2CC25EE5B4F008F8E80 /* AppDelegate.swift */,
+				SC001A002F00000001000001 /* AppDelegate+SigningRefresh.swift */,
+				SC001A022F00000001000002 /* AppOperationCoordinator.swift */,
 				F7110ADF2F9773210095AA5C /* AppDelegate+AppRefresh.swift */,
 				F7110AE32F9774130095AA5C /* AppDelegate+AppProcessing.swift */,
 				F7CAFE1A2F16AA8600DB35A5 /* main.swift */,
@@ -4661,6 +4663,8 @@
 				F7743A142C33F13A0034F670 /* NCCollectionViewCommon+CollectionViewDataSource.swift in Sources */,
 				F321DA8A2B71205A00DDA0E6 /* NCTrashSelectTabBar.swift in Sources */,
 				F702F2CD25EE5B4F008F8E80 /* AppDelegate.swift in Sources */,
+				SC001A012F00000001000001 /* AppDelegate+SigningRefresh.swift in Sources */,
+				SC001A032F00000001000002 /* AppOperationCoordinator.swift in Sources */,
 				F769454022E9F077000A798A /* NCSharePaging.swift in Sources */,
 				F7C687E92D22BD46004757BC /* NCManageDatabase+RecommendedFiles.swift in Sources */,
 				F74D50352C9855A000BBBF4C /* NCCollectionViewCommon+CollectionViewDataSourcePrefetching.swift in Sources */,
