@@ -643,8 +643,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     // MARK: - Setup Flow
     
     private func presentSetupFlowIfNeeded(controller: UIViewController) {
-        // Only show setup once per install
-        guard !UserDefaults.standard.setupCompleted else {
+        // Skip if setup was already completed
+        if UserDefaults.standard.setupCompleted {
+            return
+        }
+        // Credentials exist in Keychain even though the setupCompleted flag was lost
+        // (UserDefaults write was lost when iloader killed the process before the OS
+        // could flush the pending write to disk). Heal the flag and skip the modal.
+        if Keychain.shared.hasValidCredentials() {
+            UserDefaults.standard.setupCompleted = true
+            UserDefaults.standard.synchronize()
             return
         }
         
