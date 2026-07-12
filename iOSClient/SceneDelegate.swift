@@ -208,6 +208,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             //
             if activateSceneForAccount {
                 self.activateSceneForAccount(scene, account: activeTblAccount.account, controller: controller)
+            } else {
+                // Even when not activating the full scene (normal cold launch),
+                // we still need to run the injection flow if a debugger is attached
+                // or credentials are missing. presentSetupFlowIfNeeded has all the
+                // right guards inside (coordinator-alive check, setupCompleted check).
+                self.presentSetupFlowIfNeeded(controller: controller)
             }
         }
 
@@ -643,16 +649,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     // MARK: - Setup Flow
     
     private func presentSetupFlowIfNeeded(controller: UIViewController) {
-        // Skip if setup was already completed
-        if UserDefaults.standard.setupCompleted {
+        // A coordinator is already alive (e.g. Phase 1 is blocking, or Phase 2 is
+        // running validation). sceneWillEnterForeground can fire while injection is
+        // in progress — don't create a second coordinator.
+        if setupCoordinator != nil {
             return
         }
-        // Credentials exist in Keychain even though the setupCompleted flag was lost
-        // (UserDefaults write was lost when iloader killed the process before the OS
-        // could flush the pending write to disk). Heal the flag and skip the modal.
-        if Keychain.shared.hasValidCredentials() {
-            UserDefaults.standard.setupCompleted = true
-            UserDefaults.standard.synchronize()
+
+        // If credentials are gone (new iloader run, or app reinstall) reset the
+        // stored flag so the injection flow starts fresh.
+        if !Keychain.shared.hasValidCredentials() {
+            UserDefaults.standard.setupCompleted = false
+        }
+
+        // Skip if setup was already completed and credentials are present.
+        guard !UserDefaults.standard.setupCompleted else {
             return
         }
         
@@ -663,6 +674,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // [weak self] inside the background block to capture nil immediately.
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             guard let self else { return }
+            // Double-check: another call may have created a coordinator in the
+            // 0.5 s window between this block being scheduled and executing.
+            guard self.setupCoordinator == nil else { return }
             let coordinator = SetupCoordinator()
             coordinator.onCompletion = { [weak self] in
                 print("[Setup] Setup flow completed successfully")
