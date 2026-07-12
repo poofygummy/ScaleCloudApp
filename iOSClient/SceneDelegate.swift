@@ -126,11 +126,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                     let navigationController = UINavigationController(rootViewController: viewController)
                     window?.rootViewController = navigationController
                     window?.makeKeyAndVisible()
+                    // ScaleCloud: on a fresh install the setup flow runs before any
+                    // Nextcloud account exists. Present it over the login screen.
+                    presentSetupFlowIfNeeded(controller: navigationController)
                 }
             } else {
                 if let navigationController = UIStoryboard(name: "NCIntro", bundle: nil).instantiateInitialViewController() as? UINavigationController {
                     window?.rootViewController = navigationController
                     window?.makeKeyAndVisible()
+                    // ScaleCloud: on a fresh install the setup flow runs before any
+                    // Nextcloud account exists. Present it over the intro screen.
+                    presentSetupFlowIfNeeded(controller: navigationController)
                 }
             }
         }
