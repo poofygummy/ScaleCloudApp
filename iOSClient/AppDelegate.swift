@@ -50,6 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let utility = NCUtility()
 
         utilityFileSystem.createDirectoryStandard()
+        nkLog(debug: "[AppGroup] capabilitiesGroup = \(NCBrandOptions.shared.capabilitiesGroup)")
         utilityFileSystem.emptyTemporaryDirectory()
         utilityFileSystem.clearCacheDirectory("com.limit-point.LivePhoto")
         

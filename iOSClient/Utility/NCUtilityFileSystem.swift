@@ -623,8 +623,9 @@ final class NCUtilityFileSystem: NSObject, @unchecked Sendable {
 
     func clearCacheDirectory(_ directory: String) {
         if let cacheURL = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first {
+            let directoryURL = cacheURL.appendingPathComponent(directory, isDirectory: true)
+            guard fileManager.fileExists(atPath: directoryURL.path) else { return }
             do {
-                let directoryURL = cacheURL.appendingPathComponent(directory, isDirectory: true)
                 let directoryContents = try fileManager.contentsOfDirectory(at: directoryURL, includingPropertiesForKeys: nil, options: [])
                 for file in directoryContents {
                     do {

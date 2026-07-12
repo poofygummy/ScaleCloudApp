@@ -41,8 +41,18 @@ final class NCBrandOptions: @unchecked Sendable {
     var folderDefaultAutoUpload: String = "Photos"
 
     // Capabilities Group
-    var capabilitiesGroup: String = "group.it.twsweb.Crypto-Cloud"
-    var capabilitiesGroupApps: String = "group.com.nextcloud.apps"
+    //
+    // Both signing paths (isideload initial install and ScaleCloudRenew re-sign) create the
+    // app group as "group.<resignedBundleID>".  Since the resigned bundle ID is always
+    // "com.scalecloud.ScaleCloudApp.<TEAMID>", Bundle.main.bundleIdentifier at runtime
+    // already contains the team suffix, so "group." + bundleIdentifier is always correct.
+    var capabilitiesGroup: String {
+        return "group." + (Bundle.main.bundleIdentifier ?? "com.scalecloud.ScaleCloudApp")
+    }
+    // Same group — we only have one app, no cross-app sharing with a separate bundle.
+    var capabilitiesGroupApps: String {
+        return capabilitiesGroup
+    }
 
     // BRAND ONLY
     var use_AppConfig: Bool = false                                                         // Don't touch me !!
