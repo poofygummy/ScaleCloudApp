@@ -6,6 +6,8 @@
 	<string>development</string>
 	<key>com.apple.security.app-sandbox</key>
 	<true/>
+	<key>get-task-allow</key>
+	<true/>
 	<key>com.apple.security.application-groups</key>
 	<array>
 		<string>group.com.scalecloud.ScaleCloudApp</string>
