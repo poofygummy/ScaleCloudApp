@@ -22,6 +22,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private var privacyProtectionWindow: UIWindow?
     private let global = NCGlobal.shared
     private let alreadyMigratedMultiDomains = UserDefaults.standard.bool(forKey: NCGlobal.shared.udMigrationMultiDomains)
+    // Held as an instance property so the coordinator isn't deallocated before the
+    // background debug-channel handoff thread completes (a local var in the closure
+    // would be released the moment start() returns, making [weak self] capture nil).
+    private var setupCoordinator: SetupCoordinator?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else {
@@ -644,13 +648,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             return
         }
         
-        // Present setup flow after a short delay to allow UI to settle
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            let setupCoordinator = SetupCoordinator()
-            setupCoordinator.onCompletion = {
+        // Present setup flow after a short delay to allow UI to settle.
+        // The coordinator is stored as an instance property so it stays alive for
+        // the entire debug-channel handoff, which runs on a background thread.
+        // A local var would be released the moment start() returns, causing
+        // [weak self] inside the background block to capture nil immediately.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            guard let self else { return }
+            let coordinator = SetupCoordinator()
+            coordinator.onCompletion = { [weak self] in
                 print("[Setup] Setup flow completed successfully")
+                self?.setupCoordinator = nil
             }
-            setupCoordinator.start(from: controller)
+            self.setupCoordinator = coordinator
+            coordinator.start(from: controller)
         }
     }
 }
