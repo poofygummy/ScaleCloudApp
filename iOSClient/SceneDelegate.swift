@@ -122,7 +122,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             NCPreferences().removeAll()
 
             if let bundleID = Bundle.main.bundleIdentifier {
+                // ScaleCloud: preserve signing-setup state across this wipe.
+                // removePersistentDomain is a Nextcloud-account reset that has
+                // nothing to do with whether ScaleCloud signing credentials are
+                // already stored — don't let it reset the injection flow.
+                let savedSetupCompleted = UserDefaults.standard.setupCompleted
                 UserDefaults.standard.removePersistentDomain(forName: bundleID)
+                if savedSetupCompleted {
+                    UserDefaults.standard.setupCompleted = true
+                    UserDefaults.standard.synchronize()
+                }
             }
 
             if NCBrandOptions.shared.disable_intro {
