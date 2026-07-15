@@ -665,6 +665,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             return
         }
 
+        // If iloader launched us with --scalecloud-reset, unconditionally wipe keychain
+        // and setupCompleted before the guard below. This handles two cases:
+        //   1. Reinstall: iOS preserves Keychain across app deletion, so hasValidCredentials()
+        //      would return true and the guard would short-circuit without this.
+        //   2. Apple ID change: the user entered new credentials in iloader; old ones
+        //      must be overwritten rather than skipped.
+        if CommandLine.arguments.contains("--scalecloud-reset") {
+            print("[Setup] --scalecloud-reset: wiping stale credentials and setupCompleted flag")
+            Keychain.shared.appleIDEmailAddress = nil
+            Keychain.shared.appleIDPassword = nil
+            UserDefaults.standard.setupCompleted = false
+            UserDefaults.standard.synchronize()
+        }
+
         // If credentials are gone (new iloader run, or app reinstall) reset the
         // stored flag so the injection flow starts fresh.
         if !Keychain.shared.hasValidCredentials() {
