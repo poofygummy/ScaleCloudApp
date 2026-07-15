@@ -26,9 +26,10 @@ extension UIButton {
 
     func removeSpinner() {
         let spinnerTag = Int(bitPattern: Unmanaged.passUnretained(self).toOpaque())
-        self.superview?.subviews
-            .first { $0.isKind(of: UIActivityIndicatorView.self) && $0.tag == spinnerTag }
-            ?.removeFromSuperview()
+        let spinner = self.superview?.subviews.first(where: { view -> Bool in
+            return view.isKind(of: UIActivityIndicatorView.self) && view.tag == spinnerTag
+        })
+        spinner?.removeFromSuperview()
     }
 
     func hideSpinnerAndShowButton() {
