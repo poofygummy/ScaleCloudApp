@@ -291,7 +291,7 @@ class NCLogin: UIViewController, UITextFieldDelegate, NCLoginQRCodeDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         if textField == scPasswordInput && !scPasswordContainer.isHidden {
-            performTailscaleLoginFromUI()
+            performTailscaleLoginFromUI(self)
         } else if textField == scUsernameInput && !scUsernameContainer.isHidden {
             scPasswordInput.becomeFirstResponder()
         } else {
@@ -431,7 +431,7 @@ class NCLogin: UIViewController, UITextFieldDelegate, NCLoginQRCodeDelegate {
 
     // Convenience wrapper so the storyboard can connect buttons directly
     // (mirrors the Android performTailscaleLoginFromUI pattern).
-    @IBAction private func performTailscaleLoginFromUI() {
+    @IBAction private func performTailscaleLoginFromUI(_ sender: Any) {
         performTailscaleLogin(urlBase: baseUrlTextField.text ?? "")
     }
 

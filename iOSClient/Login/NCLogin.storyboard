@@ -148,7 +148,7 @@
                                     <imageReference key="image" image="arrow.right" catalog="system" symbolScale="large"/>
                                 </state>
                                 <connections>
-                                    <action selector="performTailscaleLoginFromUI" destination="yj9-jo-WIn" eventType="touchUpInside" id="scA-ct-1zY"/>
+                                    <action selector="performTailscaleLoginFromUI:" destination="yj9-jo-WIn" eventType="touchUpInside" id="scA-ct-1zY"/>
                                 </connections>
                             </button>
                         </subviews>
