@@ -405,7 +405,7 @@ class NCLogin: UIViewController, UITextFieldDelegate, NCLoginQRCodeDelegate {
 
         scUsernameContainer.isHidden = false
         scPasswordContainer.isHidden = false
-        scLoginButton.isHidden = false
+        // scLoginButton is a child of scPasswordContainer; visibility is inherited from the container
     }
 
     private func performTailscaleLogin(urlBase: String) {

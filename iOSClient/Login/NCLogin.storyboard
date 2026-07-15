@@ -132,25 +132,30 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done"/>
                                     </textField>
+                                    <!-- scLoginButton is a child of the password container so it is always in the same hit-test tree and can never be obscured by a sibling view -->
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="scL-5bN-9wX">
+                                        <rect key="frame" x="300" y="2" width="40" height="40"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="tailscaleLogin"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="scH-3Lgn-40"/>
+                                            <constraint firstAttribute="width" constant="40" id="scW-4Lgn-40"/>
+                                        </constraints>
+                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <state key="normal">
+                                            <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <imageReference key="image" image="arrow.right" catalog="system" symbolScale="large"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="performTailscaleLoginFromUI:" destination="yj9-jo-WIn" eventType="touchUpInside" id="scA-ct-1zY"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
-                            </view>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="scL-5bN-9wX">
-                                <rect key="frame" x="350" y="394" width="40" height="40"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <accessibility key="accessibilityConfiguration" identifier="tailscaleLogin"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="scH-3Lgn-40"/>
-                                    <constraint firstAttribute="width" constant="40" id="scW-4Lgn-40"/>
+                                    <constraint firstItem="scL-5bN-9wX" firstAttribute="trailing" secondItem="scP-4kM-8vQ" secondAttribute="trailing" constant="0" id="scC-17L-tr"/>
+                                    <constraint firstItem="scL-5bN-9wX" firstAttribute="centerY" secondItem="scP-4kM-8vQ" secondAttribute="centerY" id="scC-18L-cyP"/>
                                 </constraints>
-                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal">
-                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <imageReference key="image" image="arrow.right" catalog="system" symbolScale="large"/>
-                                </state>
-                                <connections>
-                                    <action selector="performTailscaleLoginFromUI:" destination="yj9-jo-WIn" eventType="touchUpInside" id="scA-ct-1zY"/>
-                                </connections>
-                            </button>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="8lf-3Y-f5R"/>
                         <color key="backgroundColor" systemColor="tintColor"/>
@@ -198,11 +203,7 @@
                             <constraint firstItem="sc2-Pwd-3rT" firstAttribute="trailing" secondItem="scP-4kM-8vQ" secondAttribute="trailing" constant="0" id="scC-14i-trP"/>
                             <constraint firstItem="sc2-Pwd-3rT" firstAttribute="top" secondItem="scP-4kM-8vQ" secondAttribute="top" constant="0" id="scC-15i-tpP"/>
                             <constraint firstItem="sc2-Pwd-3rT" firstAttribute="bottom" secondItem="scP-4kM-8vQ" secondAttribute="bottom" constant="0" id="scC-16i-btP"/>
-                            <!-- scLoginButton (arrow) aligned to right of password container, like normal loginButton to address -->
-                            <constraint firstItem="scL-5bN-9wX" firstAttribute="width" constant="40" id="scC-17L-wd"/>
-                            <constraint firstItem="scL-5bN-9wX" firstAttribute="height" constant="40" id="scC-18L-ht"/>
-                            <constraint firstItem="scL-5bN-9wX" firstAttribute="trailing" secondItem="8lf-3Y-f5R" secondAttribute="trailing" constant="-50" id="scC-19L-tr"/>
-                            <constraint firstItem="scL-5bN-9wX" firstAttribute="centerY" secondItem="scP-4kM-8vQ" secondAttribute="centerY" id="scC-20L-cyP"/>
+                            <!-- scLoginButton constraints are now local to scPasswordContainer (button is a child) -->
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="6v9-Gy-jiv"/>
