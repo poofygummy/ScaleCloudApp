@@ -1,6 +1,6 @@
 {
   "fill" : {
-    "solid" : "display-p3:0.10980,0.68627,1.00000,1.00000"
+    "solid" : "display-p3:0.13333,0.13333,0.13333,1.00000"
   },
   "groups" : [
     {
@@ -16,8 +16,8 @@
             }
           ],
           "hidden" : false,
-          "image-name" : "ScaleCloudIcon.svg",
-          "name" : "ScaleCloudIcon",
+          "image-name" : "ScaleCloudLogo.svg",
+          "name" : "ScaleCloudLogo",
           "opacity" : 1,
           "position" : {
             "scale" : 7,
