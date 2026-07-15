@@ -16,8 +16,8 @@
             }
           ],
           "hidden" : false,
-          "image-name" : "Nextcloud-logo-markonly-white.svg",
-          "name" : "Nextcloud-logo-markonly-white",
+          "image-name" : "ScaleCloudIcon.svg",
+          "name" : "ScaleCloudIcon",
           "opacity" : 1,
           "position" : {
             "scale" : 7,
