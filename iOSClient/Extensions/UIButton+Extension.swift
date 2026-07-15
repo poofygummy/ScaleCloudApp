@@ -24,6 +24,13 @@ extension UIButton {
         spinner.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
     }
 
+    func removeSpinner() {
+        let spinnerTag = Int(bitPattern: Unmanaged.passUnretained(self).toOpaque())
+        self.superview?.subviews
+            .first { $0.isKind(of: UIActivityIndicatorView.self) && $0.tag == spinnerTag }
+            ?.removeFromSuperview()
+    }
+
     func hideSpinnerAndShowButton() {
            let spinnerTag = Int(bitPattern: Unmanaged.passUnretained(self).toOpaque())
            let spinner = self.superview?.subviews.first(where: { view -> Bool in

@@ -394,6 +394,9 @@ class NCLogin: UIViewController, UITextFieldDelegate, NCLoginQRCodeDelegate {
     private func showTailscaleLoginUI() {
         // Mirror Android: hide the normal server address UI (host frame + helper + scan), show the
         // ScaleCloud username/password fields instead. The login trigger (arrow) moves to the password field.
+        // isUrlValid showed a spinner on loginButton before we got here; remove it now.
+        loginButton.removeSpinner()
+
         baseUrlTextField.isHidden = true
         loginAddressDetail.isHidden = true
         loginButton.isHidden = true
