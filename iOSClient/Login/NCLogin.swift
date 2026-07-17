@@ -500,7 +500,7 @@ class NCLogin: UIViewController, UITextFieldDelegate, NCLoginQRCodeDelegate {
         loginButton.isEnabled = false
         loginButton.hideButtonAndShowSpinner()
 
-        SCKClient.shared.getServerStatus(serverUrl: url) { [self] _, serverInfoResult in
+        SCKClient.shared.getServerStatus(serverUrl: url, options: SCKRequestOptions(timeout: 30)) { [self] _, serverInfoResult in
             switch serverInfoResult {
             case .success:
                 if let host = URL(string: url)?.host {
@@ -553,9 +553,7 @@ class NCLogin: UIViewController, UITextFieldDelegate, NCLoginQRCodeDelegate {
                     }))
                     self.present(alertController, animated: true)
                 } else {
-                    self.retryIsTailscaleLogin = false
                     self.showTsnetError(raw: SCKSession.getTsnetLogs(), fallback: error.errorDescription)
-                    self.startRetryTimer()
                 }
             @unknown default:
                 break
