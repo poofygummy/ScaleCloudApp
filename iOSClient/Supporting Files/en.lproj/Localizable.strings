@@ -294,6 +294,10 @@
 "_connect_server_anyway_"       = "Do you want to connect to the server anyway?";
 "_server_is_trusted_"           = "Do you consider this server trusted?";
 "_connection_error_"            = "Connection error";
+"_tsnet_node_starting_"         = "Connecting to Tailscale…";
+"_tsnet_needs_auth_"            = "Waiting for device approval.";
+"_tsnet_needs_retag_"           = "Waiting for network node re-tagging.";
+"_tsnet_other_error_"           = "Connection error.";
 "_login_url_"                   = "Server address https:// …";
 "_login_url_error_"             = "URL error, please verify your server URL";
 "_login_error_"                 = "Could not log in. Please try again later.";
