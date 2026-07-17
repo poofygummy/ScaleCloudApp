@@ -184,8 +184,13 @@ final class AppOperationCoordinator {
     
     /// Check if refresh is needed (< 4 days until expiry)
     func isRefreshNeeded() -> Bool {
-        guard let days = daysUntilExpiry() else { return false }
-        return days < 4
+        guard let days = daysUntilExpiry() else {
+            nkLog(debug: "[Signing] isRefreshNeeded: no expiry date in Keychain — skipping refresh")
+            return false
+        }
+        let needed = days < 4
+        nkLog(debug: "[Signing] isRefreshNeeded: \(days) day(s) until expiry — refresh \(needed ? "NEEDED" : "not needed")")
+        return needed
     }
     
     // MARK: - State Persistence

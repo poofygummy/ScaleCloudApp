@@ -405,7 +405,8 @@ struct NCDebugView: View {
             parts.append("cert: none")
         }
         parts.append(isMinimuxerReady ? "mux:✓" : "mux:✗")
-        parts.append(!UserDefaults.standard.menuAnisetteServersList.isEmpty ? "anisette:✓" : "anisette:✗")
+        let anisetteServers = UserDefaults.standard.array(forKey: "menuAnisetteServersList") as? [String] ?? []
+        parts.append(!anisetteServers.isEmpty ? "anisette:✓" : "anisette:✗")
         parts.append(coordinator.currentState.rawValue)
         return parts.joined(separator: "  ")
     }
