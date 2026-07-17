@@ -12,9 +12,6 @@ import FirebaseCrashlytics
 struct NCSettingsView: View {
     // State to control the visibility of the acknowledgements view
     @State private var showAcknowledgements = false
-    // Debug: re-sign status
-    @State private var resignStatusMessage: String = ""
-    @State private var showResignAlert = false
     // State to control the visibility of the passcode view
     @State private var showPasscode = false
     // State to contorl the visibility of the change passcode view
@@ -280,61 +277,21 @@ struct NCSettingsView: View {
                     }
                 }
             })
-#if DEBUG
-            Section(header: Text("Debug").font(.headline), content: {
-                Button(action: {
-                    Crashlytics.crashlytics().log("Test crash triggered")
-                    fatalError("🔥 Crash test")
-                }, label: {
+            // `Debug` Section
+            Section {
+                NavigationLink(destination: LazyView {
+                    NCDebugView()
+                }) {
                     HStack {
-                        Image(systemName: "flame.fill")
+                        Image(systemName: "ladybug")
                             .font(.icon())
-                            .foregroundColor(.red)
+                            .foregroundColor(Color(NCBrandColor.shared.iconImageColor))
                             .frame(width: 39)
-
-                        Text("Test crash triggered")
+                        Text("Debug")
                             .font(.body)
-                    }
-                })
-                .tint(Color(NCBrandColor.shared.textColor))
-
-                // Signing diagnostics row
-                HStack {
-                    Image(systemName: "signature")
-                        .font(.icon())
-                        .foregroundColor(Color(NCBrandColor.shared.iconImageColor))
-                        .frame(width: 39)
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("Signing status")
-                            .font(.body)
-                        Text(signingDiagnostics())
-                            .font(.caption)
-                            .foregroundColor(.secondary)
                     }
                 }
-
-                // Force re-sign button
-                Button(action: {
-                    forceResign()
-                }, label: {
-                    HStack {
-                        Image(systemName: "arrow.clockwise.circle")
-                            .font(.icon())
-                            .foregroundColor(.orange)
-                            .frame(width: 39)
-
-                        Text("Force Re-sign Now")
-                            .font(.body)
-                    }
-                })
-                .tint(Color(NCBrandColor.shared.textColor))
-                .alert("Re-sign Result", isPresented: $showResignAlert) {
-                    Button("OK", role: .cancel) {}
-                } message: {
-                    Text(resignStatusMessage)
-                }
-            })
-#endif
+            }
 
             // `Watermark` Section
             Section(content: {
@@ -376,43 +333,86 @@ struct E2EESection: View {
     }
 }
 
-// MARK: - Debug helpers
+// MARK: - Debug View
 
-#if DEBUG
-private extension NCSettingsView {
-    /// Returns a one-line summary of signing prerequisites for the diagnostics row.
-    func signingDiagnostics() -> String {
+struct NCDebugView: View {
+    @State private var resignStatusMessage: String = ""
+    @State private var showResignAlert = false
+
+    var body: some View {
+        Form {
+            // Signing status
+            Section(header: Text("Signing").font(.headline)) {
+                HStack {
+                    Image(systemName: "signature")
+                        .font(.icon())
+                        .foregroundColor(Color(NCBrandColor.shared.iconImageColor))
+                        .frame(width: 39)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Signing status")
+                            .font(.body)
+                        Text(signingDiagnostics())
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                }
+
+                Button(action: { forceResign() }) {
+                    HStack {
+                        Image(systemName: "arrow.clockwise.circle")
+                            .font(.icon())
+                            .foregroundColor(.orange)
+                            .frame(width: 39)
+                        Text("Force Re-sign Now")
+                            .font(.body)
+                    }
+                }
+                .tint(Color(NCBrandColor.shared.textColor))
+                .alert("Re-sign Result", isPresented: $showResignAlert) {
+                    Button("OK", role: .cancel) {}
+                } message: {
+                    Text(resignStatusMessage)
+                }
+            }
+
+            // Crash test
+            Section(header: Text("Diagnostics").font(.headline)) {
+                Button(action: {
+                    Crashlytics.crashlytics().log("Test crash triggered")
+                    fatalError("Crash test")
+                }) {
+                    HStack {
+                        Image(systemName: "flame.fill")
+                            .font(.icon())
+                            .foregroundColor(.red)
+                            .frame(width: 39)
+                        Text("Test Crash")
+                            .font(.body)
+                    }
+                }
+                .tint(Color(NCBrandColor.shared.textColor))
+            }
+        }
+        .navigationBarTitle("Debug", displayMode: .inline)
+    }
+
+    private func signingDiagnostics() -> String {
         let coordinator = AppOperationCoordinator.shared
         var parts: [String] = []
-
-        // Certificate expiry
         if let days = coordinator.daysUntilExpiry() {
             parts.append("cert \(days)d")
         } else {
             parts.append("cert: none")
         }
-
-        // Minimuxer
         parts.append(isMinimuxerReady ? "mux:✓" : "mux:✗")
-
-        // Anisette
-        let hasAnisette = !UserDefaults.standard.menuAnisetteServersList.isEmpty
-        parts.append(hasAnisette ? "anisette:✓" : "anisette:✗")
-
-        // State
+        parts.append(!UserDefaults.standard.menuAnisetteServersList.isEmpty ? "anisette:✓" : "anisette:✗")
         parts.append(coordinator.currentState.rawValue)
-
         return parts.joined(separator: "  ")
     }
 
-    /// Bypasses all gates and fires the signing engine directly.
-    /// Reads installed apps from CoreData, hands them to BackgroundRefreshAppsOperation.
-    func forceResign() {
+    private func forceResign() {
         nkLog(debug: "[Debug] Force re-sign triggered from Settings")
         let coordinator = AppOperationCoordinator.shared
-
-        // Force state to refreshing regardless of current state
-        // (reset to idle first if needed so the transition is valid)
         if coordinator.currentState != .idle {
             coordinator.attemptTransition(to: .idle)
         }
@@ -421,19 +421,16 @@ private extension NCSettingsView {
             showResignAlert = true
             return
         }
-
         DatabaseManager.shared.persistentContainer.performBackgroundTask { context in
-            // Use fetchAppsForRefreshingAll (no 6h cooldown) so a force-trigger always works
             let apps = InstalledApp.fetchAppsForRefreshingAll(in: context)
             guard !apps.isEmpty else {
                 DispatchQueue.main.async {
                     coordinator.attemptTransition(to: .idle)
-                    self.resignStatusMessage = "No apps in signing database.\nRun setup/install first so an InstalledApp record exists."
+                    self.resignStatusMessage = "No apps in signing database.\nRun setup/install first."
                     self.showResignAlert = true
                 }
                 return
             }
-
             nkLog(debug: "[Debug] Force re-sign: \(apps.count) app(s) found")
             let operation = BackgroundRefreshAppsOperation(installedApps: apps)
             operation.refreshCompletionHandler = { success, expiryDate in
@@ -446,7 +443,7 @@ private extension NCSettingsView {
                         fmt.timeStyle = .short
                         self.resignStatusMessage = "✅ Re-sign succeeded!\nCert expires: \(fmt.string(from: expiry))"
                     } else {
-                        self.resignStatusMessage = "❌ Re-sign failed.\nCheck Xcode console / os_log for details."
+                        self.resignStatusMessage = "❌ Re-sign failed.\nCheck log for details."
                     }
                     self.showResignAlert = true
                 }
@@ -455,7 +452,6 @@ private extension NCSettingsView {
         }
     }
 }
-#endif
 
 #Preview {
     NCSettingsView(model: NCSettingsModel(controller: nil))
