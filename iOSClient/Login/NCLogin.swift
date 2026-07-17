@@ -57,6 +57,11 @@ class NCLogin: UIViewController, UITextFieldDelegate, NCLoginQRCodeDelegate {
     // LucidBanner
     var banner: LucidBanner?
 
+    // ScaleCloud: tsnet retry
+    private var retryTimer: Timer?
+    private var lastShownNodeState: String = ""
+    private var retryIsTailscaleLogin: Bool = false
+
     // MARK: - View Life Cycle
 
     override func viewDidLoad() {
@@ -245,8 +250,8 @@ class NCLogin: UIViewController, UITextFieldDelegate, NCLoginQRCodeDelegate {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-
         self.banner?.dismiss()
+        stopRetryTimer()
     }
 
     private func handleLoginWithAppConfig() {
@@ -410,19 +415,7 @@ class NCLogin: UIViewController, UITextFieldDelegate, NCLoginQRCodeDelegate {
 
     private func performTailscaleLogin(urlBase: String) {
         guard let user = scUsernameInput.text, !user.isEmpty,
-            let password = scPasswordInput.text, !password.isEmpty else { return }
-        
-        // Handle empty fields
-        if user.isEmpty || password.isEmpty {
-            let alert = UIAlertController(
-                title: NSLocalizedString("_error_", comment: ""),
-                message: NSLocalizedString("_login_url_error_", comment: ""),
-                preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: NSLocalizedString("_ok_", comment: ""), style: .default))
-            present(alert, animated: true)
-            return
-        }
-        
+              let password = scPasswordInput.text, !password.isEmpty else { return }
         scLoginButton?.isEnabled = false
         Task {
             await getAppPassword(urlBase: urlBase, user: user, password: password)
@@ -432,7 +425,60 @@ class NCLogin: UIViewController, UITextFieldDelegate, NCLoginQRCodeDelegate {
     // Convenience wrapper so the storyboard can connect buttons directly
     // (mirrors the Android performTailscaleLoginFromUI pattern).
     @IBAction private func performTailscaleLoginFromUI(_ sender: Any) {
+        let user = scUsernameInput.text ?? ""
+        let password = scPasswordInput.text ?? ""
+        if user.isEmpty || password.isEmpty {
+            let alert = UIAlertController(
+                title: NSLocalizedString("_error_", comment: ""),
+                message: NSLocalizedString("_login_url_error_", comment: ""),
+                preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("_ok_", comment: ""), style: .default))
+            present(alert, animated: true)
+            return
+        }
         performTailscaleLogin(urlBase: baseUrlTextField.text ?? "")
+    }
+
+    private func showTsnetError(raw: String, fallback: String) {
+        let nodeState = raw.components(separatedBy: "\n").first ?? ""
+        guard nodeState != lastShownNodeState else { return }
+        lastShownNodeState = nodeState
+        let userMessage: String
+        switch nodeState {
+        case "STATE:NodeStarting": userMessage = NSLocalizedString("_tsnet_node_starting_", comment: "")
+        case "STATE:NeedsAuth":    userMessage = NSLocalizedString("_tsnet_needs_auth_",    comment: "")
+        case "STATE:NeedsRetag":   userMessage = NSLocalizedString("_tsnet_needs_retag_",   comment: "")
+        case "STATE:OtherError":   userMessage = NSLocalizedString("_tsnet_other_error_",   comment: "")
+        default:                   userMessage = fallback
+        }
+        let alert = UIAlertController(title: NSLocalizedString("_connection_error_", comment: ""), message: userMessage, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("_ok_", comment: ""), style: .default))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("_view_log_", comment: ""), style: .default) { [weak self] _ in
+            let logAlert = UIAlertController(title: "Diagnostic Log", message: raw, preferredStyle: .alert)
+            logAlert.addAction(UIAlertAction(title: NSLocalizedString("_ok_", comment: ""), style: .default))
+            self?.present(logAlert, animated: true)
+        })
+        present(alert, animated: true)
+    }
+
+    private func startRetryTimer() {
+        retryTimer?.invalidate()
+        retryTimer = Timer.scheduledTimer(withTimeInterval: 10, repeats: false) { [weak self] _ in
+            guard let self else { return }
+            // Do NOT clear lastShownNodeState here — showTsnetError's deduplication guard
+            // keeps the same-state alert from being pushed on top of one the user is reading.
+            if self.retryIsTailscaleLogin {
+                self.performTailscaleLogin(urlBase: self.baseUrlTextField.text ?? "")
+            } else {
+                self.login()
+            }
+        }
+    }
+
+    private func stopRetryTimer() {
+        retryTimer?.invalidate()
+        retryTimer = nil
+        lastShownNodeState = ""
     }
 
     // MARK: - Login
@@ -507,14 +553,9 @@ class NCLogin: UIViewController, UITextFieldDelegate, NCLoginQRCodeDelegate {
                     }))
                     self.present(alertController, animated: true)
                 } else {
-                    // ScaleCloud: append tsnet diagnostic logs so we can see what's failing
-                    let goLogs = SCKSession.getTsnetLogs()
-                    let diagMessage = goLogs.isEmpty
-                        ? error.errorDescription
-                        : "\(error.errorDescription ?? "")\n\n[tsnet]\n\(goLogs)"
-                    let alertController = UIAlertController(title: NSLocalizedString("_connection_error_", comment: ""), message: diagMessage, preferredStyle: .alert)
-                    alertController.addAction(UIAlertAction(title: NSLocalizedString("_ok_", comment: ""), style: .default, handler: { _ in }))
-                    self.present(alertController, animated: true, completion: { })
+                    self.retryIsTailscaleLogin = false
+                    self.showTsnetError(raw: SCKSession.getTsnetLogs(), fallback: error.errorDescription)
+                    self.startRetryTimer()
                 }
             @unknown default:
                 break
@@ -573,15 +614,22 @@ class NCLogin: UIViewController, UITextFieldDelegate, NCLoginQRCodeDelegate {
     private func getAppPassword(urlBase: String, user: String, password: String) async {
         let results = await SCKClient.shared.getAppPasswordAsync(url: urlBase, user: user, password: password)
 
-        if results.error == .success, let password = results.token {
-            await self.createAccount(urlBase: urlBase, user: user, password: password)
+        if results.error == .success, let token = results.token {
+            stopRetryTimer()
+            await self.createAccount(urlBase: urlBase, user: user, password: token)
         } else {
-            // ScaleCloud: log tsnet diagnostics to console on failure
-            let goLogs = SCKSession.getTsnetLogs()
-            if !goLogs.isEmpty { nkLog(error: "ScaleCloud tsnet logs:\n\(goLogs)") }
-            let windowScene = SceneManager.shared.getWindowScene(controller: self.controller)
-            await showErrorBanner(windowScene: windowScene, text: results.error.errorDescription, errorCode: results.error.errorCode)
-            dismiss(animated: true, completion: nil)
+            let tsnetRaw = SCKSession.getTsnetLogs()
+            nkLog(error: "ScaleCloud tsnet logs:\n\(tsnetRaw)")
+            // Synthesize OtherError so showTsnetError always shows the structured alert
+            // with View Log, whether the failure is wrong credentials, server refusal, or
+            // a network error. The Nextcloud error description is embedded in the log body.
+            let raw = "STATE:OtherError\n\(results.error.errorDescription)\n\(tsnetRaw)"
+            await MainActor.run {
+                self.scLoginButton?.isEnabled = true
+                self.retryIsTailscaleLogin = true
+                self.showTsnetError(raw: raw, fallback: results.error.errorDescription)
+                self.startRetryTimer()
+            }
         }
     }
 
