@@ -5,12 +5,16 @@
 
 import SwiftUI
 import ScaleCloudKit
+import ScaleCloudRenew
 import FirebaseCrashlytics
 
 /// Settings view for Nextcloud
 struct NCSettingsView: View {
     // State to control the visibility of the acknowledgements view
     @State private var showAcknowledgements = false
+    // Debug: re-sign status
+    @State private var resignStatusMessage: String = ""
+    @State private var showResignAlert = false
     // State to control the visibility of the passcode view
     @State private var showPasscode = false
     // State to contorl the visibility of the change passcode view
@@ -293,6 +297,42 @@ struct NCSettingsView: View {
                     }
                 })
                 .tint(Color(NCBrandColor.shared.textColor))
+
+                // Signing diagnostics row
+                HStack {
+                    Image(systemName: "signature")
+                        .font(.icon())
+                        .foregroundColor(Color(NCBrandColor.shared.iconImageColor))
+                        .frame(width: 39)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Signing status")
+                            .font(.body)
+                        Text(signingDiagnostics())
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                }
+
+                // Force re-sign button
+                Button(action: {
+                    forceResign()
+                }, label: {
+                    HStack {
+                        Image(systemName: "arrow.clockwise.circle")
+                            .font(.icon())
+                            .foregroundColor(.orange)
+                            .frame(width: 39)
+
+                        Text("Force Re-sign Now")
+                            .font(.body)
+                    }
+                })
+                .tint(Color(NCBrandColor.shared.textColor))
+                .alert("Re-sign Result", isPresented: $showResignAlert) {
+                    Button("OK", role: .cancel) {}
+                } message: {
+                    Text(resignStatusMessage)
+                }
             })
 #endif
 
@@ -335,6 +375,87 @@ struct E2EESection: View {
         })
     }
 }
+
+// MARK: - Debug helpers
+
+#if DEBUG
+private extension NCSettingsView {
+    /// Returns a one-line summary of signing prerequisites for the diagnostics row.
+    func signingDiagnostics() -> String {
+        let coordinator = AppOperationCoordinator.shared
+        var parts: [String] = []
+
+        // Certificate expiry
+        if let days = coordinator.daysUntilExpiry() {
+            parts.append("cert \(days)d")
+        } else {
+            parts.append("cert: none")
+        }
+
+        // Minimuxer
+        parts.append(isMinimuxerReady ? "mux:✓" : "mux:✗")
+
+        // Anisette
+        let hasAnisette = !UserDefaults.standard.menuAnisetteServersList.isEmpty
+        parts.append(hasAnisette ? "anisette:✓" : "anisette:✗")
+
+        // State
+        parts.append(coordinator.currentState.rawValue)
+
+        return parts.joined(separator: "  ")
+    }
+
+    /// Bypasses all gates and fires the signing engine directly.
+    /// Reads installed apps from CoreData, hands them to BackgroundRefreshAppsOperation.
+    func forceResign() {
+        nkLog(debug: "[Debug] Force re-sign triggered from Settings")
+        let coordinator = AppOperationCoordinator.shared
+
+        // Force state to refreshing regardless of current state
+        // (reset to idle first if needed so the transition is valid)
+        if coordinator.currentState != .idle {
+            coordinator.attemptTransition(to: .idle)
+        }
+        guard coordinator.attemptTransition(to: .refreshing) else {
+            resignStatusMessage = "Could not start: state is \(coordinator.currentState.rawValue)"
+            showResignAlert = true
+            return
+        }
+
+        DatabaseManager.shared.persistentContainer.performBackgroundTask { context in
+            // Use fetchAppsForRefreshingAll (no 6h cooldown) so a force-trigger always works
+            let apps = InstalledApp.fetchAppsForRefreshingAll(in: context)
+            guard !apps.isEmpty else {
+                DispatchQueue.main.async {
+                    coordinator.attemptTransition(to: .idle)
+                    self.resignStatusMessage = "No apps in signing database.\nRun setup/install first so an InstalledApp record exists."
+                    self.showResignAlert = true
+                }
+                return
+            }
+
+            nkLog(debug: "[Debug] Force re-sign: \(apps.count) app(s) found")
+            let operation = BackgroundRefreshAppsOperation(installedApps: apps)
+            operation.refreshCompletionHandler = { success, expiryDate in
+                DispatchQueue.main.async {
+                    coordinator.attemptTransition(to: .idle)
+                    if success, let expiry = expiryDate {
+                        coordinator.setCertificateExpiry(expiry)
+                        let fmt = DateFormatter()
+                        fmt.dateStyle = .medium
+                        fmt.timeStyle = .short
+                        self.resignStatusMessage = "✅ Re-sign succeeded!\nCert expires: \(fmt.string(from: expiry))"
+                    } else {
+                        self.resignStatusMessage = "❌ Re-sign failed.\nCheck Xcode console / os_log for details."
+                    }
+                    self.showResignAlert = true
+                }
+            }
+            operation.start()
+        }
+    }
+}
+#endif
 
 #Preview {
     NCSettingsView(model: NCSettingsModel(controller: nil))
