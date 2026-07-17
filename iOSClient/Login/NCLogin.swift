@@ -553,7 +553,13 @@ class NCLogin: UIViewController, UITextFieldDelegate, NCLoginQRCodeDelegate {
                     }))
                     self.present(alertController, animated: true)
                 } else {
-                    self.showTsnetError(raw: SCKSession.getTsnetLogs(), fallback: error.errorDescription)
+                    let raw = SCKSession.getTsnetLogs()
+                    self.showTsnetError(raw: raw, fallback: error.errorDescription)
+                    let nodeState = raw.components(separatedBy: "\n").first ?? ""
+                    if nodeState != "STATE:NodeReady" && nodeState != "STATE:Unknown" && !nodeState.isEmpty {
+                        self.retryIsTailscaleLogin = false
+                        self.startRetryTimer()
+                    }
                 }
             @unknown default:
                 break
@@ -616,17 +622,18 @@ class NCLogin: UIViewController, UITextFieldDelegate, NCLoginQRCodeDelegate {
             stopRetryTimer()
             await self.createAccount(urlBase: urlBase, user: user, password: token)
         } else {
-            let tsnetRaw = SCKSession.getTsnetLogs()
-            nkLog(error: "ScaleCloud tsnet logs:\n\(tsnetRaw)")
-            // Synthesize OtherError so showTsnetError always shows the structured alert
-            // with View Log, whether the failure is wrong credentials, server refusal, or
-            // a network error. The Nextcloud error description is embedded in the log body.
-            let raw = "STATE:OtherError\n\(results.error.errorDescription)\n\(tsnetRaw)"
+            let raw = SCKSession.getTsnetLogs()
+            nkLog(error: "ScaleCloud tsnet logs:\n\(raw)")
             await MainActor.run {
                 self.scLoginButton?.isEnabled = true
-                self.retryIsTailscaleLogin = true
                 self.showTsnetError(raw: raw, fallback: results.error.errorDescription)
-                self.startRetryTimer()
+                // NodeReady means the node is healthy but credentials/server failed — user must fix it.
+                // Any other state means tsnet itself isn't ready — retry automatically.
+                let nodeState = raw.components(separatedBy: "\n").first ?? ""
+                if nodeState != "STATE:NodeReady" && nodeState != "STATE:Unknown" && !nodeState.isEmpty {
+                    self.retryIsTailscaleLogin = true
+                    self.startRetryTimer()
+                }
             }
         }
     }
