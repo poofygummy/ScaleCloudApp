@@ -477,12 +477,12 @@ struct NCDebugView: View {
         let ud = UserDefaults.standard
         let serverList = ud.array(forKey: "menuAnisetteServersList") as? [String] ?? []
         let currentURL = ud.string(forKey: "menuAnisetteURL") ?? ""
-        let setupCompleted = ud.bool(forKey: "com.scalecloud.setupCompleted")
+        let credentialsInjected = ud.bool(forKey: "com.scalecloud.credentialsInjected")
         let lastSetup = ud.object(forKey: "com.scalecloud.lastSetupDate") as? Date
         let ipaSource = ud.string(forKey: "com.scalecloud.ipaSourceURL") ?? ""
         nkLog(debug: "[UserDefaults] menuAnisetteServersList (\(serverList.count)): \(serverList.joined(separator: ", "))")
         nkLog(debug: "[UserDefaults] menuAnisetteURL: \(currentURL.isEmpty ? "(empty)" : currentURL)")
-        nkLog(debug: "[UserDefaults] setupCompleted: \(setupCompleted)")
+        nkLog(debug: "[UserDefaults] credentialsInjected: \(credentialsInjected)")
         nkLog(debug: "[UserDefaults] lastSetupDate: \(lastSetup?.description ?? "(nil)")")
         nkLog(debug: "[UserDefaults] ipaSourceURL: \(ipaSource.isEmpty ? "(empty)" : ipaSource)")
     }

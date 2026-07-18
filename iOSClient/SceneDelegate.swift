@@ -126,10 +126,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 // removePersistentDomain is a Nextcloud-account reset that has
                 // nothing to do with whether ScaleCloud signing credentials are
                 // already stored — don't let it reset the injection flow.
-                let savedSetupCompleted = UserDefaults.standard.setupCompleted
+                let savedCredentialsInjected = UserDefaults.standard.credentialsInjected
                 UserDefaults.standard.removePersistentDomain(forName: bundleID)
-                if savedSetupCompleted {
-                    UserDefaults.standard.setupCompleted = true
+                if savedCredentialsInjected {
+                    UserDefaults.standard.credentialsInjected = true
                     UserDefaults.standard.synchronize()
                 }
             }
@@ -221,7 +221,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 // Even when not activating the full scene (normal cold launch),
                 // we still need to run the injection flow if a debugger is attached
                 // or credentials are missing. presentSetupFlowIfNeeded has all the
-                // right guards inside (coordinator-alive check, setupCompleted check).
+                // right guards inside (coordinator-alive check, credentialsInjected check).
                 self.presentSetupFlowIfNeeded(controller: controller)
             }
         }
@@ -663,27 +663,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
 
         // If iloader launched us with --scalecloud-reset, unconditionally wipe keychain
-        // and setupCompleted before the guard below. This handles two cases:
+        // and credentialsInjected before the guard below. This handles two cases:
         //   1. Reinstall: iOS preserves Keychain across app deletion, so hasValidCredentials()
         //      would return true and the guard would short-circuit without this.
         //   2. Apple ID change: the user entered new credentials in iloader; old ones
         //      must be overwritten rather than skipped.
         if CommandLine.arguments.contains("--scalecloud-reset") {
-            print("[Setup] --scalecloud-reset: wiping stale credentials and setupCompleted flag")
+            print("[Setup] --scalecloud-reset: wiping stale credentials and credentialsInjected flag")
             Keychain.shared.appleIDEmailAddress = nil
             Keychain.shared.appleIDPassword = nil
-            UserDefaults.standard.setupCompleted = false
+            UserDefaults.standard.credentialsInjected = false
             UserDefaults.standard.synchronize()
         }
 
         // If credentials are gone (new iloader run, or app reinstall) reset the
         // stored flag so the injection flow starts fresh.
-        if !Keychain.shared.hasValidCredentials() {
-            UserDefaults.standard.setupCompleted = false
+                if !Keychain.shared.hasValidCredentials() {
+            UserDefaults.standard.credentialsInjected = false
         }
-
-        // Skip if setup was already completed and credentials are present.
-        guard !UserDefaults.standard.setupCompleted else {
+        // Skip if credentials were already injected and are present.
+        guard !UserDefaults.standard.credentialsInjected else {
             return
         }
         
