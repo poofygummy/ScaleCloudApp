@@ -633,9 +633,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 }
             } else if NCPreferences().accountRequest {
                 requestedAccount(controller: controller)
-            } else {
-                // Present setup flow if not completed
-                self.presentSetupFlowIfNeeded(controller: controller)
             }
         }
 
