@@ -10,6 +10,24 @@ import UIKit
 print("SCALECLOUD_APP_STARTING")
 fflush(stdout)
 
+// During injection the DVT/Instruments stdout relay is slow: each flush() causes
+// a USB round-trip (~200ms), giving only ~5 lines/second. With 100+ lines of
+// startup noise that's 20+ seconds of drain before the sentinel can be seen.
+// Fix: switch stdout to fully-buffered mode so all those print() calls accumulate
+// in the buffer without triggering USB round-trips, then flush once per second.
+// The sentinel lines (SCALECLOUD_PUBKEY_READY, SCALECLOUD_CREDENTIALS_OK) call
+// fflush(stdout) explicitly so they always get through immediately.
+if CommandLine.arguments.contains("--scalecloud-reset") ||
+   CommandLine.arguments.contains(where: { $0.hasPrefix("--scalecloud-payload=") }) {
+    setvbuf(stdout, nil, _IOFBF, 65536)
+    let flushTimer = DispatchSource.makeTimerSource(queue: .global(qos: .background))
+    flushTimer.schedule(deadline: .now() + 1, repeating: 1.0)
+    flushTimer.setEventHandler { fflush(stdout) }
+    flushTimer.resume()
+    // Keep the timer alive for the process lifetime.
+    _ = Unmanaged.passRetained(flushTimer as AnyObject)
+}
+
 /// Entry point of the application.
 ///
 /// This call bootstraps the UIKit application using a custom `UIApplication`
