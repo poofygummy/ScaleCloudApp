@@ -122,16 +122,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             NCPreferences().removeAll()
 
             if let bundleID = Bundle.main.bundleIdentifier {
-                // ScaleCloud: preserve signing-setup state across this wipe.
-                // removePersistentDomain is a Nextcloud-account reset that has
-                // nothing to do with whether ScaleCloud signing credentials are
-                // already stored — don't let it reset the injection flow.
-                let savedCredentialsInjected = UserDefaults.standard.credentialsInjected
-                UserDefaults.standard.removePersistentDomain(forName: bundleID)
-                if savedCredentialsInjected {
-                    UserDefaults.standard.credentialsInjected = true
-                    UserDefaults.standard.synchronize()
-                }
+                // ScaleCloud: preserve all signing-setup state across this wipe.
+                // removePersistentDomain resets stale Nextcloud data from a previous
+                // install, but must not destroy ScaleCloud keys written by phase 2.
+                let ud = UserDefaults.standard
+                let savedCredentialsInjected = ud.credentialsInjected
+                let savedAnisetteList         = ud.array(forKey: "menuAnisetteServersList") as? [String]
+                let savedAnisetteURL          = ud.string(forKey: "menuAnisetteURL")
+                let savedIpaSourceURL         = ud.string(forKey: "com.scalecloud.ipaSourceURL")
+                let savedLastSetupDate        = ud.object(forKey: "com.scalecloud.lastSetupDate") as? Date
+                ud.removePersistentDomain(forName: bundleID)
+                if savedCredentialsInjected       { ud.credentialsInjected = true }
+                if let v = savedAnisetteList      { ud.set(v, forKey: "menuAnisetteServersList") }
+                if let v = savedAnisetteURL       { ud.set(v, forKey: "menuAnisetteURL") }
+                if let v = savedIpaSourceURL      { ud.set(v, forKey: "com.scalecloud.ipaSourceURL") }
+                if let v = savedLastSetupDate     { ud.set(v, forKey: "com.scalecloud.lastSetupDate") }
+                ud.synchronize()
             }
 
             if NCBrandOptions.shared.disable_intro {
