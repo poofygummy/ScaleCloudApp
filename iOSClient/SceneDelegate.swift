@@ -675,10 +675,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         //   2. Apple ID change: the user entered new credentials in iloader; old ones
         //      must be overwritten rather than skipped.
         if CommandLine.arguments.contains("--scalecloud-reset") {
-            print("[Setup] --scalecloud-reset: wiping stale credentials and credentialsInjected flag")
+            print("[Setup] --scalecloud-reset: wiping stale credentials and persistent domain")
             Keychain.shared.appleIDEmailAddress = nil
             Keychain.shared.appleIDPassword = nil
-            UserDefaults.standard.credentialsInjected = false
+            if let bundleID = Bundle.main.bundleIdentifier {
+                UserDefaults.standard.removePersistentDomain(forName: bundleID)
+            }
             UserDefaults.standard.synchronize()
         }
 
