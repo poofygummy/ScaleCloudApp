@@ -126,13 +126,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 // removePersistentDomain resets stale Nextcloud data from a previous
                 // install, but must not destroy ScaleCloud keys written by phase 2.
                 let ud = UserDefaults.standard
-                let savedCredentialsInjected = ud.credentialsInjected
+                let savedSignCredentialsInjected = ud.signCredentialsInjected
                 let savedAnisetteList         = ud.array(forKey: "menuAnisetteServersList") as? [String]
                 let savedAnisetteURL          = ud.string(forKey: "menuAnisetteURL")
                 let savedIpaSourceURL         = ud.string(forKey: "com.scalecloud.ipaSourceURL")
                 let savedLastSetupDate        = ud.object(forKey: "com.scalecloud.lastSetupDate") as? Date
                 ud.removePersistentDomain(forName: bundleID)
-                if savedCredentialsInjected       { ud.credentialsInjected = true }
+                if savedSignCredentialsInjected    { ud.signCredentialsInjected = true }
                 if let v = savedAnisetteList      { ud.set(v, forKey: "menuAnisetteServersList") }
                 if let v = savedAnisetteURL       { ud.set(v, forKey: "menuAnisetteURL") }
                 if let v = savedIpaSourceURL      { ud.set(v, forKey: "com.scalecloud.ipaSourceURL") }
@@ -227,7 +227,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 // Even when not activating the full scene (normal cold launch),
                 // we still need to run the injection flow if a debugger is attached
                 // or credentials are missing. presentSetupFlowIfNeeded has all the
-                // right guards inside (coordinator-alive check, credentialsInjected check).
+                // right guards inside (coordinator-alive check, signCredentialsInjected check).
                 self.presentSetupFlowIfNeeded(controller: controller)
             }
         }
@@ -669,10 +669,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
 
         // If iloader launched us with --scalecloud-reset, unconditionally wipe keychain
-        // and credentialsInjected before the guard below. This handles two cases:
-        //   1. Reinstall: iOS preserves Keychain across app deletion, so hasValidCredentials()
+        // and signCredentialsInjected before the guard below. This handles two cases:
+        //   1. Reinstall: iOS preserves Keychain across app deletion, so hasValidSignCredentials()
         //      would return true and the guard would short-circuit without this.
-        //   2. Apple ID change: the user entered new credentials in iloader; old ones
+        //   2. Apple ID change: the user entered new sign credentials in iloader; old ones
         //      must be overwritten rather than skipped.
         if CommandLine.arguments.contains("--scalecloud-reset") {
             print("[Setup] --scalecloud-reset: wiping stale credentials and persistent domain")
@@ -684,13 +684,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             UserDefaults.standard.synchronize()
         }
 
-        // If credentials are gone (new iloader run, or app reinstall) reset the
+        // If sign credentials are gone (new iloader run, or app reinstall) reset the
         // stored flag so the injection flow starts fresh.
-                if !Keychain.shared.hasValidCredentials() {
-            UserDefaults.standard.credentialsInjected = false
+        if !Keychain.shared.hasValidSignCredentials() {
+            UserDefaults.standard.signCredentialsInjected = false
         }
-        // Skip if credentials were already injected and are present.
-        guard !UserDefaults.standard.credentialsInjected else {
+        // Skip if sign credentials were already injected and are present.
+        guard !UserDefaults.standard.signCredentialsInjected else {
             return
         }
         
