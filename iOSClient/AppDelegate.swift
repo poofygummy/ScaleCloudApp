@@ -46,14 +46,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 await NCAccount().deleteAllAccounts()
             }
         }
-        // Suppress stdout print output for the entire lifetime of this process when
-        // iloader injection args are present. The capabilities JSON and other verbose
-        // output would flood iloader's stdout pipe and bury SCALECLOUD_PUBKEY_READY.
+        // Suppress the raw capabilities JSON print() calls when iloader injection args
+        // are present. The mile-long JSON would flood iloader's stdout pipe and bury
+        // SCALECLOUD_PUBKEY_READY. Regular SCK log lines still come through.
         // The app is killed and relaunched between phases, so this never affects a
         // normal user-facing launch.
         let args = CommandLine.arguments
         if args.contains("--scalecloud-reset") || args.contains(where: { $0.hasPrefix("--scalecloud-payload=") }) {
-            SCKLogFileManager.shared.suppressPrintOutput = true
+            SCKLogFileManager.shared.suppressCapabilitiesJson = true
         }
 
         let utilityFileSystem = NCUtilityFileSystem()
