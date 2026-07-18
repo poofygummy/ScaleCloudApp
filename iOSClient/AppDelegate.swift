@@ -34,12 +34,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     var pushSubscriptionTask: Task<Void, Never>?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        print("SCALECLOUD_DIDFINISHLAUNCHING_START"); fflush(stdout)
+
         // Prewarm Swift type metadata for all @Perceptible models before Realm's
         // +[RLMSchema sharedSchema] calls objc_copyClassList. On iOS 15, the
         // singleton metadata completion function for these types hits a null
         // weak-linked Observation symbol if run lazily during class enumeration.
         // Touching .self here forces the completion function to run now, safely.
         prewarmPerceptibleMetadata()
+        print("SCALECLOUD_PREWARM_DONE"); fflush(stdout)
 
         if isUiTestingEnabled {
             Task {
@@ -63,9 +66,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         nkLog(debug: "[AppGroup] capabilitiesGroup = \(NCBrandOptions.shared.capabilitiesGroup)")
         utilityFileSystem.emptyTemporaryDirectory()
         utilityFileSystem.clearCacheDirectory("com.limit-point.LivePhoto")
-        
+        print("SCALECLOUD_FILESYSTEM_DONE"); fflush(stdout)
+
         // Initialize operation coordinator early
         _ = AppOperationCoordinator.shared
+        print("SCALECLOUD_COORDINATOR_DONE"); fflush(stdout)
 
         // Start the signing database. prepareDatabase() runs inside start() and syncs
         // the IPA source URL from UserDefaults into the StoreApp's AppVersion record.
@@ -97,6 +102,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
         NCAppVersionManager.shared.checkAndUpdateInstallState()
         NCSettingsBundleHelper.checkAndExecuteSettings(delay: 0)
+        print("SCALECLOUD_SETTINGS_BUNDLE_DONE"); fflush(stdout)
 
         UserDefaults.standard.register(defaults: ["UserAgent": userAgent])
 
@@ -167,6 +173,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             NCPreferences().requestPasscodeAtStart = true
         }
 
+        print("SCALECLOUD_DIDFINISHLAUNCHING_END"); fflush(stdout)
         return true
     }
 

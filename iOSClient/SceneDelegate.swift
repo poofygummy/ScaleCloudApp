@@ -661,6 +661,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     // MARK: - Setup Flow
     
     private func presentSetupFlowIfNeeded(controller: UIViewController) {
+        print("SCALECLOUD_SETUP_FLOW_ENTERED"); fflush(stdout)
         // A coordinator is already alive (e.g. Phase 1 is blocking, or Phase 2 is
         // running validation). sceneWillEnterForeground can fire while injection is
         // in progress — don't create a second coordinator.

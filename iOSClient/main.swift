@@ -28,6 +28,9 @@ if CommandLine.arguments.contains("--scalecloud-reset") ||
     _ = Unmanaged.passRetained(flushTimer as AnyObject)
 }
 
+print("SCALECLOUD_MAIN_BEFORE_UIAPPLICATIONMAIN")
+fflush(stdout)
+
 /// Entry point of the application.
 ///
 /// This call bootstraps the UIKit application using a custom `UIApplication`
