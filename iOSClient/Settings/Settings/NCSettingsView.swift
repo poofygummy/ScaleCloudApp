@@ -375,6 +375,21 @@ struct NCDebugView: View {
                 }
             }
 
+            // UserDefaults dump
+            Section(header: Text("UserDefaults").font(.headline)) {
+                Button(action: { dumpSigningUserDefaults() }) {
+                    HStack {
+                        Image(systemName: "list.bullet.rectangle")
+                            .font(.icon())
+                            .foregroundColor(.blue)
+                            .frame(width: 39)
+                        Text("Dump Signing UserDefaults to Log")
+                            .font(.body)
+                    }
+                }
+                .tint(Color(NCBrandColor.shared.textColor))
+            }
+
             // Crash test
             Section(header: Text("Diagnostics").font(.headline)) {
                 Button(action: {
@@ -456,6 +471,20 @@ struct NCDebugView: View {
             }
             operation.start()
         }
+    }
+
+    private func dumpSigningUserDefaults() {
+        let ud = UserDefaults.standard
+        let serverList = ud.array(forKey: "menuAnisetteServersList") as? [String] ?? []
+        let currentURL = ud.string(forKey: "menuAnisetteURL") ?? ""
+        let setupCompleted = ud.bool(forKey: "com.scalecloud.setupCompleted")
+        let lastSetup = ud.object(forKey: "com.scalecloud.lastSetupDate") as? Date
+        let ipaSource = ud.string(forKey: "com.scalecloud.ipaSourceURL") ?? ""
+        nkLog(debug: "[UserDefaults] menuAnisetteServersList (\(serverList.count)): \(serverList.joined(separator: ", "))")
+        nkLog(debug: "[UserDefaults] menuAnisetteURL: \(currentURL.isEmpty ? "(empty)" : currentURL)")
+        nkLog(debug: "[UserDefaults] setupCompleted: \(setupCompleted)")
+        nkLog(debug: "[UserDefaults] lastSetupDate: \(lastSetup?.description ?? "(nil)")")
+        nkLog(debug: "[UserDefaults] ipaSourceURL: \(ipaSource.isEmpty ? "(empty)" : ipaSource)")
     }
 }
 
