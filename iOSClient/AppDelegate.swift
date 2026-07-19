@@ -55,8 +55,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // The app is killed and relaunched between phases, so this never affects a
         // normal user-facing launch.
         let args = CommandLine.arguments
-        if args.contains("--scalecloud-reset") || args.contains(where: { $0.hasPrefix("--scalecloud-payload=") }) {
+        let isInjectionLaunch = args.contains("--scalecloud-reset") || args.contains(where: { $0.hasPrefix("--scalecloud-payload=") })
+        if isInjectionLaunch {
+            // Suppress noisy Go/tsnet and capabilities JSON output so only
+            // SCALECLOUD_* protocol lines appear on stdout during injection.
             SCKLogFileManager.shared.suppressCapabilitiesJson = true
+            ScaleCloudGoSetSuppressStdout(true)
         }
 
         let utilityFileSystem = NCUtilityFileSystem()
@@ -89,7 +93,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         if FileManager.default.fileExists(atPath: pairingFileURL.path),
            let pairingFileContents = try? String(contentsOf: pairingFileURL, encoding: .utf8) {
             do {
-                try minimuxerStartWithLogger(pairingFileContents, docsPath.path, true)
+                // Disable minimuxer console logging during injection launches so
+                // its output doesn't flood stdout and bury SCALECLOUD_* lines.
+                try minimuxerStartWithLogger(pairingFileContents, docsPath.path, !isInjectionLaunch)
                 nkLog(debug: "[Signing] minimuxer started")
             } catch {
                 nkLog(debug: "[Signing] minimuxer failed to start: \(error)")

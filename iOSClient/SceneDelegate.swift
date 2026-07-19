@@ -125,6 +125,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 // ScaleCloud: preserve all signing-setup state across this wipe.
                 // removePersistentDomain resets stale Nextcloud data from a previous
                 // install, but must not destroy ScaleCloud keys written by phase 2.
+                //
+                // TODO: it is not fully understood why this wipe is needed on every
+                // no-account launch. It was inherited from Nextcloud upstream and
+                // preserved here. It does not appear to cause problems but the
+                // exact scenario it guards against has not been identified.
                 let ud = UserDefaults.standard
                 let savedSignCredentialsInjected = ud.signCredentialsInjected
                 let savedAnisetteList         = ud.array(forKey: "menuAnisetteServersList") as? [String]
@@ -685,9 +690,25 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             }
             UserDefaults.standard.synchronize()
             print("SCALECLOUD_PERSISTENTDOMAIN_WIPED reason=scalecloud-reset"); fflush(stdout)
+            // 3. Wipe all Realm accounts so the existing-account path is not
+            //    taken on the next launch (openRealm would find them otherwise).
+            Task {
+                await NCAccount().deleteAllAccounts()
+                print("[Setup] --scalecloud-reset: Realm accounts deleted"); fflush(stdout)
+            }
+
+            // 4. Delete stale tsnet node state so a second proxy doesn't start
+            //    from old Tailscale credentials and flood stdout during Phase 1.
+            let tsnetDir = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
+                .first!.appendingPathComponent("tailscale", isDirectory: true)
+            try? FileManager.default.removeItem(at: tsnetDir)
+            print("[Setup] --scalecloud-reset: tsnet state dir removed"); fflush(stdout)
+
             DispatchQueue.main.async {
                 let alert = UIAlertController(title: "ScaleCloud Debug", message: "UserDefaults persistent domain wiped (--scalecloud-reset)", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] _ in
+                    alert?.dismiss(animated: true)
+                }))
                 self.window?.rootViewController?.present(alert, animated: true)
             }
         }
