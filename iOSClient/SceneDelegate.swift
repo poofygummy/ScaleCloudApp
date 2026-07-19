@@ -682,11 +682,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         //   2. Apple ID change: the user entered new sign credentials in iloader; old ones
         //      must be overwritten rather than skipped.
         if CommandLine.arguments.contains("--scalecloud-reset") {
-            print("[Setup] --scalecloud-reset: wiping stale credentials and persistent domain")
-            Keychain.shared.appleIDEmailAddress = nil
-            Keychain.shared.appleIDPassword = nil
+            print("[Setup] --scalecloud-reset: wiping all credentials and persistent domains")
+            // Wipe all ScaleCloud signing credentials, signing materials, anisette,
+            // provisioning profiles, and cert expiry.
+            Keychain.shared.reset()
+            // Wipe all Nextcloud keychain data (passwords, E2EE keys, push keys, etc.).
+            NCPreferences().removeAll()
+            // Wipe standard UserDefaults domain.
             if let bundleID = Bundle.main.bundleIdentifier {
                 UserDefaults.standard.removePersistentDomain(forName: bundleID)
+            }
+            // Wipe app-group UserDefaults domain.
+            let groupSuite = NCBrandOptions.shared.capabilitiesGroup
+            if let groupDefaults = UserDefaults(suiteName: groupSuite) {
+                groupDefaults.removePersistentDomain(forName: groupSuite)
+                groupDefaults.synchronize()
             }
             UserDefaults.standard.synchronize()
             print("SCALECLOUD_PERSISTENTDOMAIN_WIPED reason=scalecloud-reset"); fflush(stdout)
