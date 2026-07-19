@@ -131,17 +131,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 // preserved here. It does not appear to cause problems but the
                 // exact scenario it guards against has not been identified.
                 let ud = UserDefaults.standard
-                let savedSignCredentialsInjected = ud.signCredentialsInjected
-                let savedAnisetteList         = ud.array(forKey: "menuAnisetteServersList") as? [String]
-                let savedAnisetteURL          = ud.string(forKey: "menuAnisetteURL")
-                let savedIpaSourceURL         = ud.string(forKey: "com.scalecloud.ipaSourceURL")
-                let savedLastSetupDate        = ud.object(forKey: "com.scalecloud.lastSetupDate") as? Date
+                let savedSignCredentialsInjected  = ud.signCredentialsInjected
+                let savedAnisetteList              = ud.array(forKey: "menuAnisetteServersList") as? [String]
+                let savedAnisetteURL               = ud.string(forKey: "menuAnisetteURL")
+                let savedIpaSourceURL              = ud.string(forKey: "com.scalecloud.ipaSourceURL")
+                let savedLastSetupDate             = ud.object(forKey: "com.scalecloud.lastSetupDate") as? Date
+                let savedExeModTime                = ud.lastKnownExecutableModTime
                 ud.removePersistentDomain(forName: bundleID)
-                if savedSignCredentialsInjected    { ud.signCredentialsInjected = true }
-                if let v = savedAnisetteList      { ud.set(v, forKey: "menuAnisetteServersList") }
-                if let v = savedAnisetteURL       { ud.set(v, forKey: "menuAnisetteURL") }
-                if let v = savedIpaSourceURL      { ud.set(v, forKey: "com.scalecloud.ipaSourceURL") }
-                if let v = savedLastSetupDate     { ud.set(v, forKey: "com.scalecloud.lastSetupDate") }
+                if savedSignCredentialsInjected       { ud.signCredentialsInjected = true }
+                if let v = savedAnisetteList           { ud.set(v, forKey: "menuAnisetteServersList") }
+                if let v = savedAnisetteURL            { ud.set(v, forKey: "menuAnisetteURL") }
+                if let v = savedIpaSourceURL           { ud.set(v, forKey: "com.scalecloud.ipaSourceURL") }
+                if let v = savedLastSetupDate          { ud.set(v, forKey: "com.scalecloud.lastSetupDate") }
+                if let v = savedExeModTime             { ud.lastKnownExecutableModTime = v }
                 ud.synchronize()
                 print("SCALECLOUD_PERSISTENTDOMAIN_WIPED reason=no-account"); fflush(stdout)
             }
@@ -666,6 +668,69 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     // MARK: - Setup Flow
     
+    /// Detects a fresh install or reinstall by comparing the main executable's
+    /// current modification time against the last-seen value stored in UserDefaults.
+    /// Every install physically re-extracts the app bundle, giving the executable a
+    /// new mod time even if the binary is byte-identical. Normal subsequent launches
+    /// never touch the file, so the timestamp is stable across ordinary runs.
+    ///
+    /// When a mismatch is found this function runs the full reset wipe (identical to
+    /// `--scalecloud-reset`) and **immediately** repopulates `lastKnownExecutableModTime`
+    /// with the current mod time so subsequent launches don't re-trigger the wipe.
+    /// Setup credentials are NOT re-injected here — that is left to the normal
+    /// `presentSetupFlowIfNeeded` flow that runs immediately after.
+    ///
+    /// - Returns: `true` if a fresh install was detected and the wipe was performed.
+    @discardableResult
+    private func detectFreshInstall() -> Bool {
+        guard let execPath = Bundle.main.executablePath,
+              let currentModTime = (try? FileManager.default.attributesOfItem(atPath: execPath))?[.modificationDate] as? Date else {
+            print("[FreshInstall] WARNING: could not read executable mod time — skipping detection")
+            return false
+        }
+
+        let ud = UserDefaults.standard
+        let lastModTime = ud.lastKnownExecutableModTime
+
+        guard lastModTime != currentModTime else {
+            // Mod time unchanged — normal launch, nothing to do.
+            return false
+        }
+
+        print("[FreshInstall] Executable mod time changed: \(lastModTime?.description ?? "(nil)") → \(currentModTime) — fresh install detected, running full wipe")
+        fflush(stdout)
+
+        // Full wipe — same as --scalecloud-reset.
+        Keychain.shared.reset()
+        NCPreferences().removeAll()
+        if let bundleID = Bundle.main.bundleIdentifier {
+            ud.removePersistentDomain(forName: bundleID)
+        }
+        let groupSuite = NCBrandOptions.shared.capabilitiesGroup
+        if let groupDefaults = UserDefaults(suiteName: groupSuite) {
+            groupDefaults.removePersistentDomain(forName: groupSuite)
+            groupDefaults.synchronize()
+        }
+        // Wipe Realm accounts so the existing-account path is skipped on next launch.
+        Task {
+            await NCAccount().deleteAllAccounts()
+            print("[FreshInstall] Realm accounts deleted"); fflush(stdout)
+        }
+        // Delete stale tsnet node state.
+        let tsnetDir = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
+            .first!.appendingPathComponent("tailscale", isDirectory: true)
+        try? FileManager.default.removeItem(at: tsnetDir)
+
+        // Repopulate mod time immediately so the next launch (before setup completes)
+        // doesn't re-trigger the wipe.
+        ud.lastKnownExecutableModTime = currentModTime
+        ud.synchronize()
+
+        print("[FreshInstall] Wipe complete, lastKnownExecutableModTime set to \(currentModTime)")
+        fflush(stdout)
+        return true
+    }
+
     private func presentSetupFlowIfNeeded(controller: UIViewController) {
         print("SCALECLOUD_SETUP_FLOW_ENTERED"); fflush(stdout)
         // A coordinator is already alive (e.g. Phase 1 is blocking, or Phase 2 is
@@ -674,6 +739,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if setupCoordinator != nil {
             return
         }
+
+        // Detect fresh install / reinstall via executable mod time.
+        // If detected, runs the full reset wipe before the credential checks below.
+        detectFreshInstall()
 
         // If iloader launched us with --scalecloud-reset, unconditionally wipe keychain
         // and signCredentialsInjected before the guard below. This handles two cases:
