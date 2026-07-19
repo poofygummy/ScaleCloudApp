@@ -138,6 +138,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 if let v = savedIpaSourceURL      { ud.set(v, forKey: "com.scalecloud.ipaSourceURL") }
                 if let v = savedLastSetupDate     { ud.set(v, forKey: "com.scalecloud.lastSetupDate") }
                 ud.synchronize()
+                print("SCALECLOUD_PERSISTENTDOMAIN_WIPED reason=no-account"); fflush(stdout)
             }
 
             if NCBrandOptions.shared.disable_intro {
@@ -683,6 +684,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 UserDefaults.standard.removePersistentDomain(forName: bundleID)
             }
             UserDefaults.standard.synchronize()
+            print("SCALECLOUD_PERSISTENTDOMAIN_WIPED reason=scalecloud-reset"); fflush(stdout)
+            DispatchQueue.main.async {
+                let alert = UIAlertController(title: "ScaleCloud Debug", message: "UserDefaults persistent domain wiped (--scalecloud-reset)", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                self.window?.rootViewController?.present(alert, animated: true)
+            }
         }
 
         // If sign credentials are gone (new iloader run, or app reinstall) reset the
